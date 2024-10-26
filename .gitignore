@@ -6,6 +6,7 @@ node_modules
 .output
 .env
 dist
+storybook-static
 
 *storybook.log
 .DS_Store

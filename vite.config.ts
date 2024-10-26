@@ -1,19 +1,9 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "path";
-import dts from "vite-plugin-dts";
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    dts({
-      outDir: "dist/types",
-      insertTypesEntry: true,
-    }),
-    // vueI18n({
-    //     include: path.resolve(__dirname, './src/locales/**'),
-    // }),
-  ],
+  plugins: [vue()],
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
