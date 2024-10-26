@@ -37,8 +37,13 @@ jobs:
           corepack enable
           corepack prepare yarn@stable --activate
 
+      - name: Clean Yarn Cache
+        run: |
+          rm -f yarn.lock
+          yarn cache clean
+
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Build
         run: yarn build
