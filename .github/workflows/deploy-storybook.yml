@@ -27,13 +27,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Setup Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-
       - name: Install Dependencies
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Build Storybook
         run: yarn build-storybook
