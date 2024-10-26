@@ -33,10 +33,10 @@ jobs:
           scope: ${{ env.package_name }}
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install
 
       - name: Build
-        run: npm run build
+        run: yarn build
 
       - name: Release
         env:
