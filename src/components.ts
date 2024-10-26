@@ -2,7 +2,7 @@
 import Button from "./elements/Button.vue";
 
 // shell
-import App from "./shell/App.vue";
+import App from "./shell/AppRoot.vue";
 import SidebarMenu from "./shell/SidebarMenu.vue";
 import HorizontalMenu from "./shell/HorizontalMenu.vue";
 import Header from "./shell/Header.vue";
