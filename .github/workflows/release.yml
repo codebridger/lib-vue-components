@@ -38,7 +38,7 @@ jobs:
           corepack prepare yarn@stable --activate
 
       - name: Install dependencies
-        run: --immutable --immutable-cache
+        run: yarn --immutable --immutable-cache
 
       - name: Build
         run: yarn build
