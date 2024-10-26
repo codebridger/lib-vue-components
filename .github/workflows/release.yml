@@ -32,19 +32,11 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           scope: ${{ env.package_name }}
 
-      - name: Setup Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-
       - name: Install dependencies
-        run: yarn --immutable --immutable-cache
+        run: npm ci
 
       - name: Build
-        run: yarn build
-
-      - name: Run tests
-        run: yarn test
+        run: npm run build
 
       - name: Release
         env:
