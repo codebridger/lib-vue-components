@@ -33,7 +33,7 @@ jobs:
           corepack prepare yarn@stable --activate
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build Storybook
         run: yarn build-storybook
