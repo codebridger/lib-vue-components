@@ -648,7 +648,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, computed, reactive, watch } from "vue";
-import { useI18n } from "vue-i18n";
 
 import appSetting from "@/app-setting";
 
@@ -685,16 +684,6 @@ import IconMenuMore from "../icon/menu/icon-menu-more.vue";
 const store = useAppStore();
 const route = useRoute();
 const search = ref(false);
-
-// multi language
-const i18n = reactive(useI18n());
-const changeLanguage = (item: any) => {
-  i18n.locale = item.code;
-  appSetting.toggleLanguage(item);
-};
-const currentFlag = computed(() => {
-  return `/assets/images/flags/${i18n.locale.toUpperCase()}.svg`;
-});
 
 const notifications = ref([
   {
@@ -753,6 +742,11 @@ const messages = ref([
     time: "5days",
   },
 ]);
+
+// @TODO: remove this function
+function $t(key: string) {
+  return key;
+}
 
 onMounted(() => {
   setActiveDropdown();
