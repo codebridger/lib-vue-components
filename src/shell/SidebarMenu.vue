@@ -179,9 +179,7 @@ interface SidebarProps {
   items: Array<SidebarGroupType | SidebarItemType>;
 }
 
-withDefaults(defineProps<SidebarProps>(), {
-  items: [],
-});
+defineProps<SidebarProps>();
 
 const store = useAppStore();
 const activeDropdown: any = ref("");
