@@ -172,11 +172,6 @@ import { useAppStore } from "@/stores/index";
 import { Collapse } from "vue-collapsed";
 
 import Icon from "../icon/Icon.vue";
-import { sidebarData } from "./sidebar-data";
-
-import IconCaretsDown from "../icon/icon-carets-down.vue";
-import IconMinus from "../icon/icon-minus.vue";
-import IconCaretDown from "../icon/icon-caret-down.vue";
 
 import type { SidebarGroupType, SidebarItemType } from "../types/sidebar.type";
 
@@ -185,7 +180,7 @@ interface SidebarProps {
 }
 
 withDefaults(defineProps<SidebarProps>(), {
-  items: sidebarData as any,
+  items: [],
 });
 
 const store = useAppStore();

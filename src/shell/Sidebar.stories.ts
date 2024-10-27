@@ -8,6 +8,9 @@ export default {
   title: "Shell/SidebarMenu",
   component: SidebarMenu,
   tags: ["autodocs"],
+  args: {
+    items: sidebarData,
+  },
   argTypes: {
     items: { control: "object" },
   },
@@ -41,8 +44,8 @@ export default {
 
 const Template: StoryFn<typeof SidebarMenu> = (args) => ({
   components: { SidebarMenu, DashboardShell },
-  args: {
-    items: sidebarData,
+  setup() {
+    return { args };
   },
   template: '<SidebarMenu v-bind="args"/>',
 });
