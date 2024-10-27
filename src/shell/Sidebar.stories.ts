@@ -11,6 +11,15 @@ export default {
   argTypes: {
     items: { control: "object" },
   },
+  parameters: {
+    layout: "fullscreen",
+    docs: {
+      story: {
+        inline: false,
+        height: "600px",
+      },
+    },
+  },
   decorators: [
     (story: any) => {
       const store = useAppStore();
@@ -34,17 +43,6 @@ const Template: StoryFn<typeof SidebarMenu> = (args) => ({
   components: { SidebarMenu, DashboardShell },
   args: {
     items: sidebarData,
-  },
-  parameters: {
-    layout: "fullscreen",
-    decorators: {
-      default: false,
-    },
-    docs: {
-      story: {
-        height: "600px",
-      },
-    },
   },
   template: '<SidebarMenu v-bind="args"/>',
 });
