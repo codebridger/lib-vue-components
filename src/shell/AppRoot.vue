@@ -9,27 +9,19 @@
     ]"
   >
     <slot></slot>
-
-    <!-- BEGIN APP SETTING LAUNCHER -->
-    <Setting v-if="props.showSettings" />
-    <!-- END APP SETTING LAUNCHER -->
   </div>
 </template>
 
 <script lang="ts" setup>
 import { watch } from "vue";
 import { useAppStore } from "../stores/index";
-import Setting from "./ThemeCustomizer.vue";
 
 const store = useAppStore();
 
 const props = defineProps<{
-  showSettings?: boolean;
   colorScheme?: string;
-  navPosition?: string;
   layoutStyle?: string;
   direction?: string;
-  navbarType?: string;
 }>();
 
 watch(
@@ -37,15 +29,6 @@ watch(
   (newVal) => {
     if (newVal) {
       store.toggleTheme(newVal);
-    }
-  }
-);
-
-watch(
-  () => props.navPosition,
-  (newVal) => {
-    if (newVal) {
-      store.toggleMenu(newVal);
     }
   }
 );
@@ -64,15 +47,6 @@ watch(
   (newVal) => {
     if (newVal) {
       store.toggleRTL(newVal);
-    }
-  }
-);
-
-watch(
-  () => props.navbarType,
-  (newVal) => {
-    if (newVal) {
-      store.toggleNavbar(newVal);
     }
   }
 );

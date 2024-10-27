@@ -1,3 +1,4 @@
+import { useAppStore } from "@/stores";
 import Header from "./Header.vue";
 import { Meta, StoryFn } from "@storybook/vue3";
 
@@ -10,6 +11,7 @@ export default {
 const Template: StoryFn<typeof Header> = (args) => ({
   components: { Header },
   setup() {
+    useAppStore().toggleMenu("horizontal");
     return { args };
   },
   template: "<Header />",

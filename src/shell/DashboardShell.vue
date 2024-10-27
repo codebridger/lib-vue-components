@@ -88,6 +88,7 @@
           class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300"
         >
           <div class="bg-white dark:bg-[#0e1726] h-full">
+            <!-- @slot Area for sidebar menu -->
             <slot name="sidebar-menu">
               <!-- <Sidebar /> -->
             </slot>
@@ -100,7 +101,12 @@
       <div class="main-content flex flex-col min-h-screen">
         <!--  BEGIN TOP NAVBAR  -->
         <Header>
+          <template #bar>
+            <!-- @slot Area on the header starts after brand icon -->
+            <slot name="header-bar" />
+          </template>
           <template #horizontal-menu>
+            <!-- @slot Area on the header right below of the header, for horizontal menu -->
             <slot name="horizontal-menu" />
           </template>
         </Header>
@@ -108,13 +114,15 @@
 
         <!--  BEGIN CONTENT AREA  -->
         <div class="p-6 animation flex-1">
-          <slot name="content"></slot>
+          <!-- @slot Area for main content, including your routes and pages -->
+          <slot name="content" />
         </div>
         <!--  END CONTENT AREA  -->
 
         <!-- BEGIN FOOTER -->
         <div>
-          <slot name="footer"> </slot>
+          <!-- @slot Area for footer, right below of the content -->
+          <slot name="footer" />
         </div>
         <!-- END FOOTER -->
       </div>
