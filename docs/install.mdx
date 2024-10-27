@@ -2,24 +2,52 @@ import { Meta } from "@storybook/blocks";
 
 <Meta title="Install" />
 
-# Installation
+## Installation
 
-1. Install the package using npm or yarn
+<p>1. Clone the repository</p>
 
 ```bash
-yarn add [package-name]
+git clone https://github.com/tiny-ideas-ir/lib-vue-components
 ```
 
-2. Import the package in your project.
+<p>2. Create an `.npmrc` file in the root of the project and add the following
+  line</p>
 
-### vue
-
-```javascript
-// implementation for vue
+```bash
+@tiny-ideas-ir:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
 ```
 
-### nuxt
+<p>
+<span>3. Create a github token and replace `YOUR_GITHUB_TOKEN` with the token youcreated.</span>
+<br/><span>Set the `read:packages` permission for the token.</span>
+<br/><span>Watch this video: <a href="https://www.youtube.com/watch?v=iLrywUfs7yU" target="_blank">https://www.youtube.com/watch?v=iLrywUfs7yU</a></span>
+</p>
+
+<p>4.Install the package using npm or yarn</p>
+
+```bash
+yarn add @tiny-ideas-ir/lib-vue-components
+```
+
+<p>3. Import the package in your project.</p>
+
+### vue3 
 
 ```javascript
-// implementation for nuxt
+import vueComponents from "@tiny-ideas-ir/lib-vue-components";
+
+// install on vue app
+vueApp.use(vueComponents);
+```
+
+### nuxt3
+<p>Create a file called `component-library.client.ts` in plugin folder and add the following code</p>
+```javascript
+// plugins/component-library.client.ts
+import { defineNuxtPlugin as init } from '@tiny-ideas-ir/lib-vue-components/nuxt';
+
+export default defineNuxtPlugin((nuxtApp) => {
+  return init(nuxtApp, { prefix: 'cl-' });
+});
 ```

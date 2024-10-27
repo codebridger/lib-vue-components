@@ -8,8 +8,20 @@ export default {
   title: "Shell/SidebarMenu",
   component: SidebarMenu,
   tags: ["autodocs"],
+  args: {
+    items: sidebarData,
+  },
   argTypes: {
     items: { control: "object" },
+  },
+  parameters: {
+    layout: "fullscreen",
+    docs: {
+      story: {
+        inline: false,
+        height: "600px",
+      },
+    },
   },
   decorators: [
     (story: any) => {
@@ -32,19 +44,8 @@ export default {
 
 const Template: StoryFn<typeof SidebarMenu> = (args) => ({
   components: { SidebarMenu, DashboardShell },
-  args: {
-    items: sidebarData,
-  },
-  parameters: {
-    layout: "fullscreen",
-    decorators: {
-      default: false,
-    },
-    docs: {
-      story: {
-        height: "600px",
-      },
-    },
+  setup() {
+    return { args };
   },
   template: '<SidebarMenu v-bind="args"/>',
 });

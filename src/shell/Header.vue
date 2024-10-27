@@ -32,7 +32,10 @@
         </div>
 
         <div class="min-h-9"></div>
-        <slot></slot>
+
+        <div class="flex-1">
+          <slot name="bar"></slot>
+        </div>
       </div>
 
       <!-- horizontal menu -->

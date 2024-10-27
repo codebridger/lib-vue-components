@@ -6,25 +6,27 @@ import router from "../src/router/index";
 
 import PerfectScrollbar from "vue3-perfect-scrollbar";
 import { createPinia } from "pinia";
-import i18n from "../src/i18n";
 
 import "../src/assets/css/app.css";
 import "../src/assets/css/animate.css";
 
 import { mainDecorator } from "./decorators";
-import { getColorScheme, getDirection } from "./globalTypes";
+import { getColorScheme, getDirection, getLayoutStyle } from "./globalTypes";
 
 const pinia = createPinia();
 
 setup((app: App) => {
   app.use(router);
   app.use(pinia);
-  app.use(i18n);
   app.use(PerfectScrollbar);
 });
 
 const preview: Preview = {
-  globalTypes: { colorScheme: getColorScheme(), direction: getDirection() },
+  globalTypes: {
+    colorScheme: getColorScheme(),
+    direction: getDirection(),
+    layoutStyle: getLayoutStyle(),
+  },
   parameters: {
     controls: {
       matchers: {
@@ -35,7 +37,7 @@ const preview: Preview = {
     options: {
       storySort: {
         // order of the stories including all mdx and stories files
-        order: ["Introduction"],
+        order: ["Introduction", "Shell"],
       },
     },
   },

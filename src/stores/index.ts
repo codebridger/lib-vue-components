@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import i18n from "../i18n";
+
 import appSetting from "../app-setting";
 
 export const useAppStore = defineStore("app", () => {
@@ -14,24 +14,6 @@ export const useAppStore = defineStore("app", () => {
   const navbar = ref("navbar-sticky");
   const locale = ref("en");
   const sidebar = ref(false);
-  const languageList = ref([
-    { code: "zh", name: "Chinese" },
-    { code: "da", name: "Danish" },
-    { code: "en", name: "English" },
-    { code: "fr", name: "French" },
-    { code: "de", name: "German" },
-    { code: "el", name: "Greek" },
-    { code: "hu", name: "Hungarian" },
-    { code: "it", name: "Italian" },
-    { code: "ja", name: "Japanese" },
-    { code: "pl", name: "Polish" },
-    { code: "pt", name: "Portuguese" },
-    { code: "ru", name: "Russian" },
-    { code: "es", name: "Spanish" },
-    { code: "sv", name: "Swedish" },
-    { code: "tr", name: "Turkish" },
-    { code: "ae", name: "Arabic" },
-  ]);
   const isShowMainLoader = ref(true);
   const semidark = ref(false);
 
@@ -107,18 +89,6 @@ export const useAppStore = defineStore("app", () => {
     semidark.value = payload;
   }
 
-  function toggleLocale(payload: any = null) {
-    payload = payload || locale.value;
-    i18n.global.locale.value = payload;
-    localStorage.setItem("i18n_locale", payload);
-    locale.value = payload;
-    if (locale.value?.toLowerCase() === "ae") {
-      toggleRTL("rtl");
-    } else {
-      toggleRTL("ltr");
-    }
-  }
-
   function toggleSidebar(state: boolean = false) {
     sidebar.value = !sidebar.value;
   }
@@ -141,7 +111,6 @@ export const useAppStore = defineStore("app", () => {
     navbar,
     locale,
     sidebar,
-    languageList,
     isShowMainLoader,
     semidark,
     setMainLayout,
@@ -152,7 +121,6 @@ export const useAppStore = defineStore("app", () => {
     toggleAnimation,
     toggleNavbar,
     toggleSemidark,
-    toggleLocale,
     toggleSidebar,
     toggleMainLoader,
   };

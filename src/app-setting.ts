@@ -18,15 +18,7 @@ export default {
     val = val || $themeConfig.layout;
     store.toggleLayout(val);
 
-    val = localStorage.getItem("i18n_locale"); // en, da, de, el, es, fr, hu, it, ja, pl, pt, ru, sv, tr, zh
-
     val = val || $themeConfig.locale;
-
-    const list = store.languageList;
-    const item = list.find((item: any) => item.code === val);
-    if (item) {
-      this.toggleLanguage(item);
-    }
 
     val = localStorage.getItem("rtlClass"); // rtl, ltr
     val = val || $themeConfig.rtlClass;
@@ -43,32 +35,6 @@ export default {
     val = localStorage.getItem("semidark");
     val = val === "true" ? true : $themeConfig.semidark;
     store.toggleSemidark(val);
-  },
-
-  toggleLanguage(item: any) {
-    const store = useAppStore();
-
-    let lang: any = null;
-    if (item) {
-      lang = item;
-    } else {
-      let code = store.locale || null;
-      if (!code) {
-        code = localStorage.getItem("i18n_locale");
-      }
-
-      item = store.languageList.find((d: any) => d.code === code);
-      if (item) {
-        lang = item;
-      }
-    }
-
-    if (!lang) {
-      lang = store.languageList.find((d: any) => d.code === "en");
-    }
-
-    store.toggleLocale(lang.code);
-    return lang;
   },
 
   changeAnimation(type = "add") {
