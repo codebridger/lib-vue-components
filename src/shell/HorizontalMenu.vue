@@ -2,7 +2,27 @@
   <ul
     class="horizontal-menu py-1.5 font-semibold px-6 lg:space-x-1.5 xl:space-x-8 rtl:space-x-reverse bg-white border-t border-[#ebedf2] dark:border-[#191e3a] dark:bg-[#0e1726] text-black dark:text-white-dark"
   >
-    <li class="menu nav-item relative">
+    <li
+      v-for="(item, index) in items"
+      :key="index"
+      class="menu nav-item relative"
+    >
+      <a href="javascript:;" class="nav-link">
+        <div class="flex items-center">
+          <Icon v-if="item.icon" :name="item.icon" class="shrink-0" />
+          <span class="px-2">{{ item.title }}</span>
+        </div>
+        <div class="right_arrow" v-if="item.children">
+          <Icon name="IconCaretDown" />
+        </div>
+      </a>
+      <ul class="sub-menu" v-if="item.children">
+        <li v-for="(child, childIndex) in item.children" :key="childIndex">
+          <router-link :to="child.to || '/#'">{{ child.title }}</router-link>
+        </li>
+      </ul>
+    </li>
+    <!-- <li class="menu nav-item relative">
       <a href="javascript:;" class="nav-link">
         <div class="flex items-center">
           <icon-menu-dashboard class="shrink-0" />
@@ -643,105 +663,30 @@
         </li>
       </ul>
     </li>
-  </ul>
+  --></ul>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, computed, reactive, watch } from "vue";
 
-import appSetting from "@/app-setting";
-
 import { useRoute } from "vue-router";
-import { useAppStore } from "@/stores/index";
 
-import IconMenu from "../icon/icon-menu.vue";
-import IconCalendar from "../icon/icon-calendar.vue";
-import IconEdit from "../icon/icon-edit.vue";
-import IconChatNotification from "../icon/icon-chat-notification.vue";
-import IconSearch from "../icon/icon-search.vue";
-import IconXCircle from "../icon/icon-x-circle.vue";
-import IconSun from "../icon/icon-sun.vue";
-import IconMoon from "../icon/icon-moon.vue";
-import IconLaptop from "../icon/icon-laptop.vue";
-import IconMailDot from "../icon/icon-mail-dot.vue";
-import IconArrowLeft from "../icon/icon-arrow-left.vue";
-import IconInfoCircle from "../icon/icon-info-circle.vue";
-import IconBellBing from "../icon/icon-bell-bing.vue";
-import IconUser from "../icon/icon-user.vue";
-import IconMail from "../icon/icon-mail.vue";
-import IconLockDots from "../icon/icon-lock-dots.vue";
-import IconLogout from "../icon/icon-logout.vue";
-import IconMenuDashboard from "../icon/menu/icon-menu-dashboard.vue";
+import Icon from "../icon/Icon.vue";
 import IconCaretDown from "../icon/icon-caret-down.vue";
-import IconMenuApps from "../icon/menu/icon-menu-apps.vue";
-import IconMenuComponents from "../icon/menu/icon-menu-components.vue";
-import IconMenuElements from "../icon/menu/icon-menu-elements.vue";
-import IconMenuDatatables from "../icon/menu/icon-menu-datatables.vue";
-import IconMenuForms from "../icon/menu/icon-menu-forms.vue";
-import IconMenuPages from "../icon/menu/icon-menu-pages.vue";
-import IconMenuMore from "../icon/menu/icon-menu-more.vue";
 
-const store = useAppStore();
+import { HorizontalMenuGroupType } from "../types/horizontal-menu.type";
+
+interface SidebarProps {
+  items: Array<HorizontalMenuGroupType>;
+}
+
+const props = defineProps<SidebarProps>();
+
+const normalizedItems = computed(() => {
+  // remove layers where only have title and ch
+});
+
 const route = useRoute();
-const search = ref(false);
-
-const notifications = ref([
-  {
-    id: 1,
-    profile: "user-profile.jpeg",
-    message:
-      '<strong class="text-sm mr-1">John Doe</strong>invite you to <strong>Prototyping</strong>',
-    time: "45 min ago",
-  },
-  {
-    id: 2,
-    profile: "profile-34.jpeg",
-    message:
-      '<strong class="text-sm mr-1">Adam Nolan</strong>mentioned you to <strong>UX Basics</strong>',
-    time: "9h Ago",
-  },
-  {
-    id: 3,
-    profile: "profile-16.jpeg",
-    message: '<strong class="text-sm mr-1">Anna Morgan</strong>Upload a file',
-    time: "9h Ago",
-  },
-]);
-
-const messages = ref([
-  {
-    id: 1,
-    image:
-      '<span class="grid place-content-center w-9 h-9 rounded-full bg-success-light dark:bg-success text-success dark:text-success-light"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>',
-    title: "Congratulations!",
-    message: "Your OS has been updated.",
-    time: "1hr",
-  },
-  {
-    id: 2,
-    image:
-      '<span class="grid place-content-center w-9 h-9 rounded-full bg-info-light dark:bg-info text-info dark:text-info-light"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>',
-    title: "Did you know?",
-    message: "You can switch between artboards.",
-    time: "2hr",
-  },
-  {
-    id: 3,
-    image:
-      '<span class="grid place-content-center w-9 h-9 rounded-full bg-danger-light dark:bg-danger text-danger dark:text-danger-light"> <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>',
-    title: "Something went wrong!",
-    message: "Send Reposrt",
-    time: "2days",
-  },
-  {
-    id: 4,
-    image:
-      '<span class="grid place-content-center w-9 h-9 rounded-full bg-warning-light dark:bg-warning text-warning dark:text-warning-light"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">    <circle cx="12" cy="12" r="10"></circle>    <line x1="12" y1="8" x2="12" y2="12"></line>    <line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>',
-    title: "Warning",
-    message: "Your password strength is low.",
-    time: "5days",
-  },
-]);
 
 // @TODO: remove this function
 function $t(key: string) {
@@ -779,13 +724,5 @@ const setActiveDropdown = () => {
       }
     }
   }
-};
-
-const removeNotification = (value: number) => {
-  notifications.value = notifications.value.filter((d) => d.id !== value);
-};
-
-const removeMessage = (value: number) => {
-  messages.value = messages.value.filter((d) => d.id !== value);
 };
 </script>

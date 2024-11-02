@@ -47,7 +47,7 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
-  function toggleMenu(payload: any = null) {
+  function toggleMenu(payload: "vertical" | "horizontal" | "" | string = "") {
     payload = payload || menu.value;
     sidebar.value = false;
     localStorage.setItem("menu", payload);
