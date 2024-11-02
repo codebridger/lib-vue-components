@@ -12,5 +12,5 @@ export interface HorizontalMenuItemType {
   /**
    * Only 2 levels of nesting are supported: root->su1->su2
    */
-  child?: SidebarItemType[];
+  child?: HorizontalMenuItemType[];
 }
