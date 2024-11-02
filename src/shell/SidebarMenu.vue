@@ -39,7 +39,7 @@
         </h2>
 
         <!-- Menu Item -->
-        <li class="nav-item">
+        <li class="nav-item" v-if="group.children">
           <ul>
             <li
               v-for="item of group.children"
@@ -73,7 +73,7 @@
                       '-rotate-90 rtl:rotate-90': activeDropdown !== item.title,
                     }"
                   >
-                    <icon-caret-down />
+                    <Icon name="IconCaretDown" />
                   </div>
                 </button>
 
@@ -120,7 +120,7 @@
                           <ul :unmount="false" class="sub-menu text-gray-500">
                             <li v-for="sub2 of sub1.child">
                               <router-link
-                                :to="sub2.to!"
+                                :to="sub2.to || '/#'"
                                 :target="sub2.target!"
                                 @click="toggleMobileMenu"
                               >
@@ -132,7 +132,10 @@
                       </li>
 
                       <li v-else>
-                        <RouterLink :to="sub1.to!" @click="toggleMobileMenu">
+                        <RouterLink
+                          :to="sub1.to || '/#'"
+                          @click="toggleMobileMenu"
+                        >
                           {{ sub1.title }}
                         </RouterLink>
                       </li>
@@ -143,12 +146,12 @@
 
               <template v-if="!item.child?.length">
                 <router-link
-                  to="/apps/chat"
+                  :to="item.to || '/#'"
                   class="group"
                   @click="toggleMobileMenu"
                 >
                   <div class="flex items-center">
-                    <icon :name="item.icon" />
+                    <icon v-if="item.icon" :name="item.icon" />
 
                     <span
                       class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
@@ -176,7 +179,7 @@ import Icon from "../icon/Icon.vue";
 import type { SidebarGroupType, SidebarItemType } from "../types/sidebar.type";
 
 interface SidebarProps {
-  items: Array<SidebarGroupType | SidebarItemType>;
+  items: Array<SidebarGroupType>;
 }
 
 defineProps<SidebarProps>();
