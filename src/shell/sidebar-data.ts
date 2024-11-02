@@ -4,7 +4,7 @@ import {
 } from "@/types/horizontal-menu.type";
 import { SidebarItemType, SidebarGroupType } from "@/types/sidebar.type";
 
-export const sidebarData: (SidebarGroupType | SidebarItemType)[] = [
+export const sidebarData: Array<SidebarGroupType> = [
   {
     title: "",
     children: [
