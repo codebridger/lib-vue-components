@@ -18,6 +18,11 @@ This repository follows [Conventional Commits](https://www.conventionalcommits.o
 * chore: Other changes that don't modify src or test files
 * revert: Reverts a previous commit
 
+## Reals only commits
+	1.	Patch release: Commits with type fix.
+	2.	Minor release: Commits with type feat.
+	3.	Major release: Commits with a BREAKING CHANGE note.
+
 # Example:
 Use conventional commits format:
 ```txt
