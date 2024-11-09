@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.1.0...v1.1.1) (2024-11-09)
+
+
+### Bug Fixes
+
+* adding proper app shell components to export list. ([12c96b7](https://github.com/tiny-ideas-ir/lib-vue-components/commit/12c96b76be36bd51d52e31059d5855081cd31b0d))
+
 # [1.1.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.0.0...v1.1.0) (2024-11-02)
 
 
