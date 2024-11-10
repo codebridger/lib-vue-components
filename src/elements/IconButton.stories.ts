@@ -25,9 +25,3 @@ export const Default: Story = {
     rounded: "full",
   },
 };
-
-export const Rounded: Story = {
-  args: {
-    rounded: "lg",
-  },
-};

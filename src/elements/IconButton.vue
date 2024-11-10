@@ -11,6 +11,7 @@
       'dark:text-[#d0d2d6]',
       'dark:hover:bg-dark/60',
       'dark:hover:text-primary',
+      'p-2',
       'w-fit',
       computedRounded,
     ]"
