@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.1.1...v1.1.2) (2024-11-10)
+
+
+### Bug Fixes
+
+* fix installing issues over nuxt framework ([3cee99f](https://github.com/tiny-ideas-ir/lib-vue-components/commit/3cee99f1d76e1d2cf16ca88700ffe42719cd3176))
+
 ## [1.1.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.1.0...v1.1.1) (2024-11-09)
 
 
