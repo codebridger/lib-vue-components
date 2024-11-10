@@ -37,7 +37,7 @@ const preview: Preview = {
     options: {
       storySort: {
         // order of the stories including all mdx and stories files
-        order: ["Introduction", "Shell"],
+        order: ["Getting Started", "Shell"],
       },
     },
   },
