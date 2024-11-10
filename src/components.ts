@@ -3,7 +3,7 @@ import Button from "./elements/Button.vue";
 import IconButton from "./elements/IconButton.vue";
 
 // shell
-import AppRoot from "./shell/AppRoot.vue";
+import App from "./shell/AppRoot.vue";
 import DashboardShell from "./shell/DashboardShell.vue";
 import SidebarMenu from "./shell/SidebarMenu.vue";
 import HorizontalMenu from "./shell/HorizontalMenu.vue";
@@ -15,19 +15,19 @@ import ThemeCustomizer from "./shell/ThemeCustomizer.vue";
 import Icon from "./icon/Icon.vue";
 
 export default {
-  // Elements
-  Button,
-  IconButton,
-
-  // Icons
-  Icon,
-
   // Shell
-  AppRoot,
+  App,
   DashboardShell,
   HorizontalMenu,
   SidebarMenu,
   Header,
   Footer,
   ThemeCustomizer,
+
+  // Elements
+  Button,
+  IconButton,
+
+  // Icons
+  Icon,
 };
