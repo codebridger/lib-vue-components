@@ -146,6 +146,12 @@ const store = useAppStore();
 const showTopButton = ref(false);
 
 onMounted(() => {
+  if (typeof window !== "undefined") {
+    init();
+  }
+});
+
+function init() {
   window.onscroll = () => {
     if (
       document.body.scrollTop > 50 ||
@@ -164,7 +170,7 @@ onMounted(() => {
   });
 
   store.toggleMainLoader();
-});
+}
 
 const goToTop = () => {
   document.body.scrollTop = 0;

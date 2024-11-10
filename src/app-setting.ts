@@ -1,6 +1,9 @@
 import { $themeConfig } from "../theme.config";
 import { useAppStore } from "./stores/index";
 
+const isNotClient = typeof window === "undefined";
+const isClient = typeof window !== "undefined";
+
 export default {
   init() {
     const store = useAppStore();
@@ -38,9 +41,13 @@ export default {
   },
 
   changeAnimation(type = "add") {
+    if (isNotClient) return;
+
     const store = useAppStore();
+
     if (store.animation) {
       const eleanimation: any = document.querySelector(".animation");
+
       if (type === "add") {
         eleanimation?.classList.add("animate__animated");
         eleanimation?.classList.add(store.animation);

@@ -3,6 +3,9 @@ import { ref } from "vue";
 
 import appSetting from "../app-setting";
 
+const isNotClient = typeof window === "undefined";
+const isClient = typeof window !== "undefined";
+
 export const useAppStore = defineStore("app", () => {
   const isDarkMode = ref(false);
   const mainLayout = ref("app");
@@ -21,9 +24,14 @@ export const useAppStore = defineStore("app", () => {
     mainLayout.value = payload;
   }
 
+  function setItem(key: string, payload: any) {
+    if (isNotClient) return;
+    localStorage.setItem(key, payload);
+  }
+
   function toggleTheme(payload: any = null) {
     payload = payload || theme.value;
-    localStorage.setItem("theme", payload);
+    setItem("theme", payload);
     theme.value = payload;
     if (payload == "light") {
       isDarkMode.value = false;
@@ -31,6 +39,7 @@ export const useAppStore = defineStore("app", () => {
       isDarkMode.value = true;
     } else if (payload == "system") {
       if (
+        isClient &&
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
       ) {
@@ -40,9 +49,9 @@ export const useAppStore = defineStore("app", () => {
       }
     }
 
-    if (isDarkMode.value) {
+    if (isClient && isDarkMode.value) {
       document.querySelector("body")?.classList.add("dark");
-    } else {
+    } else if (isClient) {
       document.querySelector("body")?.classList.remove("dark");
     }
   }
@@ -50,42 +59,45 @@ export const useAppStore = defineStore("app", () => {
   function toggleMenu(payload: "vertical" | "horizontal" | "" | string = "") {
     payload = payload || menu.value;
     sidebar.value = false;
-    localStorage.setItem("menu", payload);
+    setItem("menu", payload);
     menu.value = payload;
   }
 
   function toggleLayout(payload: any = null) {
     payload = payload || layout.value;
-    localStorage.setItem("layout", payload);
+    setItem("layout", payload);
     layout.value = payload;
   }
 
   function toggleRTL(payload: any = null) {
     payload = payload || rtlClass.value;
-    localStorage.setItem("rtlClass", payload);
+    setItem("rtlClass", payload);
     rtlClass.value = payload;
-    document
-      .querySelector("html")
-      ?.setAttribute("dir", rtlClass.value || "ltr");
+
+    if (isClient) {
+      document
+        .querySelector("html")
+        ?.setAttribute("dir", rtlClass.value || "ltr");
+    }
   }
 
   function toggleAnimation(payload: any = null) {
     payload = payload || animation.value;
     payload = payload?.trim();
-    localStorage.setItem("animation", payload);
+    setItem("animation", payload);
     animation.value = payload;
     appSetting.changeAnimation();
   }
 
   function toggleNavbar(payload: any = null) {
     payload = payload || navbar.value;
-    localStorage.setItem("navbar", payload);
+    setItem("navbar", payload);
     navbar.value = payload;
   }
 
   function toggleSemidark(payload: any = null) {
     payload = payload || false;
-    localStorage.setItem("semidark", payload);
+    setItem("semidark", payload);
     semidark.value = payload;
   }
 
