@@ -37,17 +37,50 @@ yarn add @tiny-ideas-ir/lib-vue-components
 ```javascript
 import vueComponents from "@tiny-ideas-ir/lib-vue-components";
 
+const options = {
+  prefix = "CL",
+  dontInstallPinia = true,
+  dontInstallPopper = false,
+  dontInstallPerfectScrollbar = false,
+}
 // install on vue app
-vueApp.use(vueComponents);
+vueApp.use(vueComponents, options);
 ```
 
 ### nuxt3
-<p>Create a file called `component-library.client.ts` in plugin folder and add the following code</p>
+<p>1. Create a file called `component-library.client.ts` in plugin folder and add the following code</p>
 ```javascript
 // plugins/component-library.client.ts
 import { defineNuxtPlugin as init } from '@tiny-ideas-ir/lib-vue-components/nuxt';
 
-export default defineNuxtPlugin((nuxtApp) => {
-  return init(nuxtApp, { prefix: 'cl-' });
+export default defineNuxtPlugin({
+  name: '@tiny-ideas-ir/lib-vue-components',
+  enforce: 'pre',
+  async setup(nuxtApp) {
+    const options = {
+      prefix = "CL",
+      dontInstallPinia = true,
+      dontInstallPopper = false,
+      dontInstallPerfectScrollbar = false,
+    }
+
+    return init(nuxtApp, options);
+  },
 });
 ```
+<p>2. Use the folowing setup in `nuxt.config.ts/js`</p>
+```javascript
+export default defineNuxtConfig({
+  // ... other nuxt config
+  
+  // Add the plugin transpile option,
+  // to make sure the components are transpiled
+  // when building the project
+  build: {
+    transpile: ['@tiny-ideas-lr/lib-vue-components'],
+  },
+
+  // ... other nuxt config
+});
+```
+

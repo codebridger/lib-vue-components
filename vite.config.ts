@@ -5,9 +5,12 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [vue()],
   resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
-    },
+    alias: [
+      {
+        find: "@",
+        replacement: resolve(__dirname, "./src"),
+      },
+    ],
   },
   // optimizeDeps: {
   //   include: ["quill"],
