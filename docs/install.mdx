@@ -1,53 +1,120 @@
 import { Meta } from "@storybook/blocks";
 
-<Meta title="Install" />
+<Meta title="Getting Started/Installation" />
 
-## Installation
+# Installation Guide
 
-<p>1. Clone the repository</p>
+## Prerequisites
+
+- A working Vue 3 or Nuxt 3 project
+- GitHub account with package access
+- Node.js and npm/yarn installed
+
+## Setup Steps
+
+### 1. GitHub Authentication
+
+1. Create a GitHub personal access token:
+   - Go to GitHub Settings → Developer Settings → Personal Access Tokens
+   - Generate a new token with `read:packages` permission
+   - Copy the generated token
+   - For detailed instructions, watch [this guide](https://www.youtube.com/watch?v=iLrywUfs7yU)
+
+2. Create an `.npmrc` file in your project root:
+   ```bash
+   @tiny-ideas-ir:registry=https://npm.pkg.github.com
+   //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+   ```
+   Replace `YOUR_GITHUB_TOKEN` with the token you created.
+
+### 2. Package Installation
+
+Install the package using npm or yarn:
 
 ```bash
-git clone https://github.com/tiny-ideas-ir/lib-vue-components
-```
+# Using npm
+npm install @tiny-ideas-ir/lib-vue-components
 
-<p>2. Create an `.npmrc` file in the root of the project and add the following
-  line</p>
-
-```bash
-@tiny-ideas-ir:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
-```
-
-<p>
-<span>3. Create a github token and replace `YOUR_GITHUB_TOKEN` with the token youcreated.</span>
-<br/><span>Set the `read:packages` permission for the token.</span>
-<br/><span>Watch this video: <a href="https://www.youtube.com/watch?v=iLrywUfs7yU" target="_blank">https://www.youtube.com/watch?v=iLrywUfs7yU</a></span>
-</p>
-
-<p>4.Install the package using npm or yarn</p>
-
-```bash
+# Using yarn
 yarn add @tiny-ideas-ir/lib-vue-components
 ```
 
-<p>3. Import the package in your project.</p>
+### 3. Integration
 
-### vue3 
+#### Vue 3 Setup
 
 ```javascript
 import vueComponents from "@tiny-ideas-ir/lib-vue-components";
 
-// install on vue app
-vueApp.use(vueComponents);
+// Configuration options
+const options = {
+  // Component prefix (default: "CL")
+  prefix: "CL",
+  
+  // Optional: Disable specific integrations
+  dontInstallPinia: true,
+  dontInstallPopper: false,
+  dontInstallPerfectScrollbar: false,
+};
+
+// Install on Vue app
+vueApp.use(vueComponents, options);
 ```
 
-### nuxt3
-<p>Create a file called `component-library.client.ts` in plugin folder and add the following code</p>
+#### Nuxt 3 Setup
+
+1. Create a plugin file `plugins/component-library.client.ts`:
+
 ```javascript
-// plugins/component-library.client.ts
 import { defineNuxtPlugin as init } from '@tiny-ideas-ir/lib-vue-components/nuxt';
 
-export default defineNuxtPlugin((nuxtApp) => {
-  return init(nuxtApp, { prefix: 'cl-' });
+export default defineNuxtPlugin({
+  name: '@tiny-ideas-ir/lib-vue-components',
+  enforce: 'pre',
+  async setup(nuxtApp) {
+    const options = {
+      prefix: "CL",
+      dontInstallPinia: true,
+      dontInstallPopper: false,
+      dontInstallPerfectScrollbar: false,
+    };
+
+    return init(nuxtApp, options);
+  },
 });
 ```
+
+2. Update your `nuxt.config.ts`:
+
+```javascript
+export default defineNuxtConfig({
+  // Ensure components are transpiled during build
+  build: {
+    transpile: ['@tiny-ideas-ir/lib-vue-components'],
+  },
+  
+  // ... other Nuxt config
+});
+```
+
+## Configuration Options
+
+```typescript
+interface ConfigOptions {
+  // Prefix for component names (default: "CL")
+  prefix?: string;
+  
+  // Disable Pinia store integration (default: false)
+  dontInstallPinia?: boolean;
+  
+  // Disable Popper.js integration (default: false)
+  dontInstallPopper?: boolean;
+  
+  // Disable Perfect Scrollbar integration (default: false)
+  dontInstallPerfectScrollbar?: boolean;
+}
+```
+
+## Next Steps
+
+After installation, you can start using the components in your application. Check out our component documentation for detailed usage instructions and examples.

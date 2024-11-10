@@ -54,10 +54,10 @@ export const Default: StoryFn<typeof AppRoot> = (args) => ({
     return { args };
   },
   template: `
-	  <AppRoot v-bind="args">
+	  <App v-bind="args">
   		<div class="h-screen flex justify-center items-center">
 		    <p>The very beginning of the app</p>
   		</div>
-	  </AppRoot>
+	  </App>
 	`,
 });
