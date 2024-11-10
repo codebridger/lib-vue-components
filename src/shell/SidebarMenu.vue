@@ -16,7 +16,7 @@
       class="collapse-icon w-8 h-8 rounded-full flex items-center hover:bg-gray-500/10 dark:hover:bg-dark-light/10 dark:text-white-light transition duration-300 rtl:rotate-180 hover:text-primary"
       @click="store.toggleSidebar()"
     >
-      <icon-carets-down class="m-auto rotate-90" />
+      <Icon name="icon-carets-down" class="m-auto rotate-90" />
     </a>
   </div>
 
@@ -34,7 +34,7 @@
           v-if="group.title"
           class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1"
         >
-          <icon-minus class="w-4 h-5 flex-none hidden" />
+          <Icon name="icon-minus" class="w-4 h-5 flex-none hidden" />
           <span>{{ group.title }}</span>
         </h2>
 
@@ -104,7 +104,8 @@
                                 subActive !== sub1.title,
                             }"
                           >
-                            <icon-carets-down
+                            <Icon
+                              name="icon-carets-down"
                               v-if="sub1.child?.length"
                               :fill="true"
                               class="w-4 h-4"
@@ -170,7 +171,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-
+import { useRoute } from "vue-router";
 import { useAppStore } from "@/stores/index";
 import { Collapse } from "vue-collapsed";
 
@@ -187,10 +188,11 @@ defineProps<SidebarProps>();
 const store = useAppStore();
 const activeDropdown: any = ref("");
 const subActive: any = ref("");
+const route = useRoute();
 
 onMounted(() => {
   const selector = document.querySelector(
-    '.sidebar ul a[href="' + window.location.pathname + '"]'
+    '.sidebar ul a[href="' + route.path + '"]'
   );
   if (selector) {
     selector.classList.add("active");

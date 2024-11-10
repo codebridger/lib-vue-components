@@ -8,21 +8,21 @@ import "./assets/css/app.css";
 import appSetting from "./app-setting";
 import components from "./components";
 
-interface PluginOptions {
+export interface PluginOptions {
   prefix?: string;
+  dontInstallPinia?: boolean;
+  dontInstallPopper?: boolean;
+  dontInstallPerfectScrollbar?: boolean;
 }
 
 export default {
   install: (app: App, options: PluginOptions) => {
-    const hasPinia =
-      app.config.globalProperties.$pinia ||
-      app._context?.provides?.pinia ||
-      false;
-
-    if (!hasPinia) {
-      const pinia = createPinia();
-      app.use(pinia);
-    }
+    const {
+      prefix = "CL",
+      dontInstallPinia = true,
+      dontInstallPopper = false,
+      dontInstallPerfectScrollbar = false,
+    } = options || {};
 
     const hasRouter =
       app.config.globalProperties.$router ||
@@ -35,12 +35,18 @@ export default {
       );
     }
 
-    app.use(PerfectScrollbar);
+    if (!dontInstallPinia) {
+      const pinia = createPinia();
+      app.use(pinia);
+    }
 
-    app.component("Popper", Popper);
+    if (!dontInstallPerfectScrollbar) {
+      app.use(PerfectScrollbar);
+    }
 
-    // Register components
-    const prefix = options.prefix || "";
+    if (!dontInstallPopper) {
+      app.component("Popper", Popper);
+    }
 
     if (!prefix)
       throw "Component library needs a prefix to be added for all components";
@@ -50,12 +56,8 @@ export default {
     });
 
     // Check if we're on client-side
-    // const isClient = typeof window !== "undefined";
-    // if (!isClient) {
-    //   // Skip window-dependent operations during SSR
-    //   return;
-    // }
-
-    appSetting.init();
+    if (typeof window !== "undefined") {
+      appSetting.init();
+    }
   },
 };
