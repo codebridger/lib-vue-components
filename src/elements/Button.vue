@@ -1,16 +1,16 @@
 <template>
   <button
-    type="submit"
+    @click="emit('click')"
+    type="button"
     :class="[
-      'btn',
-      'text-xs sm:text-sm',
-      { 'w-full': props.block },
-      props.outline,
-      props.textTransform,
-      computedRounded,
-      computedShadow,
-      computedSize,
-      computedColor,
+      'btn', // base class
+      'text-xs sm:text-sm', // responsive text size
+      { 'w-full': props.block }, // conditional full width
+      computedColor, // color class
+      computedSize, // size class
+      computedShadow, // shadow class
+      computedRounded, // rounded corners class
+      props.textTransform, // text transform class
     ]"
   >
     <slot>{{ label }}</slot>
@@ -20,7 +20,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-interface Props {
+// Define button props interface
+interface ButtonProps {
   color?:
     | "primary"
     | "info"
@@ -30,7 +31,6 @@ interface Props {
     | "secondary"
     | "dark"
     | "gradient";
-
   size?: "xs" | "sm" | "md" | "lg";
   textTransform?: "normal-case" | "capitalize" | "lowercase" | "uppercase";
   rounded?: "full" | "none" | "xs" | "sm" | "md" | "lg" | "xl";
@@ -40,29 +40,35 @@ interface Props {
   shadow?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+// Define button props with defaults
+const props = withDefaults(defineProps<ButtonProps>(), {
   textTransform: "normal-case",
   block: false,
   outline: false,
   shadow: false,
 });
 
-const computedColor = computed(() => {
-  if (props.outline && props.color) {
-    const outlinecolors = {
-      primary: "btn-outline-primary",
-      info: "btn-outline-info",
-      success: "btn-outline-success",
-      warning: "btn-outline-warning",
-      danger: "btn-outline-danger",
-      secondary: "btn-outline-secondary",
-      dark: "btn-outline-dark",
-      gradient: "btn-outline-gradient",
-    };
+// Define the emits with TypeScript typing
+const emit = defineEmits<{
+  (e: "click"): void;
+}>();
 
-    return outlinecolors[props.color];
-  } else {
-    if (props.color) {
+// Computed properties
+const computedColor = computed(() => {
+  if (props.color)
+    if (props.outline) {
+      const outlinecolors = {
+        primary: "btn-outline-primary",
+        info: "btn-outline-info",
+        success: "btn-outline-success",
+        warning: "btn-outline-warning",
+        danger: "btn-outline-danger",
+        secondary: "btn-outline-secondary",
+        dark: "btn-outline-dark",
+        gradient: "btn-outline-gradient",
+      };
+      return outlinecolors[props.color];
+    } else {
       const colors = {
         primary: "btn-primary",
         info: "btn-info",
@@ -75,7 +81,6 @@ const computedColor = computed(() => {
       };
       return colors[props.color];
     }
-  }
 });
 
 const computedSize = computed(() => {
