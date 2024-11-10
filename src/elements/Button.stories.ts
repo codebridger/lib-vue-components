@@ -21,7 +21,7 @@ const meta = {
         "gradient",
       ],
     },
-    size: { control: "inline-radio", options: ["", "xs", "sm", "md", "lg"] },
+    size: { control: "inline-radio", options: ["xs", "sm", "md", "lg"] },
     textTransform: {
       control: "inline-radio",
       options: ["normal-case", "capitalize", "lowercase", "uppercase"],
