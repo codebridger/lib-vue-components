@@ -1,5 +1,6 @@
 // Elements
 import Button from "./elements/Button.vue";
+import IconButton from "./elements/IconButton.vue";
 
 // shell
 import App from "./shell/AppRoot.vue";
@@ -25,6 +26,7 @@ export default {
 
   // Elements
   Button,
+  IconButton,
 
   // Icons
   Icon,
