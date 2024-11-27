@@ -103,8 +103,9 @@
         <Header>
           <template #bar>
             <!-- @slot Area on the header starts after brand icon -->
-            <slot name="header-bar" />
+            <slot name="after-logo" />
           </template>
+
           <template #horizontal-menu>
             <!-- @slot Area on the header right below of the header, for horizontal menu -->
             <slot name="horizontal-menu" />
@@ -137,13 +138,21 @@
  */
 
 import { ref, onMounted } from "vue";
-import Sidebar from "./SidebarMenu.vue";
 import Header from "./Header.vue";
 import appSetting from "../app-setting";
 
 import { useAppStore } from "../stores/index";
 const store = useAppStore();
 const showTopButton = ref(false);
+
+interface DashboardShellProps {
+  // Menu style
+  menuStyle?: "vertical" | "horizontal";
+}
+
+const props = withDefaults(defineProps<DashboardShellProps>(), {
+  menuStyle: "vertical",
+});
 
 onMounted(() => {
   if (typeof window !== "undefined") {
@@ -170,6 +179,10 @@ function init() {
   });
 
   store.toggleMainLoader();
+
+  if (props.menuStyle) {
+    store.toggleMenu(props.menuStyle);
+  }
 }
 
 const goToTop = () => {

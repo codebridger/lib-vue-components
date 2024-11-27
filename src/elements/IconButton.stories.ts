@@ -12,6 +12,9 @@ const meta = {
       control: "inline-radio",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
     },
+    name: {
+      control: "text",
+    },
   },
   args: {},
 } satisfies Meta<typeof IconButton>;
@@ -23,5 +26,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     rounded: "full",
+    name: "IconSun",
   },
 };
