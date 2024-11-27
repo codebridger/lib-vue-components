@@ -2,7 +2,7 @@
   <rootApp>
     <dashboard-shell>
       <template #horizontal-menu>
-        <HorizontalMenu />
+        <!-- <HorizontalMenu /> -->
       </template>
 
       <template #sidebar-menu>

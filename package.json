@@ -18,6 +18,9 @@
     },
     "./nuxt": {
       "import": "./dist/nuxt.es.js"
+    },
+    "./style.css": {
+      "import": "./dist/style.css"
     }
   },
   "scripts": {
