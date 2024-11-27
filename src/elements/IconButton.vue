@@ -1,40 +1,50 @@
 <template>
-  <a
-    @click="emit('click')"
+  <div
+    @click="onClick"
     :class="[
-      'flex',
-      'items-center',
+      // Base classes
+      'p-2',
+      'w-fit',
+      'select-none',
+
+      // light - Base classes
+      'flex items-center',
       'bg-white-light/40',
-      'hover:bg-white-light/90',
-      'hover:text-primary',
+
+      // dark - Base classes
       'dark:bg-dark/40',
       'dark:text-[#d0d2d6]',
       'dark:hover:bg-dark/60',
       'dark:hover:text-primary',
-      'p-2',
-      'w-fit',
+
       computedRounded,
+
+      // hooks
+      'hover:cursor-pointer',
+      'hover:bg-white-light/90',
+      'hover:text-primary',
     ]"
   >
-    <slot> <Icon name="IconSun" class="w-5 h-5" /></slot>
-  </a>
+    <slot> <Icon :name="props.name" class="w-5 h-5" /></slot>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineEmits } from "vue";
 import Icon from "../icon/Icon.vue";
 
 // Define Icon button props interface
 interface IconButtonProps {
   rounded?: "full" | "none" | "xs" | "sm" | "md" | "lg" | "xl";
+  name: string;
 }
 
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {
   rounded: "full",
+  IconSun: "IconSun",
 });
 
-// Define the emits with TypeScript typing
 const emit = defineEmits<{
   (e: "click"): void;
 }>();
@@ -54,4 +64,8 @@ const computedRounded = computed(() => {
     return roundedTypes[props.rounded];
   }
 });
+
+const onClick = () => {
+  emit("click");
+};
 </script>

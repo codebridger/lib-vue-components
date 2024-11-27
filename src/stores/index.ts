@@ -63,7 +63,7 @@ export const useAppStore = defineStore("app", () => {
     menu.value = payload;
   }
 
-  function toggleLayout(payload: any = null) {
+  function toggleLayout(payload: "boxed-layout" | "full" | any = null) {
     payload = payload || layout.value;
     setItem("layout", payload);
     layout.value = payload;
@@ -89,7 +89,9 @@ export const useAppStore = defineStore("app", () => {
     appSetting.changeAnimation();
   }
 
-  function toggleNavbar(payload: any = null) {
+  function toggleNavbar(
+    payload: "navbar-sticky" | "navbar-static" | "navbar-floating"
+  ) {
     payload = payload || navbar.value;
     setItem("navbar", payload);
     navbar.value = payload;
