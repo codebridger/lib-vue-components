@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.1.2...v1.2.0) (2024-11-27)
+
+
+### Features
+
+* fix export issue of styles, and a few slot changes. ([bb0f876](https://github.com/tiny-ideas-ir/lib-vue-components/commit/bb0f876cdf4a835105aa8f5ff5769e7a3a424401))
+
 ## [1.1.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.1.1...v1.1.2) (2024-11-10)
 
 
