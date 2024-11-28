@@ -112,7 +112,7 @@
                     ? 'btn-primary'
                     : 'btn-outline-primary',
                 ]"
-                @click="store.toggleMenu('horizontal')"
+                @click="store.toggleMenuPosition('horizontal')"
               >
                 Horizontal
               </button>
@@ -124,7 +124,7 @@
                     ? 'btn-primary'
                     : 'btn-outline-primary',
                 ]"
-                @click="store.toggleMenu('vertical')"
+                @click="store.toggleMenuPosition('vertical')"
               >
                 Vertical
               </button>
@@ -136,7 +136,7 @@
                     ? 'btn-primary'
                     : 'btn-outline-primary',
                 ]"
-                @click="store.toggleMenu('collapsible-vertical')"
+                @click="store.toggleMenuPosition('collapsible-vertical')"
               >
                 Collapsible
               </button>

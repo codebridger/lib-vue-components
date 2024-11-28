@@ -18,11 +18,13 @@ import { useAppStore } from "../stores/index";
 
 const store = useAppStore();
 
-const props = defineProps<{
-  colorScheme?: string;
-  layoutStyle?: string;
-  direction?: string;
-}>();
+interface AppRootProps {
+  colorScheme?: "light" | "dark" | "system";
+  layoutStyle?: "boxed-layout" | "full";
+  direction?: "ltr" | "rtl";
+}
+
+const props = defineProps<AppRootProps>();
 
 watch(
   () => props.colorScheme,

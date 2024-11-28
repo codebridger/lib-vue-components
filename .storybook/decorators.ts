@@ -10,7 +10,7 @@ export const mainDecorator: DecoratorFunction = (story: any, context: any) => {
   }
 
   if (context.globals.navPosition) {
-    store.toggleMenu(context.globals.navPosition);
+    store.toggleMenuPosition(context.globals.navPosition);
   }
 
   if (context.globals.layoutStyle) {
