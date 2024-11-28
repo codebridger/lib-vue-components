@@ -53,4 +53,5 @@ const Template: StoryFn<typeof SidebarMenu> = (args) => ({
 export const DefaultSidebarMenu = Template.bind({});
 DefaultSidebarMenu.args = {
   items: sidebarData,
+  title: "SIDEBAR",
 };
