@@ -1,16 +1,21 @@
 <template>
   <div class="flex justify-between items-center px-4 py-3">
-    <router-link to="/" class="main-logo flex items-center shrink-0">
-      <img
-        class="w-8 ml-[5px] flex-none"
-        src="/assets/images/logo.svg"
-        alt=""
-      />
-      <span
-        class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light"
-        >VRISTO</span
-      >
-    </router-link>
+    <span to="/" class="main-logo flex items-center shrink-0">
+      <!-- @slot brand content, title will be removed in this case -->
+      <slot name="brand">
+        <img
+          class="w-8 ml-[5px] flex-none"
+          src="/assets/images/logo.svg"
+          alt=""
+        />
+
+        <span
+          class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light"
+        >
+          {{ $props.title || "" }}
+        </span>
+      </slot>
+    </span>
     <a
       href="javascript:;"
       class="collapse-icon w-8 h-8 rounded-full flex items-center hover:bg-gray-500/10 dark:hover:bg-dark-light/10 dark:text-white-light transition duration-300 rtl:rotate-180 hover:text-primary"
@@ -120,25 +125,24 @@
                         >
                           <ul :unmount="false" class="sub-menu text-gray-500">
                             <li v-for="sub2 of sub1.child">
-                              <router-link
-                                :to="sub2.to || '/#'"
-                                :target="sub2.target!"
-                                @click="toggleMobileMenu"
+                              <a
+                                class="cursor-pointer"
+                                @click="onMenuItemClick(sub2)"
                               >
                                 {{ sub2.title }}
-                              </router-link>
+                              </a>
                             </li>
                           </ul>
                         </Collapse>
                       </li>
 
                       <li v-else>
-                        <RouterLink
-                          :to="sub1.to || '/#'"
-                          @click="toggleMobileMenu"
+                        <a
+                          class="cursor-pointer"
+                          @click="onMenuItemClick(sub1)"
                         >
                           {{ sub1.title }}
-                        </RouterLink>
+                        </a>
                       </li>
                     </template>
                   </ul>
@@ -146,20 +150,16 @@
               </template>
 
               <template v-if="!item.child?.length">
-                <router-link
-                  :to="item.to || '/#'"
-                  class="group"
-                  @click="toggleMobileMenu"
-                >
+                <a class="group cursor-pointer" @click="onMenuItemClick(item)">
                   <div class="flex items-center">
                     <icon v-if="item.icon" :name="item.icon" />
-
                     <span
                       class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                      >{{ item.title }}</span
                     >
+                      {{ item.title }}
+                    </span>
                   </div>
-                </router-link>
+                </a>
               </template>
             </li>
           </ul>
@@ -180,6 +180,7 @@ import Icon from "../icon/Icon.vue";
 import type { SidebarGroupType, SidebarItemType } from "../types/sidebar.type";
 
 interface SidebarProps {
+  title?: string;
   items: Array<SidebarGroupType>;
 }
 
@@ -214,4 +215,13 @@ const toggleMobileMenu = () => {
     store.toggleSidebar();
   }
 };
+
+function onMenuItemClick(item: SidebarItemType) {
+  toggleMobileMenu();
+
+  if (item.child?.length) {
+    activeDropdown.value =
+      activeDropdown.value === item.title ? "" : item.title;
+  }
+}
 </script>
