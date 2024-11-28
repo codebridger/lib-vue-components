@@ -56,9 +56,12 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
-  function toggleMenuPosition(
+  function toggleMenuStyle(
     payload: "vertical" | "horizontal" | "collapsible-vertical" | string = ""
   ) {
+    if (!["vertical", "horizontal", "collapsible-vertical"].includes(payload))
+      return;
+
     payload = payload || menu.value;
     sidebar.value = false;
     setItem("menu", payload);
@@ -131,7 +134,7 @@ export const useAppStore = defineStore("app", () => {
     semidark,
     setMainLayout,
     toggleTheme,
-    toggleMenuPosition,
+    toggleMenuStyle,
     toggleLayout,
     toggleRTL,
     toggleAnimation,

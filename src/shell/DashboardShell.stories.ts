@@ -1,8 +1,6 @@
 import { Meta, StoryObj } from "@storybook/vue3/*";
 import DashboardShell from "./DashboardShell.vue";
-import SidebarMenu from "./SidebarMenu.vue";
-import HorizontalMenu from "./HorizontalMenu.vue";
-import Footer from "./Footer.vue";
+import { getNavPosition } from "../../.storybook/globalTypes";
 
 // Import the markdown content
 // import DashboardShellDocs from "./DashboardShell.mdx";
@@ -10,8 +8,21 @@ import Footer from "./Footer.vue";
 const meta = {
   title: "Shell/DashboardShell",
   component: DashboardShell,
-  subcomponents: { SidebarMenu, HorizontalMenu, Footer },
+  // subcomponents: { SidebarMenu, HorizontalMenu, Footer },
   tags: ["autodocs"],
+  args: {
+    menuStyle: "vertical",
+    brandTitle: "VRISTO",
+  },
+  argTypes: {
+    brandTitle: {
+      control: "text",
+    },
+    menuStyle: {
+      control: "radio",
+      options: getNavPosition().toolbar.items,
+    },
+  },
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -27,26 +38,36 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const SimpleShell: Story = {
-  render() {
+  render(args) {
     return {
-      components: { DashboardShell, SidebarMenu, HorizontalMenu, Footer },
+      components: { DashboardShell },
+      setup() {
+        return { args };
+      },
       template: `
-	  <dashboard-shell>
-		<template #horizontal-menu>
-			<HorizontalMenu />
-		</template>
-			
-		<template #sidebar-menu>
-			<SidebarMenu />
-		</template>
+	  <dashboard-shell v-bind="args">
+      <template #horizontal-menu>
+        <div class="p-2 text-center">Horizontal Menu Placeholder</div>
+      </template>
+        
+      <template #sidebar-menu="{closeSidebar}">
+        <div class="p-2 text-center">
+          <h1>Sidebar Menu Placeholder</h1>
+          <button class="my-2" @click="closeSidebar">Click for close</button>
+        </div>
+      </template>
 
-		<template #content>
-			<h1>This is the body place holder</h1>
-		</template>
+      <template #content>
+        <div class="mt-2">
+          <h1>Body Placeholder</h1>
+        </div>
+      </template>
 
-		<template #footer>
-			<h1>This is the footer place holder</h1>
-		</template>
+      <template #footer>
+        <div class="p-2 ml-4">
+          <h1>Footer Placeholder</h1>
+        </div>
+      </template>
 	  </dashboard-shell>
 	  `,
     };

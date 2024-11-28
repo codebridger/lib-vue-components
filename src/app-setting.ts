@@ -14,7 +14,7 @@ export default {
 
     val = localStorage.getItem("menu"); // vertical, collapsible-vertical, horizontal
     val = val || $themeConfig.menu;
-    store.toggleMenuPosition(val);
+    store.toggleMenuStyle(val);
 
     val = localStorage.getItem("layout"); // full, boxed-layout
     val = val || $themeConfig.layout;

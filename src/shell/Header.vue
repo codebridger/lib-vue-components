@@ -20,7 +20,7 @@
               />
               <span
                 class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle hidden md:inline dark:text-white-light transition-all duration-300"
-                >VRISTO</span
+                >{{ props.title }}</span
               >
             </router-link>
 
@@ -51,4 +51,8 @@ import { useAppStore } from "../stores/index";
 import IconButton from "../elements/IconButton.vue";
 
 const store = useAppStore();
+
+const props = defineProps<{
+  title: string;
+}>();
 </script>
