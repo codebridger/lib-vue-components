@@ -26,7 +26,7 @@ export default {
   decorators: [
     (story: any) => {
       const store = useAppStore();
-      store.toggleMenu("horizontal");
+      store.toggleMenuPosition("horizontal");
 
       return {
         components: { story, DashboardShell },

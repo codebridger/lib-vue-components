@@ -181,7 +181,7 @@ function init() {
   store.toggleMainLoader();
 
   if (props.menuStyle) {
-    store.toggleMenu(props.menuStyle);
+    store.toggleMenuPosition(props.menuStyle);
   }
 }
 
