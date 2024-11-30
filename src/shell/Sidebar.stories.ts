@@ -31,11 +31,9 @@ export default {
       return {
         components: { story, DashboardShell },
         template: `
-          <DashboardShell>
-            <template #sidebar-menu>
+            <section class="w-[260px] h-full shadow">
               <story />
-            </template >
-          </DashboardShell>
+            </section>
         `,
       };
     },
@@ -53,4 +51,5 @@ const Template: StoryFn<typeof SidebarMenu> = (args) => ({
 export const DefaultSidebarMenu = Template.bind({});
 DefaultSidebarMenu.args = {
   items: sidebarData,
+  title: "SIDEBAR",
 };

@@ -8,7 +8,7 @@ import {
 import AppRoot from "./AppRoot.vue";
 
 export default {
-  title: "Shell/AppRoot",
+  title: "Getting Started/AppRoot",
   component: AppRoot,
   tags: ["autodocs", "!dev"],
   args: {

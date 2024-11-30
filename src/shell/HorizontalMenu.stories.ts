@@ -26,17 +26,11 @@ export default {
   decorators: [
     (story: any) => {
       const store = useAppStore();
-      store.toggleMenu("horizontal");
+      store.toggleMenuStyle("horizontal");
 
       return {
         components: { story, DashboardShell },
-        template: `
-          <DashboardShell>
-            <template #horizontal-menu>
-              <story />
-            </template>
-          </DashboardShell>
-        `,
+        template: `<story />`,
       };
     },
   ],
