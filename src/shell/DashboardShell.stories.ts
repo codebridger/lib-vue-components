@@ -41,24 +41,21 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const SimpleShell: Story = {
+export const FullSetupShell: Story = {
   render(args) {
     return {
-      components: { DashboardShell, Button },
+      components: { DashboardShell, HorizontalMenu, SidebarMenu },
       setup() {
-        return { args };
+        return { args, sidebarData, horizontalMenuItems };
       },
       template: `
 	  <dashboard-shell v-bind="args">
       <template #horizontal-menu>
-        <div class="p-2 text-center">Horizontal Menu Placeholder</div>
+        <HorizontalMenu :items="horizontalMenuItems" />
       </template>
         
       <template #sidebar-menu="{closeSidebar}">
-        <h1 class="w-full text-center p-2 truncate">Sidebar Menu Placeholder</h1>
-        <div class="p-2 flex flex-col items-center">
-          <Button full size="xs" class="my-2 scale-75" @click="closeSidebar">Toggle</Button>
-        </div>
+        <SidebarMenu :items="sidebarData" />
       </template>
 
       <template #content>
@@ -78,21 +75,24 @@ export const SimpleShell: Story = {
   },
 };
 
-export const FullSetupShell: Story = {
+export const SimpleShell: Story = {
   render(args) {
     return {
-      components: { DashboardShell, HorizontalMenu, SidebarMenu },
+      components: { DashboardShell, Button },
       setup() {
-        return { args, sidebarData, horizontalMenuItems };
+        return { args };
       },
       template: `
 	  <dashboard-shell v-bind="args">
       <template #horizontal-menu>
-        <HorizontalMenu :items="horizontalMenuItems" />
+        <div class="p-2 text-center">Horizontal Menu Placeholder</div>
       </template>
         
       <template #sidebar-menu="{closeSidebar}">
-        <SidebarMenu :items="sidebarData" />
+        <h1 class="w-full text-center p-2 truncate">Sidebar Menu Placeholder</h1>
+        <div class="p-2 flex flex-col items-center">
+          <Button full size="xs" class="my-2 scale-75" @click="closeSidebar">Toggle</Button>
+        </div>
       </template>
 
       <template #content>

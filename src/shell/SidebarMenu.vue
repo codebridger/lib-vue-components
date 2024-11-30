@@ -13,7 +13,7 @@
           <span
             class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light"
           >
-            {{ $props.title || "" }}
+            {{ props.title || "" }}
           </span>
         </slot>
       </span>
@@ -34,7 +34,7 @@
       class="h-[calc(100vh-80px)] relative"
     >
       <ul class="relative font-semibold space-y-0.5 p-4 py-0">
-        <template v-for="group of $props.items">
+        <template v-for="group of props.items">
           <!-- Menu Label -->
           <h2
             v-if="group.title"
@@ -186,11 +186,18 @@ import Icon from "../icon/Icon.vue";
 import type { SidebarGroupType, SidebarItemType } from "../types/sidebar.type";
 
 interface SidebarProps {
+  /** Sidebar title */
   title?: string;
+  /** Sidebar items */
   items: Array<SidebarGroupType>;
 }
 
-defineProps<SidebarProps>();
+const props = defineProps<SidebarProps>();
+
+const emit = defineEmits<{
+  /** Emit when the sidebar item is clicked */
+  (e: "ItemClick", item: SidebarItemType): void;
+}>();
 
 const store = useAppStore();
 const activeDropdown: any = ref("");
@@ -229,5 +236,7 @@ function onMenuItemClick(item: SidebarItemType) {
     activeDropdown.value =
       activeDropdown.value === item.title ? "" : item.title;
   }
+
+  emit("ItemClick", item);
 }
 </script>
