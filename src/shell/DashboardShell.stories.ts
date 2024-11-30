@@ -4,6 +4,7 @@ import { getNavPosition } from "../../.storybook/globalTypes";
 
 // Import the markdown content
 // import DashboardShellDocs from "./DashboardShell.mdx";
+import Button from "../elements/Button.vue";
 
 const meta = {
   title: "Shell/DashboardShell",
@@ -40,7 +41,7 @@ type Story = StoryObj<typeof meta>;
 export const SimpleShell: Story = {
   render(args) {
     return {
-      components: { DashboardShell },
+      components: { DashboardShell, Button },
       setup() {
         return { args };
       },
@@ -51,9 +52,9 @@ export const SimpleShell: Story = {
       </template>
         
       <template #sidebar-menu="{closeSidebar}">
-        <div class="p-2 text-center">
-          <h1>Sidebar Menu Placeholder</h1>
-          <button class="my-2" @click="closeSidebar">Click for close</button>
+        <h1 class="w-full text-center p-2 truncate">Sidebar Menu Placeholder</h1>
+        <div class="p-2 flex flex-col items-center">
+          <Button full size="xs" class="my-2 scale-75" @click="closeSidebar">Toggle</Button>
         </div>
       </template>
 
