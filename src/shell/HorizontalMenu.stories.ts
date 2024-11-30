@@ -30,13 +30,7 @@ export default {
 
       return {
         components: { story, DashboardShell },
-        template: `
-          <DashboardShell>
-            <template #horizontal-menu>
-              <story />
-            </template>
-          </DashboardShell>
-        `,
+        template: `<story />`,
       };
     },
   ],

@@ -36,7 +36,7 @@
       </div>
 
       <!-- horizontal menu -->
-      <div class="horizontal-menu hidden">
+      <div class="horizontal-menu-slot hidden">
         <slot name="horizontal-menu">
           <h1>Horizontal Menu</h1>
         </slot>
