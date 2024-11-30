@@ -1,6 +1,10 @@
 import { Meta, StoryObj } from "@storybook/vue3/*";
-import DashboardShell from "./DashboardShell.vue";
 import { getNavPosition } from "../../.storybook/globalTypes";
+
+import DashboardShell from "./DashboardShell.vue";
+import HorizontalMenu from "./HorizontalMenu.vue";
+import SidebarMenu from "./SidebarMenu.vue";
+import { sidebarData, horizontalMenuItems } from "./sidebar-data";
 
 // Import the markdown content
 // import DashboardShellDocs from "./DashboardShell.mdx";
@@ -9,7 +13,6 @@ import Button from "../elements/Button.vue";
 const meta = {
   title: "Shell/DashboardShell",
   component: DashboardShell,
-  // subcomponents: { SidebarMenu, HorizontalMenu, Footer },
   tags: ["autodocs"],
   args: {
     menuStyle: "vertical",
@@ -56,6 +59,40 @@ export const SimpleShell: Story = {
         <div class="p-2 flex flex-col items-center">
           <Button full size="xs" class="my-2 scale-75" @click="closeSidebar">Toggle</Button>
         </div>
+      </template>
+
+      <template #content>
+        <div class="mt-2">
+          <h1>Body Placeholder</h1>
+        </div>
+      </template>
+
+      <template #footer>
+        <div class="p-2 ml-4">
+          <h1>Footer Placeholder</h1>
+        </div>
+      </template>
+	  </dashboard-shell>
+	  `,
+    };
+  },
+};
+
+export const FullSetupShell: Story = {
+  render(args) {
+    return {
+      components: { DashboardShell, HorizontalMenu, SidebarMenu },
+      setup() {
+        return { args, sidebarData, horizontalMenuItems };
+      },
+      template: `
+	  <dashboard-shell v-bind="args">
+      <template #horizontal-menu>
+        <HorizontalMenu :items="horizontalMenuItems" />
+      </template>
+        
+      <template #sidebar-menu="{closeSidebar}">
+        <SidebarMenu :items="sidebarData" />
       </template>
 
       <template #content>

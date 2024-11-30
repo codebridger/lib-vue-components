@@ -81,10 +81,10 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
 
   /* Horizontal layouts */
   .horizontal .horizontal-menu-slot {
-    @apply hidden;
+    @apply hidden lg:flex;
   }
   .horizontal .horizontal-menu {
-    @apply shadow-md md:flex;
+    @apply shadow-md flex w-full;
   }
   .horizontal .horizontal-logo {
     @apply flex;
