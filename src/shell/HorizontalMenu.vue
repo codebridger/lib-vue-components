@@ -17,8 +17,12 @@
         </div>
       </a>
       <ul class="sub-menu" v-if="item.children">
-        <li v-for="(child, childIndex) in item.children" :key="childIndex">
-          <router-link :to="child.to || '/#'">{{ child.title }}</router-link>
+        <li
+          v-for="(child, childIndex) in item.children"
+          :key="childIndex"
+          @click="onMenuItemClick(child)"
+        >
+          <span>{{ child.title }}</span>
         </li>
       </ul>
     </li>
@@ -674,24 +678,24 @@ import { useRoute } from "vue-router";
 import Icon from "../icon/Icon.vue";
 import IconCaretDown from "../icon/icon-caret-down.vue";
 
-import { HorizontalMenuGroupType } from "../types/horizontal-menu.type";
+import {
+  HorizontalMenuGroupType,
+  HorizontalMenuItemType,
+} from "../types/horizontal-menu.type";
 
 interface SidebarProps {
+  /** Sidebar items */
   items: Array<HorizontalMenuGroupType>;
 }
 
 const props = defineProps<SidebarProps>();
 
-const normalizedItems = computed(() => {
-  // remove layers where only have title and ch
-});
+const emit = defineEmits<{
+  /** Emit when the sidebar item is clicked */
+  (e: "ItemClick", item: HorizontalMenuItemType): void;
+}>();
 
 const route = useRoute();
-
-// @TODO: remove this function
-function $t(key: string) {
-  return key;
-}
 
 onMounted(() => {
   setActiveDropdown();
@@ -700,6 +704,10 @@ onMounted(() => {
 watch(route, (to, from) => {
   setActiveDropdown();
 });
+
+function onMenuItemClick(item: HorizontalMenuItemType) {
+  emit("ItemClick", item);
+}
 
 const setActiveDropdown = () => {
   const selector = document.querySelector(

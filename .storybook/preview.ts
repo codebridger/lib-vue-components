@@ -1,6 +1,6 @@
 import { type Preview, setup } from "@storybook/vue3";
 
-import { h, type App } from "vue";
+import { type App } from "vue";
 
 import router from "../src/router/index";
 

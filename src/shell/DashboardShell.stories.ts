@@ -1,17 +1,32 @@
 import { Meta, StoryObj } from "@storybook/vue3/*";
+import { getNavPosition } from "../../.storybook/globalTypes";
+
 import DashboardShell from "./DashboardShell.vue";
-import SidebarMenu from "./SidebarMenu.vue";
 import HorizontalMenu from "./HorizontalMenu.vue";
-import Footer from "./Footer.vue";
+import SidebarMenu from "./SidebarMenu.vue";
+import { sidebarData, horizontalMenuItems } from "./sidebar-data";
 
 // Import the markdown content
 // import DashboardShellDocs from "./DashboardShell.mdx";
+import Button from "../elements/Button.vue";
 
 const meta = {
   title: "Shell/DashboardShell",
   component: DashboardShell,
-  subcomponents: { SidebarMenu, HorizontalMenu, Footer },
   tags: ["autodocs"],
+  args: {
+    menuStyle: "vertical",
+    brandTitle: "VRISTO",
+  },
+  argTypes: {
+    brandTitle: {
+      control: "text",
+    },
+    menuStyle: {
+      control: "radio",
+      options: getNavPosition().toolbar.items,
+    },
+  },
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -26,27 +41,71 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const SimpleShell: Story = {
-  render() {
+export const FullSetupShell: Story = {
+  render(args) {
     return {
-      components: { DashboardShell, SidebarMenu, HorizontalMenu, Footer },
+      components: { DashboardShell, HorizontalMenu, SidebarMenu },
+      setup() {
+        return { args, sidebarData, horizontalMenuItems };
+      },
       template: `
-	  <dashboard-shell>
-		<template #horizontal-menu>
-			<HorizontalMenu />
-		</template>
-			
-		<template #sidebar-menu>
-			<SidebarMenu />
-		</template>
+	  <dashboard-shell v-bind="args">
+      <template #horizontal-menu>
+        <HorizontalMenu :items="horizontalMenuItems" />
+      </template>
+        
+      <template #sidebar-menu="{closeSidebar}">
+        <SidebarMenu :items="sidebarData" />
+      </template>
 
-		<template #content>
-			<h1>This is the body place holder</h1>
-		</template>
+      <template #content>
+        <div class="mt-2">
+          <h1>Body Placeholder</h1>
+        </div>
+      </template>
 
-		<template #footer>
-			<h1>This is the footer place holder</h1>
-		</template>
+      <template #footer>
+        <div class="p-2 ml-4">
+          <h1>Footer Placeholder</h1>
+        </div>
+      </template>
+	  </dashboard-shell>
+	  `,
+    };
+  },
+};
+
+export const SimpleShell: Story = {
+  render(args) {
+    return {
+      components: { DashboardShell, Button },
+      setup() {
+        return { args };
+      },
+      template: `
+	  <dashboard-shell v-bind="args">
+      <template #horizontal-menu>
+        <div class="p-2 text-center">Horizontal Menu Placeholder</div>
+      </template>
+        
+      <template #sidebar-menu="{closeSidebar}">
+        <h1 class="w-full text-center p-2 truncate">Sidebar Menu Placeholder</h1>
+        <div class="p-2 flex flex-col items-center">
+          <Button full size="xs" class="my-2 scale-75" @click="closeSidebar">Toggle</Button>
+        </div>
+      </template>
+
+      <template #content>
+        <div class="mt-2">
+          <h1>Body Placeholder</h1>
+        </div>
+      </template>
+
+      <template #footer>
+        <div class="p-2 ml-4">
+          <h1>Footer Placeholder</h1>
+        </div>
+      </template>
 	  </dashboard-shell>
 	  `,
     };

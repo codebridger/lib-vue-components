@@ -45,7 +45,7 @@ export function getLayoutStyle(defaultValue: string = "full") {
     defaultValue,
     toolbar: {
       title: "Layout Style",
-      items: ["box", "full"],
+      items: ["full", "boxed-layout"],
     },
   };
 }
