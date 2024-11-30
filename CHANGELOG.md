@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.3.0...v1.3.1) (2024-11-30)
+
+
+### Bug Fixes
+
+* **HorizontalMenu:** add comment for root item in menu structure ([c1fb635](https://github.com/tiny-ideas-ir/lib-vue-components/commit/c1fb63546826dfedb591305d397948931beb08ee))
+
 # [1.3.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.2.0...v1.3.0) (2024-11-30)
 
 
