@@ -1,26 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import type { Placement } from "@popperjs/core";
 import Dropdown from "./Dropdown.vue";
+import DropdownItem from "./DropdownItem.vue";
 import Icon from "@/icon/Icon.vue";
 import Button from "./Button.vue";
 
 const meta = {
   title: "Elements/Dropdown",
   component: Dropdown,
-
+  subcomponents: { DropdownItem },
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
     docs: {
       story: {
-        height: "250px",
+        height: "400px",
+      },
+      source: {
+        type: "code",
       },
     },
   },
   argTypes: {
+    show: {
+      control: "boolean",
+    },
     triggerText: {
       control: "text",
-      description: "Text for the dropdown trigger button",
     },
     placement: {
       control: "select",
@@ -41,63 +47,42 @@ const meta = {
         "left-start",
         "left-end",
       ],
-      description: "Preferred placement of the dropdown",
     },
     offsetDistance: {
       control: "number",
-      description: "Offset in pixels away from the trigger element",
     },
     offsetSkid: {
       control: "number",
-      description: "Offset in pixels along the trigger element",
     },
     hover: {
       control: "boolean",
-      description: "Trigger the dropdown on hover",
     },
     disabled: {
       control: "boolean",
-      description: "Disable the dropdown",
     },
     interactive: {
       control: "boolean",
-      description: "Allow interaction with dropdown content",
     },
     arrow: {
       control: "boolean",
-      description: "Show an arrow pointer",
     },
     locked: {
       control: "boolean",
-      description: "Lock the dropdown in place (prevents auto-flipping)",
     },
     zIndex: {
       control: "number",
-      description: "Z-index of the dropdown",
     },
     arrowPadding: {
       control: "number",
-      description: "Padding for the arrow in pixels",
     },
     closeDelay: {
       control: "number",
-      description: "Delay in milliseconds before closing the dropdown",
     },
     openDelay: {
       control: "number",
-      description: "Delay in milliseconds before opening the dropdown",
     },
     disableClickAway: {
       control: "boolean",
-      description: "Disable closing the dropdown on click away",
-    },
-    show: {
-      control: "boolean",
-      description: "Manually control the visibility of the dropdown",
-    },
-    content: {
-      control: "text",
-      description: "Text content for simple dropdowns",
     },
   },
   args: {
@@ -116,36 +101,104 @@ const meta = {
     openDelay: 0,
     disableClickAway: false,
     show: null,
-    content: "",
   },
+  decorators: [
+    () => ({ template: '<div style="padding: 5rem;"><story /></div>' }),
+  ],
 } satisfies Meta<typeof Dropdown>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultTemplate = `
-  <Dropdown v-bind="args">
-    <template #body="{ close }">
-      <ul @click="close()" class="whitespace-nowrap">
-        <li><a href="javascript:;">Action</a></li>
-        <li><a href="javascript:;">Another action</a></li>
-        <li><a href="javascript:;">Something else here</a></li>
-        <li><a href="javascript:;">Separated link</a></li>
-      </ul>
-    </template>
-  </Dropdown>
-`;
-
 // Default dropdown story
 export const Default: Story = {
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args, triggerText: "Action" };
     },
-    template: defaultTemplate,
+    template: `
+  <Dropdown v-bind="args">
+    <template #body="{ close }">
+      <ul @click="close()" class="whitespace-nowrap">
+        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Another action</DropdownItem>
+        <DropdownItem>Something else here</DropdownItem>
+        <DropdownItem>Separated link</DropdownItem>
+      </ul>
+    </template>
+  </Dropdown>
+`,
   }),
+};
+
+export const ProfileMenu: Story = {
+  parameters: {
+    docs: {
+      story: {
+        height: "500px",
+      },
+    },
+  },
+  render(args) {
+    return {
+      components: { Dropdown, Button, Icon, DropdownItem },
+      setup() {
+        return { args };
+      },
+      template: `
+      <Dropdown v-bind="args">
+        <template #body="{ close }">
+          <ul class="w-[230px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
+            <li>
+                <div class="flex items-center px-4 py-4">
+                    <div class="flex-none">
+                        <img class="h-10 w-10 rounded-md object-cover" src="/assets/images/user-profile.jpeg" alt="" />
+                    </div>
+                    <div class="truncate ltr:pl-4 rtl:pr-4">
+                        <h4 class="text-base">
+                            John Doe<span class="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2">Pro</span>
+                        </h4>
+                        <a
+                            class="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white"
+                            href="javascript:;"
+                        >
+                          johndoe@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="cursor-pointer">
+                <a class="dark:hover:text-white" @click="close()">
+                    <Icon name="icon-user" class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                    Profile
+                </a>
+            </li>
+            <li class="cursor-pointer">
+                <a class="dark:hover:text-white" @click="close()">
+                    <Icon name="icon-mail" class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                    Inbox
+                </a>
+            </li>
+            <li class="cursor-pointer">
+                <a class="dark:hover:text-white" @click="close()">
+                    <Icon name="icon-lock-dots" class="h-4.5 w-4.5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                    Lock Screen
+                </a>
+            </li>
+            <li class="cursor-pointer border-t border-white-light dark:border-white-light/10">
+                <a to="/auth/boxed-signin" class="!py-3 text-danger" @click="close()">
+                    <Icon name="icon-logout" class="h-4.5 w-4.5 shrink-0 rotate-90 ltr:mr-2 rtl:ml-2" />
+                    Sign Out
+                </a>
+            </li>
+        </ul>
+        </template>
+      </Dropdown>
+    `,
+    };
+  },
 };
 
 // Hover trigger story
@@ -155,11 +208,22 @@ export const HoverTrigger: Story = {
     placement: "bottom-start",
   },
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args, triggerText: "Hover Me" };
     },
-    template: defaultTemplate,
+    template: `
+  <Dropdown v-bind="args">
+    <template #body="{ close }">
+      <ul @click="close()" class="whitespace-nowrap">
+        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Another action</DropdownItem>
+        <DropdownItem>Something else here</DropdownItem>
+        <DropdownItem>Separated link</DropdownItem>
+      </ul>
+    </template>
+  </Dropdown>
+`,
   }),
 };
 
@@ -167,29 +231,51 @@ export const HoverTrigger: Story = {
 export const WithArrow: Story = {
   args: {
     arrow: true,
-    offsetDistance: "12",
+    offsetDistance: 12,
   },
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args, triggerText: "With Arrow" };
     },
-    template: defaultTemplate,
+    template: `
+  <Dropdown v-bind="args">
+    <template #body="{ close }">
+      <ul @click="close()" class="whitespace-nowrap">
+        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Another action</DropdownItem>
+        <DropdownItem>Something else here</DropdownItem>
+        <DropdownItem>Separated link</DropdownItem>
+      </ul>
+    </template>
+  </Dropdown>
+`,
   }),
 };
 
 // With custom offset story
 export const CustomOffset: Story = {
   args: {
-    offsetDistance: "20",
-    offsetSkid: "10",
+    offsetDistance: 20,
+    offsetSkid: 10,
   },
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args, triggerText: "Custom Offset" };
     },
-    template: defaultTemplate,
+    template: `
+  <Dropdown v-bind="args">
+    <template #body="{ close }">
+      <ul @click="close()" class="whitespace-nowrap">
+        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Another action</DropdownItem>
+        <DropdownItem>Something else here</DropdownItem>
+        <DropdownItem>Separated link</DropdownItem>
+      </ul>
+    </template>
+  </Dropdown>
+`,
   }),
 };
 
@@ -199,11 +285,22 @@ export const Disabled: Story = {
     disabled: true,
   },
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args, triggerText: "Disabled" };
     },
-    template: defaultTemplate,
+    template: `
+  <Dropdown v-bind="args">
+    <template #body="{ close }">
+      <ul @click="close()" class="whitespace-nowrap">
+        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Another action</DropdownItem>
+        <DropdownItem>Something else here</DropdownItem>
+        <DropdownItem>Separated link</DropdownItem>
+      </ul>
+    </template>
+  </Dropdown>
+`,
   }),
 };
 
@@ -214,7 +311,7 @@ export const InteractiveContent: Story = {
     // offsetDistance: "8",
   },
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args };
     },
@@ -240,7 +337,7 @@ export const RTLSupport: Story = {
     placement: "bottom-start",
   },
   render: (args) => ({
-    components: { Dropdown, Button, Icon },
+    components: { Dropdown, Button, Icon, DropdownItem },
     setup() {
       return { args };
     },

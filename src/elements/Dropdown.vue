@@ -15,7 +15,6 @@
       :arrow-padding="arrowPadding"
       :interactive="interactive"
       :locked="locked"
-      :content="content"
       @open:popper="emit('open:popper')"
       @close:popper="emit('close:popper')"
       class="align-middle"
@@ -48,24 +47,67 @@ defineSlots<{
   body(props: { close: () => void; isOpen: boolean }): any;
 }>();
 
-// Define interfaces for props and events
 interface PopperProps {
+  /**
+   * Text for the trigger element
+   */
   triggerText: string;
+  /**
+   * Preferred placement of the Popper
+   */
   placement?: Placement;
+  /**
+   * Disables automatically closing the Popper when the user clicks away from it
+   */
   disableClickAway?: boolean;
+  /**
+   * Offset in pixels along the trigger element
+   */
   offsetSkid?: number;
+  /**
+   * Offset in pixels away from the trigger element
+   */
   offsetDistance?: number;
+  /**
+   * Trigger the Popper on hover
+   */
   hover?: boolean;
+  /**
+   * Control the Popper manually, other events (click, hover) are ignored if this is set to true/false
+   */
   show?: boolean | null;
+  /**
+   * Disables the Popper. If it was already open, it will be closed.
+   */
   disabled?: boolean;
+  /**
+   * Open the Popper after a delay (ms)
+   */
   openDelay?: number | string;
+  /**
+   * Close the Popper after a delay (ms)
+   */
   closeDelay?: number | string;
+  /**
+   * The z-index of the Popper
+   */
   zIndex?: number | string;
+  /**
+   * Display an arrow on the Popper
+   */
   arrow?: boolean;
+  /**
+   * Stop arrow from reaching the edge of the Popper (in pixels)
+   */
   arrowPadding?: number;
+  /**
+   * If the Popper should be interactive, it will close when clicked/hovered if false
+   */
   interactive?: boolean;
+  /**
+   * Lock the Popper into place, it will not flip dynamically when it runs out of space if this is set to true
+   */
   locked?: boolean;
-  content?: string | null;
 }
 
 interface PopperEmits {
@@ -107,7 +149,6 @@ const props = withDefaults(defineProps<PopperProps>(), {
   arrowPadding: 0,
   interactive: true,
   locked: false,
-  content: null,
 });
 
 // Define emits with type safety
@@ -128,17 +169,3 @@ const computedPlacement = computed((): Placement => {
   return props.placement;
 });
 </script>
-
-<style scoped>
-/* .dropdown :deep(ul) {
-	@apply min-w-[120px] py-2 text-sm text-gray-600;
-  }
-  
-  .dropdown :deep(ul li) {
-	@apply hover:bg-gray-100;
-  }
-  
-  .dropdown :deep(ul li a) {
-	@apply block px-4 py-2;
-  } */
-</style>
