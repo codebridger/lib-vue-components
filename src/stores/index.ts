@@ -29,7 +29,7 @@ export const useAppStore = defineStore("app", () => {
     localStorage.setItem(key, payload);
   }
 
-  function toggleTheme(payload: any = null) {
+  function toggleTheme(payload: "light" | "dark" | "system" | any = null) {
     payload = payload || theme.value;
     setItem("theme", payload);
     theme.value = payload;
@@ -56,20 +56,25 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
-  function toggleMenu(payload: "vertical" | "horizontal" | "" | string = "") {
+  function toggleMenuStyle(
+    payload: "vertical" | "horizontal" | "collapsible-vertical" | string = ""
+  ) {
+    if (!["vertical", "horizontal", "collapsible-vertical"].includes(payload))
+      return;
+
     payload = payload || menu.value;
     sidebar.value = false;
     setItem("menu", payload);
     menu.value = payload;
   }
 
-  function toggleLayout(payload: any = null) {
+  function toggleLayout(payload: "boxed-layout" | "full" | any = null) {
     payload = payload || layout.value;
     setItem("layout", payload);
     layout.value = payload;
   }
 
-  function toggleRTL(payload: any = null) {
+  function toggleRTL(payload: "ltr" | "rtl" | any = null) {
     payload = payload || rtlClass.value;
     setItem("rtlClass", payload);
     rtlClass.value = payload;
@@ -89,7 +94,9 @@ export const useAppStore = defineStore("app", () => {
     appSetting.changeAnimation();
   }
 
-  function toggleNavbar(payload: any = null) {
+  function toggleNavbar(
+    payload: "navbar-sticky" | "navbar-static" | "navbar-floating"
+  ) {
     payload = payload || navbar.value;
     setItem("navbar", payload);
     navbar.value = payload;
@@ -127,7 +134,7 @@ export const useAppStore = defineStore("app", () => {
     semidark,
     setMainLayout,
     toggleTheme,
-    toggleMenu,
+    toggleMenuStyle,
     toggleLayout,
     toggleRTL,
     toggleAnimation,

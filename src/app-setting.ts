@@ -2,7 +2,6 @@ import { $themeConfig } from "../theme.config";
 import { useAppStore } from "./stores/index";
 
 const isNotClient = typeof window === "undefined";
-const isClient = typeof window !== "undefined";
 
 export default {
   init() {
@@ -15,7 +14,7 @@ export default {
 
     val = localStorage.getItem("menu"); // vertical, collapsible-vertical, horizontal
     val = val || $themeConfig.menu;
-    store.toggleMenu(val);
+    store.toggleMenuStyle(val);
 
     val = localStorage.getItem("layout"); // full, boxed-layout
     val = val || $themeConfig.layout;

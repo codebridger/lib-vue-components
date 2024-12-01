@@ -1,9 +1,10 @@
 <template>
   <button
-    @click="emit('click')"
+    @click="onClick"
     type="button"
     :class="[
-      'btn', // base class
+      // base class
+      'btn',
       'text-xs sm:text-sm', // responsive text size
       { 'w-full': props.block }, // conditional full width
       computedColor, // color class
@@ -115,4 +116,8 @@ const computedRounded = computed(() => {
     return roundedTypes[props.rounded];
   }
 });
+
+const onClick = () => {
+  emit("click");
+};
 </script>

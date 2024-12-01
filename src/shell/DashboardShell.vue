@@ -89,7 +89,7 @@
         >
           <div class="bg-white dark:bg-[#0e1726] h-full">
             <!-- @slot Area for sidebar menu -->
-            <slot name="sidebar-menu">
+            <slot name="sidebar-menu" :closeSidebar="closeSidebar">
               <!-- <Sidebar /> -->
             </slot>
           </div>
@@ -100,11 +100,12 @@
 
       <div class="main-content flex flex-col min-h-screen">
         <!--  BEGIN TOP NAVBAR  -->
-        <Header>
+        <Header :title="props.brandTitle">
           <template #bar>
             <!-- @slot Area on the header starts after brand icon -->
-            <slot name="header-bar" />
+            <slot name="after-logo" />
           </template>
+
           <template #horizontal-menu>
             <!-- @slot Area on the header right below of the header, for horizontal menu -->
             <slot name="horizontal-menu" />
@@ -136,14 +137,23 @@
  * DashboardShell component
  */
 
-import { ref, onMounted } from "vue";
-import Sidebar from "./SidebarMenu.vue";
+import { ref, onMounted, watch } from "vue";
 import Header from "./Header.vue";
 import appSetting from "../app-setting";
 
 import { useAppStore } from "../stores/index";
 const store = useAppStore();
 const showTopButton = ref(false);
+
+interface DashboardShellProps {
+  // Menu style
+  menuStyle?: "vertical" | "horizontal" | "collapsible-vertical";
+  brandTitle: string;
+}
+
+const props = withDefaults(defineProps<DashboardShellProps>(), {
+  menuStyle: "vertical",
+});
 
 onMounted(() => {
   if (typeof window !== "undefined") {
@@ -172,8 +182,22 @@ function init() {
   store.toggleMainLoader();
 }
 
+watch(
+  () => props.menuStyle,
+  (value) => {
+    console.log(value);
+
+    store.toggleMenuStyle(value);
+  },
+  { immediate: true }
+);
+
 const goToTop = () => {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 };
+
+function closeSidebar() {
+  store.toggleSidebar(false);
+}
 </script>

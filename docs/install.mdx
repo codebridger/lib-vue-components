@@ -44,7 +44,9 @@ yarn add @tiny-ideas-ir/lib-vue-components
 #### Vue 3 Setup
 
 ```javascript
+// Import components and Styles
 import vueComponents from "@tiny-ideas-ir/lib-vue-components";
+import '@tiny-ideas-ir/lib-vue-components/style.css';
 
 // Configuration options
 const options = {
@@ -92,6 +94,11 @@ export default defineNuxtConfig({
   build: {
     transpile: ['@tiny-ideas-ir/lib-vue-components'],
   },
+
+  css: [
+    // ... other CSS files
+    '@tiny-ideas-ir/lib-vue-components/style.css',
+  ],
   
   // ... other Nuxt config
 });
