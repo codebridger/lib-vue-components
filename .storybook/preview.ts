@@ -4,6 +4,7 @@ import { type App } from "vue";
 
 import router from "../src/router/index";
 
+import Popper from "vue3-popper";
 import PerfectScrollbar from "vue3-perfect-scrollbar";
 import { createPinia } from "pinia";
 
@@ -19,6 +20,8 @@ setup((app: App) => {
   app.use(router);
   app.use(pinia);
   app.use(PerfectScrollbar);
+
+  app.component("Popper", Popper);
 });
 
 const preview: Preview = {
