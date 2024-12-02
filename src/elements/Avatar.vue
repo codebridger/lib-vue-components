@@ -9,6 +9,7 @@
       'items-center',
       'text-center',
       'text-2xl',
+      { 'transition-all duration-300 hover:translate-x-2': hoverAnimation },
     ]"
   >
     <img
@@ -41,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, inject } from "vue";
 
 // Define Avatar props interface
 interface AvatarProps {
@@ -88,6 +89,8 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   status: "online",
   disabled: false,
 });
+
+const hoverAnimation = inject("hoverAnimation", false);
 
 // Computed properties
 const computedRounded = computed(() => {
