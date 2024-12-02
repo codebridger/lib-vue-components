@@ -55,7 +55,7 @@ export const FullSetupShell: Story = {
       </template>
         
       <template #sidebar-menu="{closeSidebar}">
-        <SidebarMenu :items="sidebarData" />
+        <SidebarMenu :items="sidebarData" :title="args.brandTitle"/>
       </template>
 
       <template #content>
