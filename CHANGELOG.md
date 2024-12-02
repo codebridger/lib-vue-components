@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.4.0...v1.5.0) (2024-12-02)
+
+
+### Features
+
+* **IconButton:** add imgUrl prop and update rendering logic; enhance ProfileMenu with IconButton ([619cdd8](https://github.com/tiny-ideas-ir/lib-vue-components/commit/619cdd8a8c192f3cca0503bd525e32e38a04229c))
+
 # [1.4.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.3.1...v1.4.0) (2024-12-02)
 
 
