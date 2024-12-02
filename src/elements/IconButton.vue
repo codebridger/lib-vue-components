@@ -3,7 +3,8 @@
     @click="onClick"
     :class="[
       // Base classes
-      'p-2',
+      { computedSize: !!props.imgUrl },
+      'overflow-hidden',
       'w-fit',
       'select-none',
 
@@ -25,7 +26,19 @@
       'hover:text-primary',
     ]"
   >
-    <slot> <Icon :name="props.name" class="w-5 h-5" /></slot>
+    <slot>
+      <Icon
+        v-if="!props.imgUrl && props.icon"
+        :name="props.icon"
+        :class="['m-2', computedSize]"
+      />
+      <img
+        class="hover:opacity-80 transition-opacity"
+        v-else-if="props.imgUrl"
+        :src="props.imgUrl"
+        :class="[computedSize]"
+      />
+    </slot>
   </div>
 </template>
 
@@ -36,13 +49,16 @@ import Icon from "../icon/Icon.vue";
 // Define Icon button props interface
 interface IconButtonProps {
   rounded?: "full" | "none" | "xs" | "sm" | "md" | "lg" | "xl";
-  name: string;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  icon?: string;
+  imgUrl?: string;
 }
 
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {
   rounded: "full",
-  IconSun: "IconSun",
+  icon: "IconSun",
+  imgUrl: "",
 });
 
 const emit = defineEmits<{
@@ -63,6 +79,17 @@ const computedRounded = computed(() => {
     };
     return roundedTypes[props.rounded];
   }
+});
+
+const computedSize = computed(() => {
+  const sizes = {
+    xs: "w-4 h-4",
+    sm: "w-5 h-5",
+    md: "w-7 h-7",
+    lg: "h-10 w-10",
+    xl: "h-14 w-14",
+  };
+  return sizes[props.size || "lg"];
 });
 
 const onClick = () => {

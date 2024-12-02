@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import type { Placement } from "@popperjs/core";
 import Dropdown from "./Dropdown.vue";
 import DropdownItem from "./DropdownItem.vue";
+import IconButton from "./IconButton.vue";
 import Icon from "@/icon/Icon.vue";
 import Button from "./Button.vue";
 
@@ -135,6 +136,7 @@ export const Default: Story = {
   }),
 };
 
+import userProfilePicUrl from "../../public/assets/images/user-profile.jpeg";
 export const ProfileMenu: Story = {
   parameters: {
     docs: {
@@ -146,20 +148,14 @@ export const ProfileMenu: Story = {
 
   render(args) {
     return {
-      components: { Dropdown, Button, Icon, DropdownItem },
+      components: { Dropdown, IconButton, Icon, DropdownItem },
       setup() {
-        return { args };
+        return { args, userProfilePicUrl };
       },
       template: `
       <Dropdown v-bind="args">
         <template #trigger>
-          <button type="button" class="group relative block">
-              <img
-                  class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                  src="/assets/images/user-profile.jpeg"
-                  alt=""
-              />
-          </button>
+          <IconButton :imgUrl="userProfilePicUrl" size="xl" />
         </template>
 
         <template #body="{ close }">
@@ -167,7 +163,7 @@ export const ProfileMenu: Story = {
             <li>
                 <div class="flex items-center px-4 py-4">
                     <div class="flex-none">
-                        <img class="h-10 w-10 rounded-md object-cover" src="/assets/images/user-profile.jpeg" alt="" />
+                        <img class="h-10 w-10 rounded-md object-cover" :src="userProfilePicUrl" alt="" />
                     </div>
                     <div class="truncate ltr:pl-4 rtl:pr-4">
                         <h4 class="text-base">
