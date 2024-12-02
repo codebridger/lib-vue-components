@@ -16,4 +16,15 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, provide, readonly } from "vue";
+
+const props = defineProps<{
+  /** Add animation effect when hovering avatars */
+  hoverAnimation: boolean;
+}>();
+
+const hoverAnimation = computed(() => props.hoverAnimation);
+
+provide("hoverAnimation", readonly(hoverAnimation));
+</script>

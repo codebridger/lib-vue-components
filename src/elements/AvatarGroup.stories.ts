@@ -7,13 +7,25 @@ const meta: Meta<typeof AvatarGroup> = {
   component: AvatarGroup,
   tags: ["autodocs"],
   parameters: {
+    layout: "centered",
     componentSubtitle: "A container component for grouping multiple avatars",
     docs: {
       description: {
         component:
           "The AvatarGroup component provides a container for displaying multiple avatars with an overlapping effect. It handles proper spacing and RTL support automatically.",
       },
+      source: {
+        type: "code",
+      },
     },
+  },
+  argTypes: {
+    hoverAnimation: {
+      control: "boolean",
+    },
+  },
+  args: {
+    hoverAnimation: false,
   },
 };
 
@@ -45,13 +57,13 @@ export const Default: Story = {
       },
     },
   },
-  render: () => ({
+  render: (args) => ({
     components: { AvatarGroup, Avatar },
     setup() {
-      return { avatarImages };
+      return { avatarImages, args };
     },
     template: `
-      <AvatarGroup>
+      <AvatarGroup v-bind="args">
         <Avatar 
           v-for="(avatar, index) in avatarImages" 
           :key="index" 
@@ -72,7 +84,7 @@ export const WithMoreAvatars: Story = {
       },
     },
   },
-  render: () => ({
+  render: (args) => ({
     components: { AvatarGroup, Avatar },
     setup() {
       const extendedAvatars = [
@@ -86,10 +98,10 @@ export const WithMoreAvatars: Story = {
           alt: "User 5",
         },
       ];
-      return { avatarImages: extendedAvatars };
+      return { avatarImages: extendedAvatars, args };
     },
     template: `
-      <AvatarGroup>
+      <AvatarGroup v-bind="args">
         <Avatar 
           v-for="(avatar, index) in avatarImages" 
           :key="index" 
@@ -109,16 +121,18 @@ export const AnimateX: Story = {
       },
     },
   },
-  render: () => ({
+  args: {
+    hoverAnimation: true,
+  },
+  render: (args) => ({
     components: { AvatarGroup, Avatar },
     setup() {
-      return { avatarImages };
+      return { avatarImages, args };
     },
     template: `
       <div>
-        <AvatarGroup>
-          <Avatar 
-            class="transition-all duration-300 hover:translate-x-2"
+        <AvatarGroup v-bind="args">
+          <Avatar
             v-for="(avatar, index) in avatarImages" 
             :key="index" 
             :src="avatar.src"
@@ -138,14 +152,14 @@ export const RTLSupport: Story = {
       },
     },
   },
-  render: () => ({
+  render: (args) => ({
     components: { AvatarGroup, Avatar },
     setup() {
-      return { avatarImages };
+      return { avatarImages, args };
     },
     template: `
       <div dir="rtl">
-        <AvatarGroup>
+        <AvatarGroup v-bind="args">
           <Avatar 
             v-for="(avatar, index) in avatarImages" 
             :key="index" 
