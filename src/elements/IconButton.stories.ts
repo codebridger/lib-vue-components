@@ -12,11 +12,17 @@ const meta = {
       control: "inline-radio",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
     },
-    name: {
+    size: {
+      control: "inline-radio",
+      options: ["xs", "sm", "md", "lg", "xl"],
+    },
+    icon: {
       control: "text",
     },
   },
-  args: {},
+  args: {
+    size: "sm",
+  },
 } satisfies Meta<typeof IconButton>;
 
 export default meta;
@@ -26,6 +32,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     rounded: "full",
-    name: "IconSun",
+    icon: "IconSun",
+  },
+};
+
+import userProfilePicUrl from "../../public/assets/images/user-profile.jpeg";
+export const WithImages: Story = {
+  args: {
+    rounded: "none",
+    imgUrl: userProfilePicUrl,
   },
 };
