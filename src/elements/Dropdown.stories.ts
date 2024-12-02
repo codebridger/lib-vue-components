@@ -103,7 +103,9 @@ const meta = {
     show: null,
   },
   decorators: [
-    () => ({ template: '<div style="padding: 5rem;"><story /></div>' }),
+    () => ({
+      template: '<div class="w-[400px] flex justify-center"><story  /></div>',
+    }),
   ],
 } satisfies Meta<typeof Dropdown>;
 
@@ -141,6 +143,7 @@ export const ProfileMenu: Story = {
       },
     },
   },
+
   render(args) {
     return {
       components: { Dropdown, Button, Icon, DropdownItem },
@@ -149,6 +152,16 @@ export const ProfileMenu: Story = {
       },
       template: `
       <Dropdown v-bind="args">
+        <template #trigger>
+          <button type="button" class="group relative block">
+              <img
+                  class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
+                  src="/assets/images/user-profile.jpeg"
+                  alt=""
+              />
+          </button>
+        </template>
+
         <template #body="{ close }">
           <ul class="w-[230px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
             <li>
