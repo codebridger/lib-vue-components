@@ -1,3 +1,18 @@
+# [1.4.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.3.1...v1.4.0) (2024-12-02)
+
+
+### Features
+
+* **Avatar:** Add new peops in Avatar component ([fc9ea14](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fc9ea142fc185b9a5b6a3140f11996a43705824a))
+* **AvatarGroup:** add hover animation support and update stories ([9eb4bec](https://github.com/tiny-ideas-ir/lib-vue-components/commit/9eb4bec8a5f76808d3bd80f3229b81ead47be317))
+* **AvatarGroup:** Add slot in AvatarGroup component ([77957c8](https://github.com/tiny-ideas-ir/lib-vue-components/commit/77957c8ddba710e18a440d2a052b5d8fa375cf61))
+* **AvatarGroup:** Implament AvatarGroup component ([9a10392](https://github.com/tiny-ideas-ir/lib-vue-components/commit/9a10392f28dc7283cded83756cc3c07b8de60bce))
+* **Avatar:** Implament Avatar component ([c5d980d](https://github.com/tiny-ideas-ir/lib-vue-components/commit/c5d980d1a176bba00ea3fd169ba95fc1a6fb3881))
+* **Dropdown:** add Dropdown and DropdownItem components with customizable properties ([dd30f03](https://github.com/tiny-ideas-ir/lib-vue-components/commit/dd30f0321bc7b7ef06ec914edfb87225f0b3aac7))
+* **Dropdown:** implement Dropdown component with customizable properties and stories ([7b3f892](https://github.com/tiny-ideas-ir/lib-vue-components/commit/7b3f892851b1584c03439a8204e603dc0342f721))
+* **Dropdown:** update ProfileMenu story with custom trigger and improved layout ([388a397](https://github.com/tiny-ideas-ir/lib-vue-components/commit/388a397fdbc3110aeef62a200e6d2f9bc1a2d55f))
+* **Fonts:** add Nunito font styles and update CSS imports ([7185f44](https://github.com/tiny-ideas-ir/lib-vue-components/commit/7185f44d28f24f425b9b30f8efce6c450eef1816))
+
 ## [1.3.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.3.0...v1.3.1) (2024-11-30)
 
 
