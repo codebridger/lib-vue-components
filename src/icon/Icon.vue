@@ -37,7 +37,7 @@ const props = defineProps({
 
 const iconName = computed(() => {
   // Split by '-' and capitalize the first character of each word
-  return props.name
+  return (props.name || "")
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join("");
