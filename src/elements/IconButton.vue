@@ -3,7 +3,7 @@
     @click="onClick"
     :class="[
       // Base classes
-      { computedSize: !!props.imgUrl },
+      props.icon ? 'p-2' : '',
       'overflow-hidden',
       'w-fit',
       'select-none',
@@ -30,7 +30,7 @@
       <Icon
         v-if="!props.imgUrl && props.icon"
         :name="props.icon"
-        :class="['m-2', computedSize]"
+        :class="[computedSize]"
       />
       <img
         class="hover:opacity-80 transition-opacity"
@@ -57,8 +57,6 @@ interface IconButtonProps {
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {
   rounded: "full",
-  icon: "IconSun",
-  imgUrl: "",
 });
 
 const emit = defineEmits<{
