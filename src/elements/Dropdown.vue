@@ -51,7 +51,7 @@ interface PopperProps {
   /**
    * Text for the trigger element
    */
-  triggerText: string;
+  triggerText?: string;
   /**
    * Preferred placement of the Popper
    */
