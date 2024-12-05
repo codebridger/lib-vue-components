@@ -1,2 +1,2 @@
-export type * from "./horizontal-menu.type";
-export type * from "./sidebar.type";
+export * from "./horizontal-menu.type";
+export * from "./sidebar.type";
