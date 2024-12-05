@@ -6,7 +6,8 @@ import PerfectScrollbar from "vue3-perfect-scrollbar";
 
 import "./assets/css/app.css";
 import appSetting from "./app-setting";
-import components from "./components";
+import * as ShellComponents from "./shell/components";
+import * as Components from "./elements/components";
 
 export interface PluginOptions {
   prefix?: string;
@@ -51,8 +52,12 @@ export default {
     if (!prefix)
       throw "Component library needs a prefix to be added for all components";
 
-    Object.keys(components).forEach((key) => {
-      app.component(prefix + key, components[key]);
+    Object.keys(ShellComponents).forEach((key) => {
+      app.component(prefix + key, ShellComponents[key]);
+    });
+
+    Object.keys(Components).forEach((key) => {
+      app.component(prefix + key, ShellComponents[key]);
     });
 
     // Check if we're on client-side

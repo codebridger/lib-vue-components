@@ -100,7 +100,7 @@
 
       <div class="main-content flex flex-col min-h-screen">
         <!--  BEGIN TOP NAVBAR  -->
-        <header
+        <section
           class="z-40"
           :class="[{ dark: store.semidark && store.menu === 'horizontal' }]"
         >
@@ -126,7 +126,7 @@
                   </a>
 
                   <IconButton
-                    class="collapse-icon"
+                    class="collapse-icon mx-2"
                     icon="icon-menu"
                     rounded="full"
                     size="sm"
@@ -148,7 +148,7 @@
               <slot name="horizontal-menu" />
             </div>
           </div>
-        </header>
+        </section>
         <!--  END TOP NAVBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
