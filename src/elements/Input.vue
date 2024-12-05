@@ -20,6 +20,8 @@
             type === 'file',
           'form-input': !['range', 'file'].includes(type),
         },
+        disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
+        error ? 'border-red-500' : 'border-gray-300',
       ]"
       @input="handleInput"
       @blur="$emit('blur', $event)"
