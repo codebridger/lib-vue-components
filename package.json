@@ -11,15 +11,20 @@
   "main": "./dist/vue.cjs.js",
   "module": "./dist/vue.es.js",
   "exports": {
-    ".": {
-      "import": "./dist/vue.es.js",
-      "require": "./dist/vue.cjs.js"
-    },
-    "./nuxt": {
-      "import": "./dist/nuxt.es.js"
-    },
     "./style.css": {
       "import": "./dist/style.css"
+    },
+    "./shell.ts": "./src/shell/components.ts",
+    "./components.ts": "./src/elements/components.ts",
+    "./nuxt": {
+      "import": "./dist/nuxt.es.js",
+      "require": "./dist/nuxt.cjs.js",
+      "types": "./src/nuxt.ts"
+    },
+    ".": {
+      "import": "./dist/vue.es.js",
+      "require": "./dist/vue.cjs.js",
+      "types": "./src/vue.ts"
     }
   },
   "scripts": {

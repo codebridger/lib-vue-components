@@ -39,7 +39,8 @@ export const Default: Story = {
 import userProfilePicUrl from "../../public/assets/images/user-profile.jpeg";
 export const WithImages: Story = {
   args: {
-    rounded: "none",
+    rounded: "full",
+    size: "xl",
     imgUrl: userProfilePicUrl,
   },
 };
