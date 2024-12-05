@@ -100,17 +100,55 @@
 
       <div class="main-content flex flex-col min-h-screen">
         <!--  BEGIN TOP NAVBAR  -->
-        <Header :title="props.brandTitle">
-          <template #bar>
-            <!-- @slot Area on the header starts after brand icon -->
-            <slot name="after-logo" />
-          </template>
+        <section
+          class="z-40"
+          :class="[{ dark: store.semidark && store.menu === 'horizontal' }]"
+        >
+          <div class="shadow-sm">
+            <div
+              class="relative bg-white flex w-full items-center px-5 py-2.5 dark:bg-[#0e1726]"
+            >
+              <div
+                class="horizontal-logo flex lg:hidden justify-between items-center ltr:mr-2 rtl:ml-2 min-h-8"
+              >
+                <!-- @slot Area for logo and menu icon -->
+                <slot name="brand">
+                  <a>
+                    <img
+                      class="w-8 ltr:-ml-1 rtl:-mr-1 inline"
+                      src="/assets/images/logo.svg"
+                      alt=""
+                    />
+                    <span
+                      class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle hidden md:inline dark:text-white-light transition-all duration-300"
+                      >{{ props.brandTitle }}</span
+                    >
+                  </a>
 
-          <template #horizontal-menu>
-            <!-- @slot Area on the header right below of the header, for horizontal menu -->
-            <slot name="horizontal-menu" />
-          </template>
-        </Header>
+                  <IconButton
+                    class="collapse-icon mx-2"
+                    icon="icon-menu"
+                    rounded="full"
+                    size="sm"
+                    @click="store.toggleSidebar()"
+                  />
+                </slot>
+              </div>
+
+              <div class="min-h-9"></div>
+
+              <div class="flex-1">
+                <slot name="header" />
+              </div>
+            </div>
+
+            <!-- horizontal menu -->
+            <div class="horizontal-menu-slot hidden">
+              <!-- @slot Area on the header right below of the header, for horizontal menu -->
+              <slot name="horizontal-menu" />
+            </div>
+          </div>
+        </section>
         <!--  END TOP NAVBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
@@ -138,7 +176,8 @@
  */
 
 import { ref, onMounted, watch } from "vue";
-import Header from "./Header.vue";
+import IconButton from "../elements/IconButton.vue";
+
 import appSetting from "../app-setting";
 
 import { useAppStore } from "../stores/index";
@@ -148,8 +187,20 @@ const showTopButton = ref(false);
 interface DashboardShellProps {
   // Menu style
   menuStyle?: "vertical" | "horizontal" | "collapsible-vertical";
+  // Brand title of the dashboard
   brandTitle: string;
+  // Loading state of the dashboard
+  loading?: boolean;
 }
+
+// defineSlots<{
+//   brand(): any;
+//   "header"(): any;
+//   "horizontal-menu"(): any;
+//   "sidebar-menu"(props: { closeSidebar: () => void }): any;
+//   content(): any;
+//   footer(): any;
+// }>();
 
 const props = withDefaults(defineProps<DashboardShellProps>(), {
   menuStyle: "vertical",
@@ -181,6 +232,14 @@ function init() {
 
   store.toggleMainLoader();
 }
+
+watch(
+  () => props.loading,
+  (value) => {
+    store.toggleMainLoader(value);
+  },
+  { immediate: true }
+);
 
 watch(
   () => props.menuStyle,
