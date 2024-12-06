@@ -17,14 +17,14 @@
     "./components.ts": "./src/elements/components.ts",
     "./types.ts": "./src/types/types.ts",
     "./nuxt": {
-      "import": "./dist/nuxt.es.js",
+      "types": "./src/nuxt.ts",
       "require": "./dist/nuxt.cjs.js",
-      "types": "./src/nuxt.ts"
+      "import": "./dist/nuxt.es.js"
     },
     ".": {
-      "import": "./dist/vue.es.js",
+      "types": "./src/vue.ts",
       "require": "./dist/vue.cjs.js",
-      "types": "./src/vue.ts"
+      "import": "./dist/vue.es.js"
     }
   },
   "scripts": {
