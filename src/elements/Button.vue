@@ -35,7 +35,7 @@ interface ButtonProps {
   size?: "xs" | "sm" | "md" | "lg";
   textTransform?: "normal-case" | "capitalize" | "lowercase" | "uppercase";
   rounded?: "full" | "none" | "xs" | "sm" | "md" | "lg" | "xl";
-  label: string;
+  label?: string;
   block?: boolean;
   outline?: boolean;
   shadow?: boolean;

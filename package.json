@@ -6,16 +6,16 @@
   "version": "0.0.0",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "main": "./dist/vue.cjs.js",
   "module": "./dist/vue.es.js",
   "exports": {
-    "./style.css": {
-      "import": "./dist/style.css"
-    },
+    "./style.css": "./dist/style.css",
     "./shell.ts": "./src/shell/components.ts",
     "./components.ts": "./src/elements/components.ts",
+    "./types.ts": "./src/types/types.ts",
     "./nuxt": {
       "import": "./dist/nuxt.es.js",
       "require": "./dist/nuxt.cjs.js",
