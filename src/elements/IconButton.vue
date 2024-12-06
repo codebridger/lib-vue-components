@@ -2,6 +2,7 @@
   <div
     @click="onClick"
     :class="[
+      $attrs.class || '',
       // Base classes
       props.icon ? 'p-2' : '',
       'overflow-hidden',
