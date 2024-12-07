@@ -26,12 +26,22 @@ const meta = {
       control: "boolean",
       description: "Whether the textarea is disabled",
     },
+    error: {
+      control: "boolean",
+      description: "Whether the textarea is in error state",
+    },
+    errorMsg: {
+      control: "text",
+      description: "Error message to display",
+    },
   },
   args: {
     rows: 2,
     placeholder: "Enter Textarea ... ",
     required: false,
     disabled: false,
+    error: false,
+    errorMsg: "",
   },
 } satisfies Meta<typeof TextArea>;
 
@@ -45,6 +55,8 @@ export const Default: Story = {
     placeholder: "Enter Textarea",
     required: false,
     disabled: false,
+    error: false,
+    errorMsg: "",
   },
 };
 
@@ -55,6 +67,8 @@ export const Filled: Story = {
     placeholder: "Enter Textarea",
     required: false,
     disabled: false,
+    error: false,
+    errorMsg: "",
   },
 };
 
@@ -65,6 +79,8 @@ export const Required: Story = {
     placeholder: "Required textarea",
     required: true,
     disabled: false,
+    error: false,
+    errorMsg: "",
   },
 };
 
@@ -75,6 +91,20 @@ export const Disabled: Story = {
     placeholder: "Enter Textarea",
     required: false,
     disabled: true,
+    error: false,
+    errorMsg: "",
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    modelValue: "",
+    rows: 3,
+    placeholder: "Enter Textarea",
+    required: true,
+    disabled: false,
+    error: true,
+    errorMsg: "This field is required",
   },
 };
 
@@ -85,5 +115,7 @@ export const CustomRows: Story = {
     placeholder: "This textarea has 5 rows",
     required: false,
     disabled: false,
+    error: false,
+    errorMsg: "",
   },
 };
