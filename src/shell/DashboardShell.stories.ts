@@ -50,6 +50,10 @@ export const FullSetupShell: Story = {
       },
       template: `
 	  <dashboard-shell v-bind="args">
+      <template #header>
+        <div class="p-2 text-center">Header Bar Placeholder</div>
+      </template>
+
       <template #horizontal-menu>
         <HorizontalMenu :items="horizontalMenuItems" />
       </template>
