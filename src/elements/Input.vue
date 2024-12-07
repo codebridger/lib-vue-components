@@ -4,7 +4,18 @@
       {{ label }}
       <span v-if="required" class="text-red-500">*</span>
     </label>
+
     <input
+      :class="[
+        // base classes
+        { 'form-input': type !== 'range' },
+
+        // specific for range type
+        { 'w-full py-2.5': type === 'range' },
+
+        disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
+        error ? 'border-red-500' : 'border-gray-300',
+      ]"
       :id="id"
       :type="type"
       :value="modelValue"
@@ -13,14 +24,6 @@
       :required="required"
       :min="type === 'range' ? min : undefined"
       :max="type === 'range' ? max : undefined"
-      :class="[
-        {
-          'w-full py-2.5': type === 'range',
-          'form-input': type !== 'range',
-        },
-        disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
-        error ? 'border-red-500' : 'border-gray-300',
-      ]"
       @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
