@@ -58,26 +58,6 @@ const meta: Meta<typeof FileInput> = {
       control: "text",
       description: "Error message to display",
     },
-    onChange: {
-      action: "change",
-      description: "Triggered when files are selected",
-    },
-    onInput: {
-      action: "input",
-      description: "Triggered on input",
-    },
-    onCancel: {
-      action: "cancel",
-      description: "Triggered when file selection is cancelled",
-    },
-    onBlur: {
-      action: "blur",
-      description: "Triggered when input loses focus",
-    },
-    onFocus: {
-      action: "focus",
-      description: "Triggered when input gains focus",
-    },
   },
 };
 
