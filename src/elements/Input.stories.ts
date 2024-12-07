@@ -17,7 +17,6 @@ const meta = {
         "url",
         "search",
         "range",
-        "file",
       ],
       description: "Input type attribute",
     },
@@ -41,6 +40,10 @@ const meta = {
       control: "boolean",
       description: "Error state",
     },
+    errorMessage: {
+      control: "text",
+      description: "Error message text",
+    },
   },
   args: {
     type: "text",
@@ -48,6 +51,7 @@ const meta = {
     disabled: false,
     required: false,
     error: false,
+    errorMessage: "",
   },
 } satisfies Meta<typeof Input>;
 
@@ -70,6 +74,15 @@ export const WithLabel: Story = {
   },
 };
 
+export const WithError: Story = {
+  args: {
+    label: "Email",
+    placeholder: "Enter email",
+    error: true,
+    errorMessage: "This field is required",
+  },
+};
+
 export const Range: Story = {
   args: {
     type: "range",
@@ -78,14 +91,5 @@ export const Range: Story = {
     modelValue: "50",
     min: 0,
     max: 100,
-  },
-};
-
-export const FileUpload: Story = {
-  args: {
-    type: "file",
-    label: "Upload Document",
-    id: "file-input",
-    required: true,
   },
 };
