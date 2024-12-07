@@ -1,6 +1,6 @@
 <template>
   <rootApp>
-    <dashboard-shell>
+    <dashboard-shell brand-title="">
       <template #horizontal-menu>
         <!-- <HorizontalMenu /> -->
       </template>
@@ -9,7 +9,9 @@
         <SidebarMenu :items="sidebarData" />
       </template>
 
-      <template #content></template>
+      <template #content>
+        <router-view />
+      </template>
 
       <template #footer>
         <Footer />
