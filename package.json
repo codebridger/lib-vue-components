@@ -7,20 +7,25 @@
   "version": "1.5.0",
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "main": "./dist/vue.cjs.js",
   "module": "./dist/vue.es.js",
   "exports": {
-    ".": {
-      "import": "./dist/vue.es.js",
-      "require": "./dist/vue.cjs.js"
-    },
+    "./style.css": "./dist/style.css",
+    "./shell.ts": "./src/shell/components.ts",
+    "./components.ts": "./src/elements/components.ts",
+    "./types.ts": "./src/types/types.ts",
     "./nuxt": {
+      "types": "./src/nuxt.ts",
+      "require": "./dist/nuxt.cjs.js",
       "import": "./dist/nuxt.es.js"
     },
-    "./style.css": {
-      "import": "./dist/style.css"
+    ".": {
+      "types": "./src/vue.ts",
+      "require": "./dist/vue.cjs.js",
+      "import": "./dist/vue.es.js"
     }
   },
   "scripts": {
