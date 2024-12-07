@@ -1,17 +1,17 @@
 <template>
   <div class="sidebar">
-    <div class="flex justify-between items-center px-4 py-3">
-      <span to="/" class="main-logo flex items-center shrink-0">
+    <div class="flex items-center justify-between px-4 py-3">
+      <span to="/" class="main-logo flex shrink-0 items-center">
         <!-- @slot brand content, title will be removed in this case -->
         <slot name="brand">
           <img
-            class="w-8 ml-[5px] flex-none"
+            class="ml-[5px] w-8 flex-none"
             src="/assets/images/logo.svg"
             alt=""
           />
 
           <span
-            class="text-2xl ltr:ml-1.5 rtl:mr-1.5 font-semibold align-middle lg:inline dark:text-white-light"
+            class="align-middle text-2xl font-semibold dark:text-white-light lg:inline ltr:ml-1.5 rtl:mr-1.5"
           >
             {{ props.title || "" }}
           </span>
@@ -19,7 +19,7 @@
       </span>
       <a
         href="javascript:;"
-        class="collapse-icon w-8 h-8 rounded-full flex items-center hover:bg-gray-500/10 dark:hover:bg-dark-light/10 dark:text-white-light transition duration-300 rtl:rotate-180 hover:text-primary"
+        class="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 hover:text-primary dark:text-white-light dark:hover:bg-dark-light/10 rtl:rotate-180"
         @click="store.toggleSidebar()"
       >
         <Icon name="icon-carets-down" class="m-auto rotate-90" />
@@ -31,16 +31,16 @@
         swipeEasing: true,
         wheelPropagation: false,
       }"
-      class="h-[calc(100vh-80px)] relative"
+      class="relative h-[calc(100vh-80px)]"
     >
-      <ul class="relative font-semibold space-y-0.5 p-4 py-0">
-        <template v-for="group of props.items">
+      <ul class="relative space-y-0.5 p-4 py-0 font-semibold">
+        <template v-for="(group, gIndex) of props.items">
           <!-- Menu Label -->
           <h2
             v-if="group.title"
-            class="py-3 px-7 flex items-center uppercase font-extrabold bg-white-light/30 dark:bg-dark dark:bg-opacity-[0.08] -mx-4 mb-1"
+            class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]"
           >
-            <Icon name="icon-minus" class="w-4 h-5 flex-none hidden" />
+            <Icon name="icon-minus" class="hidden h-5 w-4 flex-none" />
             <span>{{ group.title }}</span>
           </h2>
 
@@ -48,7 +48,7 @@
           <li class="nav-item" v-if="group.children">
             <ul>
               <li
-                v-for="item of group.children"
+                v-for="(item, itemIndex) of group.children"
                 :class="[{ menu: item.child?.length }, 'nav-item']"
               >
                 <template v-if="item.child?.length">
@@ -57,9 +57,7 @@
                     class="nav-link group w-full"
                     :class="{ active: activeDropdown === item.title }"
                     @click="
-                      activeDropdown === item.title
-                        ? (activeDropdown = null)
-                        : (activeDropdown = item.title)
+                      onMenuItemClick(item, { group: gIndex, item: itemIndex })
                     "
                   >
                     <!-- Item Title -->
@@ -77,7 +75,8 @@
                       v-if="item.child?.length"
                       :class="{
                         '-rotate-90 rtl:rotate-90':
-                          activeDropdown !== item.title,
+                          getDDState(gIndex, itemIndex) ||
+                          isSubItemIsActive(item),
                       }"
                     >
                       <Icon name="IconCaretDown" />
@@ -87,18 +86,27 @@
                   <!-- Item child - Sub 1 -->
                   <Collapse
                     v-if="item.child?.length"
-                    :when="activeDropdown === item.title"
+                    :when="
+                      getDDState(gIndex, itemIndex) || isSubItemIsActive(item)
+                    "
                   >
                     <ul class="sub-menu text-gray-500">
-                      <template v-for="sub1 of item.child">
+                      <template v-for="(sub1, sub1Index) of item.child">
                         <li v-if="sub1.child?.length">
                           <button
                             type="button"
-                            class="w-full before:h-[5px] before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900"
+                            class="w-full before:h-[5px] before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 dark:text-[#888ea8] dark:hover:bg-gray-900 ltr:before:mr-2 rtl:before:ml-2"
+                            :class="{
+                              active:
+                                subActive === sub1.title ||
+                                isSubItemIsActive(item),
+                            }"
                             @click="
-                              subActive === sub1.title
-                                ? (subActive = null)
-                                : (subActive = sub1.title)
+                              onMenuItemClick(sub1, {
+                                group: gIndex,
+                                item: itemIndex,
+                                sub1: sub1Index,
+                              })
                             "
                           >
                             <span>
@@ -107,15 +115,16 @@
                             <div
                               class="ltr:ml-auto rtl:mr-auto"
                               :class="{
-                                'rtl:rotate-90 -rotate-90':
-                                  subActive !== sub1.title,
+                                '-rotate-90 rtl:rotate-90':
+                                  getDDState(gIndex, itemIndex, sub1Index) ||
+                                  isSubItemIsActive(sub1),
                               }"
                             >
                               <Icon
                                 name="icon-carets-down"
                                 v-if="sub1.child?.length"
                                 :fill="true"
-                                class="w-4 h-4"
+                                class="h-4 w-4"
                               />
                             </div>
                           </button>
@@ -123,13 +132,24 @@
                           <!-- sub2 -->
                           <Collapse
                             v-if="sub1.child?.length"
-                            :when="subActive === sub1.title"
+                            :when="
+                              getDDState(gIndex, itemIndex, sub1Index) ||
+                              isSubItemIsActive(sub1)
+                            "
                           >
                             <ul :unmount="false" class="sub-menu text-gray-500">
-                              <li v-for="sub2 of sub1.child">
+                              <li v-for="(sub2, sub2Index) of sub1.child">
                                 <a
                                   class="cursor-pointer"
-                                  @click="onMenuItemClick(sub2)"
+                                  :class="{ active: sub2.to === route.path }"
+                                  :data-item="sub2.to"
+                                  @click="
+                                    onMenuItemClick(sub2, {
+                                      group: gIndex,
+                                      item: itemIndex,
+                                      sub1: sub1Index,
+                                    })
+                                  "
                                 >
                                   {{ sub2.title }}
                                 </a>
@@ -141,7 +161,15 @@
                         <li v-else>
                           <a
                             class="cursor-pointer"
-                            @click="onMenuItemClick(sub1)"
+                            :class="{ active: subActive === sub1.title }"
+                            :data-item="sub1.to"
+                            @click="
+                              onMenuItemClick(sub1, {
+                                group: gIndex,
+                                item: itemIndex,
+                                sub1: sub1Index,
+                              })
+                            "
                           >
                             {{ sub1.title }}
                           </a>
@@ -154,12 +182,16 @@
                 <template v-if="!item.child?.length">
                   <a
                     class="group cursor-pointer"
-                    @click="onMenuItemClick(item)"
+                    :class="{ active: activeDropdown === item.title }"
+                    :data-item="item.to"
+                    @click="
+                      onMenuItemClick(item, { group: 0, item: itemIndex })
+                    "
                   >
                     <div class="flex items-center">
                       <icon v-if="item.icon" :name="item.icon" />
                       <span
-                        class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
+                        class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
                       >
                         {{ item.title }}
                       </span>
@@ -176,7 +208,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useAppStore } from "@/stores/index";
 import { Collapse } from "vue-collapsed";
@@ -196,32 +228,27 @@ const props = defineProps<SidebarProps>();
 
 const emit = defineEmits<{
   /** Emit when the sidebar item is clicked */
-  (e: "ItemClick", item: SidebarItemType): void;
+  ItemClick: [value: SidebarItemType];
 }>();
 
 const store = useAppStore();
+const groupDropdown: any = ref("");
 const activeDropdown: any = ref("");
 const subActive: any = ref("");
 const route = useRoute();
 
+const dropdownState = ref<Map<string, boolean>>(new Map());
+
 onMounted(() => {
-  const selector = document.querySelector(
-    '.sidebar ul a[href="' + route.path + '"]'
-  );
-  if (selector) {
-    selector.classList.add("active");
-    const ul: any = selector.closest("ul.sub-menu");
-    if (ul) {
-      let ele: any = ul.closest("li.menu").querySelectorAll(".nav-link") || [];
-      if (ele.length) {
-        ele = ele[0];
-        setTimeout(() => {
-          ele.click();
-        });
-      }
-    }
-  }
+  markActiveItem();
 });
+
+watch(
+  () => route.path,
+  () => {
+    markActiveItem();
+  }
+);
 
 const toggleMobileMenu = () => {
   if (window.innerWidth < 1024) {
@@ -229,14 +256,148 @@ const toggleMobileMenu = () => {
   }
 };
 
-function onMenuItemClick(item: SidebarItemType) {
-  toggleMobileMenu();
+function markActiveItem() {
+  const activePath = route.path;
 
-  if (item.child?.length) {
-    activeDropdown.value =
-      activeDropdown.value === item.title ? "" : item.title;
+  // Initialize indices for active group, item, and sub-item
+  let activeGroupIndex = -1;
+  let activeItemIndex = -1;
+  let activeSub1Index = -1;
+
+  // Iterate through groups to find the active group and item
+  for (let gIndex = 0; gIndex < props.items.length; gIndex++) {
+    const group = props.items[gIndex];
+    if (group.children) {
+      for (let itemIndex = 0; itemIndex < group.children.length; itemIndex++) {
+        const item = group.children[itemIndex];
+        if (item.to === activePath) {
+          activeGroupIndex = gIndex;
+          activeItemIndex = itemIndex;
+          break;
+        }
+
+        // Check for sub-items (level 1)
+        if (item.child) {
+          for (let sub1Index = 0; sub1Index < item.child.length; sub1Index++) {
+            const sub1 = item.child[sub1Index];
+            if (sub1.to === activePath) {
+              activeGroupIndex = gIndex;
+              activeItemIndex = itemIndex;
+              activeSub1Index = sub1Index;
+              break;
+            }
+
+            // Check for sub-items (level 2)
+            if (sub1.child) {
+              for (const sub2 of sub1.child) {
+                if (sub2.to === activePath) {
+                  activeGroupIndex = gIndex;
+                  activeItemIndex = itemIndex;
+                  activeSub1Index = sub1Index;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
+  // Set the dropdown values for the active item
+  if (activeGroupIndex >= 0) {
+    groupDropdown.value = props.items[activeGroupIndex].title;
+
+    if (activeItemIndex >= 0) {
+      activeDropdown.value =
+        props.items[activeGroupIndex].children![activeItemIndex].title;
+
+      if (activeSub1Index >= 0) {
+        subActive.value =
+          props.items[activeGroupIndex].children![activeItemIndex].child![
+            activeSub1Index
+          ].title;
+      }
+    }
+  }
+
+  // Close other group dropdowns except the active one
+  dropdownState.value.forEach((_, key) => {
+    if (key.startsWith(`${activeGroupIndex}-`)) {
+      return;
+    }
+
+    dropdownState.value.set(key, false);
+  });
+
+  // Close other item dropdowns except the active one
+  dropdownState.value.forEach((_, key) => {
+    if (key.startsWith(`${activeGroupIndex}-${activeItemIndex}-`)) {
+      return;
+    }
+
+    dropdownState.value.set(key, false);
+  });
+
+  // Close other sub1 dropdowns except the active one
+  dropdownState.value.forEach((_, key) => {
+    if (
+      key.startsWith(
+        `${activeGroupIndex}-${activeItemIndex}-${activeSub1Index}-`
+      )
+    ) {
+      return;
+    }
+
+    dropdownState.value.set(key, false);
+  });
+}
+
+function getDDId(group: number, item?: number, sub1?: number) {
+  return `${group}-${item}-${sub1}`;
+}
+
+function getDDState(group: number, item?: number, sub1?: number) {
+  return dropdownState.value.get(getDDId(group, item, sub1)) || false;
+}
+
+function onMenuItemClick(
+  item: SidebarItemType,
+  indexes: { group: number; item?: number; sub1?: number }
+) {
+  toggleMobileMenu();
+
+  // prevent dropdown
+  const ddId = getDDId(indexes.group, indexes.item, indexes.sub1);
+  const previousState = dropdownState.value.get(ddId) || false;
+
+  // toggle the current dropdown
+  dropdownState.value.set(ddId, !previousState);
+
   emit("ItemClick", item);
+}
+
+function isSubItemIsActive(item: SidebarItemType): boolean {
+  if (item.to === route.path) {
+    return true;
+  }
+
+  let isActive = false;
+
+  for (const sub of item.child || []) {
+    if (sub.to === route.path) {
+      isActive = true;
+      break;
+    }
+
+    for (const sub2 of sub.child || []) {
+      if (sub2.to === route.path) {
+        isActive = true;
+        break;
+      }
+    }
+  }
+
+  return isActive;
 }
 </script>
