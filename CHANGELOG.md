@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.7.0...v1.8.0) (2024-12-08)
+
+
+### Features
+
+* **types:** introduce AppSettingType and PluginOptionsType for improved type safety ([59d9835](https://github.com/tiny-ideas-ir/lib-vue-components/commit/59d98353b104a9972b9328d92dfa5d25d5ef48ef))
+
 # [1.7.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.6.0...v1.7.0) (2024-12-08)
 
 
