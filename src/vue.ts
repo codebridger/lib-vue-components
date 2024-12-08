@@ -5,7 +5,7 @@ import Popper from "vue3-popper";
 import PerfectScrollbar from "vue3-perfect-scrollbar";
 
 import "./assets/css/app.css";
-import appSetting from "./app-setting";
+import appSetting, { type AppSetting } from "./app-setting";
 import * as ShellComponents from "./shell/components";
 import * as Components from "./elements/components";
 
@@ -17,12 +17,19 @@ export interface PluginOptions {
 }
 
 export default {
-  install: (app: App, options: PluginOptions) => {
+  install: (app: App, options: PluginOptions & AppSetting) => {
     const {
       prefix = "CL",
       dontInstallPinia = true,
       dontInstallPopper = false,
       dontInstallPerfectScrollbar = false,
+      theme = "light",
+      menu = "vertical",
+      layout = "full",
+      rtlClass = "ltr",
+      animation = "animate__fadeIn",
+      navbar = "navbar-sticky",
+      semidark = false,
     } = options || {};
 
     const hasRouter =
@@ -62,7 +69,15 @@ export default {
 
     // Check if we're on client-side
     if (typeof window !== "undefined") {
-      appSetting.init();
+      appSetting.init({
+        theme,
+        menu,
+        layout,
+        rtlClass,
+        animation,
+        navbar,
+        semidark,
+      });
     }
   },
 };
