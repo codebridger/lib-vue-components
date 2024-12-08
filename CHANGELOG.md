@@ -1,3 +1,12 @@
+# [1.7.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.6.0...v1.7.0) (2024-12-08)
+
+
+### Features
+
+* **AppSetting:** enhance initialization with configurable options and add animation type support ([6bdc087](https://github.com/tiny-ideas-ir/lib-vue-components/commit/6bdc0871c195b3cc4040e1956ae2e44736ac306f))
+* **nuxt:** extend defineNuxtPlugin options to include AppSetting ([2810a8f](https://github.com/tiny-ideas-ir/lib-vue-components/commit/2810a8f69469c18a8f2512b10070f243736b20c1))
+* **theme:** remove deprecated theme configuration file ([a6cae5d](https://github.com/tiny-ideas-ir/lib-vue-components/commit/a6cae5deaec6610a5a736a4491f0b951d918d343))
+
 # [1.6.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.5.0...v1.6.0) (2024-12-07)
 
 
