@@ -1,32 +1,11 @@
 import { useAppStore } from "./stores/index";
+import { AppSettingType } from "./types/initialize.type";
 
 const isNotClient = typeof window === "undefined";
 
-type AnimationType =
-  | ""
-  | "animate__fadeIn"
-  | "animate__fadeInDown"
-  | "animate__fadeInUp"
-  | "animate__fadeInLeft"
-  | "animate__fadeInRight"
-  | "animate__slideInDown"
-  | "animate__slideInLeft"
-  | "animate__slideInRight"
-  | "animate__zoomIn";
-
-export interface AppSetting {
-  theme: "light" | "dark" | "system";
-  menu: "vertical" | "horizontal" | "collapsible-vertical" | string;
-  layout: "boxed-layout" | "full" | any;
-  rtlClass: "ltr" | "rtl" | any;
-  animation: AnimationType | any;
-  navbar: "navbar-sticky" | "navbar-static" | "navbar-floating" | any;
-  semidark: boolean;
-}
-
 export default {
   init(
-    config: AppSetting = {
+    config: AppSettingType = {
       theme: "light",
       menu: "vertical",
       layout: "full",
