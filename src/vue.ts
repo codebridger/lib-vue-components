@@ -5,19 +5,13 @@ import Popper from "vue3-popper";
 import PerfectScrollbar from "vue3-perfect-scrollbar";
 
 import "./assets/css/app.css";
-import appSetting, { type AppSetting } from "./app-setting";
+import appSetting from "./app-setting";
 import * as ShellComponents from "./shell/components";
 import * as Components from "./elements/components";
-
-export interface PluginOptions {
-  prefix?: string;
-  dontInstallPinia?: boolean;
-  dontInstallPopper?: boolean;
-  dontInstallPerfectScrollbar?: boolean;
-}
+import { PluginOptionsType } from "./types/initialize.type";
 
 export default {
-  install: (app: App, options: PluginOptions & AppSetting) => {
+  install: (app: App, options: PluginOptionsType) => {
     const {
       prefix = "CL",
       dontInstallPinia = true,
