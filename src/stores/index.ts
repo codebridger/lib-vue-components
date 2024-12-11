@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import appSetting from "../app-setting";
 
@@ -19,6 +19,8 @@ export const useAppStore = defineStore("app", () => {
   const sidebar = ref(false);
   const isShowMainLoader = ref(true);
   const semidark = ref(false);
+
+  const isRtl = computed(() => rtlClass.value === "rtl");
 
   function setMainLayout(payload: any = null) {
     mainLayout.value = payload;
@@ -126,6 +128,7 @@ export const useAppStore = defineStore("app", () => {
     menu,
     layout,
     rtlClass,
+    isRtl,
     animation,
     navbar,
     locale,
