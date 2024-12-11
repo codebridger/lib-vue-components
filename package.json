@@ -16,6 +16,7 @@
     "./style.css": "./dist/style.css",
     "./shell.ts": "./src/shell/components.ts",
     "./components.ts": "./src/elements/components.ts",
+    "./store.ts": "./src/stores/index.ts",
     "./types.ts": "./src/types/types.ts",
     "./nuxt": {
       "types": "./src/nuxt.ts",
