@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.8.0...v1.9.0) (2024-12-11)
+
+
+### Features
+
+* **store:** add computed property for RTL support in app store ([8e84b54](https://github.com/tiny-ideas-ir/lib-vue-components/commit/8e84b548dbe0d527b50c38402e7a43856168cc67))
+
 # [1.8.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.7.0...v1.8.0) (2024-12-08)
 
 
