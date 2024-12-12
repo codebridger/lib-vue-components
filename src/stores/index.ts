@@ -110,8 +110,8 @@ export const useAppStore = defineStore("app", () => {
     semidark.value = payload;
   }
 
-  function toggleSidebar(state: boolean = false) {
-    sidebar.value = !sidebar.value;
+  function toggleSidebar(state?: boolean) {
+    sidebar.value = state != undefined ? state : !sidebar.value;
   }
 
   function toggleMainLoader(state: boolean = false) {

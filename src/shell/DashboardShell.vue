@@ -83,7 +83,10 @@
       :class="[store.navbar]"
     >
       <!--  BEGIN SIDEBAR  -->
-      <div :class="{ 'dark text-white-dark': store.semidark }">
+      <div
+        v-if="!props.hideMenu"
+        :class="{ 'dark text-white-dark': store.semidark }"
+      >
         <nav
           class="sidebar fixed min-h-screen h-full top-0 bottom-0 w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] z-50 transition-all duration-300"
         >
@@ -126,6 +129,7 @@
                   </a>
 
                   <a
+                    v-if="!props.hideMenu"
                     href="javascript:;"
                     class="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden"
                     @click="store.toggleSidebar()"
@@ -191,16 +195,8 @@ interface DashboardShellProps {
   brandTitle: string;
   // Loading state of the dashboard
   loading?: boolean;
+  hideMenu?: boolean;
 }
-
-// defineSlots<{
-//   brand(): any;
-//   "header"(): any;
-//   "horizontal-menu"(): any;
-//   "sidebar-menu"(props: { closeSidebar: () => void }): any;
-//   content(): any;
-//   footer(): any;
-// }>();
 
 const props = withDefaults(defineProps<DashboardShellProps>(), {
   menuStyle: "vertical",
@@ -247,6 +243,14 @@ watch(
     console.log(value);
 
     store.toggleMenuStyle(value);
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.hideMenu,
+  (value) => {
+    store.toggleSidebar(value);
   },
   { immediate: true }
 );
