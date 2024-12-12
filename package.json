@@ -1,9 +1,10 @@
 {
   "name": "@tiny-ideas-ir/lib-vue-components",
+  "description": "A collection of Vue 3 components based on Tailwind CSS",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "version": "0.0.0",
+  "version": "1.9.0",
   "type": "module",
   "files": [
     "dist",
