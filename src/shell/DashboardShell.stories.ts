@@ -20,15 +20,15 @@ const meta = {
     hideMenu: false,
   },
   argTypes: {
+    hideMenu: {
+      control: "boolean",
+    },
     brandTitle: {
       control: "text",
     },
     menuStyle: {
       control: "radio",
       options: getNavPosition().toolbar.items,
-    },
-    hideMenu: {
-      control: "boolean",
     },
   },
   parameters: {
