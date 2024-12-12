@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.9.0...v1.10.0) (2024-12-12)
+
+
+### Features
+
+* **dashboard:** update brand title and add hideMenu prop for improved UI control ([ed7df1b](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ed7df1ba266fac878ddd849ad13c2ccb72bcfefc))
+
 # [1.9.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.8.0...v1.9.0) (2024-12-11)
 
 
