@@ -16,7 +16,8 @@ const meta = {
   tags: ["autodocs"],
   args: {
     menuStyle: "vertical",
-    brandTitle: "VRISTO",
+    brandTitle: "PilotsUI",
+    hideMenu: false,
   },
   argTypes: {
     brandTitle: {
@@ -25,6 +26,9 @@ const meta = {
     menuStyle: {
       control: "radio",
       options: getNavPosition().toolbar.items,
+    },
+    hideMenu: {
+      control: "boolean",
     },
   },
   parameters: {
