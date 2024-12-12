@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.10.0...v1.11.0) (2024-12-12)
+
+
+### Features
+
+* **dashboard:** add hideMenu control to storybook for better UI testing ([4652986](https://github.com/tiny-ideas-ir/lib-vue-components/commit/4652986fa8a742850dbd944b28c0fb8e68c53074))
+
 # [1.10.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.9.0...v1.10.0) (2024-12-12)
 
 
