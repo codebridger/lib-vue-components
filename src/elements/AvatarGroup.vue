@@ -21,7 +21,7 @@ import { computed, provide, readonly } from "vue";
 
 const props = defineProps<{
   /** Add animation effect when hovering avatars */
-  hoverAnimation: boolean;
+  hoverAnimation?: boolean;
 }>();
 
 const hoverAnimation = computed(() => props.hoverAnimation);
