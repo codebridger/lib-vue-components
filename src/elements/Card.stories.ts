@@ -83,6 +83,32 @@ export const CardWithInput: Story = {
   },
 };
 
+export const CustomClassCard: Story = {
+  render: (args) => ({
+    components: { Card },
+    template: `
+      <Card v-bind="args" class="flex items-center justify-center">
+        <template #default="{ cardDisabled }">
+          <div class="p-4 text-center">
+            <h3 class="text-lg font-bold mb-2">Card with Custom Classes</h3>
+            <p class="text-gray-600">This card uses additional flex classes for layout.</p>
+          </div>
+        </template>
+      </Card>
+    `,
+    setup() {
+      return { args };
+    },
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story: "A card with custom classes for additional styling",
+      },
+    },
+  },
+};
+
 export const DisabledCard: Story = {
   render: (args) => ({
     components: { Card, Input },
