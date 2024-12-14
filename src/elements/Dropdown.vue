@@ -20,14 +20,19 @@
       class="align-middle"
     >
       <slot name="trigger" :isDisabled="disabled">
-        <Button :disabled="disabled">
+        <Button
+          :disabled="disabled"
+          :class="['flex justify-between', triggerClass]"
+        >
           {{ triggerText }}
           <Icon name="IconCaretDown" class="ltr:ml-1 rtl:mr-1 inline-block" />
         </Button>
       </slot>
 
       <template #content="{ close, isOpen }">
-        <slot name="body" :close="close" :isOpen="isOpen" />
+        <ul @click="close()" :class="['whitespace-nowrap', bodyWrapperClass]">
+          <slot name="body" :close="close" :isOpen="isOpen" />
+        </ul>
       </template>
     </Popper>
   </div>
@@ -35,7 +40,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useAppStore } from "@/stores";
+import { useAppStore } from "../stores/index";
 import type { Placement } from "@popperjs/core";
 import Button from "./Button.vue";
 import Icon from "../icon/Icon.vue";
@@ -108,6 +113,14 @@ interface PopperProps {
    * Lock the Popper into place, it will not flip dynamically when it runs out of space if this is set to true
    */
   locked?: boolean;
+  /**
+   * Class to apply to the body wrapper
+   */
+  bodyWrapperClass?: string;
+  /**
+   * Class to apply to the trigger element
+   */
+  triggerClass?: string;
 }
 
 interface PopperEmits {
