@@ -1,3 +1,11 @@
+# [1.12.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.11.0...v1.12.0) (2024-12-14)
+
+
+### Features
+
+* **avatar-group:** make hoverAnimation prop optional for better flexibility ([afcb1e3](https://github.com/tiny-ideas-ir/lib-vue-components/commit/afcb1e328f897d94457fc989dc0b18cf2cfc1938))
+* **dropdown:** enhance Dropdown component with customizable trigger and body wrapper classes ([347116a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/347116afcd38ced078b2a8d111af2f7a65b504cc))
+
 # [1.11.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.10.0...v1.11.0) (2024-12-12)
 
 
