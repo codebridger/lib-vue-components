@@ -1,6 +1,6 @@
 <template>
   <li>
-    <a href="javascript:;" :class="class">
+    <a href="javascript:;" :class="props.class">
       <slot></slot>
     </a>
   </li>
@@ -8,6 +8,6 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
-  class: string;
+  class?: string;
 }>();
 </script>
