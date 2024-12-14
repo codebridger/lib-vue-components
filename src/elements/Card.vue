@@ -1,8 +1,19 @@
 <template>
-  <div class="flex justify-center items-center w-full">
+  <div v-bind="$attrs">
     <div
-      class="max-w-[19rem] w-full bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] rounded border border-[#e0e6ed] dark:border-[#1b2e4b] dark:bg-[#191e3a] dark:shadow-none"
-      :class="[disabled && 'opacity-50 cursor-not-allowed']"
+      :class="[
+        //size class
+        'max-w-[19rem] w-full',
+
+        //card class
+        'bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] dark:bg-[#191e3a] dark:shadow-none',
+
+        //border class
+        'rounded border border-[#e0e6ed] dark:border-[#1b2e4b]',
+
+        // Interactions
+        disabled && 'opacity-50 cursor-not-allowed',
+      ]"
     >
       <slot name="default" :cardDisabled="disabled"></slot>
     </div>
@@ -10,6 +21,11 @@
 </template>
 
 <script setup lang="ts">
+// Define props with explicit attrs inheritance
+defineOptions({
+  inheritAttrs: false,
+});
+
 interface CardProps {
   disabled?: boolean;
 }
