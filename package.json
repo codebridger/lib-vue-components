@@ -39,6 +39,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@storybook/builder-vite": "^8.4.5",
     "@vueuse/head": "^0.9.7",
     "pinia": "^2.0.22",
