@@ -5,6 +5,7 @@ import Input from "./Input.vue";
 const meta: Meta<typeof Card> = {
   title: "Elements/Card",
   component: Card,
+  tags: ["autodocs"],
   argTypes: {
     disabled: {
       control: "boolean",
