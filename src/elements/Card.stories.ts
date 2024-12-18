@@ -17,6 +17,9 @@ const meta: Meta<typeof Card> = {
   },
   parameters: {
     docs: {
+      source: {
+        type: "code",
+      },
       description: {
         component:
           "A versatile card component that can pass disabled state to child interactive elements.",
@@ -88,7 +91,7 @@ export const CustomClassCard: Story = {
   render: (args) => ({
     components: { Card },
     template: `
-      <Card v-bind="args" class="flex items-center justify-center">
+      <Card v-bind="args" class="flex items-center justify-start w-[600px] h-[200px]">
         <template #default="{ cardDisabled }">
           <div class="p-4 text-center">
             <h3 class="text-lg font-bold mb-2">Card with Custom Classes</h3>
