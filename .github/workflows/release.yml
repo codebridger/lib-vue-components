@@ -43,4 +43,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn semantic-release
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            yarn semantic-release --branch dev --tag-format dev-${version}
+          else
+            yarn semantic-release
+          fi
