@@ -46,7 +46,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            yarn semantic-release --branch dev --tag-format dev-${version}
+            yarn semantic-release --branch dev --tag-format "dev-${version}"
           else
             yarn semantic-release
           fi
