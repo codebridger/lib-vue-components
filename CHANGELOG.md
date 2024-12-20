@@ -1,3 +1,13 @@
+# [1.14.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.13.0...v1.14.0) (2024-12-20)
+
+
+### Features
+
+* **modal:** add CustomModal component with customizable trigger, size, and animations ([c585495](https://github.com/tiny-ideas-ir/lib-vue-components/commit/c5854951e102a2c1e3d670c087e3cbe67fd7ce75))
+* **Modal:** add Modal component with customizable properties and storybook integration ([819ad27](https://github.com/tiny-ideas-ir/lib-vue-components/commit/819ad27662ef2c1da65bf2ce9f887f40d851b916))
+* **modal:** refactor CustomModal component with improved props documentation and emit handling ([94615bb](https://github.com/tiny-ideas-ir/lib-vue-components/commit/94615bb40ba3f8db2128060ce3f4f71fdd88f16d))
+* **release:** allow releases to trigger from the dev branch ([40df973](https://github.com/tiny-ideas-ir/lib-vue-components/commit/40df973c82de2a36be733a41719be52a5a4f1d50))
+
 # [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.12.0...v1.13.0) (2024-12-20)
 
 
