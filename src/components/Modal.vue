@@ -1,6 +1,6 @@
 # CustomModal.vue
 <template>
-  <div v-if="$slots.trigger">
+  <div>
     <slot name="trigger">
       <Button @click="isShowing = true">{{ props.triggerLabel }}</Button>
     </slot>
@@ -111,6 +111,7 @@ import {
   DialogPanel,
   DialogOverlay,
 } from "@headlessui/vue";
+
 import Button from "../elements/Button.vue";
 
 type AnimationType =
@@ -130,30 +131,72 @@ interface ModalClass {
   wrapper?: string;
 }
 
-const props = withDefaults(
-  defineProps<{
-    modelValue: boolean;
-    title?: string;
-    triggerLabel?: string;
-    size?: ModalSize;
-    animation?: AnimationType;
-    hideClose?: boolean;
-    persistent?: boolean;
-    customClass?: ModalClass;
-    preventClose?: boolean;
-    contentClass?: string;
-  }>(),
-  {
-    title: "",
-    size: "md",
-    animation: "fade",
-    hideClose: false,
-    persistent: false,
-    customClass: () => ({}),
-    preventClose: false,
-    contentClass: "",
-  }
-);
+interface ModalProps {
+  /**
+   * Controls the visibility of the modal.
+   */
+  modelValue: boolean;
+
+  /**
+   * The title of the modal.
+   */
+  title?: string;
+
+  /**
+   * The label for the trigger button that opens the modal.
+   */
+  triggerLabel?: string;
+
+  /**
+   * The size of the modal. Can be one of "sm", "md", "lg", "xl", or "full".
+   */
+  size?: ModalSize;
+
+  /**
+   * The animation type for the modal. Can be one of "fade", "slideDown", "slideUp", "fadeLeft", "fadeRight", "rotateLeft", "zoomIn", or "none".
+   */
+  animation?: AnimationType;
+
+  /**
+   * If true, the close button will be hidden.
+   */
+  hideClose?: boolean;
+
+  /**
+   * If true, the modal will not close when clicking outside of it.
+   */
+  persistent?: boolean;
+
+  /**
+   * Custom classes for different parts of the modal.
+   */
+  customClass?: ModalClass;
+
+  /**
+   * If true, the modal cannot be closed.
+   */
+  preventClose?: boolean;
+
+  /**
+   * Custom class for the content area of the modal.
+   */
+  contentClass?: string;
+}
+
+const props = withDefaults(defineProps<ModalProps>(), {
+  title: "",
+  size: "md",
+  animation: "fade",
+  hideClose: false,
+  persistent: false,
+  customClass: () => ({
+    panel: "",
+    overlay: "",
+    wrapper: "",
+  }),
+  preventClose: false,
+  contentClass: "",
+});
 
 const isShowing = ref(props.modelValue);
 
@@ -161,6 +204,16 @@ watch(
   () => props.modelValue,
   (value) => {
     isShowing.value = value;
+  }
+);
+
+watch(
+  () => isShowing.value,
+  (value) => {
+    if (!value) {
+      emit("update:modelValue", false);
+      emit("close");
+    }
   }
 );
 
@@ -198,8 +251,7 @@ const animationClasses = computed(() => {
 
 const closeModal = () => {
   if (props.preventClose) return;
-  emit("update:modelValue", false);
-  emit("close");
+  isShowing.value = false;
 };
 
 const handleClose = () => {

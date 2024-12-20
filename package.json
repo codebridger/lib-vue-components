@@ -15,7 +15,8 @@
   "exports": {
     "./style.css": "./dist/style.css",
     "./shell.ts": "./src/shell/components.ts",
-    "./components.ts": "./src/elements/components.ts",
+    "./elements.ts": "./src/elements/components.ts",
+    "./components.ts": "./src/components/components.ts",
     "./store.ts": "./src/stores/index.ts",
     "./types.ts": "./src/types/types.ts",
     "./nuxt": {
