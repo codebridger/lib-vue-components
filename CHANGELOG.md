@@ -1,3 +1,42 @@
+# [1.14.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.13.0...v1.14.0) (2024-12-20)
+
+
+### Features
+
+* **modal:** add CustomModal component with customizable trigger, size, and animations ([c585495](https://github.com/tiny-ideas-ir/lib-vue-components/commit/c5854951e102a2c1e3d670c087e3cbe67fd7ce75))
+* **Modal:** add Modal component with customizable properties and storybook integration ([819ad27](https://github.com/tiny-ideas-ir/lib-vue-components/commit/819ad27662ef2c1da65bf2ce9f887f40d851b916))
+* **modal:** refactor CustomModal component with improved props documentation and emit handling ([94615bb](https://github.com/tiny-ideas-ir/lib-vue-components/commit/94615bb40ba3f8db2128060ce3f4f71fdd88f16d))
+* **release:** allow releases to trigger from the dev branch ([40df973](https://github.com/tiny-ideas-ir/lib-vue-components/commit/40df973c82de2a36be733a41719be52a5a4f1d50))
+
+# [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.12.0...v1.13.0) (2024-12-20)
+
+
+### Features
+
+* **release:** customize semantic-release for dev branch with specific tag format ([fe59e71](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fe59e71f6d5d2352fbae27252df13692d184e9d0))
+
+# [1.12.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.11.0...v1.12.0) (2024-12-14)
+
+
+### Features
+
+* **avatar-group:** make hoverAnimation prop optional for better flexibility ([afcb1e3](https://github.com/tiny-ideas-ir/lib-vue-components/commit/afcb1e328f897d94457fc989dc0b18cf2cfc1938))
+* **dropdown:** enhance Dropdown component with customizable trigger and body wrapper classes ([347116a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/347116afcd38ced078b2a8d111af2f7a65b504cc))
+
+# [1.11.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.10.0...v1.11.0) (2024-12-12)
+
+
+### Features
+
+* **dashboard:** add hideMenu control to storybook for better UI testing ([4652986](https://github.com/tiny-ideas-ir/lib-vue-components/commit/4652986fa8a742850dbd944b28c0fb8e68c53074))
+
+# [1.10.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.9.0...v1.10.0) (2024-12-12)
+
+
+### Features
+
+* **dashboard:** update brand title and add hideMenu prop for improved UI control ([ed7df1b](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ed7df1ba266fac878ddd849ad13c2ccb72bcfefc))
+
 # [1.9.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.8.0...v1.9.0) (2024-12-11)
 
 
