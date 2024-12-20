@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.0.0...dev-1.0.1) (2024-12-20)
+
+
+### Bug Fixes
+
+* **package:** update version to 1.14.0 ([15f8dfc](https://github.com/tiny-ideas-ir/lib-vue-components/commit/15f8dfc55330385ff5ee356cd1b2faa662cc8d3f))
+
 # 1.0.0 (2024-12-20)
 
 
