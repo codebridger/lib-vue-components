@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.12.0...v1.13.0) (2024-12-20)
+
+
+### Features
+
+* **release:** customize semantic-release for dev branch with specific tag format ([fe59e71](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fe59e71f6d5d2352fbae27252df13692d184e9d0))
+
 # [1.12.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.11.0...v1.12.0) (2024-12-14)
 
 
