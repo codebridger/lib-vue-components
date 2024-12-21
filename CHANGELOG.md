@@ -1,3 +1,22 @@
+# [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.12.0...dev-1.13.0) (2024-12-21)
+
+
+### Bug Fixes
+
+* **package:** update version to 1.14.0 ([15f8dfc](https://github.com/tiny-ideas-ir/lib-vue-components/commit/15f8dfc55330385ff5ee356cd1b2faa662cc8d3f))
+* **release:** add 'dev' branch to release configuration ([8e70b77](https://github.com/tiny-ideas-ir/lib-vue-components/commit/8e70b77e3922d04c505693f77324fdcfdc4da691))
+* **release:** correct tag format syntax in release workflow ([fd6efcd](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fd6efcde8321a10146cba1037d3802cde6f0eccd))
+* **release:** escape variable in tag format for semantic-release ([dc10021](https://github.com/tiny-ideas-ir/lib-vue-components/commit/dc1002119228d08c33d7d8232e8c31922da26506))
+* **release:** update version to 0.0.0 and add tag configuration for semantic-release ([83ac589](https://github.com/tiny-ideas-ir/lib-vue-components/commit/83ac589da350be6c77841ac831155f94ee07eaba))
+
+
+### Features
+
+* **Modal:** add Modal component with customizable properties and storybook integration ([819ad27](https://github.com/tiny-ideas-ir/lib-vue-components/commit/819ad27662ef2c1da65bf2ce9f887f40d851b916))
+* **modal:** refactor CustomModal component with improved props documentation and emit handling ([94615bb](https://github.com/tiny-ideas-ir/lib-vue-components/commit/94615bb40ba3f8db2128060ce3f4f71fdd88f16d))
+* **release:** allow releases to trigger from the dev branch ([40df973](https://github.com/tiny-ideas-ir/lib-vue-components/commit/40df973c82de2a36be733a41719be52a5a4f1d50))
+* **release:** customize semantic-release for dev branch with specific tag format ([fe59e71](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fe59e71f6d5d2352fbae27252df13692d184e9d0))
+
 ## [1.0.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.0.1...dev-1.0.2) (2024-12-21)
 
 
