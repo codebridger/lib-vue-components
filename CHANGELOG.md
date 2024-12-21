@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.0.1...dev-1.0.2) (2024-12-21)
+
+
+### Bug Fixes
+
+* **release:** update version to 0.0.0 and add tag configuration for semantic-release ([83ac589](https://github.com/tiny-ideas-ir/lib-vue-components/commit/83ac589da350be6c77841ac831155f94ee07eaba))
+
 ## [1.0.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.0.0...dev-1.0.1) (2024-12-20)
 
 
