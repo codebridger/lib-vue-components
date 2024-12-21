@@ -10,7 +10,8 @@
 		[
 			"@semantic-release/npm",
 			{
-				"npmPublish": true
+				"npmPublish": true,
+				"tag": "${nextRelease.gitTag}"
 			}
 		],
 		"@semantic-release/github",
