@@ -6,7 +6,10 @@
         class="bg-primary ltr:rounded-tl-full rtl:rounded-tr-full ltr:rounded-bl-full rtl:rounded-br-full absolute ltr:-left-12 rtl:-right-12 top-0 bottom-0 my-auto w-12 h-10 flex justify-center items-center text-white cursor-pointer"
         @click="showCustomizer = !showCustomizer"
       >
-        <icon-settings class="animate-[spin_3s_linear_infinite] w-5 h-5" />
+        <Icon
+          name="icon-settings"
+          class="animate-[spin_3s_linear_infinite] w-5 h-5"
+        />
       </a>
     </div>
 
@@ -34,7 +37,7 @@
               class="absolute top-0 ltr:right-0 rtl:left-0 opacity-30 hover:opacity-100 dark:text-white"
               @click="showCustomizer = false"
             >
-              <icon-x class="w-5 h-5" />
+              <Icon name="IconX" class="w-5 h-5" />
             </a>
             <h4 class="mb-1 dark:text-white">TEMPLATE CUSTOMIZER</h4>
             <p class="text-white-dark">
@@ -62,7 +65,10 @@
                 ]"
                 @click="store.toggleTheme('light')"
               >
-                <icon-sun class="w-5 h-5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                <Icon
+                  name="IconSun"
+                  class="w-5 h-5 shrink-0 ltr:mr-2 rtl:ml-2"
+                />
                 Light
               </button>
               <button
@@ -75,7 +81,10 @@
                 ]"
                 @click="store.toggleTheme('dark')"
               >
-                <icon-moon class="w-5 h-5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                <Icon
+                  name="IconMoon"
+                  class="w-5 h-5 shrink-0 ltr:mr-2 rtl:ml-2"
+                />
                 Dark
               </button>
               <button
@@ -88,7 +97,10 @@
                 ]"
                 @click="store.toggleTheme('system')"
               >
-                <icon-laptop class="w-5 h-5 shrink-0 ltr:mr-2 rtl:ml-2" />
+                <Icon
+                  name="IconLaptop"
+                  class="w-5 h-5 shrink-0 ltr:mr-2 rtl:ml-2"
+                />
                 System
               </button>
             </div>
@@ -302,11 +314,8 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useAppStore } from "../stores/index";
-import IconSettings from "../icon/icon-settings.vue";
-import IconX from "../icon/icon-x.vue";
-import IconSun from "../icon/icon-sun.vue";
-import IconMoon from "../icon/icon-moon.vue";
-import IconLaptop from "../icon/icon-laptop.vue";
+import Icon from "@/icon/Icon.vue";
+
 const store = useAppStore();
 const showCustomizer = ref(false);
 </script>
