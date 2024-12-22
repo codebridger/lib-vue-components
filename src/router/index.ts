@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/icons",
     name: "icons",
-    component: () => import("../views/icons.vue"),
+    component: () => import("../views/icons-gallery.vue"),
   },
 ];
 
