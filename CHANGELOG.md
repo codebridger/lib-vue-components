@@ -1,3 +1,13 @@
+# [1.15.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.14.0...dev-1.15.0) (2024-12-22)
+
+
+### Features
+
+* **icon:** refactor icon components to use a unified Icon component and update ThemeCustomizer ([a76068a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/a76068a14d54921e4a8fbdbf6d0c72d6662126b3))
+* **icon:** update icon components and add icon gallery documentation ([9f87fa2](https://github.com/tiny-ideas-ir/lib-vue-components/commit/9f87fa20c6f4169e10b14609612cb5187bb13a91))
+* **toast:** add Storybook stories and documentation for toast utility functions ([ee4b6e4](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ee4b6e4704074942d0111bab3e3e49b65ca299f8))
+* **toast:** implement toast utility functions using SweetAlert2 ([bab7494](https://github.com/tiny-ideas-ir/lib-vue-components/commit/bab749480fbd09a4dddc4f29e46b3692d4b670f7))
+
 # [1.14.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.13.1...dev-1.14.0) (2024-12-22)
 
 
