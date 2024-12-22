@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.13.0...dev-1.13.1) (2024-12-21)
+
+
+### Bug Fixes
+
+* update deploy condition to trigger only on successful main branch workflows ([b06ae64](https://github.com/tiny-ideas-ir/lib-vue-components/commit/b06ae64f56411bd9ae6889badc8e21c4695be41e))
+
 # [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.12.0...dev-1.13.0) (2024-12-21)
 
 
