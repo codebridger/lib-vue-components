@@ -14,7 +14,7 @@
           <span class="px-2">{{ item.title }}</span>
         </div>
         <div class="right_arrow" v-if="item.children?.length">
-          <IconCaretDown />
+          <Icon name="IconMenuTables" />
         </div>
       </a>
 
@@ -31,7 +31,7 @@
             <a href="javascript:;">
               {{ child.title }}
               <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-90 -rotate-90">
-                <IconCaretDown />
+                <Icon name="IconMenuTables" />
               </div>
             </a>
             <!-- Second level menu -->
@@ -66,7 +66,6 @@ import { ref, onMounted, computed, reactive, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import Icon from "../icon/Icon.vue";
-import IconCaretDown from "../icon/icon-caret-down.vue";
 
 import {
   HorizontalMenuGroupType,
