@@ -10,6 +10,8 @@
     "pinia",
     "semidark",
     "subbar",
-    "subcomponents"
+    "subcomponents",
+    "Swal",
+    "sweetalert"
   ]
 }
