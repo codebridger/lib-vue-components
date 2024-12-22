@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.13.1...dev-1.14.0) (2024-12-22)
+
+
+### Features
+
+* add toggleModal functionality to slots in Modal component ([d645a10](https://github.com/tiny-ideas-ir/lib-vue-components/commit/d645a10dabff1fafafb46b9abd98375360873f69))
+
 ## [1.13.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.13.0...dev-1.13.1) (2024-12-21)
 
 
