@@ -1,0 +1,29 @@
+import { Meta, Title, Description, Story, Controls, Canvas } from '@storybook/blocks'
+import * as ToastStories from './toast.stories.ts'
+
+<Meta title="Utilities/Toast" />
+
+# Toast Utility Functions
+
+The `toast.ts` file provides utility functions for displaying toast notifications using SweetAlert2. These functions allow you to show different types of toast messages with various configurations.
+
+## Usage
+
+To show a basic toast message, use the `showToast` function:
+```typescript
+import { showToast, successToast, errorToast, warningToast, infoToast } from '@tiny-ideas-ir/lib-vue-components/toast.ts';
+
+showToast({ message: 'This is a basic toast message', variant: 'success' });
+
+successToast('This is a success toast message');
+
+errorToast('This is an error toast message');
+
+warningToast('This is a warning toast message');
+
+infoToast('This is an info toast message');
+```
+
+## Configuration
+<Canvas of={ToastStories.DefaultToast} meta={ToastStories} />
+<Controls of={ToastStories.DefaultToast} />
