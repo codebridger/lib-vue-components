@@ -43,6 +43,7 @@ export const SingleVariant: Story = {
   },
 };
 
+// @ts-ignore
 export const iconGallery: Story = {
   render(args) {
     return {
