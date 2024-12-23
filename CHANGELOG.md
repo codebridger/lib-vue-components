@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.15.0...dev-1.15.1) (2024-12-23)
+
+
+### Bug Fixes
+
+* **imports:** update import paths for useAppStore and Icon component in SidebarMenu and ThemeCustomizer ([19f505d](https://github.com/tiny-ideas-ir/lib-vue-components/commit/19f505d3c70ad03a1a51917889bf1a35ca8f2ac0))
+
 # [1.15.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.14.0...dev-1.15.0) (2024-12-22)
 
 
