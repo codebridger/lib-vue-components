@@ -314,7 +314,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useAppStore } from "../stores/index";
-import Icon from "@/icon/Icon.vue";
+import Icon from "../icon/Icon.vue";
 
 const store = useAppStore();
 const showCustomizer = ref(false);
