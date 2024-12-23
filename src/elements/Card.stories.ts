@@ -10,6 +10,10 @@ const meta: Meta<typeof Card> = {
     disabled: {
       control: "boolean",
       description: "Disables the card and its child interactive elements",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
   },
   args: {
@@ -21,8 +25,39 @@ const meta: Meta<typeof Card> = {
         type: "code",
       },
       description: {
-        component:
-          "A versatile card component that can pass disabled state to child interactive elements.",
+        component: `
+A versatile Card component that serves as a container for content with consistent styling. 
+The component features:
+
+- Automatic dark mode support
+- Consistent shadow and border styling
+- Disabled state propagation to child components
+- Full TypeScript support
+- Tailwind CSS integration
+
+## Usage
+
+The Card component accepts a default slot that receives the cardDisabled state:
+
+\`\`\`vue
+<Card :disabled="false">
+  <template #default="{ cardDisabled }">
+    <div class="p-4">
+      <h3>Card Title</h3>
+      <Input :disabled="cardDisabled" />
+    </div>
+  </template>
+</Card>
+\`\`\`
+
+## Styling
+
+The card uses Tailwind CSS with:
+- Light/dark mode support
+- Configurable shadow and border
+- Consistent padding
+- Opacity changes for disabled state
+`,
       },
     },
   },
@@ -40,7 +75,7 @@ export const Default: Story = {
         <template #default="{ cardDisabled }">
           <div class="p-4">
             <h3 class="text-lg font-bold mb-2">Default Card</h3>
-            <p class="text-gray-600">This is a default card with some example content.</p>
+            <p class="text-gray-600 dark:text-gray-300">This is a default card with some example content.</p>
           </div>
         </template>
       </Card>
@@ -95,7 +130,7 @@ export const CustomClassCard: Story = {
         <template #default="{ cardDisabled }">
           <div class="p-4 text-center">
             <h3 class="text-lg font-bold mb-2">Card with Custom Classes</h3>
-            <p class="text-gray-600">This card uses additional flex classes for layout.</p>
+            <p class="text-gray-600 dark:text-gray-300">This card uses additional flex classes for layout.</p>
           </div>
         </template>
       </Card>
@@ -114,10 +149,13 @@ export const CustomClassCard: Story = {
 };
 
 export const DisabledCard: Story = {
+  args: {
+    disabled: true,
+  },
   render: (args) => ({
     components: { Card, Input },
     template: `
-      <Card :disabled="true">
+      <Card v-bind="args">
         <template #default="{ cardDisabled }">
           <div class="p-4 space-y-4">
             <h3 class="text-lg font-bold mb-2">Disabled Card</h3>
@@ -128,7 +166,7 @@ export const DisabledCard: Story = {
             />
             <button 
               :disabled="cardDisabled"
-              class="w-full p-2 bg-blue-500 text-white rounded"
+              class="w-full p-2 bg-blue-500 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Disabled Button
             </button>
@@ -136,9 +174,6 @@ export const DisabledCard: Story = {
         </template>
       </Card>
     `,
-    args: {
-      disabled: true,
-    },
   }),
   parameters: {
     docs: {
@@ -165,14 +200,14 @@ export const MultipleInteractiveElements: Story = {
             />
             <select 
               :disabled="cardDisabled"
-              class="w-full p-2 border rounded"
+              class="w-full p-2 border rounded dark:bg-[#191e3a] dark:border-[#1b2e4b]"
             >
               <option>Option 1</option>
               <option>Option 2</option>
             </select>
             <button 
               :disabled="cardDisabled"
-              class="w-full p-2 bg-blue-500 text-white rounded"
+              class="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {{ cardDisabled ? 'Disabled Action' : 'Perform Action' }}
             </button>
