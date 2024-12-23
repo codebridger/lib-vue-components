@@ -11,10 +11,14 @@
 
       // light - Base classes
       'flex items-center',
-      'bg-white-light/40',
+      disabled || cardDisabled
+        ? 'bg-gray-100 cursor-not-allowed'
+        : 'bg-white-light/40',
 
       // dark - Base classes
-      'dark:bg-dark/40',
+      disabled || cardDisabled
+        ? 'bg-gray-100 cursor-not-allowed'
+        : 'dark:bg-dark/40',
       'dark:text-[#d0d2d6]',
       'dark:hover:bg-dark/60',
       'dark:hover:text-primary',
@@ -26,6 +30,7 @@
       'hover:bg-white-light/90',
       'hover:text-primary',
     ]"
+    :disabled="disabled || cardDisabled"
   >
     <slot>
       <Icon
@@ -44,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits } from "vue";
+import { computed, defineEmits, inject } from "vue";
 import Icon from "../icon/Icon.vue";
 
 // Define Icon button props interface
@@ -53,7 +58,10 @@ interface IconButtonProps {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   icon?: string;
   imgUrl?: string;
+  disabled?: boolean;
 }
+
+const cardDisabled = inject<boolean>("cardDisabled");
 
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {

@@ -20,16 +20,21 @@
 </template>
 
 <script setup lang="ts">
+import { provide } from "vue";
+
 // Define props with explicit attrs inheritance
 defineOptions({
   inheritAttrs: false,
 });
 
+const props = withDefaults(defineProps<CardProps>(), {
+  disabled: false,
+});
+
+// Provide cardDisabled prop to children
+provide("cardDisabled", props.disabled);
+
 interface CardProps {
   disabled?: boolean;
 }
-
-withDefaults(defineProps<CardProps>(), {
-  disabled: false,
-});
 </script>
