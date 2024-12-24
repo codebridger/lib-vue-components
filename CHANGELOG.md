@@ -1,3 +1,10 @@
+# [1.17.0-dev.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.16.0...dev-1.17.0-dev.1) (2024-12-24)
+
+
+### Features
+
+* **release:** Merge branch 'main' into dev ([d42ccc0](https://github.com/tiny-ideas-ir/lib-vue-components/commit/d42ccc01aa2af63a08514e4c582b14b79cdba787))
+
 # [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.12.0...v1.13.0) (2024-12-24)
 
 
