@@ -13,14 +13,16 @@
         // specific for range type
         { 'w-full py-2.5': type === 'range' },
 
-        disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
+        disabled || cardDisabled
+          ? 'bg-gray-100 cursor-not-allowed'
+          : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
       ]"
       :id="id"
       :type="type"
       :value="modelValue"
       :placeholder="placeholder"
-      :disabled="disabled"
+      :disabled="disabled || cardDisabled"
       :required="required"
       :min="type === 'range' ? min : undefined"
       :max="type === 'range' ? max : undefined"
@@ -35,6 +37,8 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from "vue";
+
 interface InputProps {
   modelValue?: string;
   type?:
@@ -70,6 +74,8 @@ withDefaults(defineProps<InputProps>(), {
   min: 0,
   max: 100,
 });
+
+const cardDisabled = inject<boolean>("cardDisabled");
 
 defineEmits<{
   "update:modelValue": [value: string];

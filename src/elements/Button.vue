@@ -7,19 +7,22 @@
       'btn',
       'text-xs sm:text-sm', // responsive text size
       { 'w-full': props.block }, // conditional full width
-      computedColor, // color class
+      disabled || cardDisabled
+        ? 'bg-gray-100 cursor-not-allowed'
+        : computedColor, // color class
       computedSize, // size class
       computedShadow, // shadow class
       computedRounded, // rounded corners class
       props.textTransform, // text transform class
     ]"
+    :disabled="disabled || cardDisabled"
   >
     <slot>{{ label }}</slot>
   </button>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, inject } from "vue";
 
 // Define button props interface
 interface ButtonProps {
@@ -39,7 +42,10 @@ interface ButtonProps {
   block?: boolean;
   outline?: boolean;
   shadow?: boolean;
+  disabled?: boolean;
 }
+
+const cardDisabled = inject<boolean>("cardDisabled");
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -47,6 +53,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   block: false,
   outline: false,
   shadow: false,
+  disabled: false,
 });
 
 // Define the emits with TypeScript typing

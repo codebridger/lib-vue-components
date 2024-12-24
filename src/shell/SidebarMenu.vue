@@ -210,7 +210,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useAppStore } from "@/stores/index";
+import { useAppStore } from "../stores/index";
 import { Collapse } from "vue-collapsed";
 
 import Icon from "../icon/Icon.vue";

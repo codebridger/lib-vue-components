@@ -5,12 +5,14 @@
       :rows="rows"
       :class="[
         'form-textarea',
-        disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
+        disabled || cardDisabled
+          ? 'bg-gray-100 cursor-not-allowed'
+          : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
       ]"
       :placeholder="placeholder"
       :required="required"
-      :disabled="disabled"
+      :disabled="disabled || cardDisabled"
       @input="
         $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
       "
@@ -22,6 +24,8 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from "vue";
+
 interface TextAreaProps {
   modelValue?: string;
   rows?: string | number;
@@ -31,6 +35,8 @@ interface TextAreaProps {
   error?: boolean;
   errorMsg?: string;
 }
+
+const cardDisabled = inject<boolean>("cardDisabled");
 
 withDefaults(defineProps<TextAreaProps>(), {
   modelValue: "",

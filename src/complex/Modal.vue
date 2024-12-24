@@ -1,7 +1,7 @@
 # CustomModal.vue
 <template>
   <div>
-    <slot name="trigger">
+    <slot name="trigger" :toggleModal="toggleModal">
       <Button @click="isShowing = true">{{ props.triggerLabel }}</Button>
     </slot>
   </div>
@@ -83,7 +83,7 @@
 
               <!-- Content -->
               <div :class="['p-5', contentClass]">
-                <slot />
+                <slot :toggleModal="toggleModal" />
               </div>
 
               <!-- Footer -->
@@ -91,7 +91,7 @@
                 v-if="$slots.footer"
                 class="border-t border-[#ebe9f1] p-5 dark:border-white/10"
               >
-                <slot name="footer" />
+                <slot name="footer" :toggleModal="toggleModal" />
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -258,5 +258,9 @@ const handleClose = () => {
   if (!props.persistent) {
     closeModal();
   }
+};
+
+const toggleModal = function (value: boolean) {
+  isShowing.value = value || !isShowing.value;
 };
 </script>

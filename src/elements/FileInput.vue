@@ -15,10 +15,14 @@
 
         // colors
         'file:text-white',
-        computedButtonColor,
+        disabled || cardDisabled
+          ? 'bg-gray-100 cursor-not-allowed'
+          : computedButtonColor,
 
         // Interactions
-        disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white',
+        disabled || cardDisabled
+          ? 'bg-gray-100 cursor-not-allowed'
+          : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
       ]"
       :id="id"
@@ -28,13 +32,13 @@
       :capture="capture"
       :multiple="multiple"
       :size="size"
-      :disabled="disabled"
       :required="required"
       @change="handleFileChange"
       @input="handleInput"
       @cancel="handleCancel"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
+      :disabled="disabled || cardDisabled"
     />
 
     <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">
@@ -44,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, inject } from "vue";
 
 interface FileInputProps {
   disabled?: boolean;
@@ -67,6 +71,8 @@ interface FileInputProps {
   multiple?: boolean;
   size?: number;
 }
+
+const cardDisabled = inject<boolean>("cardDisabled");
 
 const computedButtonColor = computed(() => {
   const colorList = {

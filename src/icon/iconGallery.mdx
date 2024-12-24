@@ -1,0 +1,20 @@
+import * as iconStories from './icons.stories'
+import { Meta, Story, Title } from '@storybook/blocks'
+
+<Meta title="Icon Gallery" />
+
+<Title>Icon Gallery</Title>
+
+To use icons listed in this page you need to import the `icon` component and provide a name from the list below.
+
+```vue
+<template>
+  <icon name="IconMenuTables" />
+</template>
+
+<script lang="ts" setup>
+import { Icon } from '@tiny-ideas-ir/lib-vue-components/elements.ts'
+</script>
+```
+
+<Story of={iconStories.iconGallery} />

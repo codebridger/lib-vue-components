@@ -6,7 +6,6 @@
     v-else-if="variantIcons[iconName]"
     :is="variantIcons[iconName]"
     :fill="props.fill"
-    :duotone="props.duotone"
   />
 
   <div v-else :class="[props.name]" />
@@ -24,11 +23,6 @@ const props = defineProps({
     required: true,
   },
   fill: {
-    type: Boolean,
-    default: false,
-    require: false,
-  },
-  duotone: {
     type: Boolean,
     default: false,
     require: false,
