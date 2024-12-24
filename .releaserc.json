@@ -1,17 +1,23 @@
 {
 	"branches": [
 		"main",
-		"dev"
+		{
+			"name": "dev",
+			"prerelease": true
+		}
 	],
 	"plugins": [
 		"@semantic-release/commit-analyzer",
 		"@semantic-release/release-notes-generator",
-		"@semantic-release/changelog",
+		{
+			"path": "@semantic-release/changelog",
+			"condition": "branch.name === 'main'"
+		},
 		[
 			"@semantic-release/npm",
 			{
 				"npmPublish": true,
-				"tag": "${nextRelease.gitTag}"
+				"tag": "${branch.name === 'main' ? 'latest' : branch.name}"
 			}
 		],
 		"@semantic-release/github",
