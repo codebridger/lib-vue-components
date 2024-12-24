@@ -8,6 +8,7 @@ import DropdownItem from "./DropdownItem.vue";
 import Input from "./Input.vue";
 import TextArea from "./TextArea.vue";
 import FileInput from "./FileInput.vue";
+import Card from "./Card.vue";
 
 // icons
 import Icon from "../icon/Icon.vue";
@@ -23,6 +24,7 @@ export {
   Input,
   TextArea,
   FileInput,
+  Card,
 
   // Icons
   Icon,
