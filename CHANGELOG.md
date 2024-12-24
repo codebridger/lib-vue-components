@@ -1,3 +1,10 @@
+# [1.17.0-dev.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.1...dev-1.17.0-dev.2) (2024-12-24)
+
+
+### Features
+
+* **DashboardShell:** enhance content slot with dynamic size and provide contentSize context ([d478a3e](https://github.com/tiny-ideas-ir/lib-vue-components/commit/d478a3e51ca08696f603174410674fe870e1ae8c))
+
 # [1.17.0-dev.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.16.0...dev-1.17.0-dev.1) (2024-12-24)
 
 
