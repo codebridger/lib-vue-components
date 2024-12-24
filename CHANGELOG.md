@@ -1,3 +1,36 @@
+# [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.12.0...v1.13.0) (2024-12-24)
+
+
+### Bug Fixes
+
+* **Card:** improve cardDisabled state propagation to child components ([b679890](https://github.com/tiny-ideas-ir/lib-vue-components/commit/b679890951c38929b41a925732859bb05e156e20))
+* **imports:** update import paths for useAppStore and Icon component in SidebarMenu and ThemeCustomizer ([19f505d](https://github.com/tiny-ideas-ir/lib-vue-components/commit/19f505d3c70ad03a1a51917889bf1a35ca8f2ac0))
+* **package:** update version to 1.14.0 ([15f8dfc](https://github.com/tiny-ideas-ir/lib-vue-components/commit/15f8dfc55330385ff5ee356cd1b2faa662cc8d3f))
+* **release:** add 'dev' branch to release configuration ([8e70b77](https://github.com/tiny-ideas-ir/lib-vue-components/commit/8e70b77e3922d04c505693f77324fdcfdc4da691))
+* **release:** correct tag format syntax in release workflow ([fd6efcd](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fd6efcde8321a10146cba1037d3802cde6f0eccd))
+* **release:** escape variable in tag format for semantic-release ([dc10021](https://github.com/tiny-ideas-ir/lib-vue-components/commit/dc1002119228d08c33d7d8232e8c31922da26506))
+* **release:** update version to 0.0.0 and add tag configuration for semantic-release ([83ac589](https://github.com/tiny-ideas-ir/lib-vue-components/commit/83ac589da350be6c77841ac831155f94ee07eaba))
+* update deploy condition to trigger only on successful main branch workflows ([b06ae64](https://github.com/tiny-ideas-ir/lib-vue-components/commit/b06ae64f56411bd9ae6889badc8e21c4695be41e))
+
+
+### Features
+
+* add toggleModal functionality to slots in Modal component ([d645a10](https://github.com/tiny-ideas-ir/lib-vue-components/commit/d645a10dabff1fafafb46b9abd98375360873f69))
+* **Card:** add autodocs tag to Card component stories ([ab464ce](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ab464ceb08a110ac3dd220e5413cea87a5699e2a))
+* **Card:** enhance Card component with customizable classes and add source documentation ([a289b39](https://github.com/tiny-ideas-ir/lib-vue-components/commit/a289b395a51ec0a200255a85f9286e6167482d47))
+* **Card:** Implement Card component ([abc223f](https://github.com/tiny-ideas-ir/lib-vue-components/commit/abc223fc7e17dcefa528f90eb0b47f79cb8f04b3))
+* **Card:** Implement Card component - inprogress ([bc0b81c](https://github.com/tiny-ideas-ir/lib-vue-components/commit/bc0b81c01f89a47e46b488f005c2a7f4fa919fb6))
+* **Card:** update CardWithInput story to include disabled state and enhance documentation ([7678f88](https://github.com/tiny-ideas-ir/lib-vue-components/commit/7678f88b0e446871844241c66db8386e7525f41f))
+* **icon:** refactor icon components to use a unified Icon component and update ThemeCustomizer ([a76068a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/a76068a14d54921e4a8fbdbf6d0c72d6662126b3))
+* **icon:** update icon components and add icon gallery documentation ([9f87fa2](https://github.com/tiny-ideas-ir/lib-vue-components/commit/9f87fa20c6f4169e10b14609612cb5187bb13a91))
+* **modal:** add CustomModal component with customizable trigger, size, and animations ([c585495](https://github.com/tiny-ideas-ir/lib-vue-components/commit/c5854951e102a2c1e3d670c087e3cbe67fd7ce75))
+* **Modal:** add Modal component with customizable properties and storybook integration ([819ad27](https://github.com/tiny-ideas-ir/lib-vue-components/commit/819ad27662ef2c1da65bf2ce9f887f40d851b916))
+* **modal:** refactor CustomModal component with improved props documentation and emit handling ([94615bb](https://github.com/tiny-ideas-ir/lib-vue-components/commit/94615bb40ba3f8db2128060ce3f4f71fdd88f16d))
+* **release:** allow releases to trigger from the dev branch ([40df973](https://github.com/tiny-ideas-ir/lib-vue-components/commit/40df973c82de2a36be733a41719be52a5a4f1d50))
+* **release:** customize semantic-release for dev branch with specific tag format ([fe59e71](https://github.com/tiny-ideas-ir/lib-vue-components/commit/fe59e71f6d5d2352fbae27252df13692d184e9d0))
+* **toast:** add Storybook stories and documentation for toast utility functions ([ee4b6e4](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ee4b6e4704074942d0111bab3e3e49b65ca299f8))
+* **toast:** implement toast utility functions using SweetAlert2 ([bab7494](https://github.com/tiny-ideas-ir/lib-vue-components/commit/bab749480fbd09a4dddc4f29e46b3692d4b670f7))
+
 # [1.16.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.15.1...dev-1.16.0) (2024-12-24)
 
 
