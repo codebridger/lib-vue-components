@@ -87,6 +87,9 @@ export const Default: Story = {
 };
 
 export const CardWithInput: Story = {
+  args: {
+    disabled: true,
+  },
   render: (args) => ({
     components: { Card, Input },
     template: `
@@ -96,7 +99,6 @@ export const CardWithInput: Story = {
             <h3 class="text-lg font-bold mb-2">Card with Input</h3>
             <Input 
               label="Email Input" 
-              :disabled="cardDisabled"
               placeholder="Enter your email"
             />
             <Input 
@@ -116,7 +118,8 @@ export const CardWithInput: Story = {
   parameters: {
     docs: {
       description: {
-        story: "A card with input components that can be disabled together",
+        story: `A disabled card with input components that can be disabled together.
+          <br>The first input is getting disabled by ancestor card component, the second input is disabled by itself.`,
       },
     },
   },
@@ -128,7 +131,7 @@ export const CustomClassCard: Story = {
     template: `
       <Card v-bind="args" class="flex items-center justify-start w-[600px] h-[200px]">
         <template #default="{ cardDisabled }">
-          <div class="p-4 text-center">
+          <div class="px-4">
             <h3 class="text-lg font-bold mb-2">Card with Custom Classes</h3>
             <p class="text-gray-600 dark:text-gray-300">This card uses additional flex classes for layout.</p>
           </div>
