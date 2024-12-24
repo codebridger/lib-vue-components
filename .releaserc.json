@@ -9,7 +9,10 @@
 	"plugins": [
 		"@semantic-release/commit-analyzer",
 		"@semantic-release/release-notes-generator",
-		"@semantic-release/changelog",
+		{
+			"path": "@semantic-release/changelog",
+			"condition": "branch.name === 'main'"
+		},
 		[
 			"@semantic-release/npm",
 			{
