@@ -156,9 +156,13 @@
         <!--  END TOP NAVBAR  -->
 
         <!--  BEGIN CONTENT AREA  -->
-        <div class="p-6 animation flex-1">
+        <div class="animation flex-1" ref="content">
           <!-- @slot Area for main content, including your routes and pages -->
-          <slot name="content" />
+          <slot
+            name="content"
+            :width="contentSize.width"
+            :height="contentSize.height"
+          />
         </div>
         <!--  END CONTENT AREA  -->
 
@@ -179,7 +183,7 @@
  * DashboardShell component
  */
 
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, provide, useTemplateRef } from "vue";
 import Icon from "../icon/Icon.vue";
 
 import appSetting from "../app-setting";
@@ -198,11 +202,37 @@ interface DashboardShellProps {
   hideMenu?: boolean;
 }
 
+defineSlots<{
+  /** Main content slot, page content should be placed here */
+  content(props: { width: number; height: number }): any;
+  /** Sidebar menu component or custom sidebar menu should be placed here */
+  "sidebar-menu"(props: { closeSidebar: () => void }): any;
+  /** Decorating the empty space after brand title */
+  header: any;
+  /** bottom area of the header */
+  "horizontal-menu": any;
+  /** Footer slot */
+  footer: any;
+}>();
+
 const props = withDefaults(defineProps<DashboardShellProps>(), {
   menuStyle: "vertical",
 });
 
+const contentRef = useTemplateRef<HTMLElement>("content");
+const contentSize = ref({ width: 0, height: 0 });
+const contentObserver = new ResizeObserver((entries) => {
+  // `entries` is an array because ResizeObserver can observe multiple elements at once.
+  // Each entry contains information about one observed element.
+  const { width, height } = entries[0].contentRect;
+  contentSize.value = { width, height };
+});
+
+provide("contentSize", contentSize);
+
 onMounted(() => {
+  contentObserver.observe(contentRef.value!);
+
   if (typeof window !== "undefined") {
     init();
   }
