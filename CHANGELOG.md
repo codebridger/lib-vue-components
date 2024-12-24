@@ -1,3 +1,19 @@
+# [1.16.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.15.1...dev-1.16.0) (2024-12-24)
+
+
+### Bug Fixes
+
+* **Card:** improve cardDisabled state propagation to child components ([b679890](https://github.com/tiny-ideas-ir/lib-vue-components/commit/b679890951c38929b41a925732859bb05e156e20))
+
+
+### Features
+
+* **Card:** add autodocs tag to Card component stories ([ab464ce](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ab464ceb08a110ac3dd220e5413cea87a5699e2a))
+* **Card:** enhance Card component with customizable classes and add source documentation ([a289b39](https://github.com/tiny-ideas-ir/lib-vue-components/commit/a289b395a51ec0a200255a85f9286e6167482d47))
+* **Card:** Implement Card component ([abc223f](https://github.com/tiny-ideas-ir/lib-vue-components/commit/abc223fc7e17dcefa528f90eb0b47f79cb8f04b3))
+* **Card:** Implement Card component - inprogress ([bc0b81c](https://github.com/tiny-ideas-ir/lib-vue-components/commit/bc0b81c01f89a47e46b488f005c2a7f4fa919fb6))
+* **Card:** update CardWithInput story to include disabled state and enhance documentation ([7678f88](https://github.com/tiny-ideas-ir/lib-vue-components/commit/7678f88b0e446871844241c66db8386e7525f41f))
+
 ## [1.15.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.15.0...dev-1.15.1) (2024-12-23)
 
 
