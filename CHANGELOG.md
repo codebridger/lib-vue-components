@@ -1,3 +1,16 @@
+# [1.17.0-dev.3](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.2...dev-1.17.0-dev.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* **Modal:** make modelValue prop optional ([99c8855](https://github.com/tiny-ideas-ir/lib-vue-components/commit/99c88557bb4824e4f9e24f91ea5eeebf514e823b))
+
+
+### Features
+
+* **Button:** add borderType prop with options for solid, dashed, and dotted ([4f5bc7a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/4f5bc7aab91c750a35cfc7ce0b65411c2638b43e))
+* **Modal:** add verticalPosition prop to control modal alignment ([ef96f40](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ef96f4070cfe686674a2eead8524866d3477c68b))
+
 # [1.17.0-dev.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.1...dev-1.17.0-dev.2) (2024-12-24)
 
 
