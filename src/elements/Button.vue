@@ -18,15 +18,27 @@
     ]"
     :disabled="disabled || cardDisabled"
   >
-    <slot>{{ label }}</slot>
     <span
-      class="animate-spin border-4 border-success border-l-transparent rounded-full w-10 h-10 inline-block align-middle m-auto mb-10"
-    ></span>
+      :class="[
+        'transition-all overflow-hidden align-middle shrink-0',
+        isLoading ? 'w-5 ltr:mr-2 rtl:ml-2' : 'w-0',
+      ]"
+    >
+      <Icon
+        v-if="isLoading"
+        :name="loadingIcon"
+        class="animate-[spin_2s_linear_infinite]"
+      />
+    </span>
+    <span>
+      <slot>{{ label }}</slot>
+    </span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed, inject } from "vue";
+import Icon from "../icon/Icon.vue";
 
 // Define button props interface
 interface ButtonProps {
@@ -49,6 +61,11 @@ interface ButtonProps {
   disabled?: boolean;
   /** Border type */
   borderType?: "solid" | "dashed" | "dotted";
+  /**
+   * You can insert the Icon's name from here or add your icons.
+   */
+  loadingIcon?: "IconLoader" | "IconRefresh" | "IconRestore" | string;
+  isLoading?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled");
@@ -61,6 +78,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   shadow: false,
   disabled: false,
   borderType: "solid",
+  isLoading: false,
+  loadingIcon: "IconLoader",
 });
 
 // Define the emits with TypeScript typing
