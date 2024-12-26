@@ -135,7 +135,7 @@ interface ModalProps {
   /**
    * Controls the visibility of the modal.
    */
-  modelValue: boolean;
+  modelValue?: boolean;
 
   /**
    * The title of the modal.
