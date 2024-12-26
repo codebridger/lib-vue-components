@@ -18,6 +18,9 @@
     :disabled="disabled || cardDisabled"
   >
     <slot>{{ label }}</slot>
+    <span
+      class="animate-spin border-4 border-success border-l-transparent rounded-full w-10 h-10 inline-block align-middle m-auto mb-10"
+    ></span>
   </button>
 </template>
 
