@@ -14,6 +14,7 @@
       computedShadow, // shadow class
       computedRounded, // rounded corners class
       props.textTransform, // text transform class
+      computedBorderType, // border type class
     ]"
     :disabled="disabled || cardDisabled"
   >
@@ -46,6 +47,8 @@ interface ButtonProps {
   outline?: boolean;
   shadow?: boolean;
   disabled?: boolean;
+  /** Border type */
+  borderType?: "solid" | "dashed" | "dotted";
 }
 
 const cardDisabled = inject<boolean>("cardDisabled");
@@ -57,6 +60,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   outline: false,
   shadow: false,
   disabled: false,
+  borderType: "solid",
 });
 
 // Define the emits with TypeScript typing
@@ -124,6 +128,19 @@ const computedRounded = computed(() => {
       xl: "rounded-xl",
     };
     return roundedTypes[props.rounded];
+  }
+});
+
+const computedBorderType = computed(() => {
+  if (props.borderType) {
+    const borderTypes = {
+      solid: "border-solid",
+      dashed: "border-dashed",
+      dotted: "border-dotted",
+    };
+    return borderTypes[props.borderType];
+  } else {
+    return "border-solid";
   }
 });
 

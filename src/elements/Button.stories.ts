@@ -34,11 +34,16 @@ const meta = {
     block: { control: "boolean" },
     outline: { control: "boolean" },
     shadow: { control: "boolean" },
+    borderType: {
+      control: "inline-radio",
+      options: ["solid", "dashed", "dotted"],
+    },
   },
   args: {
     block: false,
     outline: false,
     shadow: false,
+    borderType: "solid",
   },
 } satisfies Meta<typeof Button>;
 
