@@ -15,6 +15,7 @@
       computedRounded, // rounded corners class
       props.textTransform, // text transform class
       computedBorderType, // border type class
+      computedActiveColor, // active effect class
     ]"
     :disabled="disabled || cardDisabled"
   >
@@ -117,6 +118,12 @@ const computedColor = computed(() => {
     }
 });
 
+const computedActiveColor = computed(() => {
+  if (props.color) {
+    return `active:${computedColor.value}`;
+  }
+});
+
 const computedSize = computed(() => {
   if (props.size) {
     const sizes = {
@@ -167,3 +174,34 @@ const onClick = () => {
   emit("click");
 };
 </script>
+
+<style scoped lang="scss">
+.btn-primary:active,
+.btn-outline-primary:active {
+  background-color: darken(#4361ee, 20%) !important;
+}
+.btn-info:active,
+.btn-outline-info:active {
+  background-color: darken(#2196f3, 20%) !important;
+}
+.btn-success:active,
+.btn-outline-success:active {
+  background-color: darken(#00ab55, 20%) !important;
+}
+.btn-warning:active,
+.btn-outline-warning:active {
+  background-color: darken(#e2a03f, 20%) !important;
+}
+.btn-danger:active,
+.btn-outline-danger:active {
+  background-color: darken(#e7515a, 20%) !important;
+}
+.btn-secondary:active,
+.btn-outline-secondary:active {
+  background-color: darken(#805dca, 20%) !important;
+}
+.btn-dark:active,
+.btn-outline-dark:active {
+  background-color: darken(#3b3f5c, 20%) !important;
+}
+</style>
