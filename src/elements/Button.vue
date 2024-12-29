@@ -7,7 +7,7 @@
       'btn',
       'text-xs sm:text-sm', // responsive text size
       { 'w-full': props.block }, // conditional full width
-      disabled || cardDisabled
+      disabled || (cardDisabled ?? false)
         ? 'bg-gray-100 cursor-not-allowed'
         : computedColor, // color class
       computedSize, // size class
@@ -16,7 +16,7 @@
       props.textTransform, // text transform class
       computedBorderType, // border type class
     ]"
-    :disabled="disabled || cardDisabled"
+    :disabled="disabled || (cardDisabled ?? false)"
   >
     <slot>{{ label }}</slot>
   </button>
@@ -48,7 +48,7 @@ interface ButtonProps {
   borderType?: "solid" | "dashed" | "dotted";
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {

@@ -11,12 +11,12 @@
 
       // light - Base classes
       'flex items-center',
-      disabled || cardDisabled
+      disabled || (cardDisabled ?? false)
         ? 'bg-gray-100 cursor-not-allowed'
         : 'bg-white-light/40',
 
       // dark - Base classes
-      disabled || cardDisabled
+      disabled || (cardDisabled ?? false)
         ? 'bg-gray-100 cursor-not-allowed'
         : 'dark:bg-dark/40',
       'dark:text-[#d0d2d6]',
@@ -30,7 +30,7 @@
       'hover:bg-white-light/90',
       'hover:text-primary',
     ]"
-    :disabled="disabled || cardDisabled"
+    :disabled="disabled || (cardDisabled ?? false)"
   >
     <slot>
       <Icon
@@ -61,7 +61,7 @@ interface IconButtonProps {
   disabled?: boolean;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {
