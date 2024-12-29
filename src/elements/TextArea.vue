@@ -5,14 +5,14 @@
       :rows="rows"
       :class="[
         'form-textarea',
-        disabled || cardDisabled
+        disabled || (cardDisabled ?? false)
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
       ]"
       :placeholder="placeholder"
       :required="required"
-      :disabled="disabled || cardDisabled"
+      :disabled="disabled || (cardDisabled ?? false)"
       @input="
         $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
       "
@@ -36,7 +36,7 @@ interface TextAreaProps {
   errorMsg?: string;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 withDefaults(defineProps<TextAreaProps>(), {
   modelValue: "",

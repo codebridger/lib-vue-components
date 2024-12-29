@@ -13,7 +13,7 @@
         // specific for range type
         { 'w-full py-2.5': type === 'range' },
 
-        disabled || cardDisabled
+        disabled || (cardDisabled ?? false)
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
@@ -22,7 +22,7 @@
       :type="type"
       :value="modelValue"
       :placeholder="placeholder"
-      :disabled="disabled || cardDisabled"
+      :disabled="disabled || (cardDisabled ?? false)"
       :required="required"
       :min="type === 'range' ? min : undefined"
       :max="type === 'range' ? max : undefined"
@@ -75,7 +75,7 @@ withDefaults(defineProps<InputProps>(), {
   max: 100,
 });
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 defineEmits<{
   "update:modelValue": [value: string];

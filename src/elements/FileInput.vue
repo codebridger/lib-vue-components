@@ -15,12 +15,12 @@
 
         // colors
         'file:text-white',
-        disabled || cardDisabled
+        disabled || (cardDisabled ?? false)
           ? 'bg-gray-100 cursor-not-allowed'
           : computedButtonColor,
 
         // Interactions
-        disabled || cardDisabled
+        disabled || (cardDisabled ?? false)
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
@@ -38,7 +38,7 @@
       @cancel="handleCancel"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
-      :disabled="disabled || cardDisabled"
+      :disabled="disabled || (cardDisabled ?? false)"
     />
 
     <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">
@@ -72,7 +72,7 @@ interface FileInputProps {
   size?: number;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 const computedButtonColor = computed(() => {
   const colorList = {
