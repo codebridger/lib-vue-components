@@ -5,14 +5,14 @@
       :rows="rows"
       :class="[
         'form-textarea',
-        disabled || (cardDisabled ?? false)
+        disabled || cardDisabled
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
       ]"
       :placeholder="placeholder"
       :required="required"
-      :disabled="disabled || (cardDisabled ?? false)"
+      :disabled="disabled || cardDisabled"
       @input="
         $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
       "

@@ -11,12 +11,12 @@
 
       // light - Base classes
       'flex items-center',
-      disabled || (cardDisabled ?? false)
+      disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
         : 'bg-white-light/40',
 
       // dark - Base classes
-      disabled || (cardDisabled ?? false)
+      disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
         : 'dark:bg-dark/40',
       'dark:text-[#d0d2d6]',
@@ -30,7 +30,7 @@
       'hover:bg-white-light/90',
       'hover:text-primary',
     ]"
-    :disabled="disabled || (cardDisabled ?? false)"
+    :disabled="disabled || cardDisabled"
   >
     <slot>
       <Icon

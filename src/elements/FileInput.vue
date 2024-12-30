@@ -15,12 +15,12 @@
 
         // colors
         'file:text-white',
-        disabled || (cardDisabled ?? false)
+        disabled || cardDisabled
           ? 'bg-gray-100 cursor-not-allowed'
           : computedButtonColor,
 
         // Interactions
-        disabled || (cardDisabled ?? false)
+        disabled || cardDisabled
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
@@ -38,7 +38,7 @@
       @cancel="handleCancel"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
-      :disabled="disabled || (cardDisabled ?? false)"
+      :disabled="disabled || cardDisabled"
     />
 
     <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">
