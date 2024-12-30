@@ -1,3 +1,11 @@
+# [1.17.0-dev.5](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.4...dev-1.17.0-dev.5) (2024-12-30)
+
+
+### Bug Fixes
+
+* **Card:** make cardDisabled injection optional in child components ([059fb86](https://github.com/tiny-ideas-ir/lib-vue-components/commit/059fb86b2636d01e00490392fcf68581ae8c6a2b))
+* simplify cardDisabled handling in form elements ([3f7753b](https://github.com/tiny-ideas-ir/lib-vue-components/commit/3f7753bb0b4fcdb7c7492da17da59b1fa8605071))
+
 # [1.17.0-dev.4](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.3...dev-1.17.0-dev.4) (2024-12-30)
 
 
