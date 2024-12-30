@@ -7,7 +7,7 @@
       'btn',
       'text-xs sm:text-sm', // responsive text size
       { 'w-full': props.block }, // conditional full width
-      disabled || (cardDisabled ?? false)
+      disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
         : computedColor, // color class
       computedSize, // size class
@@ -16,7 +16,7 @@
       props.textTransform, // text transform class
       computedBorderType, // border type class
     ]"
-    :disabled="disabled || (cardDisabled ?? false)"
+    :disabled="disabled || cardDisabled"
   >
     <slot>{{ label }}</slot>
   </button>

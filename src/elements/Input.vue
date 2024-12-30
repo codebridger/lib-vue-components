@@ -13,7 +13,7 @@
         // specific for range type
         { 'w-full py-2.5': type === 'range' },
 
-        disabled || (cardDisabled ?? false)
+        disabled || cardDisabled
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
         error ? 'border-red-500' : 'border-gray-300',
@@ -22,7 +22,7 @@
       :type="type"
       :value="modelValue"
       :placeholder="placeholder"
-      :disabled="disabled || (cardDisabled ?? false)"
+      :disabled="disabled || cardDisabled"
       :required="required"
       :min="type === 'range' ? min : undefined"
       :max="type === 'range' ? max : undefined"
