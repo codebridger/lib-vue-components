@@ -15,15 +15,31 @@
       computedRounded, // rounded corners class
       props.textTransform, // text transform class
       computedBorderType, // border type class
+      computedActiveColor, // active effect class
     ]"
     :disabled="disabled || cardDisabled"
   >
-    <slot>{{ label }}</slot>
+    <span
+      :class="[
+        'transition-all overflow-hidden align-middle shrink-0',
+        isLoading ? 'w-5 ltr:mr-2 rtl:ml-2' : 'w-0',
+      ]"
+    >
+      <Icon
+        v-if="isLoading"
+        :name="loadingIcon"
+        class="animate-[spin_2s_linear_infinite]"
+      />
+    </span>
+    <span>
+      <slot>{{ label }}</slot>
+    </span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed, inject } from "vue";
+import Icon from "../icon/Icon.vue";
 
 // Define button props interface
 interface ButtonProps {
@@ -46,6 +62,11 @@ interface ButtonProps {
   disabled?: boolean;
   /** Border type */
   borderType?: "solid" | "dashed" | "dotted";
+  /**
+   * You can insert the Icon's name from here or add your icons.
+   */
+  loadingIcon?: "IconLoader" | "IconRefresh" | "IconRestore" | string;
+  isLoading?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled");
@@ -58,6 +79,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   shadow: false,
   disabled: false,
   borderType: "solid",
+  isLoading: false,
+  loadingIcon: "IconLoader",
 });
 
 // Define the emits with TypeScript typing
@@ -93,6 +116,12 @@ const computedColor = computed(() => {
       };
       return colors[props.color];
     }
+});
+
+const computedActiveColor = computed(() => {
+  if (props.color) {
+    return `active:${computedColor.value}`;
+  }
 });
 
 const computedSize = computed(() => {
@@ -145,3 +174,34 @@ const onClick = () => {
   emit("click");
 };
 </script>
+
+<style scoped lang="scss">
+.btn-primary:active,
+.btn-outline-primary:active {
+  background-color: darken(#4361ee, 20%) !important;
+}
+.btn-info:active,
+.btn-outline-info:active {
+  background-color: darken(#2196f3, 20%) !important;
+}
+.btn-success:active,
+.btn-outline-success:active {
+  background-color: darken(#00ab55, 20%) !important;
+}
+.btn-warning:active,
+.btn-outline-warning:active {
+  background-color: darken(#e2a03f, 20%) !important;
+}
+.btn-danger:active,
+.btn-outline-danger:active {
+  background-color: darken(#e7515a, 20%) !important;
+}
+.btn-secondary:active,
+.btn-outline-secondary:active {
+  background-color: darken(#805dca, 20%) !important;
+}
+.btn-dark:active,
+.btn-outline-dark:active {
+  background-color: darken(#3b3f5c, 20%) !important;
+}
+</style>
