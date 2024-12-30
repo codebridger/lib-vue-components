@@ -69,7 +69,7 @@ interface ButtonProps {
   isLoading?: boolean;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {
