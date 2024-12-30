@@ -75,7 +75,7 @@ withDefaults(defineProps<InputProps>(), {
   max: 100,
 });
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 defineEmits<{
   "update:modelValue": [value: string];
