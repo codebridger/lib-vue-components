@@ -1,3 +1,12 @@
+# [1.17.0-dev.4](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.3...dev-1.17.0-dev.4) (2024-12-30)
+
+
+### Features
+
+* **Button:** Add active effect ([425514a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/425514a2a7ce6dfec3e378aba82e60d095621e34))
+* **Button:** Add loading with different variation ([3565082](https://github.com/tiny-ideas-ir/lib-vue-components/commit/35650829479297dfe9a85e6b820baf5008bb3d61))
+* **Button:** Add span loading on click button ([2f8dc45](https://github.com/tiny-ideas-ir/lib-vue-components/commit/2f8dc450ac3a02a538d76421ce9b0eb3d4925800))
+
 # [1.17.0-dev.3](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.2...dev-1.17.0-dev.3) (2024-12-26)
 
 
