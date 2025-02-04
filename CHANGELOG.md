@@ -1,3 +1,10 @@
+# [1.17.0-dev.6](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.5...dev-1.17.0-dev.6) (2025-02-04)
+
+
+### Features
+
+* update story titles and enhance documentation structure ([13d7f5f](https://github.com/tiny-ideas-ir/lib-vue-components/commit/13d7f5f4286a1119077bdf5de87bb678a63a23c9))
+
 # [1.17.0-dev.5](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.4...dev-1.17.0-dev.5) (2024-12-30)
 
 
