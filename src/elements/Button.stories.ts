@@ -34,11 +34,22 @@ const meta = {
     block: { control: "boolean" },
     outline: { control: "boolean" },
     shadow: { control: "boolean" },
+    borderType: {
+      control: "inline-radio",
+      options: ["solid", "dashed", "dotted"],
+    },
+    isLoading: { control: "boolean" },
+    loadingIcon: {
+      control: "text",
+    },
   },
   args: {
     block: false,
     outline: false,
     shadow: false,
+    isLoading: false,
+    borderType: "solid",
+    loadingIcon: "IconLoader",
   },
 } satisfies Meta<typeof Button>;
 
@@ -68,6 +79,16 @@ export const Outline: Story = {
     color: "success",
     textTransform: "capitalize",
     outline: true,
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    label: "Button",
+    color: "success",
+    textTransform: "capitalize",
+    outline: true,
+    isLoading: true,
   },
 };
 

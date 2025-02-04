@@ -1,3 +1,61 @@
+# [1.17.0-dev.7](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.6...dev-1.17.0-dev.7) (2025-02-04)
+
+
+### Features
+
+* **release:** conditionally apply changelog generation for main branch ([aec0db3](https://github.com/tiny-ideas-ir/lib-vue-components/commit/aec0db3cd293e82fd5c33d5945c65d20ba4cab0d))
+
+# [1.17.0-dev.6](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.5...dev-1.17.0-dev.6) (2025-02-04)
+
+
+### Features
+
+* update story titles and enhance documentation structure ([13d7f5f](https://github.com/tiny-ideas-ir/lib-vue-components/commit/13d7f5f4286a1119077bdf5de87bb678a63a23c9))
+
+# [1.17.0-dev.5](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.4...dev-1.17.0-dev.5) (2024-12-30)
+
+
+### Bug Fixes
+
+* **Card:** make cardDisabled injection optional in child components ([059fb86](https://github.com/tiny-ideas-ir/lib-vue-components/commit/059fb86b2636d01e00490392fcf68581ae8c6a2b))
+* simplify cardDisabled handling in form elements ([3f7753b](https://github.com/tiny-ideas-ir/lib-vue-components/commit/3f7753bb0b4fcdb7c7492da17da59b1fa8605071))
+
+# [1.17.0-dev.4](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.3...dev-1.17.0-dev.4) (2024-12-30)
+
+
+### Features
+
+* **Button:** Add active effect ([425514a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/425514a2a7ce6dfec3e378aba82e60d095621e34))
+* **Button:** Add loading with different variation ([3565082](https://github.com/tiny-ideas-ir/lib-vue-components/commit/35650829479297dfe9a85e6b820baf5008bb3d61))
+* **Button:** Add span loading on click button ([2f8dc45](https://github.com/tiny-ideas-ir/lib-vue-components/commit/2f8dc450ac3a02a538d76421ce9b0eb3d4925800))
+
+# [1.17.0-dev.3](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.2...dev-1.17.0-dev.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* **Modal:** make modelValue prop optional ([99c8855](https://github.com/tiny-ideas-ir/lib-vue-components/commit/99c88557bb4824e4f9e24f91ea5eeebf514e823b))
+
+
+### Features
+
+* **Button:** add borderType prop with options for solid, dashed, and dotted ([4f5bc7a](https://github.com/tiny-ideas-ir/lib-vue-components/commit/4f5bc7aab91c750a35cfc7ce0b65411c2638b43e))
+* **Modal:** add verticalPosition prop to control modal alignment ([ef96f40](https://github.com/tiny-ideas-ir/lib-vue-components/commit/ef96f4070cfe686674a2eead8524866d3477c68b))
+
+# [1.17.0-dev.2](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.1...dev-1.17.0-dev.2) (2024-12-24)
+
+
+### Features
+
+* **DashboardShell:** enhance content slot with dynamic size and provide contentSize context ([d478a3e](https://github.com/tiny-ideas-ir/lib-vue-components/commit/d478a3e51ca08696f603174410674fe870e1ae8c))
+
+# [1.17.0-dev.1](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.16.0...dev-1.17.0-dev.1) (2024-12-24)
+
+
+### Features
+
+* **release:** Merge branch 'main' into dev ([d42ccc0](https://github.com/tiny-ideas-ir/lib-vue-components/commit/d42ccc01aa2af63a08514e4c582b14b79cdba787))
+
 # [1.13.0](https://github.com/tiny-ideas-ir/lib-vue-components/compare/v1.12.0...v1.13.0) (2024-12-24)
 
 
