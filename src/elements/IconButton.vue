@@ -61,7 +61,7 @@ interface IconButtonProps {
   disabled?: boolean;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {

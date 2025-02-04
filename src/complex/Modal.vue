@@ -30,7 +30,15 @@
 
       <!-- Modal -->
       <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center px-4 py-8">
+        <div
+          :class="[
+            // base styles
+            'flex min-h-full px-4 py-8',
+            // positioning
+            computedVerticalPosition,
+            'justify-center',
+          ]"
+        >
           <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -135,7 +143,7 @@ interface ModalProps {
   /**
    * Controls the visibility of the modal.
    */
-  modelValue: boolean;
+  modelValue?: boolean;
 
   /**
    * The title of the modal.
@@ -181,6 +189,11 @@ interface ModalProps {
    * Custom class for the content area of the modal.
    */
   contentClass?: string;
+
+  /**
+   * The position of the modal on the screen.
+   */
+  verticalPosition?: "top" | "center" | "bottom";
 }
 
 const props = withDefaults(defineProps<ModalProps>(), {
@@ -247,6 +260,13 @@ const animationClasses = computed(() => {
     none: "",
   };
   return animations[props.animation];
+});
+
+const computedVerticalPosition = computed(() => {
+  if (props.verticalPosition === "top") return "items-start";
+  if (props.verticalPosition === "center") return "items-center";
+  if (props.verticalPosition === "bottom") return "items-end";
+  return "items-center";
 });
 
 const closeModal = () => {

@@ -72,7 +72,7 @@ interface FileInputProps {
   size?: number;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 const computedButtonColor = computed(() => {
   const colorList = {

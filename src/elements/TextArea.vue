@@ -36,7 +36,7 @@ interface TextAreaProps {
   errorMsg?: string;
 }
 
-const cardDisabled = inject<boolean>("cardDisabled");
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 withDefaults(defineProps<TextAreaProps>(), {
   modelValue: "",
