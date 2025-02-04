@@ -1,0 +1,118 @@
+import { Meta, Markdown } from "@storybook/blocks";
+
+<Meta title="Getting Started/Global Configuration" />
+
+
+## Using `useAppStore`
+
+Import and use the `useAppStore` in your components to access and modify the global state.
+
+### Importing the Store
+
+```typescript
+import { useAppStore } from '@tiny-ideas-ir/lib-vue-components/store.ts';
+```
+
+### Accessing State
+
+You can access the state properties directly from the store instance:
+
+```typescript
+const store = useAppStore();
+
+console.log(store.isDarkMode); // false
+console.log(store.theme); // "light"
+```
+
+### Modifying State
+
+The store provides several methods to modify the state. Below are examples of how to use these methods.
+
+```typescript
+// Toggle Theme
+store.toggleTheme('dark'); 
+
+// Toggle Menu Style
+store.toggleMenuStyle('horizontal'); 
+
+// Toggle Layout
+store.toggleLayout('boxed-layout'); 
+
+// Toggle RTL
+store.toggleRTL('rtl'); 
+
+// Toggle Animation
+store.toggleAnimation('fade'); 
+
+// Toggle Navbar
+store.toggleNavbar('navbar-floating'); 
+
+// Toggle Semidark Mode
+store.toggleSemidark(true); 
+
+// Toggle Sidebar
+store.toggleSidebar(true); 
+store.toggleSidebar(false); 
+
+// Toggle Main Loader
+store.toggleMainLoader(true); // Show main loader
+```
+## State Properties
+
+| Property          | Type      | Description                                           |
+|-------------------|-----------|-------------------------------------------------------|
+| `isDarkMode`      | `boolean` | Indicates if dark mode is enabled.                    |
+| `mainLayout`      | `string`  | The main layout of the application.                   |
+| `theme`           | `string`  | The current theme (light, dark, or system).           |
+| `menu`            | `string`  | The current menu style (vertical, horizontal, or collapsible-vertical). |
+| `layout`          | `string`  | The current layout style (boxed-layout or full).      |
+| `rtlClass`        | `string`  | The current text direction (ltr or rtl).              |
+| `isRtl`           | `boolean` | Computed property indicating if RTL is enabled.       |
+| `animation`       | `string`  | The current animation style.                          |
+| `navbar`          | `string`  | The current navbar style (navbar-sticky, navbar-static, or navbar-floating). |
+| `locale`          | `string`  | The current locale.                                   |
+| `sidebar`         | `boolean` | Indicates if the sidebar is visible.                  |
+| `isShowMainLoader`| `boolean` | Indicates if the main loader is visible.              |
+| `semidark`        | `boolean` | Indicates if semidark mode is enabled.                |
+
+
+## Methods
+
+| Method                      | Input Type                                                                 | Description                                 |
+|-----------------------------|---------------------------------------------------------------------------|---------------------------------------------|
+| `setMainLayout(payload)`    | `any`                                                                     | Sets the main layout.                       |
+| `toggleTheme(payload)`      | `"light" \| "dark" \| "system" \| any`                                    | Toggles the theme.                          |
+| `toggleMenuStyle(payload)`  | `"vertical" \| "horizontal" \| "collapsible-vertical" \| string`           | Toggles the menu style.                     |
+| `toggleLayout(payload)`     | `"boxed-layout" \| "full" \| any`                                         | Toggles the layout style.                   |
+| `toggleRTL(payload)`        | `"ltr" \| "rtl" \| any`                                                   | Toggles the text direction.                 |
+| `toggleAnimation(payload)`  | `any`                                                                     | Toggles the animation style.                |
+| `toggleNavbar(payload)`     | `"navbar-sticky" \| "navbar-static" \| "navbar-floating"`                 | Toggles the navbar style.                   |
+| `toggleSemidark(payload)`   | `any`                                                                     | Toggles semidark mode.                      |
+| `toggleSidebar(state?)`     | `boolean`                                                                 | Toggles the sidebar visibility.             |
+| `toggleMainLoader(state)`   | `boolean`                                                                 | Toggles the main loader visibility.         |
+## Example
+
+Here is an example of how to use the `useAppStore` in a Vue component:
+
+```vue
+<template>
+  <div>
+    <button @click="toggleTheme">Toggle Theme</button>
+    <button @click="toggleSidebar">Toggle Sidebar</button>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { useAppStore } from '@/stores';
+
+const store = useAppStore();
+
+function toggleTheme() {
+  store.toggleTheme(store.theme === 'light' ? 'dark' : 'light');
+}
+
+function toggleSidebar() {
+  store.toggleSidebar();
+}
+</script>
+```
