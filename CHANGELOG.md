@@ -1,3 +1,10 @@
+# [1.17.0-dev.7](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.6...dev-1.17.0-dev.7) (2025-02-04)
+
+
+### Features
+
+* **release:** conditionally apply changelog generation for main branch ([aec0db3](https://github.com/tiny-ideas-ir/lib-vue-components/commit/aec0db3cd293e82fd5c33d5945c65d20ba4cab0d))
+
 # [1.17.0-dev.6](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.5...dev-1.17.0-dev.6) (2025-02-04)
 
 
