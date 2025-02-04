@@ -40,7 +40,14 @@ const preview: Preview = {
     options: {
       storySort: {
         // order of the stories including all mdx and stories files
-        order: ["Getting Started", "Shell"],
+        order: [
+          //
+          "Getting Started",
+          ["Installation", "How To Use", "Global Configuration"],
+
+          //
+          "Shell",
+        ],
       },
     },
   },

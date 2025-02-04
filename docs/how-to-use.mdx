@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/blocks";
 
-<Meta title="Getting Started/Use Components" />
+<Meta title="Getting Started/How To Use" />
 
 # Component library
 
@@ -11,12 +11,14 @@ You need to follow these principles in order to use the component library proper
 ## AppRoot
 
 All components should be wrapped with the main ancestor component called `AppRoot`.
+It's really important to wrap all components with `AppRoot` because it's responsible for the global state management and the theme management.
 
 ```html
 <App>
   <!-- your components here -->
 </App>
 ```
+
 ```typescript
 // Shell components
 import { App, DashboardShell, ThemeCustomizer, SidebarMenu, HorizontalMenu } from '@tiny-ideas-ir/lib-vue-components/shell.ts';
@@ -29,4 +31,14 @@ import { Modal } from '@tiny-ideas-ir/lib-vue-components/complex.ts';
 
 // Type imports
 import type { SidebarItemType, HorizontalMenuItemType } from '@tiny-ideas-ir/lib-vue-components/types.ts';
+```
+
+## Global Configuration
+There is pinia store for global configuration. see full documentation [here](/docs/introduction.mdx#store)
+
+```typescript
+import { useAppStore } from '@tiny-ideas-ir/lib-vue-components/store.ts';
+
+const appStore = useAppStore();
+appStore.setTheme('dark');
 ```
