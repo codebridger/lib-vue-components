@@ -1,7 +1,9 @@
 <template>
-  <button
+  <component
+    :is="to ? 'a' : 'button'"
     @click="onClick"
-    type="button"
+    :href="to || undefined"
+    :type="to ? undefined : 'button'"
     :class="[
       // base class
       'btn',
@@ -19,6 +21,7 @@
     ]"
     :disabled="disabled || cardDisabled"
   >
+    <!-- Loading Icon -->
     <span
       :class="[
         'transition-all overflow-hidden align-middle shrink-0',
@@ -31,14 +34,23 @@
         class="animate-[spin_2s_linear_infinite]"
       />
     </span>
-    <span>
+
+    <!-- Icon Slot or Icon from props -->
+    <span v-if="hasIcon" class="inline-flex align-middle">
+      <slot name="icon">
+        <Icon v-if="iconName" :name="iconName" :class="iconClass" />
+      </slot>
+    </span>
+
+    <!-- Label Slot or Text Label -->
+    <span :class="{ 'ltr:ml-2 rtl:mr-2': hasIcon && label }">
       <slot>{{ label }}</slot>
     </span>
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed, inject, useSlots } from "vue";
 import Icon from "../icon/Icon.vue";
 
 // Define button props interface
@@ -67,9 +79,16 @@ interface ButtonProps {
    */
   loadingIcon?: "IconLoader" | "IconRefresh" | "IconRestore" | string;
   isLoading?: boolean;
+  /** Link path when button should act as a link */
+  to?: string;
+  /** Icon name to display */
+  iconName?: string;
+  /** Additional classes for the icon */
+  iconClass?: string;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
+const slots = useSlots();
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -87,6 +106,11 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 const emit = defineEmits<{
   (e: "click"): void;
 }>();
+
+// Check if button has an icon (either via slot or prop)
+const hasIcon = computed(() => {
+  return !!props.iconName || !!slots.icon;
+});
 
 // Computed properties
 const computedColor = computed(() => {
@@ -171,7 +195,9 @@ const computedBorderType = computed(() => {
 });
 
 const onClick = () => {
-  emit("click");
+  if (!props.to) {
+    emit("click");
+  }
 };
 </script>
 
