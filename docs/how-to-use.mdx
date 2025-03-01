@@ -21,23 +21,23 @@ It's really important to wrap all components with `AppRoot` because it's respons
 
 ```typescript
 // Shell components
-import { App, DashboardShell, ThemeCustomizer, SidebarMenu, HorizontalMenu } from '@tiny-ideas-ir/lib-vue-components/shell.ts';
+import { App, DashboardShell, ThemeCustomizer, SidebarMenu, HorizontalMenu } from '@codebridger/lib-vue-components/shell.ts';
 
 // Element components
-import { Button } from '@tiny-ideas-ir/lib-vue-components/elements.ts';
+import { Button } from '@codebridger/lib-vue-components/elements.ts';
 
 // Complex components
-import { Modal } from '@tiny-ideas-ir/lib-vue-components/complex.ts';
+import { Modal } from '@codebridger/lib-vue-components/complex.ts';
 
 // Type imports
-import type { SidebarItemType, HorizontalMenuItemType } from '@tiny-ideas-ir/lib-vue-components/types.ts';
+import type { SidebarItemType, HorizontalMenuItemType } from '@codebridger/lib-vue-components/types.ts';
 ```
 
 ## Global Configuration
 There is pinia store for global configuration. see full documentation [here](/docs/introduction.mdx#store)
 
 ```typescript
-import { useAppStore } from '@tiny-ideas-ir/lib-vue-components/store.ts';
+import { useAppStore } from '@codebridger/lib-vue-components/store.ts';
 
 const appStore = useAppStore();
 appStore.setTheme('dark');
