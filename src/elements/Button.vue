@@ -108,6 +108,7 @@ const emit = defineEmits<{
 }>();
 
 // Check if button has an icon (either via slot or prop)
+//
 const hasIcon = computed(() => {
   return !!props.iconName || !!slots.icon;
 });
