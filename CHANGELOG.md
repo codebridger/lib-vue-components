@@ -1,4 +1,4 @@
-# [1.17.0-dev.9](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.8...dev-1.17.0-dev.9) (2025-03-01)
+# [1.17.0-dev.9](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.8...dev-1.17.0-dev.9) (2025-03-01
 
 
 ### Bug Fixes
