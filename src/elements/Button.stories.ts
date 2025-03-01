@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-
+import { h } from "vue";
 import Button from "./Button.vue";
+import Icon from "../icon/Icon.vue";
 
 const meta = {
   title: "Elements/Button",
@@ -26,7 +27,6 @@ const meta = {
       control: "inline-radio",
       options: ["normal-case", "capitalize", "lowercase", "uppercase"],
     },
-
     rounded: {
       control: "inline-radio",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
@@ -41,6 +41,18 @@ const meta = {
     isLoading: { control: "boolean" },
     loadingIcon: {
       control: "text",
+    },
+    to: {
+      control: "text",
+      description: "URL path for link functionality",
+    },
+    iconName: {
+      control: "text",
+      description: "Icon name to display",
+    },
+    iconClass: {
+      control: "text",
+      description: "Additional classes for the icon",
     },
   },
   args: {
@@ -109,5 +121,24 @@ export const Shadow: Story = {
     textTransform: "capitalize",
     size: "lg",
     shadow: true,
+  },
+};
+
+export const AsLink: Story = {
+  args: {
+    label: "Go to Dashboard",
+    color: "primary",
+    textTransform: "capitalize",
+    size: "md",
+    to: "/dashboard",
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    label: "Settings",
+    color: "primary",
+    iconName: "IconSettings",
+    size: "md",
   },
 };
