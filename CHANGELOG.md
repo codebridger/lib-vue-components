@@ -1,3 +1,10 @@
+# [1.17.0-dev.8](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.7...dev-1.17.0-dev.8) (2025-03-01)
+
+
+### Bug Fixes
+
+* **Button:** publish previous changes ([aad26e9](https://github.com/codebridger/lib-vue-components/commit/aad26e9de0fd01865dbee2d00aa448635358c7b9))
+
 # [1.17.0-dev.7](https://github.com/tiny-ideas-ir/lib-vue-components/compare/dev-1.17.0-dev.6...dev-1.17.0-dev.7) (2025-02-04)
 
 
