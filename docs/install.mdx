@@ -22,7 +22,7 @@ import { Meta } from "@storybook/blocks";
 
 2. Create an `.npmrc` file in your project root:
    ```bash
-   @tiny-ideas-ir:registry=https://npm.pkg.github.com
+   @codebridger:registry=https://npm.pkg.github.com
    //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
    ```
    Replace `YOUR_GITHUB_TOKEN` with the token you created.
@@ -33,13 +33,13 @@ Install the package using npm or yarn:
 
 ```bash
 # Using npm
-npm install @tiny-ideas-ir/lib-vue-components
+npm install @codebridger/lib-vue-components
 
 # Using yarn
-yarn add @tiny-ideas-ir/lib-vue-components
+yarn add @codebridger/lib-vue-components
 
 # install from dev branch
-yarn add @tiny-ideas-ir/lib-vue-components@dev
+yarn add @codebridger/lib-vue-components@dev
 ```
 
 ### 3. Integration
@@ -48,8 +48,8 @@ yarn add @tiny-ideas-ir/lib-vue-components@dev
 
 ```javascript
 // Import components and Styles
-import vueComponents from "@tiny-ideas-ir/lib-vue-components";
-import '@tiny-ideas-ir/lib-vue-components/style.css';
+import vueComponents from "@codebridger/lib-vue-components";
+import '@codebridger/lib-vue-components/style.css';
 
 // Configuration options
 const options = {
@@ -71,10 +71,10 @@ vueApp.use(vueComponents, options);
 1. Create a plugin file `plugins/component-library.client.ts`:
 
 ```javascript
-import { defineNuxtPlugin as init } from '@tiny-ideas-ir/lib-vue-components/nuxt';
+import { defineNuxtPlugin as init } from '@codebridger/lib-vue-components/nuxt';
 
 export default defineNuxtPlugin({
-  name: '@tiny-ideas-ir/lib-vue-components',
+  name: '@codebridger/lib-vue-components',
   enforce: 'pre',
   async setup(nuxtApp) {
     const options = {
@@ -95,12 +95,12 @@ export default defineNuxtPlugin({
 export default defineNuxtConfig({
   // Ensure components are transpiled during build
   build: {
-    transpile: ['@tiny-ideas-ir/lib-vue-components'],
+    transpile: ['@codebridger/lib-vue-components'],
   },
 
   css: [
     // ... other CSS files
-    '@tiny-ideas-ir/lib-vue-components/style.css',
+    '@codebridger/lib-vue-components/style.css',
   ],
   
   // ... other Nuxt config
