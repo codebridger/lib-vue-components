@@ -1,7 +1,7 @@
 name: Release
 
 env:
-  package_name: "@tiny-ideas-ir/lib-vue-components"
+  package_name: "@codebridger/lib-vue-components"
 
 on:
   push:
