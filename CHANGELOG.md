@@ -1,3 +1,11 @@
+## [1.14.1](https://github.com/codebridger/lib-vue-components/compare/v1.14.0...v1.14.1) (2025-03-01)
+
+
+### Bug Fixes
+
+* **Button:** publish previous changes ([aad26e9](https://github.com/codebridger/lib-vue-components/commit/aad26e9de0fd01865dbee2d00aa448635358c7b9))
+* update package name references from [@tiny-ideas-ir](https://github.com/tiny-ideas-ir) to [@codebridger](https://github.com/codebridger) ([57f6178](https://github.com/codebridger/lib-vue-components/commit/57f6178bf7bb8a3853b13a6ce64223c1c545d6ed))
+
 # [1.17.0-dev.9](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.8...dev-1.17.0-dev.9) (2025-03-01
 
 
