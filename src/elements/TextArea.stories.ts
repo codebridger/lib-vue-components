@@ -34,6 +34,14 @@ const meta = {
       control: "text",
       description: "Error message to display",
     },
+    label: {
+      control: "text",
+      description: "Label text for the textarea",
+    },
+    id: {
+      control: "text",
+      description: "ID for the textarea (used to associate label)",
+    },
   },
   args: {
     rows: 2,
@@ -69,6 +77,19 @@ export const Filled: Story = {
     disabled: false,
     error: false,
     errorMsg: "",
+  },
+};
+
+export const WithLabel: Story = {
+  args: {
+    modelValue: "",
+    rows: 3,
+    placeholder: "Enter your comments",
+    required: false,
+    disabled: false,
+    error: false,
+    errorMsg: "",
+    label: "Comments",
   },
 };
 
