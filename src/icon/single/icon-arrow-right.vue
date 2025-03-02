@@ -7,7 +7,7 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M20 12H4M4 12L10 6M4 12L10 18"
+      d="M4 12H20M20 12L14 6M20 12L14 18"
       stroke="currentColor"
       stroke-width="1.5"
       stroke-linecap="round"
