@@ -72,7 +72,7 @@ interface InputProps {
   iconName?: string; // Add this line
 }
 
-withDefaults(defineProps<InputProps>(), {
+const props = withDefaults(defineProps<InputProps>(), {
   modelValue: "",
   type: "text",
   placeholder: "",
