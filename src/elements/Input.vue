@@ -5,31 +5,40 @@
       <span v-if="required" class="text-red-500">*</span>
     </label>
 
-    <input
-      :class="[
-        // base classes
-        { 'form-input': type !== 'range' },
+    <div class="relative">
+      <Icon
+        v-if="iconName"
+        :name="iconName"
+        class="absolute left-3 top-1/2 transform -translate-y-1/2"
+      />
+      <input
+        :class="[
+          'pl-10',
+          // base classes
+          { 'form-input': type !== 'range' },
 
-        // specific for range type
-        { 'w-full py-2.5': type === 'range' },
+          // specific for range type
+          { 'w-full py-2.5': type === 'range' },
 
-        disabled || cardDisabled
-          ? 'bg-gray-100 cursor-not-allowed'
-          : 'bg-white',
-        error ? 'border-red-500' : 'border-gray-300',
-      ]"
-      :id="id"
-      :type="type"
-      :value="modelValue"
-      :placeholder="placeholder"
-      :disabled="disabled || cardDisabled"
-      :required="required"
-      :min="type === 'range' ? min : undefined"
-      :max="type === 'range' ? max : undefined"
-      @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
-      @blur="$emit('blur', $event)"
-      @focus="$emit('focus', $event)"
-    />
+          disabled || cardDisabled
+            ? 'bg-gray-100 cursor-not-allowed'
+            : 'bg-white',
+          error ? 'border-red-500' : 'border-gray-300',
+        ]"
+        :id="id"
+        :type="type"
+        :value="modelValue"
+        :placeholder="placeholder"
+        :disabled="disabled || cardDisabled"
+        :required="required"
+        :min="type === 'range' ? min : undefined"
+        :max="type === 'range' ? max : undefined"
+        @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
+        @blur="$emit('blur', $event)"
+        @focus="$emit('focus', $event)"
+      />
+    </div>
+
     <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">{{
       errorMessage
     }}</span>
@@ -38,6 +47,7 @@
 
 <script setup lang="ts">
 import { inject } from "vue";
+import Icon from "../icon/Icon.vue";
 
 interface InputProps {
   modelValue?: string;
@@ -59,6 +69,7 @@ interface InputProps {
   id?: string;
   min?: string | number;
   max?: string | number;
+  iconName?: string; // Add this line
 }
 
 withDefaults(defineProps<InputProps>(), {
@@ -73,6 +84,7 @@ withDefaults(defineProps<InputProps>(), {
   id: "",
   min: 0,
   max: 100,
+  iconName: "", // Add this line
 });
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
