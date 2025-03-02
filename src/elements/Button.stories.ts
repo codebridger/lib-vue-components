@@ -6,7 +6,6 @@ import Icon from "../icon/Icon.vue";
 const meta = {
   title: "Elements/Button",
   component: Button,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   argTypes: {
     color: {
