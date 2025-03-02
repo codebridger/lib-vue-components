@@ -1,3 +1,10 @@
+# [1.17.0-dev.10](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.9...dev-1.17.0-dev.10) (2025-03-02)
+
+
+### Features
+
+* add right arrow icon and update left arrow icon SVG structure ([c26147b](https://github.com/codebridger/lib-vue-components/commit/c26147b71bf4770a277ed3684e7e184890bf06eb))
+
 # [1.17.0-dev.9](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.8...dev-1.17.0-dev.9) (2025-03-01
 
 
