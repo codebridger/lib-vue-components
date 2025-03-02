@@ -2,16 +2,16 @@
   <component
     :is="to ? 'a' : 'button'"
     @click="onClick"
-    :href="to || undefined"
+    :href="!disabled && !cardDisabled ? to : undefined"
     :type="to ? undefined : 'button'"
     :class="[
       // base class
       'btn',
       'text-xs sm:text-sm', // responsive text size
       { 'w-full': props.block }, // conditional full width
-      (disabled || cardDisabled) && !to
+      disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
-        : computedColor, // color class still applies
+        : computedColor, // color class
       computedSize, // size class
       computedShadow, // shadow class
       computedRounded, // rounded corners class
@@ -19,7 +19,7 @@
       computedBorderType, // border type class
       computedActiveColor, // active effect class
     ]"
-    :disabled="to ? undefined : disabled || cardDisabled"
+    :disabled="disabled || cardDisabled ? true : undefined"
   >
     <!-- Loading Icon -->
     <span
@@ -96,7 +96,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   block: false,
   outline: false,
   shadow: false,
-  disabled: false,
   borderType: "solid",
   isLoading: false,
   loadingIcon: "IconLoader",

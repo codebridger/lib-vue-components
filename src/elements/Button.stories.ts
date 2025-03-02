@@ -141,3 +141,13 @@ export const WithIcon: Story = {
     size: "md",
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    label: "Disabled",
+    color: "primary",
+    size: "md",
+    disabled: true,
+    to: "/dashboard",
+  },
+};
