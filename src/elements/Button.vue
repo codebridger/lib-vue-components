@@ -11,7 +11,7 @@
       { 'w-full': props.block }, // conditional full width
       (disabled || cardDisabled) && !to
         ? 'bg-gray-100 cursor-not-allowed'
-        : computedColor, // color class
+        : computedColor, // color class still applies
       computedSize, // size class
       computedShadow, // shadow class
       computedRounded, // rounded corners class
@@ -19,7 +19,7 @@
       computedBorderType, // border type class
       computedActiveColor, // active effect class
     ]"
-    :disabled="disabled || cardDisabled"
+    :disabled="to ? undefined : disabled || cardDisabled"
   >
     <!-- Loading Icon -->
     <span
