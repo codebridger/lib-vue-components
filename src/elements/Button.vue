@@ -9,7 +9,7 @@
       'btn',
       'text-xs sm:text-sm', // responsive text size
       { 'w-full': props.block }, // conditional full width
-      disabled || cardDisabled
+      (disabled || cardDisabled) && !to
         ? 'bg-gray-100 cursor-not-allowed'
         : computedColor, // color class
       computedSize, // size class
