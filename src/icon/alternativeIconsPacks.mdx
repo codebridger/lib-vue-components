@@ -1,0 +1,58 @@
+
+import { Meta, Story, Title } from '@storybook/blocks'
+
+<Meta title="Icons/Alternative Icon Packs" />
+
+<Title>Alternative Icon Packs</Title>
+
+Using Iconify as an Alternative Icon Pack with Tailwind CSS
+
+Iconify is a comprehensive icon library that offers over 200,000 icons from many popular sets. It can serve as an alternative icon pack for Tailwind CSS projects, giving you access to a vast selection of icons beyond the defaults. With the Iconify Tailwind plugin, you can easily integrate these icons and style them with Tailwind utility classes.
+
+- **Official Website:** [Iconify gallery](https://icon-sets.iconify.design/)
+- **Official Iconify Tailwind CSS page:** [doc](https://iconify.design/docs/usage/css/tailwind/)
+
+## Tailwind CSS Setup for Iconify
+
+To get started with Iconify in a Tailwind CSS project, follow these steps:
+#### 1. **Install the Iconify Tailwind CSS plugin and icon set(s):** 
+Add the official plugin and any icon sets you want to use as development dependencies. For example, to use Material Design Icons (light theme) you can run: `npm install -D @iconify/tailwind @iconify-json/mdi-light`.
+
+#### 2. **Configure Tailwind to use the Iconify plugin:**
+Open your tailwind.config.js and import the plugin. Then add it to the plugins array, specifying which icon sets (by their prefix) to include if using the static selectors. For example:
+
+```javascript
+// tailwind.config.js
+const { addIconSelectors } = require('@iconify/tailwind');
+module.exports = {
+  // ... other Tailwind config ...
+  plugins: [
+    // Include Iconify plugin and specify icon set prefixes to load
+    addIconSelectors(['mdi-light']) 
+  ]
+};
+
+// (Alternatively, you can use the dynamic plugin with addDynamicIconSelectors() to avoid listing prefixes. 
+// Make sure to install the icon sets you need.)
+```
+
+#### 3. **Run your build:**
+Ensure your build process (e.g., Vite or Webpack) runs Tailwind so it generates the icon classes. The plugin will generate the necessary CSS for any Iconify icon classes you use in your templates.
+
+Usage Example in a Vue Component
+
+After setup, you can use Iconify icons in your Vue components just like using any other HTML element with Tailwind classes. For example, in a Vue component template you might add an icon like this:
+
+```vue
+<template>
+  <!-- Using the 'home' icon from Material Design Icons (mdi-light set) -->
+  <span class="icon-[mdi-light--home] text-gray-600 w-6 h-6"></span>
+  <icon name="icon-[mdi-light--home]" />
+  <Button iconName="icon-[mdi-light--home]" />
+  <IconButton iconName="icon-[mdi-light--home]" />
+</template>
+```
+
+In the snippet above, the icon-[mdi-light--home] class inserts the mdi-light:home icon as an inline SVG. We also apply Tailwind utility classes for color and size. In this example, text-gray-600 sets the icon color (monotone icons inherit the text color), and w-6 h-6 gives it a fixed width and height. You can swap out the prefix and icon name to use any icon from Iconify’s library (just make sure you’ve installed the corresponding icon set).
+
+For more details on using Iconify with Tailwind (and other setup options like additional icon sets or dynamic mode), refer to the official Iconify Tailwind CSS documentation.
