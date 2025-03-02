@@ -205,30 +205,30 @@ const onClick = () => {
 <style scoped lang="scss">
 .btn-primary:active,
 .btn-outline-primary:active {
-  background-color: darken(#4361ee, 20%) !important;
+  background-color: color.adjust(#4361ee, 20%) !important;
 }
 .btn-info:active,
 .btn-outline-info:active {
-  background-color: darken(#2196f3, 20%) !important;
+  background-color: color.adjust(#2196f3, 20%) !important;
 }
 .btn-success:active,
 .btn-outline-success:active {
-  background-color: darken(#00ab55, 20%) !important;
+  background-color: color.adjust(#00ab55, 20%) !important;
 }
 .btn-warning:active,
 .btn-outline-warning:active {
-  background-color: darken(#e2a03f, 20%) !important;
+  background-color: color.adjust(#e2a03f, 20%) !important;
 }
 .btn-danger:active,
 .btn-outline-danger:active {
-  background-color: darken(#e7515a, 20%) !important;
+  background-color: color.adjust(#e7515a, 20%) !important;
 }
 .btn-secondary:active,
 .btn-outline-secondary:active {
-  background-color: darken(#805dca, 20%) !important;
+  background-color: color.adjust(#805dca, 20%) !important;
 }
 .btn-dark:active,
 .btn-outline-dark:active {
-  background-color: darken(#3b3f5c, 20%) !important;
+  background-color: color.adjust(#3b3f5c, 20%) !important;
 }
 </style>
