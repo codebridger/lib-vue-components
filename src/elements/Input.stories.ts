@@ -257,3 +257,18 @@ export const Range: Story = {
     },
   },
 };
+
+export const TelInput: Story = {
+  args: {
+    type: "tel",
+    label: "Phone Number",
+    placeholder: "(123) 456-7890",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Telephone input with appropriate formatting placeholder.",
+      },
+    },
+  },
+};
