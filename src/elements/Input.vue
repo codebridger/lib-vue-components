@@ -9,11 +9,11 @@
       <Icon
         v-if="iconName"
         :name="iconName"
-        class="absolute left-3 top-1/2 transform -translate-y-1/2"
+        class="absolute ltr:left-3 rtl:right-3 top-1/2 transform -translate-y-1/2"
       />
       <input
         :class="[
-          'pl-10',
+          iconName ? 'ltr:pl-10 rtl:pr-10' : '',
           // base classes
           { 'form-input': type !== 'range' },
 
