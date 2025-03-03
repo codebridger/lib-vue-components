@@ -147,7 +147,6 @@ export const EmailInput: Story = {
     type: "email",
     label: "Email Address",
     placeholder: "your@email.com",
-    iconName: "mail",
     required: true,
   },
   parameters: {
@@ -165,7 +164,6 @@ export const PasswordInput: Story = {
     type: "password",
     label: "Password",
     placeholder: "Enter your password",
-    iconName: "lock",
     required: true,
   },
   parameters: {
@@ -184,7 +182,6 @@ export const WithError: Story = {
     type: "email",
     error: true,
     errorMessage: "This field is required",
-    iconName: "alert-circle",
   },
   parameters: {
     docs: {
@@ -256,37 +253,6 @@ export const Range: Story = {
     docs: {
       description: {
         story: "Range slider input with label and min/max values.",
-      },
-    },
-  },
-};
-
-export const SearchInput: Story = {
-  args: {
-    type: "search",
-    placeholder: "Search...",
-    iconName: "search",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Search input with search icon for improved user experience.",
-      },
-    },
-  },
-};
-
-export const TelInput: Story = {
-  args: {
-    type: "tel",
-    label: "Phone Number",
-    placeholder: "(123) 456-7890",
-    iconName: "phone",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Telephone input with appropriate formatting placeholder.",
       },
     },
   },
