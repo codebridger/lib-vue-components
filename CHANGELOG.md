@@ -1,3 +1,17 @@
+# [1.17.0-dev.12](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.11...dev-1.17.0-dev.12) (2025-03-03)
+
+
+### Bug Fixes
+
+* **input:** Adding TelInput to input story ([5a2894d](https://github.com/codebridger/lib-vue-components/commit/5a2894d01707064dbea764dc48626ce258b28259))
+* **input:** Checking rtl or ltr for icon in input ([6f859ea](https://github.com/codebridger/lib-vue-components/commit/6f859ea263ac9deebe2036f19fc7a5c6cb7ab7f2))
+
+
+### Features
+
+* **button:** add icon option to input component ([be9af0a](https://github.com/codebridger/lib-vue-components/commit/be9af0af83dc4465d8038f412bb45f52225647f7))
+* **textarea:** add label option to textarea component ([ae84fab](https://github.com/codebridger/lib-vue-components/commit/ae84fab83a18a82b8dc1f93406c34ddd7edc0737))
+
 # [1.17.0-dev.11](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.10...dev-1.17.0-dev.11) (2025-03-03)
 
 
