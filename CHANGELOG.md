@@ -1,3 +1,14 @@
+# [1.17.0-dev.11](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.10...dev-1.17.0-dev.11) (2025-03-03)
+
+
+### Bug Fixes
+
+* **button:** Checking Cursor on Button component when it has link ([9ff709c](https://github.com/codebridger/lib-vue-components/commit/9ff709c3f14918002820fca20962574851ff9303))
+* **button:** Checking disabled on Button component when it is a tag ([934e3b8](https://github.com/codebridger/lib-vue-components/commit/934e3b8278d07fee2102ff6915f5895fcff20766))
+* **button:** Checking Onclick and disabled for button and a tag ([d5bdcb9](https://github.com/codebridger/lib-vue-components/commit/d5bdcb95ae822d6a213eb175d16316397b96b2ab))
+* **button:** resolve Deprecation Warning darken function ([3be9a7a](https://github.com/codebridger/lib-vue-components/commit/3be9a7a745653148061f84dc1aca357656637764))
+* **button:** resolve Deprecation Warning darken function to color.adjust ([546399a](https://github.com/codebridger/lib-vue-components/commit/546399ae9fd4dcf8ddbcbdd2e3f113e6af8f18bb))
+
 # [1.17.0-dev.10](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.9...dev-1.17.0-dev.10) (2025-03-02)
 
 
