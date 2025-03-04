@@ -11,6 +11,7 @@ const meta = {
     color: {
       control: "inline-radio",
       options: [
+        "default",
         "primary",
         "info",
         "success",
