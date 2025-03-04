@@ -9,8 +9,6 @@ const PaginationWrapper = defineComponent({
   props: {
     initialPage: { type: Number, default: 1 },
     totalPages: { type: Number, default: 1 },
-    totalItems: { type: Number, default: 0 },
-    itemsPerPage: { type: Number, default: 10 },
   },
   setup(props) {
     const currentPage = ref(props.initialPage);
@@ -18,8 +16,6 @@ const PaginationWrapper = defineComponent({
     return {
       currentPage,
       totalPages: props.totalPages,
-      totalItems: props.totalItems,
-      itemsPerPage: props.itemsPerPage,
     };
   },
   template: `
@@ -28,20 +24,11 @@ const PaginationWrapper = defineComponent({
       <Pagination
         v-model="currentPage"
         :totalPages="totalPages"
-        :totalItems="totalItems"
-        :itemsPerPage="itemsPerPage"
       />
     </div>
   `,
 });
 
-/**
- * The Pagination component provides a simple and intuitive way to navigate through paginated content.
- * It displays the current page number and total pages, with Prev/Next buttons for navigation.
- *
- * The component can calculate total pages from server response data (totalItems)
- * or use a directly provided totalPages value.
- */
 const meta = {
   title: "complex/Pagination",
   component: PaginationWrapper,
@@ -53,16 +40,7 @@ const meta = {
     },
     totalPages: {
       control: { type: "number", min: 1 },
-      description:
-        "Total number of pages (optional if totalItems and itemsPerPage are provided)",
-    },
-    totalItems: {
-      control: { type: "number", min: 0 },
-      description: "Total number of items from server response",
-    },
-    itemsPerPage: {
-      control: { type: "number", min: 1 },
-      description: "Number of items per page",
+      description: "Total number of pages",
     },
   },
   parameters: {
@@ -81,8 +59,6 @@ const meta = {
           <template>
             <Pagination
               v-model="page"
-              :totalItems="serverResponse.total"
-              :itemsPerPage="10"
               @change-page="handlePageChange"
             />
           </template>
@@ -116,45 +92,19 @@ export const Default: Story = {
 };
 
 /**
- * Pagination with calculation from server response data
- */
-export const ServerPagination: Story = {
-  args: {
-    initialPage: 1,
-    totalItems: 87,
-    itemsPerPage: 10,
-  },
-};
-
-/**
- * Pagination on middle page
- */
-export const MiddlePage: Story = {
-  args: {
-    initialPage: 3,
-    totalItems: 50,
-    itemsPerPage: 10,
-  },
-};
-
-/**
  * Pagination on last page
  */
 export const LastPage: Story = {
   args: {
     initialPage: 9,
-    totalItems: 87,
-    itemsPerPage: 10,
   },
 };
 
 /**
- * Single page pagination (when there are fewer items than itemsPerPage)
+ * Single page pagination
  */
 export const SinglePage: Story = {
   args: {
     initialPage: 1,
-    totalItems: 8,
-    itemsPerPage: 10,
   },
 };

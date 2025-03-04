@@ -38,24 +38,14 @@ interface PaginationProps {
    */
   modelValue?: number;
   /**
-   * Total number of pages (can be calculated from totalItems and itemsPerPage)
+   * Total number of pages
    */
   totalPages?: number;
-  /**
-   * Total number of items from server response
-   */
-  totalItems?: number;
-  /**
-   * Number of items per page
-   */
-  itemsPerPage?: number;
 }
 
 const props = withDefaults(defineProps<PaginationProps>(), {
   modelValue: 1,
   totalPages: 1,
-  totalItems: 0,
-  itemsPerPage: 10,
 });
 
 const emit = defineEmits(["update:modelValue", "change-page"]);
@@ -68,12 +58,7 @@ const calculatedTotalPages = computed(() => {
   if (props.totalPages > 1) {
     return props.totalPages;
   }
-
-  if (props.totalItems <= 0) {
-    return 1;
-  }
-
-  return Math.ceil(props.totalItems / props.itemsPerPage);
+  return 1;
 });
 
 /**
@@ -84,7 +69,6 @@ const handlePrevClick = () => {
     const newPage = props.modelValue - 1;
     emit("update:modelValue", newPage);
     emit("change-page", newPage);
-    console.log("Previous button clicked, new page:", newPage);
   }
 };
 
@@ -96,7 +80,6 @@ const handleNextClick = () => {
     const newPage = props.modelValue + 1;
     emit("update:modelValue", newPage);
     emit("change-page", newPage);
-    console.log("Next button clicked, new page:", newPage);
   }
 };
 </script>
