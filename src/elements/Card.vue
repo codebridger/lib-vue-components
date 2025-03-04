@@ -1,12 +1,13 @@
 <template>
   <div
     :class="[
-      $attrs.class,
+      computedClass,
+
       //size class
       'p-4',
 
       //card class
-      'bg-white shadow-[4px_6px_10px_-3px_#bfc9d4] dark:bg-[#191e3a] dark:shadow-none',
+      'shadow-[4px_6px_10px_-3px_#bfc9d4] dark:bg-[#191e3a] dark:shadow-none',
 
       //border class
       'rounded border border-[#e0e6ed] dark:border-[#1b2e4b]',
@@ -20,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide } from "vue";
+import { provide, computed, useAttrs } from "vue";
 
 // Define props with explicit attrs inheritance
 defineOptions({
@@ -37,4 +38,12 @@ provide("cardDisabled", props.disabled);
 interface CardProps {
   disabled?: boolean;
 }
+
+// Computed property to add bg-white if no bg color class is present
+const attrs = useAttrs();
+const computedClass = computed(() => {
+  const classes = typeof attrs.class === "string" ? attrs.class : "";
+  const hasBgColor = classes.split(" ").some((cls) => cls.startsWith("bg-"));
+  return hasBgColor ? classes : `${classes} bg-white`;
+});
 </script>
