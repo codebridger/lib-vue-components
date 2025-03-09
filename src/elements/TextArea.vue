@@ -1,10 +1,16 @@
 <template>
   <div>
+    <label v-if="label" :for="id" class="text-sm font-medium text-gray-700">
+      {{ label }}
+      <span v-if="required" class="text-red-500">*</span>
+    </label>
+
     <textarea
+      :id="id"
       :value="modelValue"
       :rows="rows"
       :class="[
-        'form-textarea',
+        'form-textarea w-full',
         disabled || cardDisabled
           ? 'bg-gray-100 cursor-not-allowed'
           : 'bg-white',
@@ -34,11 +40,13 @@ interface TextAreaProps {
   disabled?: boolean;
   error?: boolean;
   errorMsg?: string;
+  label?: string;
+  id?: string;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 
-withDefaults(defineProps<TextAreaProps>(), {
+const props = withDefaults(defineProps<TextAreaProps>(), {
   modelValue: "",
   rows: 3,
   placeholder: "Enter Textarea",
@@ -46,6 +54,8 @@ withDefaults(defineProps<TextAreaProps>(), {
   disabled: false,
   error: false,
   errorMsg: "",
+  label: "",
+  id: "",
 });
 
 defineEmits<{

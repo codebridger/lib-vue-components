@@ -6,12 +6,12 @@ import Icon from "../icon/Icon.vue";
 const meta = {
   title: "Elements/Button",
   component: Button,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   argTypes: {
     color: {
       control: "inline-radio",
       options: [
+        "default",
         "primary",
         "info",
         "success",
@@ -140,5 +140,15 @@ export const WithIcon: Story = {
     color: "primary",
     iconName: "IconSettings",
     size: "md",
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: "Disabled",
+    color: "primary",
+    size: "md",
+    disabled: true,
+    to: "/dashboard",
   },
 };

@@ -1,3 +1,4 @@
 import Modal from "./Modal.vue";
+import Pagination from "./Pagination.vue";
 
-export { Modal };
+export { Modal, Pagination };
