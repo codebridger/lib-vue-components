@@ -8,6 +8,7 @@
       // base class
       'btn',
       'text-xs sm:text-sm', // responsive text size
+      'transition-all', // transition effect
       { 'w-full': props.block }, // conditional full width
       disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
@@ -117,6 +118,7 @@ const computedColor = computed(() => {
   if (props.color)
     if (props.outline) {
       const outlinecolors = {
+        default: "btn-outline-white",
         primary: "btn-outline-primary",
         info: "btn-outline-info",
         success: "btn-outline-success",
@@ -129,6 +131,7 @@ const computedColor = computed(() => {
       return outlinecolors[props.color];
     } else {
       const colors = {
+        default: "btn-white",
         primary: "btn-primary",
         info: "btn-info",
         success: "btn-success",

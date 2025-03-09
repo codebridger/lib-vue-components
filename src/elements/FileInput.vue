@@ -8,7 +8,7 @@
     <input
       :class="[
         // base classes
-        `form-input file:border-0 file:font-semibold w-full file:py-2 file:px-4 p-0`,
+        `form-input file:border-0 file:font-semibold w-full file:py-2 file:px-4 p-0 transition-all`,
 
         // Direction classes
         'ltr:file:mr-5 rtl:file:ml-5',
