@@ -1,6 +1,5 @@
 # [1.17.0-dev.13](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.12...dev-1.17.0-dev.13) (2025-03-09)
 
-
 ### Bug Fixes
 
 * **button:** add color default to button component ([87f2494](https://github.com/codebridger/lib-vue-components/commit/87f24943b12cf2a8bc0683053dfc71f7d718e3f3))
