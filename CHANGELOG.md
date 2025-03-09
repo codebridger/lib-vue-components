@@ -1,3 +1,19 @@
+# [1.17.0-dev.13](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.12...dev-1.17.0-dev.13) (2025-03-09)
+
+
+### Bug Fixes
+
+* **button:** add color default to button component ([87f2494](https://github.com/codebridger/lib-vue-components/commit/87f24943b12cf2a8bc0683053dfc71f7d718e3f3))
+* **card:** check bg color if it has not bg ([acd11bc](https://github.com/codebridger/lib-vue-components/commit/acd11bcd1ff48ca26c44a334ddfb27e6baa8639d))
+* **iconbutton:** add transition ([93bb8f8](https://github.com/codebridger/lib-vue-components/commit/93bb8f8b46dc65fdf26caffe9bae3859f194092c))
+* **modal:** add button component ([54c812a](https://github.com/codebridger/lib-vue-components/commit/54c812a64810f6d992cfd8a2d2260016eed46df0))
+* **pagination:** Remove totalItems and itemsPerPage ([b694599](https://github.com/codebridger/lib-vue-components/commit/b6945995e3e9147e6f2db80fafc7b7c275c51755))
+
+
+### Features
+
+* **pagination:** Implementing a Pagination Component ([b182fbe](https://github.com/codebridger/lib-vue-components/commit/b182fbeddc0da716cd7fb2ca3eb75bc2b16e864e))
+
 # [1.17.0-dev.12](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.11...dev-1.17.0-dev.12) (2025-03-03)
 
 
