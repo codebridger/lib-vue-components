@@ -8,27 +8,21 @@
       'overflow-hidden',
       'w-fit',
       'select-none',
+      'transition-all',
 
       // light - Base classes
       'flex items-center',
       disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
-        : 'bg-white-light/40',
+        : 'bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer',
 
       // dark - Base classes
       disabled || cardDisabled
         ? 'bg-gray-100 cursor-not-allowed'
-        : 'dark:bg-dark/40',
+        : 'dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer',
       'dark:text-[#d0d2d6]',
-      'dark:hover:bg-dark/60',
-      'dark:hover:text-primary',
 
       computedRounded,
-
-      // hooks
-      'hover:cursor-pointer',
-      'hover:bg-white-light/90',
-      'hover:text-primary',
     ]"
     :disabled="disabled || cardDisabled"
   >

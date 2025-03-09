@@ -1,10 +1,49 @@
-## [1.14.1](https://github.com/codebridger/lib-vue-components/compare/v1.14.0...v1.14.1) (2025-03-01)
+# [1.17.0-dev.13](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.12...dev-1.17.0-dev.13) (2025-03-09)
+
+### Bug Fixes
+
+* **button:** add color default to button component ([87f2494](https://github.com/codebridger/lib-vue-components/commit/87f24943b12cf2a8bc0683053dfc71f7d718e3f3))
+* **card:** check bg color if it has not bg ([acd11bc](https://github.com/codebridger/lib-vue-components/commit/acd11bcd1ff48ca26c44a334ddfb27e6baa8639d))
+* **iconbutton:** add transition ([93bb8f8](https://github.com/codebridger/lib-vue-components/commit/93bb8f8b46dc65fdf26caffe9bae3859f194092c))
+* **modal:** add button component ([54c812a](https://github.com/codebridger/lib-vue-components/commit/54c812a64810f6d992cfd8a2d2260016eed46df0))
+* **pagination:** Remove totalItems and itemsPerPage ([b694599](https://github.com/codebridger/lib-vue-components/commit/b6945995e3e9147e6f2db80fafc7b7c275c51755))
+
+
+### Features
+
+* **pagination:** Implementing a Pagination Component ([b182fbe](https://github.com/codebridger/lib-vue-components/commit/b182fbeddc0da716cd7fb2ca3eb75bc2b16e864e))
+
+# [1.17.0-dev.12](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.11...dev-1.17.0-dev.12) (2025-03-03)
 
 
 ### Bug Fixes
 
-* **Button:** publish previous changes ([aad26e9](https://github.com/codebridger/lib-vue-components/commit/aad26e9de0fd01865dbee2d00aa448635358c7b9))
-* update package name references from [@tiny-ideas-ir](https://github.com/tiny-ideas-ir) to [@codebridger](https://github.com/codebridger) ([57f6178](https://github.com/codebridger/lib-vue-components/commit/57f6178bf7bb8a3853b13a6ce64223c1c545d6ed))
+* **input:** Adding TelInput to input story ([5a2894d](https://github.com/codebridger/lib-vue-components/commit/5a2894d01707064dbea764dc48626ce258b28259))
+* **input:** Checking rtl or ltr for icon in input ([6f859ea](https://github.com/codebridger/lib-vue-components/commit/6f859ea263ac9deebe2036f19fc7a5c6cb7ab7f2))
+
+
+### Features
+
+* **button:** add icon option to input component ([be9af0a](https://github.com/codebridger/lib-vue-components/commit/be9af0af83dc4465d8038f412bb45f52225647f7))
+* **textarea:** add label option to textarea component ([ae84fab](https://github.com/codebridger/lib-vue-components/commit/ae84fab83a18a82b8dc1f93406c34ddd7edc0737))
+
+# [1.17.0-dev.11](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.10...dev-1.17.0-dev.11) (2025-03-03)
+
+
+### Bug Fixes
+
+* **button:** Checking Cursor on Button component when it has link ([9ff709c](https://github.com/codebridger/lib-vue-components/commit/9ff709c3f14918002820fca20962574851ff9303))
+* **button:** Checking disabled on Button component when it is a tag ([934e3b8](https://github.com/codebridger/lib-vue-components/commit/934e3b8278d07fee2102ff6915f5895fcff20766))
+* **button:** Checking Onclick and disabled for button and a tag ([d5bdcb9](https://github.com/codebridger/lib-vue-components/commit/d5bdcb95ae822d6a213eb175d16316397b96b2ab))
+* **button:** resolve Deprecation Warning darken function ([3be9a7a](https://github.com/codebridger/lib-vue-components/commit/3be9a7a745653148061f84dc1aca357656637764))
+* **button:** resolve Deprecation Warning darken function to color.adjust ([546399a](https://github.com/codebridger/lib-vue-components/commit/546399ae9fd4dcf8ddbcbdd2e3f113e6af8f18bb))
+
+# [1.17.0-dev.10](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.9...dev-1.17.0-dev.10) (2025-03-02)
+
+
+### Features
+
+* add right arrow icon and update left arrow icon SVG structure ([c26147b](https://github.com/codebridger/lib-vue-components/commit/c26147b71bf4770a277ed3684e7e184890bf06eb))
 
 # [1.17.0-dev.9](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.8...dev-1.17.0-dev.9) (2025-03-01
 
