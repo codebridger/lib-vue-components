@@ -8,10 +8,10 @@
         <li v-for="(tab, index) in tabs" :key="index">
           <a
             href="javascript:"
-            class="p-3.5 py-2 -mb-[1px] flex items-center border border-transparent hover:text-danger dark:hover:border-b-black"
+            class="p-3.5 py-2 -mb-[1px] flex items-center border border-transparent hover:text-primary dark:hover:border-b-black"
             :class="[
               {
-                '!border-white-light !border-b-white text-danger dark:!border-[#191e3a] dark:!border-b-black':
+                '!border-white-light !border-b-white text-primary dark:!border-[#191e3a] dark:!border-b-black':
                   modelValue === tab.id,
               },
               tab.disabled
