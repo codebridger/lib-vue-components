@@ -3,9 +3,9 @@
     <!-- Tab buttons -->
     <div>
       <ul
-        class="flex flex-wrap mt-3 border-b border-white-light dark:border-[#191e3a]"
+        class="flex flex-wrap border-b border-white-light dark:border-[#191e3a]"
       >
-        <li v-for="(tab, index) in tabs" :key="index">
+        <li v-for="(tab, index) in tabs" :key="index" class="flex-1">
           <a
             href="javascript:"
             class="p-3.5 py-2 -mb-[1px] flex items-center border border-transparent hover:text-primary dark:hover:border-b-black"
