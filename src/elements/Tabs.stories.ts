@@ -100,6 +100,7 @@ const tabs: TabItem[] = [
 \`\`\`
         `,
       },
+      source: { type: "code" },
     },
   },
 } satisfies Meta<typeof Tabs>;
