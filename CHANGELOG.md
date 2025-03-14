@@ -1,3 +1,17 @@
+# [1.17.0-dev.14](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.13...dev-1.17.0-dev.14) (2025-03-14)
+
+
+### Bug Fixes
+
+* **tabs:**  Divide Width Equally Between Objects ([f7c4a7a](https://github.com/codebridger/lib-vue-components/commit/f7c4a7a6f11004e50cab143193dacdc309a0b937))
+* **tabs:** Add source type to tab story for better documentation ([d78210c](https://github.com/codebridger/lib-vue-components/commit/d78210c8058bf48ea73a4633f69c4f027bf6ed23))
+* **tabs:** add tab component and change text tab color ([12040f8](https://github.com/codebridger/lib-vue-components/commit/12040f875d31dc65c8c03bae6f8d4b23b7128ef9))
+
+
+### Features
+
+* **tabs:** Implementing a Tabs Component ([d4a8578](https://github.com/codebridger/lib-vue-components/commit/d4a85785ddf3216aa7e0a0db16fc356b708eb890))
+
 # [1.17.0-dev.13](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.12...dev-1.17.0-dev.13) (2025-03-09)
 
 ### Bug Fixes
