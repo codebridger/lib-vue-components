@@ -3,6 +3,8 @@
 // 1) Import all icons
 import IconArrowLeft from "./single/icon-arrow-left.vue";
 import IconArrowRight from "./single/icon-arrow-right.vue";
+import IconArrowUp from "./single/icon-arrow-up.vue";
+import IconArrowDown from "./single/icon-arrow-down.vue";
 import IconArrowWaveLeftUp from "./single/icon-arrow-wave-left-up.vue";
 import IconArrowBackward from "./single/icon-arrow-backward.vue";
 import IconArrowForward from "./single/icon-arrow-forward.vue";
@@ -113,6 +115,7 @@ import IconTrash from "./single/icon-trash.vue";
 import IconTrashLines from "./single/icon-trash-lines.vue";
 import IconArchive from "./single/icon-archive.vue";
 import IconCloudDownload from "./single/icon-cloud-download.vue";
+import IconCloudUpload from "./single/icon-cloud-upload.vue";
 import IconGlobe from "./single/icon-globe.vue";
 import IconMapPin from "./single/icon-map-pin.vue";
 import IconPhone from "./single/icon-phone.vue";
@@ -133,6 +136,8 @@ import IconStar from "./single/icon-star.vue";
 const ArrowsAndNavigation = {
   IconArrowLeft,
   IconArrowRight,
+  IconArrowUp,
+  IconArrowDown,
   IconArrowWaveLeftUp,
   IconArrowBackward,
   IconArrowForward,
@@ -261,6 +266,7 @@ const InterfaceAndSystem = {
   IconTrashLines,
   IconArchive,
   IconCloudDownload,
+  IconCloudUpload,
   IconGlobe,
   IconMapPin,
   IconPhone,
