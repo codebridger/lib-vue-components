@@ -1,16 +1,11 @@
 <template>
   <section class="flex flex-col gap-4">
     <div class="flex justify-start gap-2">
-      <IconButton
-        icon="IconPlus"
-        @click="triggerFileInput"
-        size="sm"
-        :disabled="disabled"
-      />
-      <IconButton icon="IconArrowUp" @click="" size="sm" />
+      <IconButton icon="IconPlus" @click="addFile" size="sm" />
+      <IconButton icon="IconArrowUp" @click="uploadAllFiles" size="sm" />
     </div>
     <div
-      class="file-upload relative"
+      class="relative"
       :class="{ 'border-primary': isDragging }"
       @dragenter.prevent="handleDragEnter"
       @dragleave.prevent="handleDragLeave"
@@ -42,57 +37,48 @@
         <div class="flex flex-col items-center gap-2">
           <Icon name="IconCloudUpload" class="w-12 h-12" />
 
-          <slot name="title">
-            <h3 class="text-lg font-medium text-gray-900">
-              {{ title || "Drop files to upload" }}
-            </h3>
-          </slot>
+          <h3 class="text-lg font-medium text-gray-900">
+            Drop files to upload
+          </h3>
 
-          <slot name="description">
-            <p class="mt-1 text-sm text-gray-500">
-              {{
-                description ||
-                (multiple
-                  ? "or click to browse files"
-                  : "or click to browse a file")
-              }}
-            </p>
-          </slot>
+          <span
+            class="text-gray-400 font-sans text-[0.7rem] font-semibold uppercase"
+          >
+            Or
+          </span>
 
-          <slot name="restrictions">
-            <p
-              v-if="fileTypesText || maxSizeText"
-              class="mt-2 text-xs text-gray-500"
-            >
-              {{ fileTypesText }}{{ fileTypesText && maxSizeText ? ", " : ""
-              }}{{ maxSizeText }}
-            </p>
-          </slot>
+          <p class="mt-1 text-sm text-gray-500">Click to browse files</p>
 
-          <slot name="browse-button">
-            <Button
-              :disabled="disabled"
-              @click="triggerFileInput"
-              color="default"
-              rounded="lg"
-            >
-              Browse
-            </Button>
-          </slot>
+          <Button
+            :disabled="disabled"
+            @click="triggerFileInput"
+            rounded="lg"
+            label="Browse"
+          />
         </div>
       </div>
 
       <!-- Preview section for uploaded files -->
       <div v-if="showPreview && files.length > 0" class="mt-4">
-        <h4 class="text-sm font-medium text-gray-700 mb-2">Uploaded Files</h4>
-        <ul class="space-y-2">
+        <ul class="space-y-4">
           <li
             v-for="(file, index) in files"
             :key="index"
-            class="flex items-center justify-between p-3 bg-gray-50 rounded-md"
+            class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl"
           >
             <div class="flex items-center gap-2">
-              <!-- <div>files preveiw(imgs, videos, ...)</div> -->
+              <!-- File preview thumbnail -->
+              <div
+                class="size-10 flex-shrink-0 bg-gray-300 rounded-md flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  v-if="isImageFile(file)"
+                  :src="createThumbnailUrl(file)"
+                  alt="thumbnail"
+                  class="h-full w-full object-cover"
+                />
+                <Icon v-else name="IconGallery" />
+              </div>
               <div>
                 <p class="text-sm font-medium text-gray-700 truncate max-w-xs">
                   {{ file.name }}
@@ -101,22 +87,45 @@
                   {{ formatFileSize(file.size) }}
                 </p>
               </div>
-              <!-- <div>Progress bar </div> -->
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center justify-end gap-3">
+              <!-- Progress bar and status -->
+              <div
+                class="flex flex-col gap-1 min-w-[120px] mx-2"
+                v-if="fileProgress[index] !== undefined"
+              >
+                <div class="flex justify-between items-center">
+                  <span class="text-xs text-gray-600">
+                    {{
+                      fileProgress[index] === 100 ? "Complete" : "Uploading..."
+                    }}
+                  </span>
+                  <span class="text-xs font-medium text-blue-600">
+                    {{ fileProgress[index] }}%
+                  </span>
+                </div>
+                <div
+                  class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300"
+                >
+                  <div
+                    class="h-full bg-blue-500 transition-all duration-300"
+                    :style="{ width: `${fileProgress[index]}%` }"
+                  ></div>
+                </div>
+              </div>
               <IconButton
                 v-if="!disabled"
                 class="text-gray-400 hover:text-gray-500 focus:outline-none"
                 icon="IconX"
                 size="sm"
-                @click=""
+                @click="cancelUpload(index)"
               />
               <IconButton
                 v-if="!disabled"
                 class="text-gray-400 hover:text-gray-500 focus:outline-none"
                 icon="IconArrowUp"
                 size="sm"
-                @click=""
+                @click="uploadFile(index)"
               />
               <IconButton
                 v-if="!disabled"
@@ -180,11 +189,23 @@ interface DropFileProps {
    * Maximum number of files allowed
    */
   maxFiles?: number;
+  /**
+   * Custom upload endpoint URL
+   */
+  uploadUrl?: string;
+  /**
+   * Use mock upload for testing (simulates progress without actual server requests)
+   */
+  mockUpload?: boolean;
+  /**
+   * Automatically start upload when files are added
+   */
+  autoUpload?: boolean;
 }
 
 const props = withDefaults(defineProps<DropFileProps>(), {
   accept: "",
-  multiple: false,
+  multiple: true,
   disabled: false,
   title: "",
   description: "",
@@ -192,6 +213,9 @@ const props = withDefaults(defineProps<DropFileProps>(), {
   maxSize: 0, // 0 means no limit
   fileTypes: "",
   maxFiles: 0, // 0 means no limit
+  uploadUrl: "/api/upload", // Default upload endpoint
+  mockUpload: false, // Default to real uploads
+  autoUpload: false, // Don't auto upload by default
 });
 
 const emit = defineEmits<{
@@ -203,6 +227,26 @@ const emit = defineEmits<{
    * Emitted when an error occurs
    */
   (e: "error", message: string): void;
+  /**
+   * Emitted when a file upload starts
+   */
+  (e: "upload:start", file: File, index: number): void;
+  /**
+   * Emitted when a file upload is completed
+   */
+  (e: "upload:complete", file: File, response: any, index: number): void;
+  /**
+   * Emitted when a file upload fails
+   */
+  (e: "upload:error", file: File, error: any, index: number): void;
+  /**
+   * Emitted when a file upload is canceled
+   */
+  (e: "upload:cancel", file: File, index: number): void;
+  /**
+   * Emitted when file upload progress changes
+   */
+  (e: "upload:progress", file: File, progress: number, index: number): void;
 }>();
 
 // Refs
@@ -211,6 +255,8 @@ const files = ref<File[]>([]);
 const isDragging = ref(false);
 const errorMessage = ref("");
 const dragCounter = ref(0);
+const fileProgress = ref<Record<number, number>>({});
+const activeUploads = ref<Record<number, XMLHttpRequest>>({});
 
 // Computed properties
 const fileTypesText = computed(() => {
@@ -222,10 +268,28 @@ const maxSizeText = computed(() => {
   return `Max size: ${formatFileSize(props.maxSize)}`;
 });
 
+// File preview helpers
+const isImageFile = (file: File): boolean => {
+  return file.type.startsWith("image/");
+};
+
+const createThumbnailUrl = (file: File): string => {
+  return URL.createObjectURL(file);
+};
+
 // Methods
 const triggerFileInput = () => {
   if (props.disabled) return;
+
+  // Reset the input value first to ensure change event fires even if selecting the same file
+  if (fileInput.value) fileInput.value.value = "";
+
+  // Then trigger the click
   fileInput.value?.click();
+};
+
+const addFile = () => {
+  triggerFileInput();
 };
 
 const handleDragEnter = (event: DragEvent) => {
@@ -287,11 +351,28 @@ const handleFileSelect = (event: Event) => {
   }
 
   errorMessage.value = "";
+
+  // Determine the starting index for uploads
+  const startIndex = files.value.length;
+
+  // Add files to our list
   files.value = props.multiple ? [...files.value, ...fileList] : fileList;
   emit("update:files", files.value);
 
   // Reset the input to allow selecting the same file again
   if (fileInput.value) fileInput.value.value = "";
+
+  // Auto upload if enabled
+  if (props.autoUpload) {
+    // Only upload the newly added files
+    if (props.multiple) {
+      for (let i = startIndex; i < files.value.length; i++) {
+        uploadFile(i);
+      }
+    } else {
+      uploadFile(0); // Only upload the single file
+    }
+  }
 };
 
 const handleDrop = (event: DragEvent) => {
@@ -312,16 +393,46 @@ const handleDrop = (event: DragEvent) => {
   }
 
   errorMessage.value = "";
+
+  // Determine the starting index for uploads
+  const startIndex = files.value.length;
+
+  // Add files to our list
   files.value = props.multiple ? [...files.value, ...fileList] : fileList;
   emit("update:files", files.value);
+
+  // Auto upload if enabled
+  if (props.autoUpload) {
+    // Only upload the newly added files
+    if (props.multiple) {
+      for (let i = startIndex; i < files.value.length; i++) {
+        uploadFile(i);
+      }
+    } else {
+      uploadFile(0); // Only upload the single file
+    }
+  }
 };
 
 const removeFile = (index: number) => {
   if (props.disabled) return;
+
+  // Cancel upload if in progress
+  if (activeUploads.value[index]) {
+    cancelUpload(index);
+  }
+
   const newFiles = [...files.value];
   newFiles.splice(index, 1);
   files.value = newFiles;
   emit("update:files", files.value);
+
+  // Clean up progress tracking
+  if (fileProgress.value[index] !== undefined) {
+    const newProgress = { ...fileProgress.value };
+    delete newProgress[index];
+    fileProgress.value = newProgress;
+  }
 };
 
 const formatFileSize = (bytes: number): string => {
@@ -332,5 +443,144 @@ const formatFileSize = (bytes: number): string => {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+};
+
+// New functions for file uploading
+const uploadFile = (index: number) => {
+  if (props.disabled || !files.value[index]) return;
+
+  const file = files.value[index];
+
+  // Don't upload if already in progress
+  if (fileProgress.value[index] !== undefined && activeUploads.value[index]) {
+    return;
+  }
+
+  // Initialize progress tracking
+  fileProgress.value[index] = 0;
+
+  // Emit upload start event
+  emit("upload:start", file, index);
+
+  if (props.mockUpload) {
+    // Simulate upload progress for testing purposes
+    let mockProgress = 0;
+    const mockUploadInterval = setInterval(() => {
+      if (mockProgress < 100) {
+        // Increment by a random amount between 5-15%
+        const increment = Math.floor(Math.random() * 10) + 5;
+        mockProgress = Math.min(mockProgress + increment, 100);
+
+        fileProgress.value[index] = mockProgress;
+        emit("upload:progress", file, mockProgress, index);
+
+        if (mockProgress === 100) {
+          clearInterval(mockUploadInterval);
+
+          // Simulate a small delay before marking as complete
+          setTimeout(() => {
+            emit(
+              "upload:complete",
+              file,
+              { success: true, message: "Mock upload complete" },
+              index
+            );
+          }, 500);
+        }
+      } else {
+        clearInterval(mockUploadInterval);
+      }
+    }, 500); // Update every 500ms
+
+    // Store the interval ID so we can cancel it
+    activeUploads.value[index] = {
+      abort: () => clearInterval(mockUploadInterval),
+    } as any;
+
+    return;
+  }
+
+  // Real upload implementation
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const xhr = new XMLHttpRequest();
+  activeUploads.value[index] = xhr;
+
+  xhr.upload.addEventListener("progress", (event) => {
+    if (event.lengthComputable) {
+      const progress = Math.round((event.loaded / event.total) * 100);
+      fileProgress.value[index] = progress;
+      emit("upload:progress", file, progress, index);
+    }
+  });
+
+  xhr.addEventListener("load", () => {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      fileProgress.value[index] = 100;
+      emit("upload:complete", file, xhr.response, index);
+
+      // Clean up
+      const newActiveUploads = { ...activeUploads.value };
+      delete newActiveUploads[index];
+      activeUploads.value = newActiveUploads;
+    } else {
+      errorMessage.value = `Upload failed: ${xhr.statusText}`;
+      emit(
+        "upload:error",
+        file,
+        { status: xhr.status, message: xhr.statusText },
+        index
+      );
+
+      // Reset progress
+      fileProgress.value[index] = 0;
+    }
+  });
+
+  xhr.addEventListener("error", () => {
+    errorMessage.value = "Upload failed due to network error";
+    fileProgress.value[index] = 0;
+    emit("upload:error", file, { message: "Network error" }, index);
+  });
+
+  xhr.addEventListener("abort", () => {
+    fileProgress.value[index] = 0;
+    emit("upload:cancel", file, index);
+  });
+
+  xhr.open("POST", props.uploadUrl);
+  xhr.send(formData);
+};
+
+const cancelUpload = (index: number) => {
+  if (!activeUploads.value[index]) return;
+
+  // Call abort method (works for both XHR and our mock object)
+  activeUploads.value[index].abort();
+
+  // Clean up
+  const newActiveUploads = { ...activeUploads.value };
+  delete newActiveUploads[index];
+  activeUploads.value = newActiveUploads;
+
+  // Reset progress
+  fileProgress.value[index] = 0;
+
+  // Emit cancel event
+  if (files.value[index]) {
+    emit("upload:cancel", files.value[index], index);
+  }
+};
+
+const uploadAllFiles = () => {
+  if (props.disabled || files.value.length === 0) return;
+
+  files.value.forEach((_, index) => {
+    // Only start upload if not already in progress
+    if (!activeUploads.value[index]) {
+      uploadFile(index);
+    }
+  });
 };
 </script>

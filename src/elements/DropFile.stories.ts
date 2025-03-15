@@ -43,6 +43,19 @@ const meta: Meta<typeof DropFile> = {
       control: "number",
       description: "Maximum number of files allowed",
     },
+    uploadUrl: {
+      control: "text",
+      description: "Custom upload endpoint URL",
+    },
+    mockUpload: {
+      control: "boolean",
+      description:
+        "Simulate upload progress without an actual server (for testing)",
+    },
+    autoUpload: {
+      control: "boolean",
+      description: "Automatically start upload when files are added",
+    },
   },
   parameters: {
     docs: {
@@ -60,7 +73,7 @@ type Story = StoryObj<typeof DropFile>;
 export const Default: Story = {
   args: {
     accept: "",
-    multiple: false,
+    multiple: true,
     disabled: false,
     title: "",
     description: "",
@@ -68,6 +81,9 @@ export const Default: Story = {
     maxSize: 0,
     fileTypes: "",
     maxFiles: 0,
+    uploadUrl: "/api/upload",
+    mockUpload: false,
+    autoUpload: false,
   },
 };
 
@@ -148,5 +164,44 @@ export const NoPreview: Story = {
     multiple: true,
     title: "Upload in Background",
     description: "Files will be uploaded without preview",
+  },
+};
+
+export const WithMockUpload: Story = {
+  args: {
+    ...Default.args,
+    mockUpload: true,
+    accept: "image/*",
+    fileTypes: "JPG, PNG, GIF",
+    title: "Test Upload With Progress",
+    description: "Files will show a simulated upload progress",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This example uses mock uploads to simulate progress bars without requiring a backend server. Great for testing the UI.",
+      },
+    },
+  },
+};
+
+export const AutoUploadDemo: Story = {
+  args: {
+    ...Default.args,
+    mockUpload: true,
+    autoUpload: true,
+    accept: "image/*,application/pdf",
+    fileTypes: "Images, PDF",
+    title: "Auto-Upload Files",
+    description: "Files will automatically upload when added",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This example automatically starts uploading files as soon as they're added, either by drop or selection.",
+      },
+    },
   },
 };
