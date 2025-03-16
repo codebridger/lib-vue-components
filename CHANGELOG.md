@@ -1,3 +1,10 @@
+# [1.17.0-dev.15](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.14...dev-1.17.0-dev.15) (2025-03-16)
+
+
+### Bug Fixes
+
+* **branding:** Allow dynamic brand logo in DashboardShell and SidebarMenu components ([db70f0a](https://github.com/codebridger/lib-vue-components/commit/db70f0a6c444ccdaf88aa63781fbaa39742949e3))
+
 # [1.17.0-dev.14](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.13...dev-1.17.0-dev.14) (2025-03-14)
 
 
