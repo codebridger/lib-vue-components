@@ -6,8 +6,8 @@
         <slot name="brand">
           <img
             class="ml-[5px] w-8 flex-none"
-            src="/assets/images/logo.svg"
-            alt=""
+            :src="props.brandLogo || '/assets/images/logo.svg'"
+            alt="Sidebar Brand logo"
           />
 
           <span
@@ -220,6 +220,8 @@ import type { SidebarGroupType, SidebarItemType } from "../types/sidebar.type";
 interface SidebarProps {
   /** Sidebar title */
   title?: string;
+  /** Sidebar logo URL */
+  brandLogo?: string;
   /** Sidebar items */
   items: Array<SidebarGroupType>;
 }
