@@ -11,7 +11,9 @@ import FileInput from "./FileInput.vue";
 import Card from "./Card.vue";
 import Tabs from "./Tabs.vue";
 import DropFile from "./DropFile.vue";
-
+import FullscreenDropfile from "./FullscreenDropfile.vue";
+import InputFileHeadless from "./InputFileHeadless.vue";
+import Progress from "./Progress.vue";
 // icons
 import Icon from "../icon/Icon.vue";
 
@@ -29,7 +31,9 @@ export {
   Card,
   Tabs,
   DropFile,
-
+  FullscreenDropfile,
+  InputFileHeadless,
+  Progress,
   // Icons
   Icon,
 };
