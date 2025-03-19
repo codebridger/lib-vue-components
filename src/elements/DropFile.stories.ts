@@ -35,27 +35,6 @@ const meta: Meta<typeof DropFile> = {
       control: "number",
       description: "Maximum file size in bytes",
     },
-    fileTypes: {
-      control: "text",
-      description: "Human-readable description of accepted file types",
-    },
-    maxFiles: {
-      control: "number",
-      description: "Maximum number of files allowed",
-    },
-    uploadUrl: {
-      control: "text",
-      description: "Custom upload endpoint URL",
-    },
-    mockUpload: {
-      control: "boolean",
-      description:
-        "Simulate upload progress without an actual server (for testing)",
-    },
-    autoUpload: {
-      control: "boolean",
-      description: "Automatically start upload when files are added",
-    },
   },
   parameters: {
     docs: {
@@ -79,72 +58,6 @@ export const Default: Story = {
     description: "",
     showPreview: true,
     maxSize: 0,
-    fileTypes: "",
-    maxFiles: 0,
-    uploadUrl: "/api/upload",
-    mockUpload: false,
-    autoUpload: false,
-  },
-};
-
-export const SingleImageUpload: Story = {
-  args: {
-    ...Default.args,
-    accept: "image/*",
-    fileTypes: "JPG, PNG, GIF",
-    title: "Upload Profile Picture",
-    description: "Drop your profile image or click to browse",
-  },
-};
-
-export const MultipleDocumentUpload: Story = {
-  args: {
-    ...Default.args,
-    accept: ".pdf,.doc,.docx",
-    fileTypes: "PDF, DOC, DOCX",
-    multiple: true,
-    title: "Upload Documents",
-    description: "Drop your documents or click to browse",
-  },
-};
-
-export const LimitedFileSize: Story = {
-  args: {
-    ...Default.args,
-    accept: "image/*",
-    fileTypes: "Images",
-    maxSize: 1024 * 1024, // 1MB
-    title: "Upload Image",
-    description: "Maximum file size: 1MB",
-  },
-};
-
-export const LimitedFileCount: Story = {
-  args: {
-    ...Default.args,
-    accept: "image/*",
-    multiple: true,
-    maxFiles: 3,
-    title: "Upload Gallery Images",
-    description: "Upload up to 3 images",
-  },
-};
-
-export const CustomStyling: Story = {
-  args: {
-    ...Default.args,
-    title: "Upload Your Design",
-    description: "Drag and drop your creative designs here",
-    fileTypes: "SVG, AI, PSD, PNG",
-    accept: ".svg,.ai,.psd,.png",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "A customized version of the DropFile component with specialized text for designers.",
-      },
-    },
   },
 };
 
@@ -164,44 +77,5 @@ export const NoPreview: Story = {
     multiple: true,
     title: "Upload in Background",
     description: "Files will be uploaded without preview",
-  },
-};
-
-export const WithMockUpload: Story = {
-  args: {
-    ...Default.args,
-    mockUpload: true,
-    accept: "image/*",
-    fileTypes: "JPG, PNG, GIF",
-    title: "Test Upload With Progress",
-    description: "Files will show a simulated upload progress",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This example uses mock uploads to simulate progress bars without requiring a backend server. Great for testing the UI.",
-      },
-    },
-  },
-};
-
-export const AutoUploadDemo: Story = {
-  args: {
-    ...Default.args,
-    mockUpload: true,
-    autoUpload: true,
-    accept: "image/*,application/pdf",
-    fileTypes: "Images, PDF",
-    title: "Auto-Upload Files",
-    description: "Files will automatically upload when added",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This example automatically starts uploading files as soon as they're added, either by drop or selection.",
-      },
-    },
   },
 };

@@ -10,6 +10,7 @@ import TextArea from "./TextArea.vue";
 import FileInput from "./FileInput.vue";
 import Card from "./Card.vue";
 import Tabs from "./Tabs.vue";
+import DropFile from "./DropFile.vue";
 
 // icons
 import Icon from "../icon/Icon.vue";
@@ -27,6 +28,7 @@ export {
   FileInput,
   Card,
   Tabs,
+  DropFile,
 
   // Icons
   Icon,
