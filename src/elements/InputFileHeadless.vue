@@ -8,7 +8,90 @@
       :remove="remove"
       :preview="useFilePreview"
       :drop="drop"
+      :file-count="fileCount"
+      :has-files="hasFiles"
+      :is-disabled="isDisabled"
+      :has-error="error"
     >
+      <slot name="default">
+        <div
+          role="button"
+          tabindex="-1"
+          class="w-full"
+          @dragenter.stop.prevent
+          @dragover.stop.prevent
+          @drop="!isDisabled && drop($event)"
+        >
+          <div
+            v-if="!isDisabled"
+            class="focus:ring-primary-500/50 group cursor-pointer rounded-lg border-[3px] border-dashed border-gray-300 p-8 transition-colors duration-300 hover:border-gray-400 focus:border-gray-400 focus:outline-none focus:ring-2 dark:border-gray-700 dark:hover:border-gray-600 dark:focus:border-gray-700"
+            tabindex="0"
+            role="button"
+            @click="open"
+            @keydown.enter.prevent="open"
+          >
+            <slot
+              name="upload-ui"
+              :file-count="fileCount"
+              :has-files="hasFiles"
+            >
+              <div class="flex flex-col items-center justify-center gap-2 p-2">
+                <slot name="icon">
+                  <Icon name="IconCloudUpload" class="size-10 text-gray-400" />
+                </slot>
+
+                <slot name="title">
+                  <h4 class="font-sans text-sm text-gray-400">
+                    Drop files to upload
+                  </h4>
+                </slot>
+
+                <slot name="divider">
+                  <div>
+                    <span
+                      class="font-sans text-[0.7rem] font-semibold uppercase text-gray-400"
+                    >
+                      Or
+                    </span>
+                  </div>
+                </slot>
+
+                <slot name="select-button">
+                  <label
+                    :for="id"
+                    class="group-hover:text-primary-500 group-focus:text-primary-500 cursor-pointer font-sans text-sm text-gray-400 underline underline-offset-4 transition-colors duration-300"
+                  >
+                    Select files
+                  </label>
+                </slot>
+              </div>
+            </slot>
+            <slot name="list-files" :files="modelValue" :remove="remove"></slot>
+          </div>
+          <div
+            v-else
+            class="group cursor-not-allowed rounded-lg border-[3px] border-dashed border-gray-200 bg-gray-50 p-8 transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800"
+          >
+            <slot
+              name="upload-ui-disabled"
+              :file-count="fileCount"
+              :has-files="hasFiles"
+            >
+              <div class="flex flex-col items-center justify-center gap-2 p-2">
+                <slot name="icon-disabled">
+                  <Icon name="IconCloudUpload" class="size-10 text-gray-300" />
+                </slot>
+
+                <slot name="title-disabled">
+                  <h4 class="font-sans text-sm text-gray-300">
+                    File upload disabled
+                  </h4>
+                </slot>
+              </div>
+            </slot>
+          </div>
+        </div>
+      </slot>
     </slot>
 
     <input
@@ -18,6 +101,7 @@
       v-bind="$attrs"
       class="hidden"
       :multiple="multiple"
+      :disabled="isDisabled"
       @change="handleFileChange"
     />
   </div>
@@ -26,6 +110,7 @@
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
 import { useFilePreview } from "../composables/file-preview";
+import Icon from "@/icon/Icon.vue";
 
 interface InputFileHeadlessProps {
   /**
@@ -44,11 +129,6 @@ interface InputFileHeadlessProps {
   filterFileDropped?: (file: File) => boolean;
 
   /**
-   * The size of the input.
-   */
-  size?: "sm" | "md" | "lg";
-
-  /**
    * Whether the input is disabled.
    */
   disabled?: boolean;
@@ -62,11 +142,6 @@ interface InputFileHeadlessProps {
    * Accept attribute for file input
    */
   accept?: string;
-
-  /**
-   * Capture attribute for file input
-   */
-  capture?: "user" | "environment" | boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -75,11 +150,9 @@ const props = withDefaults(defineProps<InputFileHeadlessProps>(), {
   id: undefined,
   multiple: false,
   filterFileDropped: () => true,
-  size: "md",
   disabled: false,
   error: false,
   accept: undefined,
-  capture: undefined,
 });
 
 const emit = defineEmits<{
@@ -216,20 +289,4 @@ function handleFileChange(event: Event) {
 
   emit("change", event);
 }
-
-// Expose component API
-defineExpose({
-  el: inputRef,
-  id,
-  files: modelValue,
-  hasFiles,
-  fileCount,
-  open,
-  remove,
-  preview,
-  drop,
-  isDisabled,
-  hasError: computed(() => props.error),
-  size: computed(() => props.size),
-});
 </script>
