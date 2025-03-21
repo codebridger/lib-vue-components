@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import FullscreenDropfile from "./FullscreenDropfile.vue";
+import InputFileDropMode from "./InputFileDropMode.vue";
 
 const meta = {
-  title: "Elements/FullscreenDropfile",
-  component: FullscreenDropfile,
+  title: "Elements/InputFileDropMode",
+  component: InputFileDropMode,
   tags: ["autodocs"],
   argTypes: {
     icon: {
@@ -28,7 +28,7 @@ const meta = {
     docs: {
       description: {
         component: `
-      # FullscreenDropfile Component
+      # InputFileDropMode Component
 
 A fullscreen file drop component that allows users to drag and drop files anywhere on the screen. The component provides visual feedback when files are being dragged over and supports file type filtering.
 
@@ -45,7 +45,7 @@ A fullscreen file drop component that allows users to drag and drop files anywhe
 
 \`\`\`
 <script setup lang="ts">
-import FullscreenDropfile from './components/FullscreenDropfile.vue';
+import InputFileDropMode from './components/InputFileDropMode.vue';
 
 const handleDrop = (files: FileList) => {
   // Handle the dropped files
@@ -54,7 +54,7 @@ const handleDrop = (files: FileList) => {
 </script>
 
 <template>
-  <FullscreenDropfile
+  <InputFileDropMode
     icon="IconCloudUpload"
     label="Drop your files here"
     :filterFileDropped="(file) => file.type.startsWith('image/')"
@@ -65,7 +65,7 @@ const handleDrop = (files: FileList) => {
       source: { type: "code" },
     },
   },
-} satisfies Meta<typeof FullscreenDropfile>;
+} satisfies Meta<typeof InputFileDropMode>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
