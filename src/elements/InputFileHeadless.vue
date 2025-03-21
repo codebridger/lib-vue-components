@@ -8,7 +8,9 @@
       :remove="remove"
       :preview="useFilePreview"
       :drop="drop"
-    />
+    >
+    </slot>
+
     <input
       :id="id"
       ref="inputRef"
@@ -22,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, reactive, type Ref } from "vue";
+import { ref, computed, inject } from "vue";
 import { useFilePreview } from "../composables/file-preview";
 
 interface InputFileHeadlessProps {
@@ -55,7 +57,19 @@ interface InputFileHeadlessProps {
    * Whether the input has an error.
    */
   error?: boolean;
+
+  /**
+   * Accept attribute for file input
+   */
+  accept?: string;
+
+  /**
+   * Capture attribute for file input
+   */
+  capture?: "user" | "environment" | boolean;
 }
+
+const cardDisabled = inject<boolean>("cardDisabled", false);
 
 const props = withDefaults(defineProps<InputFileHeadlessProps>(), {
   id: undefined,
@@ -64,7 +78,36 @@ const props = withDefaults(defineProps<InputFileHeadlessProps>(), {
   size: "md",
   disabled: false,
   error: false,
+  accept: undefined,
+  capture: undefined,
 });
+
+const emit = defineEmits<{
+  /**
+   * Emitted when the value of the input changes
+   */
+  change: [event: Event];
+
+  /**
+   * Emitted when files are dropped
+   */
+  drop: [event: DragEvent];
+
+  /**
+   * Emitted when a file is removed
+   */
+  remove: [file: File];
+
+  /**
+   * Emitted when the input loses focus
+   */
+  blur: [event: FocusEvent];
+
+  /**
+   * Emitted when the input gains focus
+   */
+  focus: [event: FocusEvent];
+}>();
 
 const [modelValue] = defineModel<FileList | null>();
 
@@ -73,40 +116,46 @@ const id = ref(
   props.id || `file-input-${Math.random().toString(36).substr(2, 9)}`
 );
 
-const previewMap = new WeakMap<File, Ref<string | undefined>>();
+const previewMap = new WeakMap<File, string>();
+
+// Computed properties
+const isDisabled = computed(() => props.disabled || cardDisabled);
+const hasFiles = computed(
+  () => modelValue.value && modelValue.value.length > 0
+);
+const fileCount = computed(() => modelValue.value?.length || 0);
 
 function open() {
-  inputRef.value?.click();
+  if (!isDisabled.value) {
+    inputRef.value?.click();
+  }
 }
 
 function drop(event: DragEvent) {
   event.stopPropagation();
   event.preventDefault();
 
+  if (isDisabled.value) return;
+
   const dt = event.dataTransfer;
+  if (!dt || !inputRef.value) return;
+
   const filtered = new DataTransfer();
-  if (inputRef.value && dt) {
-    Array.from(dt.files).forEach((file) => {
-      if (props.filterFileDropped(file)) {
-        filtered.items.add(file);
-      }
-    });
-    inputRef.value.files = filtered.files;
-    modelValue.value = inputRef.value.files;
-  }
+  Array.from(dt.files).forEach((file) => {
+    if (props.filterFileDropped(file)) {
+      filtered.items.add(file);
+    }
+  });
+
+  inputRef.value.files = filtered.files;
+  modelValue.value = filtered.files;
+  emit("drop", event);
 }
 
 function remove(file?: File) {
-  if (!file) return;
-  if (!modelValue.value) return;
-  if (!inputRef.value) return;
+  if (!file || !modelValue.value || !inputRef.value || isDisabled.value) return;
 
   const filtered = new DataTransfer();
-
-  if (previewMap.has(file)) {
-    previewMap.delete(file);
-  }
-
   Array.from(modelValue.value).forEach((f) => {
     if (f !== file) {
       filtered.items.add(f);
@@ -114,41 +163,40 @@ function remove(file?: File) {
   });
 
   inputRef.value.files = filtered.files;
-  modelValue.value = inputRef.value.files;
+  modelValue.value = filtered.files;
+  emit("remove", file);
 }
 
 function preview(file: File): string | undefined {
   if (previewMap.has(file)) {
-    return previewMap.get(file)?.value;
+    return previewMap.get(file);
   }
 
   const reader = new FileReader();
-  const previewRef = ref<string>();
-
   reader.onload = (e) => {
-    previewRef.value = e.target?.result as string;
-    previewMap.set(file, previewRef);
+    const result = e.target?.result as string;
+    previewMap.set(file, result);
   };
-
   reader.readAsDataURL(file);
-  return previewRef.value;
+  return undefined; // Will be updated when reader.onload fires
 }
 
 function handleFileChange(event: Event) {
+  if (isDisabled.value) return;
+
   const newFiles = (event.target as HTMLInputElement).files;
   if (!newFiles) return;
 
   if (props.multiple && modelValue.value) {
-    // When multiple is true, append new files to existing ones
     const existingFiles = Array.from(modelValue.value);
     const updatedFiles = new DataTransfer();
 
-    // Add all existing files
+    // Add existing files
     existingFiles.forEach((file) => {
       updatedFiles.items.add(file);
     });
 
-    // Add new files, optionally check for duplicates
+    // Add new files, avoiding duplicates
     Array.from(newFiles).forEach((newFile) => {
       if (
         !existingFiles.some(
@@ -158,60 +206,30 @@ function handleFileChange(event: Event) {
         updatedFiles.items.add(newFile);
       }
     });
-    if (!inputRef.value) return;
 
+    if (!inputRef.value) return;
     inputRef.value.files = updatedFiles.files;
     modelValue.value = updatedFiles.files;
   } else {
-    // When multiple is false, replace current files with new selection
     modelValue.value = newFiles;
   }
+
+  emit("change", event);
 }
 
-provide(
-  "InputFileHeadlessContext",
-  reactive({
-    el: inputRef,
-    id,
-    files: modelValue,
-    open,
-    remove,
-    preview: useFilePreview,
-    drop,
-    size: props.size,
-    disabled: props.disabled,
-    error: props.error,
-  })
-);
-
+// Expose component API
 defineExpose({
-  /**
-   * The underlying HTMLInputElement element.
-   */
   el: inputRef,
-  /**
-   * The form input identifier.
-   */
   id,
-  /**
-   * The model value of the file input.
-   */
   files: modelValue,
-  /**
-   * Opens the native file input selector.
-   */
+  hasFiles,
+  fileCount,
   open,
-  /**
-   * Removes a file from the input.
-   */
   remove,
-  /**
-   * Returns the preview DataURL of a file.
-   */
-  preview: useFilePreview,
-  /**
-   * Handles the drop event.
-   */
+  preview,
   drop,
+  isDisabled,
+  hasError: computed(() => props.error),
+  size: computed(() => props.size),
 });
 </script>
