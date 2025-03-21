@@ -10,7 +10,7 @@ import TextArea from "./TextArea.vue";
 import FileInput from "./FileInput.vue";
 import Card from "./Card.vue";
 import Tabs from "./Tabs.vue";
-import InputDragFile from "./InputDragFile.vue";
+import InputFileDropMode from "./InputFileDropMode.vue";
 import InputFileHeadless from "./InputFileHeadless.vue";
 import Progress from "./Progress.vue";
 // icons
@@ -29,7 +29,7 @@ export {
   FileInput,
   Card,
   Tabs,
-  InputDragFile,
+  InputFileDropMode,
   InputFileHeadless,
   Progress,
   // Icons
