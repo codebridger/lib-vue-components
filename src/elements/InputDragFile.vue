@@ -1,10 +1,7 @@
 <template>
-  <div class="fixed inset-0 z-50">
-    <div v-if="isDropping" class="fixed inset-0 bg-black/50" />
-    <div
-      v-show="isDropping"
-      class="fixed inset-0 flex items-center justify-center"
-    >
+  <div class="z-50">
+    <div v-if="isDropping" class="bg-black/50" />
+    <div v-show="isDropping" class="flex items-center justify-center">
       <Transition
         enter-active-class="transition duration-100 ease-out"
         enter-from-class="transform scale-0 opacity-0"
