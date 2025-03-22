@@ -7,6 +7,22 @@ const meta = {
   component: InputFileHeadless,
   tags: ["autodocs"],
   argTypes: {
+    modelValue: {
+      control: false,
+      description: "The file list value (v-model)",
+    },
+    label: {
+      control: "text",
+      description: "Label text for the file input",
+    },
+    placeholder: {
+      control: "text",
+      description: "Placeholder text shown in the dropzone area",
+    },
+    iconName: {
+      control: "text",
+      description: "Icon name to be displayed in the dropzone area",
+    },
     multiple: {
       control: "boolean",
       description: "Allow multiple file selection",
@@ -15,31 +31,68 @@ const meta = {
       control: "boolean",
       description: "Disable the input",
     },
+    required: {
+      control: "boolean",
+      description: "Mark the input as required",
+    },
     error: {
       control: "boolean",
       description: "Show error state",
     },
+    errorMessage: {
+      control: "text",
+      description: "Error message text",
+    },
+    id: {
+      control: "text",
+      description: "Input ID attribute for label association",
+    },
     accept: {
       control: "text",
-      description: "Accept attribute for file input (e.g., 'image/*', '.pdf')",
+      description: "Accepted file types (e.g., 'image/*', '.pdf')",
     },
     filterFileDropped: {
       control: false,
-      description: "Function to filter which files are accepted",
+      description: "Function to filter which files are accepted when dropped",
     },
   },
   args: {
+    label: "",
+    placeholder: "Drop files to upload",
+    iconName: "IconCloudUpload",
     multiple: false,
     disabled: false,
+    required: false,
     error: false,
+    errorMessage: "",
+    id: "",
     accept: undefined,
-    filterFileDropped: () => true,
   },
   parameters: {
     docs: {
       description: {
         component: `
-## Usage Example
+## Features
+
+- Drag and drop file upload
+- Multiple file selection
+- Custom UI through slots
+- Error state with custom error message
+- File filtering capabilities
+- Preview file functionality
+- Fully reactive with Vue's v-model
+
+## Basic Usage
+
+\`\`\`vue
+<template>
+  <InputFileHeadless v-model="files" accept="image/*" multiple>
+    <!-- Default slot receives all needed props -->
+  </InputFileHeadless>
+</template>
+\`\`\`
+
+## Advanced Usage with Slots
 
 \`\`\`vue
 <template>
@@ -50,26 +103,34 @@ const meta = {
     @change="handleChange"
     @drop="handleDrop"
   >
-    <template #default="slotProps">
+    <template #default="{ open, files, remove, preview, drop, isDisabled, hasError, fileCount, hasFiles }">
       <div 
         class="border-2 border-dashed rounded-lg p-4"
         :class="{
-          'border-gray-300': !slotProps.hasError && !slotProps.isDisabled,
-          'border-red-500': slotProps.hasError,
-          'border-gray-200 bg-gray-50': slotProps.isDisabled,
-          'border-primary': slotProps.isDragging
+          'border-gray-300': !hasError && !isDisabled,
+          'border-red-500': hasError,
+          'border-gray-200 bg-gray-50': isDisabled
         }"
-        @click="slotProps.open"
+        @click="!isDisabled && open()"
         @dragover.prevent
-        @drop="slotProps.drop"
+        @drop="!isDisabled && drop($event)"
       >
-        <!-- Your custom content -->
+        <!-- Your custom UI here -->
+        <div v-if="hasFiles">
+          <div v-for="(file, index) in files" :key="index">
+            {{ file.name }} - {{ (file.size / 1024).toFixed(2) }} KB
+            <button @click.stop="remove(file)">Remove</button>
+          </div>
+        </div>
+        <div v-else>
+          <p>Drag and drop files here, or click to select files</p>
+        </div>
       </div>
     </template>
   </InputFileHeadless>
 </template>
 \`\`\`
-      `,
+        `,
       },
       source: { type: "code" },
     },
@@ -81,180 +142,140 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    multiple: false,
-    disabled: false,
-    error: false,
+    placeholder: "Drop files here or click to browse",
   },
-  render: (args) => ({
-    components: { InputFileHeadless },
-    setup() {
-      const files = ref([]);
-      return { args, files };
+  parameters: {
+    docs: {
+      description: {
+        story: "Basic file upload component with default styling.",
+      },
     },
-    template: `
-      <InputFileHeadless v-bind="args" v-model="files">
-        <template #default="{ open, files, remove, preview, drop, isDisabled, fileCount, hasFiles, id, el }">
-          <div 
-            class="border-2 border-dashed rounded-lg p-4 transition-colors"
-            :class="{
-              'border-gray-300 hover:border-gray-400 cursor-pointer': !args.error && !isDisabled,
-              'border-red-500 cursor-pointer': args.error && !isDisabled,
-              'border-gray-200 bg-gray-50 cursor-not-allowed': isDisabled,
-              'border-primary': false
-            }"
-            @click="!isDisabled && open()"
-            @dragover.prevent
-            @drop="!isDisabled && drop($event)"
-          >
-            <div class="text-center">
-              <svg class="mx-auto h-12 w-12" :class="{'text-gray-400': !isDisabled, 'text-gray-300': isDisabled}" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <p class="mt-1 text-sm" :class="{'text-gray-600': !isDisabled, 'text-gray-400': isDisabled}">
-                {{ hasFiles ? \`\${fileCount} files selected\` : 'Drag and drop files here, or click to select files' }}
-              </p>
-              <p class="mt-1 text-xs" :class="{'text-gray-500': !isDisabled, 'text-gray-400': isDisabled}">
-                Any file type
-              </p>
-            </div>
-          </div>
-        </template>
-      </InputFileHeadless>
-    `,
-  }),
+  },
+};
+
+export const WithLabel: Story = {
+  args: {
+    label: "Upload Document",
+    placeholder: "Drop your document here",
+    id: "document-upload",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "File upload with a descriptive label to improve accessibility.",
+      },
+    },
+  },
+};
+
+export const WithCustomIcon: Story = {
+  args: {
+    label: "Profile Picture",
+    placeholder: "Upload your profile picture",
+    iconName: "IconUser",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "File upload with a custom icon to indicate the upload type.",
+      },
+    },
+  },
+};
+
+export const WithKebabCaseIcon: Story = {
+  args: {
+    label: "Document Upload",
+    placeholder: "Upload your document",
+    iconName: "icon-document",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "File upload with an icon name in kebab-case format.",
+      },
+    },
+  },
 };
 
 export const Multiple: Story = {
   args: {
+    label: "Upload Images",
+    placeholder: "Drop multiple images here",
     multiple: true,
-    disabled: false,
-    error: false,
+    accept: "image/*",
   },
-  render: (args) => ({
-    components: { InputFileHeadless },
-    setup() {
-      const files = ref([]);
-      return { args, files };
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Allows selection of multiple files with image type restrictions.",
+      },
     },
-    template: `
-      <InputFileHeadless v-bind="args" v-model="files">
-        <template #default="{ open, files, remove, preview, drop, isDisabled, fileCount, hasFiles, id, el }">
-          <div 
-            class="border-2 border-dashed rounded-lg p-4 transition-colors"
-            :class="{
-              'border-gray-300 hover:border-gray-400 cursor-pointer': !args.error && !isDisabled,
-              'border-red-500 cursor-pointer': args.error && !isDisabled,
-              'border-gray-200 bg-gray-50 cursor-not-allowed': isDisabled,
-              'border-primary': false
-            }"
-            @click="!isDisabled && open()"
-            @dragover.prevent
-            @drop="!isDisabled && drop($event)"
-          >
-            <div class="text-center">
-              <svg class="mx-auto h-12 w-12" :class="{'text-gray-400': !isDisabled, 'text-gray-300': isDisabled}" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <p class="mt-1 text-sm" :class="{'text-gray-600': !isDisabled, 'text-gray-400': isDisabled}">
-                {{ hasFiles ? \`\${fileCount} files selected\` : 'Drag and drop files here, or click to select files' }}
-              </p>
-              <p class="mt-1 text-xs" :class="{'text-gray-500': !isDisabled, 'text-gray-400': isDisabled}">
-                Any file type
-              </p>
-            </div>
-          </div>
-        </template>
-      </InputFileHeadless>
-    `,
-  }),
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    label: "Required Document",
+    placeholder: "Please upload a document",
+    error: true,
+    errorMessage: "This field is required",
+    required: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "File upload in an error state with a visible error message.",
+      },
+    },
+  },
 };
 
 export const Disabled: Story = {
   args: {
-    multiple: false,
+    label: "Upload Document",
+    placeholder: "This upload field is disabled",
     disabled: true,
-    error: false,
   },
-  render: (args) => ({
-    components: { InputFileHeadless },
-    setup() {
-      const files = ref([]);
-      return { args, files };
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Disabled file upload with visual indication of its unavailable state.",
+      },
     },
-    template: `
-      <InputFileHeadless v-bind="args" v-model="files">
-        <template #default="{ open, files, remove, preview, drop, isDisabled, fileCount, hasFiles, id, el }">
-          <div 
-            class="border-2 border-dashed rounded-lg p-4 transition-colors"
-            :class="{
-              'border-gray-300 hover:border-gray-400 cursor-pointer': !args.error && !isDisabled,
-              'border-red-500 cursor-pointer': args.error && !isDisabled,
-              'border-gray-200 bg-gray-50 cursor-not-allowed': isDisabled,
-              'border-primary': false
-            }"
-            @click="!isDisabled && open()"
-            @dragover.prevent
-            @drop="!isDisabled && drop($event)"
-          >
-            <div class="text-center">
-              <svg class="mx-auto h-12 w-12" :class="{'text-gray-400': !isDisabled, 'text-gray-300': isDisabled}" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <p class="mt-1 text-sm" :class="{'text-gray-600': !isDisabled, 'text-gray-400': isDisabled}">
-                {{ hasFiles ? \`\${fileCount} files selected\` : 'Drag and drop files here, or click to select files' }}
-              </p>
-              <p class="mt-1 text-xs" :class="{'text-gray-500': !isDisabled, 'text-gray-400': isDisabled}">
-                Any file type
-              </p>
-            </div>
-          </div>
-        </template>
-      </InputFileHeadless>
-    `,
-  }),
+  },
 };
 
-export const Error: Story = {
+export const Required: Story = {
   args: {
-    multiple: false,
-    disabled: false,
-    error: true,
+    label: "Required Document",
+    placeholder: "This field is required",
+    required: true,
   },
-  render: (args) => ({
-    components: { InputFileHeadless },
-    setup() {
-      const files = ref([]);
-      return { args, files };
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Required file upload with asterisk indicator next to the label.",
+      },
     },
-    template: `
-      <InputFileHeadless v-bind="args" v-model="files">
-        <template #default="{ open, files, remove, preview, drop, isDisabled, fileCount, hasFiles, id, el }">
-          <div 
-            class="border-2 border-dashed rounded-lg p-4 transition-colors"
-            :class="{
-              'border-gray-300 hover:border-gray-400 cursor-pointer': !args.error && !isDisabled,
-              'border-red-500 cursor-pointer': args.error && !isDisabled,
-              'border-gray-200 bg-gray-50 cursor-not-allowed': isDisabled,
-              'border-primary': false
-            }"
-            @click="!isDisabled && open()"
-            @dragover.prevent
-            @drop="!isDisabled && drop($event)"
-          >
-            <div class="text-center">
-              <svg class="mx-auto h-12 w-12" :class="{'text-gray-400': !isDisabled, 'text-gray-300': isDisabled}" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <p class="mt-1 text-sm" :class="{'text-gray-600': !isDisabled, 'text-gray-400': isDisabled}">
-                {{ hasFiles ? \`\${fileCount} files selected\` : 'Drag and drop files here, or click to select files' }}
-              </p>
-              <p class="mt-1 text-xs" :class="{'text-gray-500': !isDisabled, 'text-gray-400': isDisabled}">
-                Any file type
-              </p>
-            </div>
-          </div>
-        </template>
-      </InputFileHeadless>
-    `,
-  }),
+  },
+};
+
+export const AcceptOnlyImages: Story = {
+  args: {
+    label: "Upload Images",
+    placeholder: "Only image files are accepted",
+    accept: "image/*",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "File upload that only accepts image files (jpg, png, gif, etc.).",
+      },
+    },
+  },
 };
