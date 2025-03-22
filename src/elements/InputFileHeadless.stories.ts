@@ -55,6 +55,10 @@ const meta = {
       control: false,
       description: "Function to filter which files are accepted when dropped",
     },
+    showControls: {
+      control: "boolean",
+      description: "Show the controls",
+    },
   },
   args: {
     label: "",
@@ -67,6 +71,7 @@ const meta = {
     errorMessage: "",
     id: "",
     accept: undefined,
+    showControls: true,
   },
   parameters: {
     docs: {

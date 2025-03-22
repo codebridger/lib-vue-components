@@ -18,7 +18,26 @@
         :has-files="hasFiles"
         :is-disabled="isDisabled"
         :has-error="error"
+        :show-controls="showControls"
       >
+        <!-- Controls -->
+        <div v-if="showControls" class="mb-4 flex items-center gap-2">
+          <IconButton
+            size="sm"
+            title="Select files"
+            @click="open"
+            icon="IconPlus"
+            label="Select files"
+          />
+
+          <IconButton
+            size="sm"
+            title="Start Upload"
+            icon="IconArrowUp"
+            label="Start Upload"
+            disabled
+          />
+        </div>
         <div
           role="button"
           tabindex="-1"
@@ -88,6 +107,7 @@
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
 import Icon from "../icon/Icon.vue";
+import IconButton from "../elements/IconButton.vue";
 
 interface InputFileHeadlessProps {
   modelValue?: FileList | null;
@@ -102,6 +122,7 @@ interface InputFileHeadlessProps {
   errorMessage?: string;
   id?: string;
   accept?: string;
+  showControls?: boolean;
 }
 
 const props = withDefaults(defineProps<InputFileHeadlessProps>(), {
@@ -117,6 +138,7 @@ const props = withDefaults(defineProps<InputFileHeadlessProps>(), {
   errorMessage: "",
   id: "",
   accept: undefined,
+  showControls: true,
 });
 
 const emit = defineEmits<{
