@@ -81,6 +81,7 @@ import IconInfoHexagon from "./single/icon-info-hexagon.vue";
 import IconHelpCircle from "./single/icon-help-circle.vue";
 import IconListCheck from "./single/icon-list-check.vue";
 import IconChecks from "./single/icon-checks.vue";
+import IconCheck from "./single/icon-check.vue";
 import IconSquareCheck from "./single/icon-square-check.vue";
 import IconCircleCheck from "./single/icon-circle-check.vue";
 import IconLoader from "./single/icon-loader.vue";
@@ -228,6 +229,7 @@ const StatusAndIndicators = {
   IconHelpCircle,
   IconListCheck,
   IconChecks,
+  IconCheck,
   IconSquareCheck,
   IconCircleCheck,
   IconLoader,
