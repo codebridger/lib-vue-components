@@ -13,6 +13,7 @@ import Tabs from "./Tabs.vue";
 import InputFileDropMode from "./InputFileDropMode.vue";
 import InputFileHeadless from "./InputFileHeadless.vue";
 import Progress from "./Progress.vue";
+import SwitchBall from "./SwitchBall.vue";
 // icons
 import Icon from "../icon/Icon.vue";
 
@@ -32,6 +33,7 @@ export {
   InputFileDropMode,
   InputFileHeadless,
   Progress,
+  SwitchBall,
   // Icons
   Icon,
 };
