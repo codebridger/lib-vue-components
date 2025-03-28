@@ -63,6 +63,28 @@ A customizable switch/toggle component with support for labels, sublabels, and v
 - Multiple color themes
 - Icon integration
 - Accessible design with proper ARIA attributes
+
+## Basic Usage
+
+\`\`\`vue
+<template>
+  <SwitchBall
+    v-model="isEnabled"
+    label="Notifications"
+    sublabel="Receive email notifications"
+    color="primary"
+    icon-name="IconBell"
+    id="notifications-switch"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import SwitchBall from './SwitchBall.vue'
+
+const isEnabled = ref(false)
+</script>
+\`\`\`
         `,
       },
       source: {
