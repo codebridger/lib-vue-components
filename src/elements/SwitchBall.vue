@@ -22,8 +22,9 @@
       <!-- Moving ball -->
       <span
         :class="[
-          'absolute left-0 mx-0.5 my-0.5 h-4 w-4 rounded-full bg-white transition-all duration-300 z-10',
-          'peer-checked:translate-x-5 peer-checked:bg-white',
+          'absolute mx-0.5 my-0.5 h-4 w-4 rounded-full bg-white transition-all duration-300 z-10',
+          'ltr:left-0 rtl:right-0',
+          'ltr:peer-checked:translate-x-5 rtl:peer-checked:-translate-x-5 peer-checked:bg-white',
           'shadow-gray-500 dark:shadow-gray-800/50 shadow-sm',
         ]"
       />
@@ -32,7 +33,8 @@
         v-if="iconName"
         :name="iconName"
         :class="[
-          'absolute left-1 top-1/2 -translate-y-1/2 w-3 h-3',
+          'absolute top-1/2 -translate-y-1/2 w-3 h-3',
+          'ltr:left-1 rtl:right-1',
           'text-gray-400 peer-checked:text-white',
           'transition-colors duration-300',
         ]"
@@ -40,16 +42,16 @@
     </div>
 
     <!-- Label section -->
-    <div v-if="!sublabel" class="ml-3">
+    <div v-if="!sublabel" class="ltr:ml-3 rtl:mr-3">
       <span class="text-sm font-medium text-gray-800 dark:text-gray-100">
         {{ label }}
       </span>
     </div>
-    <div v-else class="ml-3">
+    <div v-else class="ltr:ml-3 rtl:mr-3">
       <span class="block text-sm font-medium text-gray-800 dark:text-gray-100">
         {{ label }}
       </span>
-      <span class="block text-xs text-gray-400">
+      <span class="block text-xs text-gray-400 dark:text-gray-500">
         {{ sublabel }}
       </span>
     </div>
