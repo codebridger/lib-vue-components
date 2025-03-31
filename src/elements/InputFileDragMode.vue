@@ -331,10 +331,27 @@ const id = computed(
 
 // Methods
 function triggerFileInput() {
-  if (props.disabled || cardDisabled || !fileInput.value) {
+  if (props.disabled || cardDisabled) {
     return;
   }
-  fileInput.value.click();
+
+  // Create a new input element
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = props.accept;
+  input.multiple = props.multiple;
+  input.style.display = "none";
+
+  // Add change event listener
+  input.addEventListener("change", (event) => {
+    handleFileSelect(event);
+    // Clean up the input element
+    document.body.removeChild(input);
+  });
+
+  // Append to body and trigger click
+  document.body.appendChild(input);
+  input.click();
 }
 
 function handleFileSelect(event: Event) {
@@ -364,6 +381,19 @@ function handleFileSelect(event: Event) {
     return;
   }
 
+  // Check for duplicate files
+  const duplicateFiles = selectedFiles.filter((newFile) =>
+    files.value.some(
+      (existingFile) =>
+        existingFile.name === newFile.name && existingFile.size === newFile.size
+    )
+  );
+
+  if (duplicateFiles.length > 0) {
+    errorMessage.value = "Some files are already selected";
+    return;
+  }
+
   // Add files to the list
   files.value = [...files.value, ...selectedFiles];
   emit("file-select", files.value);
@@ -373,8 +403,6 @@ function handleFileSelect(event: Event) {
     uploadAllFiles();
   }
 
-  // Reset input
-  input.value = "";
   errorMessage.value = "";
 }
 
