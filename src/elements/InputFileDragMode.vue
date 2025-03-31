@@ -119,7 +119,7 @@
                   </div>
                   <div>
                     <p
-                      class="text-sm font-medium text-gray-700 truncate max-w-xs"
+                      class="text-sm font-medium text-gray-700 truncate max-w-[140px]"
                     >
                       {{ file.name }}
                     </p>
