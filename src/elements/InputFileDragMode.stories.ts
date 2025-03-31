@@ -132,20 +132,49 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          "A file upload component that supports drag and drop, file previews, and upload status tracking.",
+        component: `
+A versatile file upload component that supports both drag-and-drop and click-to-upload functionality. The component provides a modern interface with file previews, upload progress tracking, and comprehensive file management features.
+
+## Features
+
+- **Dual Upload Modes**: Support for both drag-and-drop and click-to-upload
+- **File Preview**: Visual preview of selected files with thumbnails
+- **Progress Tracking**: Real-time upload progress indicators
+- **Auto Upload**: Option to automatically start uploads when files are selected
+- **File Validation**: Built-in file type and size restrictions
+- **Multiple File Support**: Handle multiple file uploads with individual progress tracking
+- **Customizable UI**: Custom icons, labels, and descriptions
+- **Accessibility**: Full keyboard navigation and ARIA support
+- **Responsive Design**: Works well on all screen sizes
+
+## Usage
+
+\`\`\`
+<script setup lang="ts">
+import InputFileDragMode from './components/InputFileDragMode.vue';
+
+const handleFileSelect = (files) => {
+  console.log('Selected files:', files);
+};
+
+const handleUploadProgress = (file, progress) => {
+  console.log(\`Upload progress for \${file.name}: \${progress}%\`);
+};
+</script>
+
+<template>
+  <InputFileDragMode
+    label="Upload Documents"
+    accept=".pdf,.doc,.docx"
+    :max-size="5 * 1024 * 1024"
+    :auto-upload="true"
+    @file-select="handleFileSelect"
+    @file-upload-progress="handleUploadProgress"
+  />
+</template>
+\`\`\``,
       },
-    },
-    actions: {
-      handles: [
-        "file-select",
-        "file-upload",
-        "file-remove",
-        "file-upload-all",
-        "file-upload-progress",
-        "file-upload-error",
-        "file-upload-complete",
-      ],
+      source: { type: "code" },
     },
   },
 } satisfies Meta<typeof InputFileDragMode>;
