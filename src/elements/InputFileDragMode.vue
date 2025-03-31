@@ -25,6 +25,7 @@
           />
 
           <IconButton
+            v-if="!props.autoUpload"
             size="sm"
             title="Start Upload"
             icon="IconArrowUp"
@@ -131,7 +132,7 @@
                   <!-- Progress bar and status -->
                   <div
                     class="flex flex-col gap-1 min-w-[120px] mx-2"
-                    v-if="fileProgress[index] !== undefined"
+                    v-if="props.autoUpload && fileProgress[index] !== undefined"
                   >
                     <div class="flex justify-between items-center">
                       <span class="text-xs text-gray-600">
@@ -162,7 +163,7 @@
                     @click="cancelUpload(index)"
                   />
                   <IconButton
-                    v-if="!props.disabled"
+                    v-if="!props.disabled && !props.autoUpload"
                     class="text-gray-400 hover:text-gray-500 focus:outline-none"
                     icon="IconArrowUp"
                     size="sm"
