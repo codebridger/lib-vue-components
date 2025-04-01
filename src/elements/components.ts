@@ -12,6 +12,7 @@ import Card from "./Card.vue";
 import Tabs from "./Tabs.vue";
 import InputFileDropMode from "./InputFileDropMode.vue";
 import InputFileHeadless from "./InputFileHeadless.vue";
+import InputFileDragMode from "./InputFileDragMode.vue";
 import Progress from "./Progress.vue";
 import SwitchBall from "./SwitchBall.vue";
 // icons
@@ -32,6 +33,7 @@ export {
   Tabs,
   InputFileDropMode,
   InputFileHeadless,
+  InputFileDragMode,
   Progress,
   SwitchBall,
   // Icons
