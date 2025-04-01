@@ -36,7 +36,7 @@
         </div>
       </slot>
 
-      <slot name="upload-area" :files="files">
+      <slot name="upload-area" :files="files" :files-status="filesStatus">
         <div
           class="relative"
           :class="{ 'border-primary': isDragging && !props.disabled }"
@@ -47,7 +47,7 @@
         >
           <div
             v-if="files.length === 0"
-            class="upload-area flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg transition-colors"
+            class="flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg transition-colors"
             :class="[
               isDragging
                 ? 'bg-primary-50 border-primary-400'
@@ -329,6 +329,19 @@ const errorMessage = ref<string>("");
 const id = computed(
   () => props.id || `file-input-${Math.random().toString(36).substr(2, 9)}`
 );
+
+// Computed properties
+const filesStatus = computed(() => {
+  return files.value.map((file, index) => ({
+    file,
+    progress: fileProgress.value[index] || 0,
+    isUploading:
+      fileProgress.value[index] !== undefined &&
+      fileProgress.value[index] < 100,
+    isComplete: fileProgress.value[index] === 100,
+    index,
+  }));
+});
 
 // Methods
 function triggerFileInput() {
