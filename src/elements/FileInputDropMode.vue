@@ -34,13 +34,13 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import Icon from "../icon/Icon.vue";
 
-interface InputFileDropModeProps {
+interface FileInputDropModeProps {
   icon?: string;
   label?: string;
   filterFileDropped?: (file: File) => boolean;
 }
 
-const props = withDefaults(defineProps<InputFileDropModeProps>(), {
+const props = withDefaults(defineProps<FileInputDropModeProps>(), {
   label: "Drop your files",
   icon: "IconGallery",
   filterFileDropped: () => true,
