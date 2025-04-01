@@ -36,7 +36,7 @@
         </div>
       </slot>
 
-      <slot name="upload-area">
+      <slot name="upload-area" :files="files" :files-status="filesStatus">
         <div
           class="relative"
           :class="{ 'border-primary': isDragging && !props.disabled }"
@@ -47,7 +47,7 @@
         >
           <div
             v-if="files.length === 0"
-            class="upload-area flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg transition-colors"
+            class="flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg transition-colors"
             :class="[
               isDragging
                 ? 'bg-primary-50 border-primary-400'
@@ -132,7 +132,7 @@
                   <!-- Progress bar and status -->
                   <div
                     class="flex flex-col gap-1 min-w-[120px] mx-2"
-                    v-if="props.autoUpload && fileProgress[index] !== undefined"
+                    v-if="props.autoUpload || fileProgress[index] !== undefined"
                   >
                     <div class="flex justify-between items-center">
                       <span class="text-xs text-gray-600">
@@ -183,7 +183,7 @@
         </div>
       </slot>
     </div>
-    <InputFileDropMode
+    <FileInputDropMode
       :icon="props.dropModeIcon"
       :label="props.dropModeLabel"
       :filter-file-dropped="props.filterFileDropped"
@@ -198,12 +198,12 @@
 
 <script setup lang="ts">
 import { ref, computed, inject } from "vue";
-import InputFileDropMode from "./InputFileDropMode.vue";
+import FileInputDropMode from "./FileInputDropMode.vue";
 import Button from "../elements/Button.vue";
 import IconButton from "../elements/IconButton.vue";
 import Icon from "../icon/Icon.vue";
 
-interface DropFileProps {
+interface FileInputComboProps {
   /**
    * File types that are allowed to be uploaded (e.g. '.jpg,.png')
    */
@@ -282,7 +282,7 @@ interface DropFileProps {
   errorMessage?: string;
 }
 
-const props = withDefaults(defineProps<DropFileProps>(), {
+const props = withDefaults(defineProps<FileInputComboProps>(), {
   accept: "",
   multiple: true,
   disabled: false,
@@ -329,6 +329,19 @@ const errorMessage = ref<string>("");
 const id = computed(
   () => props.id || `file-input-${Math.random().toString(36).substr(2, 9)}`
 );
+
+// Computed properties
+const filesStatus = computed(() => {
+  return files.value.map((file, index) => ({
+    file,
+    progress: fileProgress.value[index] || 0,
+    isUploading:
+      fileProgress.value[index] !== undefined &&
+      fileProgress.value[index] < 100,
+    isComplete: fileProgress.value[index] === 100,
+    index,
+  }));
+});
 
 // Methods
 function triggerFileInput() {

@@ -1,10 +1,9 @@
-// FileInput.stories.ts
 import type { Meta, StoryObj } from "@storybook/vue3";
-import FileInput from "./FileInput.vue";
+import FileInputButton from "./FileInputButton.vue";
 
-const meta: Meta<typeof FileInput> = {
-  title: "Elements/FileInput",
-  component: FileInput,
+const meta: Meta<typeof FileInputButton> = {
+  title: "Elements/FileInputButton",
+  component: FileInputButton,
   tags: ["autodocs"],
   argTypes: {
     buttonColor: {
@@ -62,7 +61,7 @@ const meta: Meta<typeof FileInput> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof FileInput>;
+type Story = StoryObj<typeof FileInputButton>;
 
 export const Default: Story = {
   args: {
