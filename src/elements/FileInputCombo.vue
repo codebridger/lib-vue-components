@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="flex flex-col gap-4">
-      <slot name="label">
+      <slot name="title">
         <label
           v-if="props.label"
           :for="id"
@@ -36,7 +36,7 @@
         </div>
       </slot>
 
-      <slot name="upload-area" :files="files" :files-status="filesStatus">
+      <slot name="uploadArea" :files="files" :files-status="filesStatus">
         <div
           class="relative"
           :class="{ 'border-primary': isDragging && !props.disabled }"
@@ -99,7 +99,7 @@
           <!-- Preview section for uploaded files -->
           <div v-if="props.showPreview && files.size > 0" class="mt-4">
             <slot
-              name="file-list"
+              name="fileList"
               :files-status="filesStatus"
               :upload-file="uploadFile"
               :cancel-upload="cancelUpload"
@@ -112,7 +112,7 @@
                   class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl"
                 >
                   <slot
-                    name="file-item"
+                    name="fileItem"
                     :file="status.file"
                     :fileId="status.fileId"
                     :status="status"
@@ -147,7 +147,7 @@
                     <div class="flex items-center justify-end gap-3">
                       <!-- Progress bar and status -->
                       <slot
-                        name="file-progress"
+                        name="fileProgress"
                         :file="status.file"
                         :fileId="status.fileId"
                         :state="fileStates[status.fileId]"
@@ -224,7 +224,7 @@
                       </slot>
 
                       <slot
-                        name="file-actions"
+                        name="fileActions"
                         :file="status.file"
                         :fileId="status.fileId"
                         :status="status"
@@ -291,6 +291,46 @@ import FileInputDropMode from "./FileInputDropMode.vue";
 import Button from "../elements/Button.vue";
 import IconButton from "../elements/IconButton.vue";
 import Icon from "../icon/Icon.vue";
+
+defineSlots<{
+  /** Custom slot for the input label */
+  title(): any;
+  /** Custom slot for upload controls */
+  controls(): any;
+  /** Custom slot for the upload area */
+  uploadArea(props: { files: Map<string, File>; filesStatus: Array<any> }): any;
+  /** Custom slot for file list */
+  fileList(props: {
+    filesStatus: Array<any>;
+    uploadFile: (fileId: string) => void;
+    cancelUpload: (fileId: string) => void;
+    removeFile: (fileId: string) => void;
+  }): any;
+  /** Custom slot for individual file item */
+  fileItem(props: {
+    file: File;
+    fileId: string;
+    status: any;
+    uploadFile: () => void;
+    cancelUpload: () => void;
+    removeFile: () => void;
+  }): any;
+  /** Custom slot for file progress indicator */
+  fileProgress(props: {
+    file: File;
+    fileId: string;
+    state: FileState | undefined;
+  }): any;
+  /** Custom slot for file action buttons */
+  fileActions(props: {
+    file: File;
+    fileId: string;
+    status: any;
+    uploadFile: () => void;
+    cancelUpload: () => void;
+    removeFile: () => void;
+  }): any;
+}>();
 
 interface FileInputComboProps {
   /**
