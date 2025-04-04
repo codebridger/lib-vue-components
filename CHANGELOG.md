@@ -1,3 +1,46 @@
+# [1.16.0](https://github.com/codebridger/lib-vue-components/compare/v1.15.0...v1.16.0) (2025-04-04)
+
+
+### Bug Fixes
+
+* **branding:** Allow dynamic brand logo in DashboardShell and SidebarMenu components ([db70f0a](https://github.com/codebridger/lib-vue-components/commit/db70f0a6c444ccdaf88aa63781fbaa39742949e3))
+* **dropfile:** add storybook stories for DropFile component with various upload scenarios ([67852c6](https://github.com/codebridger/lib-vue-components/commit/67852c62bea34e2e409311f988d921931977a973))
+* **dropfile:** enhance DropFile component with new upload features and mock upload support ([1ac3342](https://github.com/codebridger/lib-vue-components/commit/1ac3342f2e13fe486ad11dc59ef1efbe40094742))
+* **FileInputButton:** rename FileInput component to FileInputButton component ([17e4984](https://github.com/codebridger/lib-vue-components/commit/17e4984170fe59501b2dc0eca656ef44769610d6))
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 update upload button visibility to prevent interaction during uploading state; enhance user experience by ensuring proper status checks ([be0cf62](https://github.com/codebridger/lib-vue-components/commit/be0cf6245bc15ae7eb26f2c8d0a3939074d00ff2)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputDropMode:** rename InputFileDropMode component to FileInputDropMode component ([db308f8](https://github.com/codebridger/lib-vue-components/commit/db308f81d818256e3d9a72d29c8505a33b6a680e))
+* **InputFileDragMode:** enhance file input handling by creating a temporary input element for file selection and adding duplicate file check ([42ebc47](https://github.com/codebridger/lib-vue-components/commit/42ebc47a5dd2f4f4ffbe2df9b05b933110b6e0cc))
+* **InputFileDragMode:** update upload button visibility and progress display based on autoUpload prop ([25fefc8](https://github.com/codebridger/lib-vue-components/commit/25fefc8a962a4934eb2c984f9d5879db4873ab80))
+* **SwitchBall:** adjust positioning and styling for RTL support; enhance label and sublabel alignment ([c342dd7](https://github.com/codebridger/lib-vue-components/commit/c342dd785c49ac84805be945ac0e286986099f1f))
+* **tabs:**  Divide Width Equally Between Objects ([f7c4a7a](https://github.com/codebridger/lib-vue-components/commit/f7c4a7a6f11004e50cab143193dacdc309a0b937))
+* **tabs:** Add source type to tab story for better documentation ([d78210c](https://github.com/codebridger/lib-vue-components/commit/d78210c8058bf48ea73a4633f69c4f027bf6ed23))
+* **tabs:** add tab component and change text tab color ([12040f8](https://github.com/codebridger/lib-vue-components/commit/12040f875d31dc65c8c03bae6f8d4b23b7128ef9))
+
+
+### Features
+
+* **dropfile:** add DropFile component for file uploads with drag-and-drop support ([bc4f947](https://github.com/codebridger/lib-vue-components/commit/bc4f9470d5125f05bd5b50ff2f9321e86b6e1a21))
+* **dropfile:** integrate DropFile component into main export and update stories with simplified props ([b0f4537](https://github.com/codebridger/lib-vue-components/commit/b0f453729eaeb3a86326e8114c5c3e5a67a9b6c9))
+* **file-input:** introduce InputFileHeadless component with file selection and preview functionality, along with Storybook stories for various use cases ([9aaf8f4](https://github.com/codebridger/lib-vue-components/commit/9aaf8f47c67f39cca2bf0ab460fc87486ee14c41))
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 enhance file upload component with toast notifications for events, improve file handling with unique IDs, and update Storybook stories to demonstrate new features ([f96a06b](https://github.com/codebridger/lib-vue-components/commit/f96a06b82ff99fdae023563845ab86b3265fea40)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 enhance file upload functionality with progress tracking and error simulation; update Storybook stories to demonstrate new features and usage scenarios ([e0769b0](https://github.com/codebridger/lib-vue-components/commit/e0769b086af757e4baf50b89e05963f1f4b4d8e4)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 enhance file upload handling with comprehensive status tracking and error management; update UI to reflect upload progress and status ([488c810](https://github.com/codebridger/lib-vue-components/commit/488c8102a2d8a94a946f1d2feccb4ef2771e60fd)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 refactor file preview and upload status display using slots for better customization; enhance UI structure and maintainability ([ed3561d](https://github.com/codebridger/lib-vue-components/commit/ed3561d925488cb5acd33416205fbd3452a45041)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** add filesStatus computed property to track file upload progress and status; update upload-area slot to include filesStatus ([b5328c5](https://github.com/codebridger/lib-vue-components/commit/b5328c51b5e07c584908433acd823807202409f5))
+* **FileInputCombo:** introduce FileInputCombo component with drag-and-drop and click-to-upload functionality; includes comprehensive props for customization and Storybook stories for various use cases ([a4e51af](https://github.com/codebridger/lib-vue-components/commit/a4e51afc2b6a6f7380125cdeea66431170e1dbf0))
+* **fullscreen-dropfile:** add FullscreenDropfile component with drag-and-drop functionality and Storybook stories ([2d4aa92](https://github.com/codebridger/lib-vue-components/commit/2d4aa9286e01c4c266d5fd353abbe7238737ca05))
+* **icon:** add new arrow and cloud upload icons ([967ebde](https://github.com/codebridger/lib-vue-components/commit/967ebde3405d005a045327a05b5c8165fe107f81))
+* **input-drag-file:** introduce InputDragFile component with drag-and-drop functionality and Storybook stories ([6f87e2b](https://github.com/codebridger/lib-vue-components/commit/6f87e2bf1df437af2dd92b1059650fda56017b0a))
+* **input-file-drop-mode:** introduce InputFileDropMode component for fullscreen drag-and-drop file uploads; add associated Storybook stories for customization options ([18c7e3b](https://github.com/codebridger/lib-vue-components/commit/18c7e3b4793bc8c1f08ffff4e525c88df45c67f6))
+* **input-file-headless:** enhance InputFileHeadless component with new props for file acceptance, capture, and filtering; update documentation and add new Storybook stories for image preview and file type filtering ([933c3e7](https://github.com/codebridger/lib-vue-components/commit/933c3e75accf4b85b432266d84b3f9166ecfb068))
+* **InputFileDragMode:** add InputFileDragMode component for drag-and-drop file uploads; include Storybook stories for various use cases and customization options ([8744e33](https://github.com/codebridger/lib-vue-components/commit/8744e33cfa50ef2411d34f160b9ce93df3d67072))
+* **InputFileHeadless:** add new props for label, placeholder, icon, and error handling; enhance Storybook stories for improved accessibility and customization options ([31dd92b](https://github.com/codebridger/lib-vue-components/commit/31dd92b3d7a8d120aac1c1dc1928c48fa5dd442d))
+* **InputFileHeadless:** add showControls prop to toggle visibility of control buttons in the component; update Storybook stories accordingly ([007887c](https://github.com/codebridger/lib-vue-components/commit/007887c7d00205ec4929811fbc7f6af67dfaa60c))
+* **progress:** add Progress component with customizable styles and Storybook stories for various use cases ([4c6d8d7](https://github.com/codebridger/lib-vue-components/commit/4c6d8d7b7dfa98e635aaae0e06dc7186225001e4))
+* **static-icons:** add IconCheck component and include it in the StatusAndIndicators export ([b43fa9b](https://github.com/codebridger/lib-vue-components/commit/b43fa9bc76dbe6d7b62fabf37f59ac8aa822e0f9))
+* **SwitchBall:** add SwitchBall component with customizable labels, colors, and icons; include Storybook stories for various use cases ([32239bc](https://github.com/codebridger/lib-vue-components/commit/32239bc3f4e30af2dfc2c8df26c31ea0e832f27f))
+* **tabs:** Implementing a Tabs Component ([d4a8578](https://github.com/codebridger/lib-vue-components/commit/d4a85785ddf3216aa7e0a0db16fc356b708eb890))
+
 # [1.17.0-dev.17](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.16...dev-1.17.0-dev.17) (2025-04-04)
 
 
