@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="flex flex-col gap-4">
-      <slot name="label">
+      <slot name="title">
         <label
           v-if="props.label"
           :for="id"
@@ -36,7 +36,7 @@
         </div>
       </slot>
 
-      <slot name="upload-area" :files="files" :files-status="filesStatus">
+      <slot name="uploadArea" :files="files" :files-status="filesStatus">
         <div
           class="relative"
           :class="{ 'border-primary': isDragging && !props.disabled }"
@@ -46,7 +46,7 @@
           @drop.prevent="handleDrop"
         >
           <div
-            v-if="files.length === 0"
+            v-if="files.size === 0"
             class="flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg transition-colors"
             :class="[
               isDragging
@@ -97,92 +97,181 @@
           </div>
 
           <!-- Preview section for uploaded files -->
-          <div v-if="props.showPreview && files.length > 0" class="mt-4">
-            <ul class="space-y-4">
-              <li
-                v-for="(file, index) in files"
-                :key="index"
-                class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl"
-              >
-                <div class="flex items-center gap-2">
-                  <!-- File preview thumbnail -->
-                  <div
-                    class="size-10 flex-shrink-0 bg-gray-300 rounded-md flex items-center justify-center overflow-hidden"
+          <div v-if="props.showPreview && files.size > 0" class="mt-4">
+            <slot
+              name="fileList"
+              :files-status="filesStatus"
+              :upload-file="uploadFile"
+              :cancel-upload="cancelUpload"
+              :remove-file="removeFile"
+            >
+              <ul class="space-y-4">
+                <li
+                  v-for="status in filesStatus"
+                  :key="status.fileId"
+                  class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl"
+                >
+                  <slot
+                    name="fileItem"
+                    :file="status.file"
+                    :fileId="status.fileId"
+                    :status="status"
+                    :upload-file="() => uploadFile(status.fileId)"
+                    :cancel-upload="() => cancelUpload(status.fileId)"
+                    :remove-file="() => removeFile(status.fileId)"
                   >
-                    <img
-                      v-if="isImageFile(file)"
-                      :src="createThumbnailUrl(file)"
-                      alt="thumbnail"
-                      class="h-full w-full object-cover"
-                    />
-                    <Icon v-else name="IconGallery" />
-                  </div>
-                  <div>
-                    <p
-                      class="text-sm font-medium text-gray-700 truncate max-w-[140px]"
-                    >
-                      {{ file.name }}
-                    </p>
-                    <p class="text-xs text-gray-500">
-                      {{ formatFileSize(file.size) }}
-                    </p>
-                  </div>
-                </div>
-                <div class="flex items-center justify-end gap-3">
-                  <!-- Progress bar and status -->
-                  <div
-                    class="flex flex-col gap-1 min-w-[120px] mx-2"
-                    v-if="props.autoUpload || fileProgress[index] !== undefined"
-                  >
-                    <div class="flex justify-between items-center">
-                      <span class="text-xs text-gray-600">
-                        {{
-                          fileProgress[index] === 100
-                            ? "Complete"
-                            : "Uploading..."
-                        }}
-                      </span>
-                      <span class="text-xs font-medium text-blue-600">
-                        {{ fileProgress[index] }}%
-                      </span>
-                    </div>
-                    <div
-                      class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300"
-                    >
+                    <div class="flex items-center gap-2">
+                      <!-- File preview thumbnail -->
                       <div
-                        class="h-full bg-blue-500 transition-all duration-300"
-                        :style="{ width: `${fileProgress[index]}%` }"
-                      ></div>
+                        class="size-10 flex-shrink-0 bg-gray-300 rounded-md flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          v-if="isImageFile(status.file)"
+                          :src="createThumbnailUrl(status.file)"
+                          alt="thumbnail"
+                          class="h-full w-full object-cover"
+                        />
+                        <Icon v-else name="IconGallery" />
+                      </div>
+                      <div>
+                        <p
+                          class="text-sm font-medium text-gray-700 truncate max-w-[140px]"
+                        >
+                          {{ status.file.name }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                          {{ formatFileSize(status.file.size) }}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <IconButton
-                    v-if="!props.disabled"
-                    class="text-gray-400 hover:text-gray-500 focus:outline-none"
-                    icon="IconX"
-                    size="sm"
-                    @click="cancelUpload(index)"
-                  />
-                  <IconButton
-                    v-if="!props.disabled && !props.autoUpload"
-                    class="text-gray-400 hover:text-gray-500 focus:outline-none"
-                    icon="IconArrowUp"
-                    size="sm"
-                    @click="uploadFile(index)"
-                  />
-                  <IconButton
-                    v-if="!props.disabled"
-                    class="text-gray-400 hover:text-gray-500 focus:outline-none"
-                    icon="IconTrash"
-                    size="sm"
-                    @click="removeFile(index)"
-                  />
-                </div>
-              </li>
-            </ul>
+                    <div class="flex items-center justify-end gap-3">
+                      <!-- Progress bar and status -->
+                      <slot
+                        name="fileProgress"
+                        :file="status.file"
+                        :fileId="status.fileId"
+                        :state="fileStates[status.fileId]"
+                      >
+                        <div
+                          class="flex flex-col gap-1 min-w-[120px] mx-2"
+                          v-if="
+                            props.autoUpload ||
+                            fileStates[status.fileId]?.status !== 'queue'
+                          "
+                        >
+                          <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600">
+                              {{
+                                fileStates[status.fileId]?.status === "finished"
+                                  ? "Complete"
+                                  : fileStates[status.fileId]?.status ===
+                                    "error"
+                                  ? "Error"
+                                  : fileStates[status.fileId]?.status ===
+                                    "uploading"
+                                  ? "Uploading..."
+                                  : "Queued"
+                              }}
+                            </span>
+                            <span
+                              class="text-xs font-medium"
+                              :class="{
+                                'text-blue-600':
+                                  fileStates[status.fileId]?.status ===
+                                  'uploading',
+                                'text-green-600':
+                                  fileStates[status.fileId]?.status ===
+                                  'finished',
+                                'text-red-600':
+                                  fileStates[status.fileId]?.status === 'error',
+                              }"
+                            >
+                              {{ fileStates[status.fileId]?.progress }}%
+                            </span>
+                          </div>
+                          <div
+                            class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300"
+                          >
+                            <div
+                              class="h-full transition-all duration-300"
+                              :class="{
+                                'bg-blue-500':
+                                  fileStates[status.fileId]?.status ===
+                                  'uploading',
+                                'bg-green-500':
+                                  fileStates[status.fileId]?.status ===
+                                  'finished',
+                                'bg-red-500':
+                                  fileStates[status.fileId]?.status === 'error',
+                              }"
+                              :style="{
+                                width: `${
+                                  fileStates[status.fileId]?.progress
+                                }%`,
+                              }"
+                            ></div>
+                          </div>
+                          <div
+                            v-if="
+                              fileStates[status.fileId]?.status === 'error' &&
+                              fileStates[status.fileId]?.error
+                            "
+                            class="text-xs text-red-500 mt-1"
+                          >
+                            {{ fileStates[status.fileId]?.error }}
+                          </div>
+                        </div>
+                      </slot>
+
+                      <slot
+                        name="fileActions"
+                        :file="status.file"
+                        :fileId="status.fileId"
+                        :status="status"
+                        :upload-file="() => uploadFile(status.fileId)"
+                        :cancel-upload="() => cancelUpload(status.fileId)"
+                        :remove-file="() => removeFile(status.fileId)"
+                      >
+                        <IconButton
+                          v-if="
+                            !props.disabled &&
+                            fileStates[status.fileId]?.status === 'uploading'
+                          "
+                          class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                          icon="IconX"
+                          size="sm"
+                          @click="cancelUpload(status.fileId)"
+                        />
+                        <IconButton
+                          v-if="
+                            !props.disabled &&
+                            !props.autoUpload &&
+                            fileStates[status.fileId]?.status !== 'finished' &&
+                            fileStates[status.fileId]?.status !== 'uploading'
+                          "
+                          class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                          icon="IconArrowUp"
+                          size="sm"
+                          @click="uploadFile(status.fileId)"
+                        />
+                        <IconButton
+                          v-if="!props.disabled"
+                          class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                          icon="IconTrash"
+                          size="sm"
+                          @click="removeFile(status.fileId)"
+                        />
+                      </slot>
+                    </div>
+                  </slot>
+                </li>
+              </ul>
+            </slot>
           </div>
         </div>
       </slot>
     </div>
+
     <FileInputDropMode
       :icon="props.dropModeIcon"
       :label="props.dropModeLabel"
@@ -202,6 +291,46 @@ import FileInputDropMode from "./FileInputDropMode.vue";
 import Button from "../elements/Button.vue";
 import IconButton from "../elements/IconButton.vue";
 import Icon from "../icon/Icon.vue";
+
+defineSlots<{
+  /** Custom slot for the input label */
+  title(): any;
+  /** Custom slot for upload controls */
+  controls(): any;
+  /** Custom slot for the upload area */
+  uploadArea(props: { files: Map<string, File>; filesStatus: Array<any> }): any;
+  /** Custom slot for file list */
+  fileList(props: {
+    filesStatus: Array<any>;
+    uploadFile: (fileId: string) => void;
+    cancelUpload: (fileId: string) => void;
+    removeFile: (fileId: string) => void;
+  }): any;
+  /** Custom slot for individual file item */
+  fileItem(props: {
+    file: File;
+    fileId: string;
+    status: any;
+    uploadFile: () => void;
+    cancelUpload: () => void;
+    removeFile: () => void;
+  }): any;
+  /** Custom slot for file progress indicator */
+  fileProgress(props: {
+    file: File;
+    fileId: string;
+    state: FileState | undefined;
+  }): any;
+  /** Custom slot for file action buttons */
+  fileActions(props: {
+    file: File;
+    fileId: string;
+    status: any;
+    uploadFile: () => void;
+    cancelUpload: () => void;
+    removeFile: () => void;
+  }): any;
+}>();
 
 interface FileInputComboProps {
   /**
@@ -304,43 +433,68 @@ const props = withDefaults(defineProps<FileInputComboProps>(), {
 });
 
 const emit = defineEmits<{
-  (e: "file-select", files: File[]): void;
-  (e: "file-upload", file: File, index: number): void;
-  (e: "file-remove", file: File, index: number): void;
+  (e: "file-select", payload: { files: File[] }): void;
+  (e: "file-upload", payload: { file: File; fileId: string }): void;
+  (e: "file-remove", payload: { file: File; fileId: string }): void;
   (e: "file-upload-all"): void;
   (
     e: "file-upload-progress",
-    file: File,
-    progress: number,
-    index: number
+    payload: { file: File; progress: number; fileId: string }
   ): void;
-  (e: "file-upload-error", file: File, error: Error, index: number): void;
-  (e: "file-upload-complete", file: File, index: number): void;
+  (
+    e: "file-upload-error",
+    payload: { file: File; error: Error; fileId: string }
+  ): void;
+  (e: "file-upload-complete", payload: { file: File; fileId: string }): void;
+  (e: "file-upload-cancel", payload: { file: File; fileId: string }): void;
 }>();
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 
 // Refs
 const fileInput = ref<HTMLInputElement | null>(null);
-const files = ref<File[]>([]);
+const files = ref<Map<string, File>>(new Map());
 const isDragging = ref(false);
-const fileProgress = ref<Record<number, number>>({});
-const errorMessage = ref<string>("");
-const id = computed(
-  () => props.id || `file-input-${Math.random().toString(36).substr(2, 9)}`
-);
 
-// Computed properties
+// Define file status type
+type FileStatus = "queue" | "uploading" | "finished" | "error";
+
+// Replace the simple fileProgress with a more comprehensive status tracking
+interface FileState {
+  progress: number;
+  status: FileStatus;
+  error?: string;
+  fileId: string; // Unique ID for the file
+}
+
+const fileStates = ref<Record<string, FileState>>({});
+const errorMessage = ref("");
+
+// Generated unique file ID
+function generateFileId(): string {
+  return `file-${Math.random().toString(36).substring(2, 15)}`;
+}
+
+// Updated computed property for file status
 const filesStatus = computed(() => {
-  return files.value.map((file, index) => ({
-    file,
-    progress: fileProgress.value[index] || 0,
-    isUploading:
-      fileProgress.value[index] !== undefined &&
-      fileProgress.value[index] < 100,
-    isComplete: fileProgress.value[index] === 100,
-    index,
-  }));
+  return Array.from(files.value.entries()).map(([fileId, file]) => {
+    const state = fileStates.value[fileId] || {
+      progress: 0,
+      status: "queue",
+      fileId,
+    };
+    return {
+      file,
+      fileId,
+      progress: state.progress,
+      status: state.status,
+      error: state.error,
+      isUploading: state.status === "uploading",
+      isComplete: state.status === "finished",
+      isError: state.status === "error",
+      isQueued: state.status === "queue",
+    };
+  });
 });
 
 // Methods
@@ -389,7 +543,7 @@ function handleFileSelect(event: Event) {
 
   if (
     props.maxFiles > 0 &&
-    files.value.length + selectedFiles.length > props.maxFiles
+    files.value.size + selectedFiles.length > props.maxFiles
   ) {
     errorMessage.value = `Maximum ${props.maxFiles} files allowed`;
     return;
@@ -397,7 +551,7 @@ function handleFileSelect(event: Event) {
 
   // Check for duplicate files
   const duplicateFiles = selectedFiles.filter((newFile) =>
-    files.value.some(
+    Array.from(files.value.values()).some(
       (existingFile) =>
         existingFile.name === newFile.name && existingFile.size === newFile.size
     )
@@ -408,9 +562,16 @@ function handleFileSelect(event: Event) {
     return;
   }
 
-  // Add files to the list
-  files.value = [...files.value, ...selectedFiles];
-  emit("file-select", files.value);
+  // Add files to the map with generated IDs
+  const newFiles = new Map(files.value);
+  selectedFiles.forEach((file) => {
+    const fileId = generateFileId();
+    newFiles.set(fileId, file);
+  });
+
+  files.value = newFiles;
+
+  emit("file-select", { files: Array.from(files.value.values()) });
 
   // Auto upload if enabled
   if (props.autoUpload) {
@@ -456,7 +617,7 @@ function handleDrop(event: DragEvent) {
   // Apply validation
   if (
     props.maxFiles > 0 &&
-    files.value.length + filteredFiles.length > props.maxFiles
+    files.value.size + filteredFiles.length > props.maxFiles
   ) {
     errorMessage.value = `Maximum ${props.maxFiles} files allowed`;
     return;
@@ -474,9 +635,16 @@ function handleDrop(event: DragEvent) {
     }
   }
 
-  // Add files to the list
-  files.value = [...files.value, ...filteredFiles];
-  emit("file-select", files.value);
+  // Add files to the map with generated IDs
+  const newFiles = new Map(files.value);
+  filteredFiles.forEach((file) => {
+    const fileId = generateFileId();
+    newFiles.set(fileId, file);
+  });
+
+  files.value = newFiles;
+
+  emit("file-select", { files: Array.from(files.value.values()) });
 
   // Auto upload if enabled
   if (props.autoUpload) {
@@ -496,7 +664,7 @@ function handleGlobalDrop(fileList: FileList) {
   // Apply validation
   if (
     props.maxFiles > 0 &&
-    files.value.length + droppedFiles.length > props.maxFiles
+    files.value.size + droppedFiles.length > props.maxFiles
   ) {
     errorMessage.value = `Maximum ${props.maxFiles} files allowed`;
     return;
@@ -514,9 +682,16 @@ function handleGlobalDrop(fileList: FileList) {
     }
   }
 
-  // Add files to the list
-  files.value = [...files.value, ...droppedFiles];
-  emit("file-select", files.value);
+  // Add files to the map with generated IDs
+  const newFiles = new Map(files.value);
+  droppedFiles.forEach((file) => {
+    const fileId = generateFileId();
+    newFiles.set(fileId, file);
+  });
+
+  files.value = newFiles;
+
+  emit("file-select", { files: Array.from(files.value.values()) });
 
   // Auto upload if enabled
   if (props.autoUpload) {
@@ -526,29 +701,19 @@ function handleGlobalDrop(fileList: FileList) {
   errorMessage.value = "";
 }
 
-function uploadFile(index: number) {
+function uploadFile(fileId: string) {
   if (props.disabled || cardDisabled) {
     return;
   }
 
-  const file = files.value[index];
+  const file = files.value.get(fileId);
   if (!file) return;
 
   // Start with 0% progress
-  fileProgress.value[index] = 0;
+  fileStates.value[fileId] = { progress: 0, status: "uploading", fileId };
 
-  // Simulate progress (in a real app, this would be an actual upload)
-  const interval = setInterval(() => {
-    if (fileProgress.value[index] < 100) {
-      fileProgress.value[index] += 10;
-      emit("file-upload-progress", file, fileProgress.value[index], index);
-    } else {
-      clearInterval(interval);
-      emit("file-upload-complete", file, index);
-    }
-  }, 300);
-
-  emit("file-upload", file, index);
+  // Emit the upload event
+  emit("file-upload", { file, fileId });
 }
 
 function uploadAllFiles() {
@@ -556,38 +721,108 @@ function uploadAllFiles() {
     return;
   }
 
-  files.value.forEach((_, index) => {
+  files.value.forEach((file, fileId) => {
     if (
-      fileProgress.value[index] === undefined ||
-      fileProgress.value[index] < 100
+      !fileStates.value[fileId] ||
+      fileStates.value[fileId].status !== "finished"
     ) {
-      uploadFile(index);
+      uploadFile(fileId);
     }
   });
 
   emit("file-upload-all");
 }
 
-function cancelUpload(index: number) {
+function cancelUpload(fileId: string) {
   if (props.disabled || cardDisabled) {
     return;
   }
 
-  delete fileProgress.value[index];
-}
-
-function removeFile(index: number) {
-  if (props.disabled || cardDisabled) {
-    return;
-  }
-
-  const file = files.value[index];
+  const file = files.value.get(fileId);
   if (!file) return;
 
-  files.value.splice(index, 1);
-  delete fileProgress.value[index];
+  // Update state
+  const state = fileStates.value[fileId];
+  if (state && state.status === "uploading") {
+    fileStates.value[fileId] = {
+      progress: 0,
+      status: "queue",
+      fileId,
+    };
+  }
 
-  emit("file-remove", file, index);
+  emit("file-upload-cancel", { file, fileId });
+}
+
+// Method for parent components to update file progress by id
+function updateFileProgress(fileId: string, progress: number) {
+  // Initialize the file state if it doesn't exist
+  if (!fileStates.value[fileId]) {
+    fileStates.value[fileId] = { progress: 0, status: "uploading", fileId };
+  }
+  // If the file is already finished, throw an error
+  else if (fileStates.value[fileId].status === "finished") {
+    throw new Error("File already finished", {
+      cause: "File already finished",
+    });
+  }
+  // If the file is not uploading, set the status to uploading
+  else if (fileStates.value[fileId].status !== "uploading") {
+    fileStates.value[fileId].status = "uploading";
+  }
+
+  fileStates.value[fileId].progress = progress;
+
+  // Find the file for this ID
+  const file = files.value.get(fileId);
+  if (file) {
+    if (progress >= 100) {
+      fileStates.value[fileId].status = "finished";
+      emit("file-upload-complete", { file, fileId });
+    } else {
+      fileStates.value[fileId].status = "uploading";
+      emit("file-upload-progress", { file, progress, fileId });
+    }
+  }
+}
+
+// Method for parent components to set file status by id
+function setFileStatus(fileId: string, status: FileStatus, error?: string) {
+  if (!fileStates.value[fileId]) {
+    fileStates.value[fileId] = { progress: 0, status: "queue", fileId };
+  }
+
+  fileStates.value[fileId].status = status;
+
+  // Find the file for this ID
+  const file = files.value.get(fileId);
+  if (file) {
+    if (error && status === "error") {
+      fileStates.value[fileId].error = error;
+      emit("file-upload-error", { file, error: new Error(error), fileId });
+    } else if (status === "finished") {
+      fileStates.value[fileId].progress = 100;
+      emit("file-upload-complete", { file, fileId });
+    }
+  }
+}
+
+function removeFile(fileId: string) {
+  if (props.disabled || cardDisabled) {
+    return;
+  }
+
+  const file = files.value.get(fileId);
+  if (!file) return;
+
+  // Create a new map without this file
+  const newFiles = new Map(files.value);
+  newFiles.delete(fileId);
+  files.value = newFiles;
+
+  delete fileStates.value[fileId];
+
+  emit("file-remove", { file, fileId });
 }
 
 function isImageFile(file: File): boolean {
@@ -607,4 +842,16 @@ function formatFileSize(bytes: number): string {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
+
+defineExpose({
+  uploadFile,
+  uploadAllFiles,
+  cancelUpload,
+  removeFile,
+  triggerFileInput,
+  files: computed(() => Array.from(files.value.values())),
+  filesStatus,
+  updateFileProgress,
+  setFileStatus,
+});
 </script>
