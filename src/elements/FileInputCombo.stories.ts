@@ -1,6 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { ref } from "vue";
 import FileInputCombo from "./FileInputCombo.vue";
+import { ref } from "vue";
+import {
+  showToast,
+  successToast,
+  errorToast,
+  infoToast,
+  warningToast,
+} from "../utils/toast";
+
+// Define type for the component instance
+type FileInputComboInstance = InstanceType<typeof FileInputCombo>;
+
+// Helper function to format file size for display
+function formatFileSize(bytes: number): string {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
 
 const meta = {
   title: "Elements/FileInputCombo",
@@ -84,6 +103,9 @@ const meta = {
   },
   parameters: {
     docs: {
+      source: {
+        type: "auto",
+      },
       description: {
         component: `
 A versatile file upload component that supports both drag-and-drop and click-to-upload functionality. The component provides a modern interface with file previews, upload progress tracking, and comprehensive file management features.
@@ -100,41 +122,273 @@ A versatile file upload component that supports both drag-and-drop and click-to-
 - **Accessibility**: Full keyboard navigation and ARIA support
 - **Responsive Design**: Works well on all screen sizes
 
-## Usage
+## Storybook Demo Note
 
-\`\`\`
-<script setup lang="ts">
-import FileInputCombo from './components/FileInputCombo.vue';
+In this Storybook demo, the file upload process is simulated with progress updates that happen automatically via intervals. In a real application, you would need to implement the actual upload logic and update the file states accordingly.
 
-const handleFileSelect = (files) => {
-  console.log('Selected files:', files);
+## Usage in Real Applications
+
+\`\`\`vue
+<script setup>
+import { FileInputCombo } from "@codebridger/lib-vue-components/elements";
+import { ref } from "vue";
+
+// Get a reference to the component
+const fileInput = ref(null);
+// Track active uploads to allow cancellation
+const activeUploads = ref({});
+
+// Handle file selection
+const handleFileSelect = (payload) => {
+  console.log('Selected files:', payload.files);
 };
 
-const handleUploadProgress = (file, progress) => {
-  console.log(\`Upload progress for \${file.name}: \${progress}%\`);
+// Handle file upload
+const handleFileUpload = async (payload) => {
+  const { file, fileId } = payload;
+  try {
+    // Create a FormData object for your API request
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    // Store the XHR request for potential cancellation
+    const xhr = new XMLHttpRequest();
+    
+    // Track the upload for potential cancellation
+    activeUploads.value[fileId] = xhr;
+    
+    xhr.open('POST', '/api/upload', true);
+    
+    // Update progress as it happens
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100);
+        // Update the component's progress display using fileId
+        fileInput.value.updateFileProgress(fileId, progress);
+      }
+    };
+    
+    // Handle completion
+    xhr.onload = () => {
+      // Remove from active uploads
+      delete activeUploads.value[fileId];
+      
+      if (xhr.status >= 200 && xhr.status < 300) {
+        // Mark upload as complete using fileId
+        fileInput.value.setFileStatus(fileId, 'finished');
+      } else {
+        // Handle error using fileId
+        fileInput.value.setFileStatus(fileId, 'error', 'Upload failed');
+      }
+    };
+    
+    // Handle network errors
+    xhr.onerror = () => {
+      // Remove from active uploads
+      delete activeUploads.value[fileId];
+      fileInput.value.setFileStatus(fileId, 'error', 'Network error');
+    };
+    
+    // Start the upload
+    xhr.send(formData);
+  } catch (error) {
+    fileInput.value.setFileStatus(fileId, 'error', error.message);
+  }
+};
+
+// Handle upload cancellation
+const handleCancelUpload = (payload) => {
+  const { file, fileId } = payload;
+  if (activeUploads.value[fileId]) {
+    // Abort the XHR request
+    activeUploads.value[fileId].abort();
+    delete activeUploads.value[fileId];
+    console.log(\`Upload cancelled for \${file.name}\`);
+  }
 };
 </script>
 
 <template>
   <FileInputCombo
+    ref="fileInput"
     label="Upload Documents"
     accept=".pdf,.doc,.docx"
     :max-size="5 * 1024 * 1024"
     :auto-upload="true"
     @file-select="handleFileSelect"
-    @file-upload-progress="handleUploadProgress"
+    @file-upload="handleFileUpload"
+    @file-upload-cancel="handleCancelUpload"
   />
 </template>
-\`\`\``,
+\`\`\`
+`,
       },
-      source: { type: "code" },
     },
   },
+  // Custom render function to handle the simulation and toast notifications
+  render: (args) => ({
+    components: { FileInputCombo },
+    setup() {
+      const fileInputRef = ref<FileInputComboInstance | null>(null);
+      const uploadIntervals = ref<Record<string, number>>({});
+
+      // File upload handler with simulation
+      const handleFileUpload = (payload: { file: File; fileId: string }) => {
+        const { file, fileId } = payload;
+
+        // Show toast notification
+        showToast({
+          message: `Starting upload: ${file.name} (${formatFileSize(
+            file.size
+          )})`,
+          variant: "primary",
+          position: "top-end",
+        });
+
+        // Clear existing interval if any
+        if (uploadIntervals.value[fileId]) {
+          clearInterval(uploadIntervals.value[fileId]);
+        }
+
+        // Start upload simulation
+        let progress = 0;
+        uploadIntervals.value[fileId] = window.setInterval(() => {
+          progress += 10;
+
+          // Check if this is the error demo story
+          const isErrorDemo =
+            args.title?.includes("error at 30%") ||
+            window.location.href.includes("withuploaderror") ||
+            window.location.href.includes("withErrorToasts");
+
+          if (isErrorDemo && progress >= 30) {
+            // Simulate error at 30%
+            fileInputRef.value?.setFileStatus(
+              fileId,
+              "error",
+              "Connection failed"
+            );
+
+            // Show error toast
+            errorToast(`Error uploading ${file.name}: Connection failed`, {
+              position: "top-end",
+              duration: 4000,
+            });
+
+            clearInterval(uploadIntervals.value[fileId]);
+          } else if (progress <= 100) {
+            // Update progress
+            fileInputRef.value?.updateFileProgress(fileId, progress);
+
+            // Show progress toast only at 50% to avoid too many notifications
+            if (progress === 50) {
+              infoToast(`${file.name}: ${progress}% uploaded`, {
+                position: "top-end",
+                duration: 2000,
+              });
+            }
+
+            // Complete when done
+            if (progress >= 100) {
+              // Show success toast
+              successToast(`Upload complete: ${file.name}`, {
+                position: "top-end",
+              });
+              clearInterval(uploadIntervals.value[fileId]);
+            }
+          }
+        }, 300);
+      };
+
+      // Handle cancel upload simulation
+      const handleCancelUpload = (payload: { file: File; fileId: string }) => {
+        const { file, fileId } = payload;
+
+        // Show toast notification
+        warningToast(`Upload cancelled: ${file.name}`, { position: "top-end" });
+
+        // If there's an active interval for this file, clear it
+        if (uploadIntervals.value[fileId]) {
+          clearInterval(uploadIntervals.value[fileId]);
+          delete uploadIntervals.value[fileId];
+        }
+      };
+
+      // Handle file selection event
+      const handleFileSelect = (payload: { files: File[] }) => {
+        const { files } = payload;
+        const fileCount = files.length;
+        infoToast(`${fileCount} file${fileCount !== 1 ? "s" : ""} selected`, {
+          position: "top-end",
+        });
+      };
+
+      // Handle file removal event
+      const handleFileRemove = (payload: { file: File; fileId: string }) => {
+        const { file, fileId } = payload;
+
+        // Show toast notification
+        infoToast(`File removed: ${file.name}`, { position: "top-end" });
+
+        // Clear any active upload simulation for this file
+        if (uploadIntervals.value[fileId]) {
+          clearInterval(uploadIntervals.value[fileId]);
+          delete uploadIntervals.value[fileId];
+        }
+      };
+
+      // Handle upload-all event
+      const handleUploadAll = () => {
+        // Show toast notification
+        showToast({
+          message: "Starting upload of all files",
+          variant: "primary",
+          position: "top-end",
+        });
+      };
+
+      // Clean up intervals
+      const cleanup = () => {
+        Object.values(uploadIntervals.value).forEach((interval) =>
+          clearInterval(interval)
+        );
+      };
+
+      // Return everything needed for the template
+      return {
+        args,
+        fileInputRef,
+        handleFileUpload,
+        handleCancelUpload,
+        handleFileSelect,
+        handleFileRemove,
+        handleUploadAll,
+        onUnmounted: cleanup,
+      };
+    },
+    template: `
+      <div>
+        <FileInputCombo
+          v-bind="args"
+          ref="fileInputRef"
+          @file-upload="handleFileUpload"
+          @file-upload-cancel="handleCancelUpload"
+          @file-select="handleFileSelect"
+          @file-remove="handleFileRemove"
+          @file-upload-all="handleUploadAll"
+        />
+      </div>
+    `,
+    beforeUnmount() {
+      this.onUnmounted();
+    },
+  }),
 } satisfies Meta<typeof FileInputCombo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Export the stories
 export const Default: Story = {
   args: {},
 };
@@ -215,5 +469,52 @@ export const WithMaxFiles: Story = {
     label: "Limited Number of Files",
     maxFiles: 2,
     description: "Maximum 2 files allowed",
+  },
+};
+
+export const WithUploadError: Story = {
+  args: {
+    label: "Upload with Error Simulation",
+    autoUpload: true,
+    description: "Files will fail to upload after progress reaches 30%",
+  },
+};
+
+export const WithToastNotifications: Story = {
+  args: {
+    label: "File Upload with Toast Notifications",
+    title: "Upload files to see toast notifications",
+    description:
+      "All component events will be displayed as toast notifications",
+    autoUpload: true,
+    maxFiles: 5,
+    showControls: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This story demonstrates toast notifications for all component events. Try selecting, uploading, cancelling and removing files to see different toast notifications.",
+      },
+    },
+  },
+};
+
+export const WithErrorToasts: Story = {
+  args: {
+    label: "Upload with Error Notifications",
+    title: "Files will error at 30% upload",
+    description: "Demonstrates error toast notifications",
+    autoUpload: true,
+    maxFiles: 3,
+  },
+  parameters: {
+    name: "withuploaderror", // This triggers the error simulation
+    docs: {
+      description: {
+        story:
+          "This story demonstrates error toast notifications. All uploads will fail at 30% progress, displaying error toasts.",
+      },
+    },
   },
 };
