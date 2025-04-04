@@ -132,42 +132,81 @@
                   <!-- Progress bar and status -->
                   <div
                     class="flex flex-col gap-1 min-w-[120px] mx-2"
-                    v-if="props.autoUpload || fileProgress[index] !== undefined"
+                    v-if="
+                      props.autoUpload || fileStates[index]?.status !== 'queue'
+                    "
                   >
                     <div class="flex justify-between items-center">
                       <span class="text-xs text-gray-600">
                         {{
-                          fileProgress[index] === 100
+                          fileStates[index]?.status === "finished"
                             ? "Complete"
-                            : "Uploading..."
+                            : fileStates[index]?.status === "error"
+                            ? "Error"
+                            : fileStates[index]?.status === "uploading"
+                            ? "Uploading..."
+                            : "Queued"
                         }}
                       </span>
-                      <span class="text-xs font-medium text-blue-600">
-                        {{ fileProgress[index] }}%
+                      <span
+                        class="text-xs font-medium"
+                        :class="{
+                          'text-blue-600':
+                            fileStates[index]?.status === 'uploading',
+                          'text-green-600':
+                            fileStates[index]?.status === 'finished',
+                          'text-red-600': fileStates[index]?.status === 'error',
+                        }"
+                      >
+                        {{ fileStates[index]?.progress }}%
                       </span>
                     </div>
                     <div
                       class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300"
                     >
                       <div
-                        class="h-full bg-blue-500 transition-all duration-300"
-                        :style="{ width: `${fileProgress[index]}%` }"
+                        class="h-full transition-all duration-300"
+                        :class="{
+                          'bg-blue-500':
+                            fileStates[index]?.status === 'uploading',
+                          'bg-green-500':
+                            fileStates[index]?.status === 'finished',
+                          'bg-red-500': fileStates[index]?.status === 'error',
+                        }"
+                        :style="{ width: `${fileStates[index]?.progress}%` }"
                       ></div>
+                    </div>
+                    <div
+                      v-if="
+                        fileStates[index]?.status === 'error' &&
+                        fileStates[index]?.error
+                      "
+                      class="text-xs text-red-500 mt-1"
+                    >
+                      {{ fileStates[index]?.error }}
                     </div>
                   </div>
                   <IconButton
-                    v-if="!props.disabled"
+                    v-if="
+                      !props.disabled &&
+                      fileStates[index]?.status === 'uploading'
+                    "
                     class="text-gray-400 hover:text-gray-500 focus:outline-none"
                     icon="IconX"
                     size="sm"
                     @click="cancelUpload(index)"
                   />
                   <IconButton
-                    v-if="!props.disabled && !props.autoUpload"
+                    v-if="
+                      !props.disabled &&
+                      !props.autoUpload &&
+                      fileStates[index]?.status !== 'finished'
+                    "
                     class="text-gray-400 hover:text-gray-500 focus:outline-none"
                     icon="IconArrowUp"
                     size="sm"
                     @click="uploadFile(index)"
+                    :disabled="fileStates[index]?.status === 'uploading'"
                   />
                   <IconButton
                     v-if="!props.disabled"
@@ -324,23 +363,39 @@ const cardDisabled = inject<boolean>("cardDisabled", false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const files = ref<File[]>([]);
 const isDragging = ref(false);
-const fileProgress = ref<Record<number, number>>({});
+
+// Define file status type
+type FileStatus = "queue" | "uploading" | "finished" | "error";
+
+// Replace the simple fileProgress with a more comprehensive status tracking
+interface FileState {
+  progress: number;
+  status: FileStatus;
+  error?: string;
+}
+
+const fileStates = ref<Record<number, FileState>>({});
 const errorMessage = ref<string>("");
 const id = computed(
   () => props.id || `file-input-${Math.random().toString(36).substr(2, 9)}`
 );
 
-// Computed properties
+// Updated computed property for file status
 const filesStatus = computed(() => {
-  return files.value.map((file, index) => ({
-    file,
-    progress: fileProgress.value[index] || 0,
-    isUploading:
-      fileProgress.value[index] !== undefined &&
-      fileProgress.value[index] < 100,
-    isComplete: fileProgress.value[index] === 100,
-    index,
-  }));
+  return files.value.map((file, index) => {
+    const state = fileStates.value[index] || { progress: 0, status: "queue" };
+    return {
+      file,
+      progress: state.progress,
+      status: state.status,
+      error: state.error,
+      isUploading: state.status === "uploading",
+      isComplete: state.status === "finished",
+      isError: state.status === "error",
+      isQueued: state.status === "queue",
+      index,
+    };
+  });
 });
 
 // Methods
@@ -535,15 +590,21 @@ function uploadFile(index: number) {
   if (!file) return;
 
   // Start with 0% progress
-  fileProgress.value[index] = 0;
+  fileStates.value[index] = { progress: 0, status: "uploading" };
 
   // Simulate progress (in a real app, this would be an actual upload)
   const interval = setInterval(() => {
-    if (fileProgress.value[index] < 100) {
-      fileProgress.value[index] += 10;
-      emit("file-upload-progress", file, fileProgress.value[index], index);
+    if (fileStates.value[index]?.progress < 100) {
+      fileStates.value[index]!.progress += 10;
+      emit(
+        "file-upload-progress",
+        file,
+        fileStates.value[index]!.progress,
+        index
+      );
     } else {
       clearInterval(interval);
+      fileStates.value[index]!.status = "finished";
       emit("file-upload-complete", file, index);
     }
   }, 300);
@@ -558,8 +619,8 @@ function uploadAllFiles() {
 
   files.value.forEach((_, index) => {
     if (
-      fileProgress.value[index] === undefined ||
-      fileProgress.value[index] < 100
+      fileStates.value[index] === undefined ||
+      fileStates.value[index]!.status !== "finished"
     ) {
       uploadFile(index);
     }
@@ -573,7 +634,14 @@ function cancelUpload(index: number) {
     return;
   }
 
-  delete fileProgress.value[index];
+  // Update to set state back to queue when cancelling
+  const state = fileStates.value[index];
+  if (state && state.status === "uploading") {
+    fileStates.value[index] = {
+      progress: 0,
+      status: "queue",
+    };
+  }
 }
 
 function removeFile(index: number) {
@@ -585,7 +653,7 @@ function removeFile(index: number) {
   if (!file) return;
 
   files.value.splice(index, 1);
-  delete fileProgress.value[index];
+  delete fileStates.value[index];
 
   emit("file-remove", file, index);
 }
@@ -606,5 +674,19 @@ function formatFileSize(bytes: number): string {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
+
+// Add a method to handle upload errors
+function handleUploadError(index: number, error: Error) {
+  const file = files.value[index];
+  if (!file) return;
+
+  fileStates.value[index] = {
+    progress: 0,
+    status: "error",
+    error: error.message || "Upload failed",
+  };
+
+  emit("file-upload-error", file, error, index);
 }
 </script>
