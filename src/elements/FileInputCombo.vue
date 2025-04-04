@@ -398,6 +398,7 @@ const emit = defineEmits<{
   ): void;
   (e: "file-upload-error", file: File, error: Error, index: number): void;
   (e: "file-upload-complete", file: File, index: number): void;
+  (e: "file-upload-cancel", file: File, index: number): void;
 }>();
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -635,23 +636,7 @@ function uploadFile(index: number) {
   // Start with 0% progress
   fileStates.value[index] = { progress: 0, status: "uploading" };
 
-  // Simulate progress (in a real app, this would be an actual upload)
-  const interval = setInterval(() => {
-    if (fileStates.value[index]?.progress < 100) {
-      fileStates.value[index]!.progress += 10;
-      emit(
-        "file-upload-progress",
-        file,
-        fileStates.value[index]!.progress,
-        index
-      );
-    } else {
-      clearInterval(interval);
-      fileStates.value[index]!.status = "finished";
-      emit("file-upload-complete", file, index);
-    }
-  }, 300);
-
+  // Emit the upload event - parent will handle the actual upload
   emit("file-upload", file, index);
 }
 
@@ -684,6 +669,57 @@ function cancelUpload(index: number) {
       progress: 0,
       status: "queue",
     };
+  }
+
+  emit("file-upload-cancel", files.value[index], index);
+}
+
+// New method for parent components to update file progress
+function updateFileProgress(index: number, progress: number) {
+  if (index < 0 || index >= files.value.length) return;
+
+  // Initialize the file state if it doesn't exist
+  if (!fileStates.value[index]) {
+    fileStates.value[index] = { progress: 0, status: "uploading" };
+  }
+  // If the file is already finished, throw an error
+  else if (fileStates.value[index]!.status === "finished") {
+    throw new Error("File already finished", {
+      cause: "File already finished",
+    });
+  }
+  // If the file is not uploading, set the status to uploading
+  else if (fileStates.value[index]!.status !== "uploading") {
+    fileStates.value[index]!.status = "uploading";
+  }
+
+  fileStates.value[index]!.progress = progress;
+
+  if (progress >= 100) {
+    fileStates.value[index]!.status = "finished";
+    emit("file-upload-complete", files.value[index], index);
+  } else {
+    fileStates.value[index]!.status = "uploading";
+    emit("file-upload-progress", files.value[index], progress, index);
+  }
+}
+
+// New method for parent components to set file status
+function setFileStatus(index: number, status: FileStatus, error?: string) {
+  if (index < 0 || index >= files.value.length) return;
+
+  if (!fileStates.value[index]) {
+    fileStates.value[index] = { progress: 0, status: "queue" };
+  }
+
+  fileStates.value[index]!.status = status;
+
+  if (error && status === "error") {
+    fileStates.value[index]!.error = error;
+    emit("file-upload-error", files.value[index], new Error(error), index);
+  } else if (status === "finished") {
+    fileStates.value[index]!.progress = 100;
+    emit("file-upload-complete", files.value[index], index);
   }
 }
 
@@ -719,20 +755,6 @@ function formatFileSize(bytes: number): string {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
 
-// Add a method to handle upload errors
-function handleUploadError(index: number, error: Error) {
-  const file = files.value[index];
-  if (!file) return;
-
-  fileStates.value[index] = {
-    progress: 0,
-    status: "error",
-    error: error.message || "Upload failed",
-  };
-
-  emit("file-upload-error", file, error, index);
-}
-
 defineExpose({
   uploadFile,
   uploadAllFiles,
@@ -741,5 +763,7 @@ defineExpose({
   triggerFileInput,
   files,
   filesStatus,
+  updateFileProgress,
+  setFileStatus,
 });
 </script>
