@@ -239,13 +239,13 @@
                           v-if="
                             !props.disabled &&
                             !props.autoUpload &&
-                            fileStates[index]?.status !== 'finished'
+                            fileStates[index]?.status !== 'finished' &&
+                            fileStates[index]?.status !== 'uploading'
                           "
                           class="text-gray-400 hover:text-gray-500 focus:outline-none"
                           icon="IconArrowUp"
                           size="sm"
                           @click="uploadFile(index)"
-                          :disabled="fileStates[index]?.status === 'uploading'"
                         />
                         <IconButton
                           v-if="!props.disabled"
