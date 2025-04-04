@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { computed, ref, inject } from "vue";
 
-interface FileInputProps {
+interface FileInputButtonProps {
   disabled?: boolean;
   required?: boolean;
   error?: boolean;
@@ -89,7 +89,7 @@ const computedButtonColor = computed(() => {
   return colorList[props.buttonColor];
 });
 
-const props = withDefaults(defineProps<FileInputProps>(), {
+const props = withDefaults(defineProps<FileInputButtonProps>(), {
   disabled: false,
   required: false,
   error: false,
