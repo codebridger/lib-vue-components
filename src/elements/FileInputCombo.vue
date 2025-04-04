@@ -98,130 +98,173 @@
 
           <!-- Preview section for uploaded files -->
           <div v-if="props.showPreview && files.length > 0" class="mt-4">
-            <ul class="space-y-4">
-              <li
-                v-for="(file, index) in files"
-                :key="index"
-                class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl"
-              >
-                <div class="flex items-center gap-2">
-                  <!-- File preview thumbnail -->
-                  <div
-                    class="size-10 flex-shrink-0 bg-gray-300 rounded-md flex items-center justify-center overflow-hidden"
+            <slot
+              name="file-list"
+              :files="files"
+              :files-status="filesStatus"
+              :upload-file="uploadFile"
+              :cancel-upload="cancelUpload"
+              :remove-file="removeFile"
+            >
+              <ul class="space-y-4">
+                <li
+                  v-for="(file, index) in files"
+                  :key="index"
+                  class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-xl"
+                >
+                  <slot
+                    name="file-item"
+                    :file="file"
+                    :index="index"
+                    :status="filesStatus[index]"
+                    :upload-file="() => uploadFile(index)"
+                    :cancel-upload="() => cancelUpload(index)"
+                    :remove-file="() => removeFile(index)"
                   >
-                    <img
-                      v-if="isImageFile(file)"
-                      :src="createThumbnailUrl(file)"
-                      alt="thumbnail"
-                      class="h-full w-full object-cover"
-                    />
-                    <Icon v-else name="IconGallery" />
-                  </div>
-                  <div>
-                    <p
-                      class="text-sm font-medium text-gray-700 truncate max-w-[140px]"
-                    >
-                      {{ file.name }}
-                    </p>
-                    <p class="text-xs text-gray-500">
-                      {{ formatFileSize(file.size) }}
-                    </p>
-                  </div>
-                </div>
-                <div class="flex items-center justify-end gap-3">
-                  <!-- Progress bar and status -->
-                  <div
-                    class="flex flex-col gap-1 min-w-[120px] mx-2"
-                    v-if="
-                      props.autoUpload || fileStates[index]?.status !== 'queue'
-                    "
-                  >
-                    <div class="flex justify-between items-center">
-                      <span class="text-xs text-gray-600">
-                        {{
-                          fileStates[index]?.status === "finished"
-                            ? "Complete"
-                            : fileStates[index]?.status === "error"
-                            ? "Error"
-                            : fileStates[index]?.status === "uploading"
-                            ? "Uploading..."
-                            : "Queued"
-                        }}
-                      </span>
-                      <span
-                        class="text-xs font-medium"
-                        :class="{
-                          'text-blue-600':
-                            fileStates[index]?.status === 'uploading',
-                          'text-green-600':
-                            fileStates[index]?.status === 'finished',
-                          'text-red-600': fileStates[index]?.status === 'error',
-                        }"
-                      >
-                        {{ fileStates[index]?.progress }}%
-                      </span>
-                    </div>
-                    <div
-                      class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300"
-                    >
+                    <div class="flex items-center gap-2">
+                      <!-- File preview thumbnail -->
                       <div
-                        class="h-full transition-all duration-300"
-                        :class="{
-                          'bg-blue-500':
-                            fileStates[index]?.status === 'uploading',
-                          'bg-green-500':
-                            fileStates[index]?.status === 'finished',
-                          'bg-red-500': fileStates[index]?.status === 'error',
-                        }"
-                        :style="{ width: `${fileStates[index]?.progress}%` }"
-                      ></div>
+                        class="size-10 flex-shrink-0 bg-gray-300 rounded-md flex items-center justify-center overflow-hidden"
+                      >
+                        <img
+                          v-if="isImageFile(file)"
+                          :src="createThumbnailUrl(file)"
+                          alt="thumbnail"
+                          class="h-full w-full object-cover"
+                        />
+                        <Icon v-else name="IconGallery" />
+                      </div>
+                      <div>
+                        <p
+                          class="text-sm font-medium text-gray-700 truncate max-w-[140px]"
+                        >
+                          {{ file.name }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                          {{ formatFileSize(file.size) }}
+                        </p>
+                      </div>
                     </div>
-                    <div
-                      v-if="
-                        fileStates[index]?.status === 'error' &&
-                        fileStates[index]?.error
-                      "
-                      class="text-xs text-red-500 mt-1"
-                    >
-                      {{ fileStates[index]?.error }}
+                    <div class="flex items-center justify-end gap-3">
+                      <!-- Progress bar and status -->
+                      <slot
+                        name="file-progress"
+                        :file="file"
+                        :index="index"
+                        :state="fileStates[index]"
+                      >
+                        <div
+                          class="flex flex-col gap-1 min-w-[120px] mx-2"
+                          v-if="
+                            props.autoUpload ||
+                            fileStates[index]?.status !== 'queue'
+                          "
+                        >
+                          <div class="flex justify-between items-center">
+                            <span class="text-xs text-gray-600">
+                              {{
+                                fileStates[index]?.status === "finished"
+                                  ? "Complete"
+                                  : fileStates[index]?.status === "error"
+                                  ? "Error"
+                                  : fileStates[index]?.status === "uploading"
+                                  ? "Uploading..."
+                                  : "Queued"
+                              }}
+                            </span>
+                            <span
+                              class="text-xs font-medium"
+                              :class="{
+                                'text-blue-600':
+                                  fileStates[index]?.status === 'uploading',
+                                'text-green-600':
+                                  fileStates[index]?.status === 'finished',
+                                'text-red-600':
+                                  fileStates[index]?.status === 'error',
+                              }"
+                            >
+                              {{ fileStates[index]?.progress }}%
+                            </span>
+                          </div>
+                          <div
+                            class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-gray-300"
+                          >
+                            <div
+                              class="h-full transition-all duration-300"
+                              :class="{
+                                'bg-blue-500':
+                                  fileStates[index]?.status === 'uploading',
+                                'bg-green-500':
+                                  fileStates[index]?.status === 'finished',
+                                'bg-red-500':
+                                  fileStates[index]?.status === 'error',
+                              }"
+                              :style="{
+                                width: `${fileStates[index]?.progress}%`,
+                              }"
+                            ></div>
+                          </div>
+                          <div
+                            v-if="
+                              fileStates[index]?.status === 'error' &&
+                              fileStates[index]?.error
+                            "
+                            class="text-xs text-red-500 mt-1"
+                          >
+                            {{ fileStates[index]?.error }}
+                          </div>
+                        </div>
+                      </slot>
+
+                      <slot
+                        name="file-actions"
+                        :file="file"
+                        :index="index"
+                        :status="filesStatus[index]"
+                        :upload-file="() => uploadFile(index)"
+                        :cancel-upload="() => cancelUpload(index)"
+                        :remove-file="() => removeFile(index)"
+                      >
+                        <IconButton
+                          v-if="
+                            !props.disabled &&
+                            fileStates[index]?.status === 'uploading'
+                          "
+                          class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                          icon="IconX"
+                          size="sm"
+                          @click="cancelUpload(index)"
+                        />
+                        <IconButton
+                          v-if="
+                            !props.disabled &&
+                            !props.autoUpload &&
+                            fileStates[index]?.status !== 'finished'
+                          "
+                          class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                          icon="IconArrowUp"
+                          size="sm"
+                          @click="uploadFile(index)"
+                          :disabled="fileStates[index]?.status === 'uploading'"
+                        />
+                        <IconButton
+                          v-if="!props.disabled"
+                          class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                          icon="IconTrash"
+                          size="sm"
+                          @click="removeFile(index)"
+                        />
+                      </slot>
                     </div>
-                  </div>
-                  <IconButton
-                    v-if="
-                      !props.disabled &&
-                      fileStates[index]?.status === 'uploading'
-                    "
-                    class="text-gray-400 hover:text-gray-500 focus:outline-none"
-                    icon="IconX"
-                    size="sm"
-                    @click="cancelUpload(index)"
-                  />
-                  <IconButton
-                    v-if="
-                      !props.disabled &&
-                      !props.autoUpload &&
-                      fileStates[index]?.status !== 'finished'
-                    "
-                    class="text-gray-400 hover:text-gray-500 focus:outline-none"
-                    icon="IconArrowUp"
-                    size="sm"
-                    @click="uploadFile(index)"
-                    :disabled="fileStates[index]?.status === 'uploading'"
-                  />
-                  <IconButton
-                    v-if="!props.disabled"
-                    class="text-gray-400 hover:text-gray-500 focus:outline-none"
-                    icon="IconTrash"
-                    size="sm"
-                    @click="removeFile(index)"
-                  />
-                </div>
-              </li>
-            </ul>
+                  </slot>
+                </li>
+              </ul>
+            </slot>
           </div>
         </div>
       </slot>
     </div>
+
     <FileInputDropMode
       :icon="props.dropModeIcon"
       :label="props.dropModeLabel"
@@ -689,4 +732,14 @@ function handleUploadError(index: number, error: Error) {
 
   emit("file-upload-error", file, error, index);
 }
+
+defineExpose({
+  uploadFile,
+  uploadAllFiles,
+  cancelUpload,
+  removeFile,
+  triggerFileInput,
+  files,
+  filesStatus,
+});
 </script>
