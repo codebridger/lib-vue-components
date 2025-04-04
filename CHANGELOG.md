@@ -1,3 +1,18 @@
+# [1.17.0-dev.17](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.16...dev-1.17.0-dev.17) (2025-04-04)
+
+
+### Bug Fixes
+
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 update upload button visibility to prevent interaction during uploading state; enhance user experience by ensuring proper status checks ([be0cf62](https://github.com/codebridger/lib-vue-components/commit/be0cf6245bc15ae7eb26f2c8d0a3939074d00ff2)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+
+
+### Features
+
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 enhance file upload component with toast notifications for events, improve file handling with unique IDs, and update Storybook stories to demonstrate new features ([f96a06b](https://github.com/codebridger/lib-vue-components/commit/f96a06b82ff99fdae023563845ab86b3265fea40)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 enhance file upload functionality with progress tracking and error simulation; update Storybook stories to demonstrate new features and usage scenarios ([e0769b0](https://github.com/codebridger/lib-vue-components/commit/e0769b086af757e4baf50b89e05963f1f4b4d8e4)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 enhance file upload handling with comprehensive status tracking and error management; update UI to reflect upload progress and status ([488c810](https://github.com/codebridger/lib-vue-components/commit/488c8102a2d8a94a946f1d2feccb4ef2771e60fd)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+* **FileInputCombo:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)erv8ke2 refactor file preview and upload status display using slots for better customization; enhance UI structure and maintainability ([ed3561d](https://github.com/codebridger/lib-vue-components/commit/ed3561d925488cb5acd33416205fbd3452a45041)), closes [#86erv8ke2](https://github.com/codebridger/lib-vue-components/issues/86erv8ke2)
+
 # [1.17.0-dev.16](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.15...dev-1.17.0-dev.16) (2025-04-04)
 
 
