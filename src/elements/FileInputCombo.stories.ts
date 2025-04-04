@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { ref } from "vue";
 import FileInputCombo from "./FileInputCombo.vue";
+import { ref } from "vue";
+
+// Define type for the component instance
+type FileInputComboInstance = InstanceType<typeof FileInputCombo>;
 
 const meta = {
   title: "Elements/FileInputCombo",
@@ -100,29 +103,78 @@ A versatile file upload component that supports both drag-and-drop and click-to-
 - **Accessibility**: Full keyboard navigation and ARIA support
 - **Responsive Design**: Works well on all screen sizes
 
-## Usage
+## Storybook Demo Note
+
+In this Storybook demo, the file upload process is simulated with progress updates that happen automatically via intervals. In a real application, you would need to implement the actual upload logic and update the file states accordingly.
+
+## Usage in Real Applications
 
 \`\`\`
 <script setup lang="ts">
-import FileInputCombo from './components/FileInputCombo.vue';
+import { FileInputCombo } from "@codebridger/lib-vue-components/elements";
+import { ref } from "vue";
 
+// Get a reference to the component
+const fileInput = ref(null);
+
+// Handle file selection
 const handleFileSelect = (files) => {
   console.log('Selected files:', files);
 };
 
-const handleUploadProgress = (file, progress) => {
-  console.log(\`Upload progress for \${file.name}: \${progress}%\`);
+// Handle file upload
+const handleFileUpload = async (file, index) => {
+  try {
+    // Create a FormData object for your API request
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    // Example API upload with progress monitoring
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/upload', true);
+    
+    // Update progress as it happens
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100);
+        // Update the component's progress display
+        fileInput.value.updateFileProgress(index, progress);
+      }
+    };
+    
+    // Handle completion
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        // Mark upload as complete
+        fileInput.value.setFileStatus(index, 'finished');
+      } else {
+        // Handle error
+        fileInput.value.setFileStatus(index, 'error', 'Upload failed');
+      }
+    };
+    
+    // Handle network errors
+    xhr.onerror = () => {
+      fileInput.value.setFileStatus(index, 'error', 'Network error');
+    };
+    
+    // Start the upload
+    xhr.send(formData);
+  } catch (error) {
+    fileInput.value.setFileStatus(index, 'error', error.message);
+  }
 };
 </script>
 
 <template>
   <FileInputCombo
+    ref="fileInput"
     label="Upload Documents"
     accept=".pdf,.doc,.docx"
     :max-size="5 * 1024 * 1024"
     :auto-upload="true"
     @file-select="handleFileSelect"
-    @file-upload-progress="handleUploadProgress"
+    @file-upload="handleFileUpload"
   />
 </template>
 \`\`\``,
@@ -130,11 +182,81 @@ const handleUploadProgress = (file, progress) => {
       source: { type: "code" },
     },
   },
+  // Custom render function to handle the simulation
+  render: (args) => ({
+    components: { FileInputCombo },
+    setup() {
+      const fileInputRef = ref<FileInputComboInstance | null>(null);
+      const uploadIntervals = ref<Record<number, number>>({});
+
+      // File upload handler with simulation
+      const handleFileUpload = (file: File, index: number) => {
+        // Clear existing interval if any
+        if (uploadIntervals.value[index]) {
+          clearInterval(uploadIntervals.value[index]);
+        }
+
+        // Start upload simulation
+        let progress = 0;
+        uploadIntervals.value[index] = window.setInterval(() => {
+          progress += 10;
+
+          // Handle different simulation scenarios
+          const isErrorDemo =
+            window.location.href.includes("withuploaderror") && progress >= 30;
+
+          if (isErrorDemo) {
+            // Simulate error at 30%
+            fileInputRef.value?.setFileStatus(
+              index,
+              "error",
+              "Connection failed"
+            );
+            clearInterval(uploadIntervals.value[index]);
+          } else if (progress <= 100) {
+            // Update progress
+            fileInputRef.value?.updateFileProgress(index, progress);
+
+            // Complete when done
+            if (progress >= 100) {
+              clearInterval(uploadIntervals.value[index]);
+            }
+          }
+        }, 300);
+      };
+
+      // Clean up intervals
+      const cleanup = () => {
+        Object.values(uploadIntervals.value).forEach((interval) =>
+          clearInterval(interval)
+        );
+      };
+
+      // Return everything needed for the template
+      return {
+        args,
+        fileInputRef,
+        handleFileUpload,
+        onUnmounted: cleanup,
+      };
+    },
+    template: `
+      <FileInputCombo
+        v-bind="args"
+        ref="fileInputRef"
+        @file-upload="handleFileUpload"
+      />
+    `,
+    beforeUnmount() {
+      this.onUnmounted();
+    },
+  }),
 } satisfies Meta<typeof FileInputCombo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Export the stories
 export const Default: Story = {
   args: {},
 };
@@ -215,5 +337,13 @@ export const WithMaxFiles: Story = {
     label: "Limited Number of Files",
     maxFiles: 2,
     description: "Maximum 2 files allowed",
+  },
+};
+
+export const WithUploadError: Story = {
+  args: {
+    label: "Upload with Error Simulation",
+    autoUpload: true,
+    description: "Files will fail to upload after progress reaches 30%",
   },
 };
