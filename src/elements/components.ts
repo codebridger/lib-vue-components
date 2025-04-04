@@ -7,9 +7,13 @@ import Dropdown from "./Dropdown.vue";
 import DropdownItem from "./DropdownItem.vue";
 import Input from "./Input.vue";
 import TextArea from "./TextArea.vue";
-import FileInput from "./FileInput.vue";
+import FileInputButton from "./FileInputButton.vue";
 import Card from "./Card.vue";
-
+import Tabs from "./Tabs.vue";
+import FileInputDropMode from "./FileInputDropMode.vue";
+import FileInputCombo from "./FileInputCombo.vue";
+import Progress from "./Progress.vue";
+import SwitchBall from "./SwitchBall.vue";
 // icons
 import Icon from "../icon/Icon.vue";
 
@@ -23,9 +27,13 @@ export {
   DropdownItem,
   Input,
   TextArea,
-  FileInput,
+  FileInputButton,
   Card,
-
+  Tabs,
+  FileInputDropMode,
+  FileInputCombo,
+  Progress,
+  SwitchBall,
   // Icons
   Icon,
 };
