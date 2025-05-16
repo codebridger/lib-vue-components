@@ -2,12 +2,13 @@
   <div
     role="progressbar"
     :aria-valuenow="computedValue"
+    :aria-valuemin="0"
     :aria-valuemax="props.max"
     class="w-full bg-gray-200 dark:bg-gray-700"
     :class="[computedSize, computedRounded, props.classes?.wrapper]"
   >
     <div
-      class="transition-all duration-300 flex items-center justify-center"
+      class="transition-all duration-300 flex items-center justify-center progress-bar"
       :class="[
         isIndeterminate && 'animate-progress-indeterminate',
         props.striped && 'striped-bar',
