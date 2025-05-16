@@ -3,21 +3,25 @@
     role="progressbar"
     :aria-valuenow="computedValue"
     :aria-valuemax="props.max"
-    class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"
+    class="w-full bg-gray-200 dark:bg-gray-700"
     :class="[computedSize, computedRounded, props.classes?.wrapper]"
   >
     <div
-      class="h-2.5 rounded-full transition-all duration-300"
+      class="transition-all duration-300 flex items-center justify-center"
       :class="[
-        computedValueColor,
         isIndeterminate && 'animate-progress-indeterminate',
         props.striped && 'striped-bar',
         props.animated && 'animated-progress',
         props.classes?.progress,
+        computedRounded,
+        computedColor,
+        computedSize,
       ]"
-      :style="[!isIndeterminate ? `width: ${computedValue}%` : 'width: 100%']"
+      :style="[
+        !isIndeterminate ? { width: `${computedValue}%` } : { width: '100%' },
+      ]"
     >
-      <span v-if="props.showLabel" class="text-xs text-white px-2">
+      <span v-if="props.showLabel" class="text-xs text-white">
         {{ props.label || `${computedValue}%` }}
       </span>
     </div>
@@ -28,10 +32,19 @@
 import { computed } from "vue";
 
 interface ProgressProps {
-  value: number;
-  max: number;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  rounded?: "none" | "sm" | "md" | "lg" | "full";
+  value?: number;
+  max?: number;
+  color?:
+    | "primary"
+    | "info"
+    | "success"
+    | "warning"
+    | "danger"
+    | "secondary"
+    | "dark"
+    | "gradient";
+  size?: "default" | "sm" | "md" | "lg" | "xl";
+  rounded?: boolean;
   classes?: {
     /**
      * CSS classes to apply to the wrapper element.
@@ -62,10 +75,11 @@ interface ProgressProps {
 }
 
 const props = withDefaults(defineProps<ProgressProps>(), {
-  value: 0,
+  value: 50,
   max: 100,
-  size: "md",
-  rounded: "full",
+  color: "primary",
+  size: "default",
+  rounded: true,
   striped: false,
   animated: false,
   showLabel: false,
@@ -73,44 +87,39 @@ const props = withDefaults(defineProps<ProgressProps>(), {
 });
 
 // Computed properties
-const computedValueColor = computed(() => {
-  const percentage = computedValue.value;
-
-  if (percentage < 25) {
-    return "bg-red-500 dark:bg-red-400"; // Danger
-  } else if (percentage < 50) {
-    return "bg-yellow-500 dark:bg-yellow-400"; // Warning
-  } else if (percentage < 75) {
-    return "bg-blue-500 dark:bg-blue-400"; // Primary
-  } else {
-    return "bg-green-500 dark:bg-green-400"; // Success
-  }
-});
-
-const computedRounded = computed(() => {
-  if (props.rounded) {
-    const roundedTypes = {
-      none: "",
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      full: "rounded-full",
+const computedColor = computed(() => {
+  if (props.color) {
+    const colors = {
+      primary: "bg-blue-600 dark:bg-blue-500",
+      info: "bg-blue-300 dark:bg-blue-200",
+      success: "bg-green-600 dark:bg-green-500",
+      warning: "bg-yellow-600 dark:bg-yellow-500",
+      danger: "bg-red-600 dark:bg-red-500",
+      secondary: "bg-gray-600 dark:bg-gray-500",
+      dark: "bg-gray-600 dark:bg-gray-500",
     };
-    return roundedTypes[props.rounded];
+    return colors[props.color];
   }
 });
 
 const computedSize = computed(() => {
   if (props.size) {
     const sizes = {
-      xs: "h-1",
-      sm: "h-1.5",
+      default: "h-4",
+      sm: "h-1",
       md: "h-2.5",
-      lg: "h-4",
+      lg: "h-5",
       xl: "h-6",
     };
     return sizes[props.size];
   }
+});
+
+const computedRounded = computed(() => {
+  if (props.rounded) {
+    return "rounded-full";
+  }
+  return "";
 });
 
 const computedValue = computed(() => {
@@ -160,5 +169,10 @@ const isIndeterminate = computed(() => typeof props.value !== "number");
   100% {
     background-position: 0 0;
   }
+}
+
+/* Dark mode adjustments */
+.dark .progress-bar {
+  filter: brightness(1.1);
 }
 </style>

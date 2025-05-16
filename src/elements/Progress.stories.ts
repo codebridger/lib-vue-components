@@ -14,14 +14,27 @@ const meta = {
       control: { type: "number" },
       description: "The maximum progress value",
     },
+    color: {
+      control: "select",
+      options: [
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "secondary",
+        "dark",
+        "gradient",
+      ],
+      description: "The color of the progress bar",
+    },
     size: {
       control: "select",
-      options: ["xs", "sm", "md", "lg", "xl"],
+      options: ["default", "sm", "md", "lg", "xl"],
       description: "The size of the progress bar",
     },
     rounded: {
-      control: "select",
-      options: ["none", "sm", "md", "lg", "full"],
+      control: "boolean",
       description: "The border radius of the progress bar",
     },
     classes: {
@@ -48,20 +61,22 @@ const meta = {
   args: {
     value: 50,
     max: 100,
+    color: "primary",
+    size: "default",
+    rounded: true,
+    striped: false,
+    animated: false,
+    showLabel: false,
+    label: "",
   },
   parameters: {
     docs: {
       description: {
         component: `
-A versatile progress bar component that automatically changes color based on the progress value.
+A versatile progress bar component with a clean, modern design.
 
 ### Features
 - Multiple sizes (xs, sm, md, lg, xl)
-- Automatic color changes based on value:
-  - Red (< 25%): Indicating initial progress
-  - Yellow (25-49%): Indicating moderate progress
-  - Blue (50-74%): Indicating significant progress
-  - Green (≥ 75%): Indicating near completion or completion
 - Different border radius options (none, sm, md, lg, full)
 - Custom class support for both wrapper and progress elements
 - Dark mode support
@@ -101,8 +116,8 @@ A versatile progress bar component that automatically changes color based on the
 ### Props
 - \`value\`: The current progress value (number)
 - \`max\`: The maximum progress value (number, default: 100)
-- \`size\`: Size of the progress bar (xs, sm, md, lg, xl)
-- \`rounded\`: Border radius (none, sm, md, lg, full)
+- \`size\`: Size of the progress bar (default, sm, md, lg, xl)
+- \`rounded\`: Whether to show a rounded progress bar (boolean)
 - \`classes\`: Custom CSS classes for wrapper and progress elements
 - \`striped\`: Whether to show a striped pattern (boolean)
 - \`animated\`: Whether to animate the progress bar (boolean)
@@ -141,27 +156,21 @@ export const Default: Story = {
   },
 };
 
-// Different Values
-export const Values: Story = {
+// Progress Examples
+export const ProgressExamples: Story = {
   render: () => ({
     components: { Progress },
     template: `
       <div class="space-y-4">
         <div>
-          <h3 class="mb-2">Initial Progress (< 25%)</h3>
-          <Progress :value="20" :showLabel="true" />
-        </div>
-        <div>
-          <h3 class="mb-2">Moderate Progress (25-49%)</h3>
-          <Progress :value="40" :showLabel="true" />
-        </div>
-        <div>
-          <h3 class="mb-2">Significant Progress (50-74%)</h3>
-          <Progress :value="60" :showLabel="true" />
-        </div>
-        <div>
-          <h3 class="mb-2">Near Completion (≥ 75%)</h3>
-          <Progress :value="85" :showLabel="true" />
+          <h3 class="mb-2">Progress Examples</h3>
+          <div class="space-y-2">
+            <Progress :value="0" :showLabel="true" />
+            <Progress :value="25" :showLabel="true" />
+            <Progress :value="50" :showLabel="true" />
+            <Progress :value="75" :showLabel="true" />
+            <Progress :value="100" :showLabel="true" />
+          </div>
         </div>
       </div>
     `,
@@ -184,32 +193,16 @@ export const Sizes: Story = {
   }),
 };
 
-// Different Border Radius
-export const BorderRadius: Story = {
-  render: () => ({
-    components: { Progress },
-    template: `
-      <div class="space-y-4">
-        <Progress :value="50" rounded="none" />
-        <Progress :value="50" rounded="sm" />
-        <Progress :value="50" rounded="md" />
-        <Progress :value="50" rounded="lg" />
-        <Progress :value="50" rounded="full" />
-      </div>
-    `,
-  }),
-};
-
 // Striped Progress Bars
 export const Striped: Story = {
   render: () => ({
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <Progress :value="20" :striped="true" :showLabel="true" />
-        <Progress :value="40" :striped="true" :showLabel="true" />
-        <Progress :value="60" :striped="true" :showLabel="true" />
-        <Progress :value="85" :striped="true" :showLabel="true" />
+        <Progress :value="25" :striped="true" :showLabel="true" />
+        <Progress :value="50" :striped="true" :showLabel="true" />
+        <Progress :value="75" :striped="true" :showLabel="true" />
+        <Progress :value="100" :striped="true" :showLabel="true" />
       </div>
     `,
   }),
@@ -221,10 +214,10 @@ export const Animated: Story = {
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <Progress :value="20" :striped="true" :animated="true" :showLabel="true" />
-        <Progress :value="40" :striped="true" :animated="true" :showLabel="true" />
-        <Progress :value="60" :striped="true" :animated="true" :showLabel="true" />
-        <Progress :value="85" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="25" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="50" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="75" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="100" :striped="true" :animated="true" :showLabel="true" />
       </div>
     `,
   }),
@@ -236,10 +229,10 @@ export const Labels: Story = {
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <Progress :value="20" :showLabel="true" />
-        <Progress :value="40" :showLabel="true" label="Loading..." />
-        <Progress :value="60" :showLabel="true" label="Uploading" />
-        <Progress :value="85" :showLabel="true" label="Almost Done" />
+        <Progress :value="25" :showLabel="true" />
+        <Progress :value="50" :showLabel="true" label="Loading..." />
+        <Progress :value="75" :showLabel="true" label="Uploading" />
+        <Progress :value="100" :showLabel="true" label="Complete" />
       </div>
     `,
   }),
