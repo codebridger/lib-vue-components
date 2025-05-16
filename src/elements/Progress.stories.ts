@@ -76,13 +76,13 @@ A versatile progress bar component with a clean, modern design.
 
 ### Features
 - Multiple sizes (xs, sm, md, lg, xl)
-- Different border radius options (none, sm, md, lg, full)
-- Custom class support for both wrapper and progress elements
-- Dark mode support
+- Different border radius options
+- Built-in RTL support using Tailwind's RTL utilities
+- Dark mode support with smooth transitions
+- Interactive hover and active states
+- Animated progress and striped effects
 - Accessible with ARIA attributes
-- Striped progress bars
-- Animated progress bars
-- Labels inside progress bars
+- Labels with customizable text
 
 ### Usage
 \`\`\`vue
@@ -90,27 +90,33 @@ A versatile progress bar component with a clean, modern design.
   <!-- Basic usage -->
   <Progress :value="50" :max="100" />
 
-  <!-- With size -->
-  <Progress :value="75" size="lg" />
+  <!-- In RTL context (wrap in RTL container) -->
+  <div dir="rtl">
+    <Progress :value="75" :showLabel="true" />
+  </div>
 
-  <!-- With label -->
-  <Progress :value="85" :showLabel="true" />
-
-  <!-- Striped and animated -->
+  <!-- With animations -->
   <Progress
     :value="75"
     :striped="true"
     :animated="true"
+    :showLabel="true"
   />
 
-  <!-- With custom label -->
+  <!-- Dark mode compatible -->
   <Progress
     :value="90"
+    color="primary"
     :showLabel="true"
-    label="Loading..."
   />
 </template>
 \`\`\`
+
+### RTL Support
+The component uses Tailwind's RTL utilities for bidirectional support:
+- \`ltr:origin-left rtl:origin-right\` for proper transform origins
+- CSS custom properties for RTL-aware animations
+- Automatic support in RTL contexts (no extra props needed)
 
 ### Props
 - \`value\`: The current progress value (number)
@@ -124,17 +130,29 @@ A versatile progress bar component with a clean, modern design.
 - \`label\`: Custom label text (string, defaults to percentage)
 
 ### Accessibility
-The component includes proper ARIA attributes:
+The component includes proper ARIA attributes and follows accessibility best practices:
 - \`role="progressbar"\`
 - \`aria-valuenow\`: Current progress value
 - \`aria-valuemax\`: Maximum progress value
+- Automatic RTL support through HTML \`dir\` attribute
+- Smooth transitions for visual changes
+
+### Interactions & Animations
+The component includes several interactive features:
+1. Hover effect: Slight brightness increase
+2. Active state: Subtle scale reduction
+3. Smooth transitions for:
+   - Progress value changes
+   - Theme switching
+   - Size changes
+   - Color changes
 
 ### Best Practices
-1. Always provide a meaningful value and max for progress bars
-2. Consider using labels for important progress indicators
-3. Use animations to indicate ongoing processes
-4. Choose appropriate sizes based on context
-5. Ensure proper color contrast for accessibility
+1. Use appropriate sizes based on context
+2. Set the correct \`dir\` attribute on a parent container for RTL support
+3. Ensure proper color contrast in both light and dark themes
+4. Use animations judiciously to avoid overwhelming users
+5. Provide clear labels for important progress indicators
 `,
       },
       source: {
@@ -192,23 +210,8 @@ export const Sizes: Story = {
   }),
 };
 
-// Striped Progress Bars
-export const Striped: Story = {
-  render: () => ({
-    components: { Progress },
-    template: `
-      <div class="space-y-4">
-        <Progress :value="25" :striped="true" :showLabel="true" />
-        <Progress :value="50" :striped="true" :showLabel="true" />
-        <Progress :value="75" :striped="true" :showLabel="true" />
-        <Progress :value="100" :striped="true" :showLabel="true" />
-      </div>
-    `,
-  }),
-};
-
-// Animated Progress Bars
-export const Animated: Story = {
+// Striped & Animated Progress Bars
+export const StripedAnimated: Story = {
   render: () => ({
     components: { Progress },
     template: `
@@ -217,21 +220,6 @@ export const Animated: Story = {
         <Progress :value="50" :striped="true" :animated="true" :showLabel="true" />
         <Progress :value="75" :striped="true" :animated="true" :showLabel="true" />
         <Progress :value="100" :striped="true" :animated="true" :showLabel="true" />
-      </div>
-    `,
-  }),
-};
-
-// Labeled Progress Bars
-export const Labels: Story = {
-  render: () => ({
-    components: { Progress },
-    template: `
-      <div class="space-y-4">
-        <Progress :value="25" :showLabel="true" />
-        <Progress :value="50" :showLabel="true" label="Loading..." />
-        <Progress :value="75" :showLabel="true" label="Uploading" />
-        <Progress :value="100" :showLabel="true" label="Complete" />
       </div>
     `,
   }),
