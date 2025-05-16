@@ -24,7 +24,6 @@ const meta = {
         "danger",
         "secondary",
         "dark",
-        "gradient",
       ],
       description: "The color of the progress bar",
     },
@@ -183,7 +182,7 @@ export const Sizes: Story = {
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <Progress :value="50" size="xs" />
+        <Progress :value="50" size="default" />
         <Progress :value="50" size="sm" />
         <Progress :value="50" size="md" />
         <Progress :value="50" size="lg" />
