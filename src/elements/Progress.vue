@@ -4,11 +4,11 @@
     :aria-valuenow="computedValue"
     :aria-valuemin="0"
     :aria-valuemax="props.max"
-    class="w-full bg-gray-200 dark:bg-gray-700"
+    class="w-full bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
     :class="[computedSize, computedRounded, props.classes?.wrapper]"
   >
     <div
-      class="transition-all duration-300 flex items-center justify-center progress-bar"
+      class="transition-all duration-300 flex items-center justify-center progress-bar ltr:origin-left rtl:origin-right"
       :class="[
         isIndeterminate && 'animate-progress-indeterminate',
         props.striped && 'striped-bar',
@@ -17,12 +17,16 @@
         computedRounded,
         computedColor,
         computedSize,
+        'hover:brightness-110 active:brightness-90',
       ]"
       :style="[
         !isIndeterminate ? { width: `${computedValue}%` } : { width: '100%' },
       ]"
     >
-      <span v-if="props.showLabel" class="text-xs text-white">
+      <span
+        v-if="props.showLabel"
+        class="text-xs text-white transition-opacity duration-200"
+      >
         {{ props.label || `${computedValue}%` }}
       </span>
     </div>
@@ -160,10 +164,18 @@ const isIndeterminate = computed(() => typeof props.value !== "number");
 }
 
 .animated-progress {
-  animation: progress-animation 1s linear infinite;
+  animation: var(--progress-animation) 1s linear infinite;
 }
 
-@keyframes progress-animation {
+:root {
+  --progress-animation: progress-animation-ltr;
+}
+
+[dir="rtl"] {
+  --progress-animation: progress-animation-rtl;
+}
+
+@keyframes progress-animation-ltr {
   0% {
     background-position: 1rem 0;
   }
@@ -172,8 +184,32 @@ const isIndeterminate = computed(() => typeof props.value !== "number");
   }
 }
 
-/* Dark mode adjustments */
+@keyframes progress-animation-rtl {
+  0% {
+    background-position: -1rem 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Theme transitions */
+.progress-bar {
+  transition: width 300ms ease-in-out, background-color 200ms ease,
+    filter 150ms ease, transform 150ms ease;
+}
+
+/* Dark mode adjustments with smooth transition */
 .dark .progress-bar {
   filter: brightness(1.1);
+}
+
+/* Hover and active states */
+.progress-bar:hover {
+  transform: scale(1.005);
+}
+
+.progress-bar:active {
+  transform: scale(0.995);
 }
 </style>
