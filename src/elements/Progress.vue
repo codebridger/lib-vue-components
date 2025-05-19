@@ -1,25 +1,35 @@
 <template>
   <div
     role="progressbar"
-    :aria-valuenow="value"
+    :aria-valuenow="computedValue"
+    :aria-valuemin="0"
     :aria-valuemax="props.max"
-    class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700"
-    :class="[
-      computedSize,
-      computedContrast,
-      computedColor,
-      computedRounded,
-      props.classes?.wrapper,
-    ]"
+    class="w-full bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
+    :class="[computedSize, computedRounded, props.classes?.wrapper]"
   >
     <div
-      class="h-2.5 rounded-full transition-all duration-300"
+      class="transition-all duration-300 flex items-center justify-center progress-bar ltr:origin-left rtl:origin-right"
       :class="[
         isIndeterminate && 'animate-progress-indeterminate',
+        props.striped && 'striped-bar',
+        props.animated && 'animated-progress',
         props.classes?.progress,
+        computedRounded,
+        computedColor,
+        computedSize,
+        'hover:brightness-110 active:brightness-90',
       ]"
-      :style="!isIndeterminate ? `width: ${value}%` : 'width: 100%'"
-    />
+      :style="[
+        !isIndeterminate ? { width: `${computedValue}%` } : { width: '100%' },
+      ]"
+    >
+      <span
+        v-if="props.showLabel"
+        class="text-xs text-white transition-opacity duration-200"
+      >
+        {{ props.label || `${computedValue}%` }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -27,20 +37,19 @@
 import { computed } from "vue";
 
 interface ProgressProps {
-  value: number;
-  max: number;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  contrast?: "default" | "contrast";
+  value?: number;
+  max?: number;
   color?:
     | "primary"
     | "info"
     | "success"
     | "warning"
     | "danger"
-    | "light"
+    | "secondary"
     | "dark"
-    | "black";
-  rounded?: "none" | "sm" | "md" | "lg" | "full";
+    | "gradient";
+  size?: "default" | "sm" | "md" | "lg" | "xl";
+  rounded?: boolean;
   classes?: {
     /**
      * CSS classes to apply to the wrapper element.
@@ -52,78 +61,155 @@ interface ProgressProps {
      */
     progress?: string | string[];
   };
+  /**
+   * Whether to show a striped pattern
+   */
+  striped?: boolean;
+  /**
+   * Whether to animate the progress bar
+   */
+  animated?: boolean;
+  /**
+   * Whether to show a label inside the progress bar
+   */
+  showLabel?: boolean;
+  /**
+   * Custom label text (defaults to percentage)
+   */
+  label?: string;
 }
 
 const props = withDefaults(defineProps<ProgressProps>(), {
-  value: 0,
+  value: 50,
   max: 100,
-  size: "md",
-  contrast: "default",
   color: "primary",
-  rounded: "full",
+  size: "default",
+  rounded: true,
+  striped: false,
+  animated: false,
+  showLabel: false,
+  label: "",
 });
 
 // Computed properties
 const computedColor = computed(() => {
   if (props.color) {
     const colors = {
-      primary: "bg-primary",
-      info: "bg-info",
-      success: "bg-success",
-      warning: "bg-warning",
-      danger: "bg-danger",
-      light: "bg-light",
-      dark: "bg-dark",
-      black: "bg-black",
+      primary: "bg-blue-600 dark:bg-blue-500",
+      info: "bg-blue-300 dark:bg-blue-200",
+      success: "bg-green-600 dark:bg-green-500",
+      warning: "bg-yellow-600 dark:bg-yellow-500",
+      danger: "bg-red-600 dark:bg-red-500",
+      secondary: "bg-gray-600 dark:bg-gray-500",
+      dark: "bg-gray-600 dark:bg-gray-500",
     };
     return colors[props.color];
-  }
-});
-
-const computedContrast = computed(() => {
-  if (props.contrast) {
-    const contrasts = {
-      default: "bg-gray-200 dark:bg-gray-700",
-      contrast: "bg-gray-300 dark:bg-gray-600",
-    };
-    return contrasts[props.contrast];
-  }
-});
-
-const computedRounded = computed(() => {
-  if (props.rounded) {
-    const roundedTypes = {
-      none: "",
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      full: "rounded-full",
-    };
-    return roundedTypes[props.rounded];
   }
 });
 
 const computedSize = computed(() => {
   if (props.size) {
     const sizes = {
-      xs: "h-1",
-      sm: "h-1.5",
+      default: "h-4",
+      sm: "h-1",
       md: "h-2.5",
-      lg: "h-4",
+      lg: "h-5",
       xl: "h-6",
     };
     return sizes[props.size];
   }
 });
 
-const value = computed(() => {
+const computedRounded = computed(() => {
+  if (props.rounded) {
+    return "rounded-full";
+  }
+  return "";
+});
+
+const computedValue = computed(() => {
   const { value, max } = props;
 
   if (max === 0) {
     return 0;
   }
-  return typeof value === "number" ? (value / max) * 100 : undefined;
+
+  // Ensure value is a number and within bounds
+  const numericValue = Number(value);
+  if (isNaN(numericValue)) {
+    return 0;
+  }
+
+  // Calculate percentage and ensure it's between 0 and 100
+  const percentage = (numericValue / max) * 100;
+  return Math.min(Math.max(percentage, 0), 100);
 });
 
-const isIndeterminate = computed(() => typeof value.value !== "number");
+const isIndeterminate = computed(() => typeof props.value !== "number");
 </script>
+
+<style>
+.striped-bar {
+  background-image: linear-gradient(
+    45deg,
+    hsla(0, 0%, 100%, 0.15) 25%,
+    transparent 0,
+    transparent 50%,
+    hsla(0, 0%, 100%, 0.15) 0,
+    hsla(0, 0%, 100%, 0.15) 75%,
+    transparent 0,
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+.animated-progress {
+  animation: var(--progress-animation) 1s linear infinite;
+}
+
+:root {
+  --progress-animation: progress-animation-ltr;
+}
+
+[dir="rtl"] {
+  --progress-animation: progress-animation-rtl;
+}
+
+@keyframes progress-animation-ltr {
+  0% {
+    background-position: 1rem 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes progress-animation-rtl {
+  0% {
+    background-position: -1rem 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Theme transitions */
+.progress-bar {
+  transition: width 300ms ease-in-out, background-color 200ms ease,
+    filter 150ms ease, transform 150ms ease;
+}
+
+/* Dark mode adjustments with smooth transition */
+.dark .progress-bar {
+  filter: brightness(1.1);
+}
+
+/* Hover and active states */
+.progress-bar:hover {
+  transform: scale(1.005);
+}
+
+.progress-bar:active {
+  transform: scale(0.995);
+}
+</style>
