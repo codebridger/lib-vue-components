@@ -14,16 +14,6 @@ const meta = {
       control: { type: "number" },
       description: "The maximum progress value",
     },
-    size: {
-      control: "select",
-      options: ["xs", "sm", "md", "lg", "xl"],
-      description: "The size of the progress bar",
-    },
-    contrast: {
-      control: "select",
-      options: ["default", "contrast"],
-      description: "The contrast level of the progress bar",
-    },
     color: {
       control: "select",
       options: [
@@ -32,41 +22,67 @@ const meta = {
         "success",
         "warning",
         "danger",
-        "light",
+        "secondary",
         "dark",
-        "black",
       ],
       description: "The color of the progress bar",
     },
-    rounded: {
+    size: {
       control: "select",
-      options: ["none", "sm", "md", "lg", "full"],
+      options: ["default", "sm", "md", "lg", "xl"],
+      description: "The size of the progress bar",
+    },
+    rounded: {
+      control: "boolean",
       description: "The border radius of the progress bar",
     },
     classes: {
       control: "object",
       description: "Custom CSS classes for wrapper and progress elements",
     },
+    striped: {
+      control: "boolean",
+      description: "Whether to show a striped pattern",
+    },
+    animated: {
+      control: "boolean",
+      description: "Whether to animate the progress bar",
+    },
+    showLabel: {
+      control: "boolean",
+      description: "Whether to show a label inside the progress bar",
+    },
+    label: {
+      control: "text",
+      description: "Custom label text (defaults to percentage)",
+    },
   },
   args: {
     value: 50,
     max: 100,
+    color: "primary",
+    size: "default",
+    rounded: true,
+    striped: false,
+    animated: false,
+    showLabel: false,
+    label: "",
   },
   parameters: {
     docs: {
       description: {
         component: `
-A versatile progress bar component that supports various styles, sizes, and states.
+A versatile progress bar component with a clean, modern design.
 
 ### Features
 - Multiple sizes (xs, sm, md, lg, xl)
-- Various color options (primary, info, success, warning, danger, light, dark, black)
-- Different border radius options (none, sm, md, lg, full)
-- Contrast levels (default, contrast)
-- Indeterminate state support
-- Custom class support for both wrapper and progress elements
-- Dark mode support
+- Different border radius options
+- Built-in RTL support using Tailwind's RTL utilities
+- Dark mode support with smooth transitions
+- Interactive hover and active states
+- Animated progress and striped effects
 - Accessible with ARIA attributes
+- Labels with customizable text
 
 ### Usage
 \`\`\`vue
@@ -74,47 +90,69 @@ A versatile progress bar component that supports various styles, sizes, and stat
   <!-- Basic usage -->
   <Progress :value="50" :max="100" />
 
-  <!-- With color and size -->
-  <Progress value="75" color="success" size="lg" />
+  <!-- In RTL context (wrap in RTL container) -->
+  <div dir="rtl">
+    <Progress :value="75" :showLabel="true" />
+  </div>
 
-  <!-- Indeterminate state -->
-  <Progress :value="undefined" color="info" />
-
-  <!-- Custom styling -->
+  <!-- With animations -->
   <Progress
-    value="85"
+    :value="75"
+    :striped="true"
+    :animated="true"
+    :showLabel="true"
+  />
+
+  <!-- Dark mode compatible -->
+  <Progress
+    :value="90"
     color="primary"
-    rounded="lg"
-    contrast="contrast"
-    :classes="{
-      wrapper: 'bg-gray-100 p-4 rounded-lg',
-      progress: 'shadow-lg'
-    }"
+    :showLabel="true"
   />
 </template>
 \`\`\`
 
+### RTL Support
+The component uses Tailwind's RTL utilities for bidirectional support:
+- \`ltr:origin-left rtl:origin-right\` for proper transform origins
+- CSS custom properties for RTL-aware animations
+- Automatic support in RTL contexts (no extra props needed)
+
 ### Props
 - \`value\`: The current progress value (number)
 - \`max\`: The maximum progress value (number, default: 100)
-- \`size\`: Size of the progress bar (xs, sm, md, lg, xl)
-- \`color\`: Color variant (primary, info, success, warning, danger, light, dark, black)
-- \`rounded\`: Border radius (none, sm, md, lg, full)
-- \`contrast\`: Contrast level (default, contrast)
+- \`size\`: Size of the progress bar (default, sm, md, lg, xl)
+- \`rounded\`: Whether to show a rounded progress bar (boolean)
 - \`classes\`: Custom CSS classes for wrapper and progress elements
+- \`striped\`: Whether to show a striped pattern (boolean)
+- \`animated\`: Whether to animate the progress bar (boolean)
+- \`showLabel\`: Whether to show a label inside the progress bar (boolean)
+- \`label\`: Custom label text (string, defaults to percentage)
 
 ### Accessibility
-The component includes proper ARIA attributes:
+The component includes proper ARIA attributes and follows accessibility best practices:
 - \`role="progressbar"\`
 - \`aria-valuenow\`: Current progress value
 - \`aria-valuemax\`: Maximum progress value
+- Automatic RTL support through HTML \`dir\` attribute
+- Smooth transitions for visual changes
+
+### Interactions & Animations
+The component includes several interactive features:
+1. Hover effect: Slight brightness increase
+2. Active state: Subtle scale reduction
+3. Smooth transitions for:
+   - Progress value changes
+   - Theme switching
+   - Size changes
+   - Color changes
 
 ### Best Practices
-1. Always provide a meaningful value and max for determinate progress bars
-2. Use indeterminate state when progress cannot be measured
-3. Choose appropriate contrast levels based on background color
-4. Consider using custom classes for specific styling needs
-5. Ensure proper color contrast for accessibility
+1. Use appropriate sizes based on context
+2. Set the correct \`dir\` attribute on a parent container for RTL support
+3. Ensure proper color contrast in both light and dark themes
+4. Use animations judiciously to avoid overwhelming users
+5. Provide clear labels for important progress indicators
 `,
       },
       source: {
@@ -135,156 +173,53 @@ export const Default: Story = {
   },
 };
 
+// Progress Examples
+export const ProgressExamples: Story = {
+  render: () => ({
+    components: { Progress },
+    template: `
+      <div class="space-y-4">
+        <div>
+          <h3 class="mb-2">Progress Examples</h3>
+          <div class="space-y-2">
+            <Progress :value="0" :showLabel="true" />
+            <Progress :value="25" :showLabel="true" />
+            <Progress :value="50" :showLabel="true" />
+            <Progress :value="75" :showLabel="true" />
+            <Progress :value="100" :showLabel="true" />
+          </div>
+        </div>
+      </div>
+    `,
+  }),
+};
+
 // Different Sizes
 export const Sizes: Story = {
-  args: {
-    value: 50,
-    max: 100,
-  },
   render: () => ({
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <Progress value="50" size="xs" />
-        <Progress value="50" size="sm" />
-        <Progress value="50" size="md" />
-        <Progress value="50" size="lg" />
-        <Progress value="50" size="xl" />
+        <Progress :value="50" size="default" />
+        <Progress :value="50" size="sm" />
+        <Progress :value="50" size="md" />
+        <Progress :value="50" size="lg" />
+        <Progress :value="50" size="xl" />
       </div>
     `,
   }),
 };
 
-// Different Colors
-export const Colors: Story = {
-  args: {
-    value: 50,
-    max: 100,
-  },
+// Striped & Animated Progress Bars
+export const StripedAnimated: Story = {
   render: () => ({
     components: { Progress },
     template: `
       <div class="space-y-4">
-        <Progress value="50" color="primary" />
-        <Progress value="50" color="info" />
-        <Progress value="50" color="success" />
-        <Progress value="50" color="warning" />
-        <Progress value="50" color="danger" />
-        <Progress value="50" color="light" />
-        <Progress value="50" color="dark" />
-        <Progress value="50" color="black" />
-      </div>
-    `,
-  }),
-};
-
-// Different Border Radius
-export const BorderRadius: Story = {
-  args: {
-    value: 50,
-    max: 100,
-  },
-  render: () => ({
-    components: { Progress },
-    template: `
-      <div class="space-y-4">
-        <Progress value="50" rounded="none" />
-        <Progress value="50" rounded="sm" />
-        <Progress value="50" rounded="md" />
-        <Progress value="50" rounded="lg" />
-        <Progress value="50" rounded="full" />
-      </div>
-    `,
-  }),
-};
-
-// Different Contrast Levels
-export const Contrast: Story = {
-  args: {
-    value: 50,
-    max: 100,
-  },
-  render: () => ({
-    components: { Progress },
-    template: `
-      <div class="space-y-4">
-        <Progress value="50" contrast="default" />
-        <Progress value="50" contrast="contrast" />
-      </div>
-    `,
-  }),
-};
-
-// Indeterminate Progress
-export const Indeterminate: Story = {
-  args: {
-    value: 0,
-    max: 100,
-  },
-  render: () => ({
-    components: { Progress },
-    template: `
-      <Progress :value="undefined" max="100" />
-    `,
-  }),
-};
-
-// Custom Classes
-export const CustomClasses: Story = {
-  args: {
-    value: 75,
-    max: 100,
-    classes: {
-      wrapper: "bg-gray-100 p-4 rounded-lg",
-      progress: "shadow-lg",
-    },
-  },
-};
-
-// Complete Example
-export const CompleteExample: Story = {
-  args: {
-    value: 50,
-    max: 100,
-  },
-  render: () => ({
-    components: { Progress },
-    template: `
-      <div class="space-y-8 p-4">
-        <div>
-          <h3 class="mb-2">Basic Progress</h3>
-          <Progress value="30" />
-        </div>
-        
-        <div>
-          <h3 class="mb-2">Success Progress</h3>
-          <Progress value="70" color="success" />
-        </div>
-        
-        <div>
-          <h3 class="mb-2">Large Warning Progress</h3>
-          <Progress value="45" color="warning" size="lg" />
-        </div>
-        
-        <div>
-          <h3 class="mb-2">Indeterminate Progress</h3>
-          <Progress :value="undefined" color="info" />
-        </div>
-        
-        <div>
-          <h3 class="mb-2">Custom Styled Progress</h3>
-          <Progress 
-            value="85" 
-            color="primary" 
-            size="md" 
-            rounded="lg"
-            contrast="contrast"
-            :classes="{
-              wrapper: 'bg-gray-100 p-4 rounded-lg',
-              progress: 'shadow-lg'
-            }"
-          />
-        </div>
+        <Progress :value="25" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="50" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="75" :striped="true" :animated="true" :showLabel="true" />
+        <Progress :value="100" :striped="true" :animated="true" :showLabel="true" />
       </div>
     `,
   }),
