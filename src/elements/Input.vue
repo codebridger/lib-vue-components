@@ -36,6 +36,7 @@
         @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
         @blur="$emit('blur', $event)"
         @focus="$emit('focus', $event)"
+        @keyup.enter="handleEnterKey"
       />
     </div>
 
@@ -89,9 +90,20 @@ const props = withDefaults(defineProps<InputProps>(), {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 
-defineEmits<{
+const emit = defineEmits<{
   "update:modelValue": [value: string];
   blur: [event: FocusEvent];
   focus: [event: FocusEvent];
+  enter: [value: string];
 }>();
+
+const handleEnterKey = (event: KeyboardEvent) => {
+  const target = event.target as HTMLInputElement;
+  const value = target.value;
+
+  if (value) {
+    emit("enter", value);
+    emit("update:modelValue", "");
+  }
+};
 </script>

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import Input from "./Input.vue";
+import { ref } from "vue";
 
 const meta = {
   title: "Elements/Input",
@@ -271,4 +272,56 @@ export const TelInput: Story = {
       },
     },
   },
+};
+
+export const WithEnterKeyEvent: Story = {
+  args: {
+    label: "Quick Add",
+    placeholder: "Type and press Enter",
+    iconName: "IconSearch",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Input that captures values when Enter key is pressed and displays them in a list below.",
+      },
+    },
+  },
+  render: (args) => ({
+    components: { Input },
+    setup() {
+      const inputValue = ref("");
+      const enteredValues = ref<string[]>([]);
+
+      const handleEnterKey = (value: string) => {
+        if (value.trim()) {
+          enteredValues.value.push(value);
+        }
+      };
+
+      return { args, inputValue, enteredValues, handleEnterKey };
+    },
+    template: `
+      <div class="space-y-4">
+        <Input 
+          v-model="inputValue"
+          v-bind="args"
+          @enter="handleEnterKey"
+        />
+        
+        <div v-if="enteredValues.length > 0" class="mt-2 p-3 bg-gray-100 rounded">
+          <p class="text-sm font-medium mb-2">Entered values:</p>
+          <ul class="list-disc pl-5">
+            <li v-for="(value, index) in enteredValues" :key="index" class="text-sm">
+              {{ value }}
+            </li>
+          </ul>
+          <p class="text-xs text-gray-500 mt-2">
+            Try typing more values and pressing Enter each time
+          </p>
+        </div>
+      </div>
+    `,
+  }),
 };
