@@ -4,7 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "version": "1.17.0-dev.17",
+  "version": "1.17.0-dev.18",
   "type": "module",
   "files": [
     "dist",
@@ -17,7 +17,7 @@
     "./shell.ts": "./src/shell/components.ts",
     "./elements.ts": "./src/elements/components.ts",
     "./complex.ts": "./src/complex/components.ts",
-    "./toast.ts": "./src/toast.ts",
+    "./toast.ts": "./src/utils/toast.ts",
     "./store.ts": "./src/stores/index.ts",
     "./types.ts": "./src/types/types.ts",
     "./nuxt": {
