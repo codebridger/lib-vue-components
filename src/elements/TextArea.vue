@@ -58,7 +58,8 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   id: "",
 });
 
-defineEmits<{
+const emit = defineEmits<{
   "update:modelValue": [value: string];
+  enter: [value: string];
 }>();
 </script>
