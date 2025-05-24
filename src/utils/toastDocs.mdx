@@ -11,17 +11,17 @@ The `toast.ts` file provides utility functions for displaying toast notification
 
 To show a basic toast message, use the `showToast` function:
 ```typescript
-import { showToast, successToast, errorToast, warningToast, infoToast } from '@codebridger/lib-vue-components/toast.ts';
+import { showToast, toastSuccess, toastError, toastWarning, toastInfo } from '@codebridger/lib-vue-components/toast.ts';
 
 showToast({ message: 'This is a basic toast message', variant: 'success' });
 
-successToast('This is a success toast message');
+toastSuccess('This is a success toast message');
 
-errorToast('This is an error toast message');
+toastError('This is an error toast message');
 
-warningToast('This is a warning toast message');
+toastWarning('This is a warning toast message');
 
-infoToast('This is an info toast message');
+toastInfo('This is an info toast message');
 ```
 
 ## Configuration
