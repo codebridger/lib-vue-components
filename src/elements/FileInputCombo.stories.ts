@@ -3,10 +3,10 @@ import FileInputCombo from "./FileInputCombo.vue";
 import { ref } from "vue";
 import {
   showToast,
-  successToast,
-  errorToast,
-  infoToast,
-  warningToast,
+  toastSuccess,
+  toastError,
+  toastInfo,
+  toastWarning,
 } from "../utils/toast";
 
 // Define type for the component instance
@@ -270,7 +270,7 @@ const handleCancelUpload = (payload) => {
             );
 
             // Show error toast
-            errorToast(`Error uploading ${file.name}: Connection failed`, {
+            toastError(`Error uploading ${file.name}: Connection failed`, {
               position: "top-end",
               duration: 4000,
             });
@@ -282,7 +282,7 @@ const handleCancelUpload = (payload) => {
 
             // Show progress toast only at 50% to avoid too many notifications
             if (progress === 50) {
-              infoToast(`${file.name}: ${progress}% uploaded`, {
+              toastInfo(`${file.name}: ${progress}% uploaded`, {
                 position: "top-end",
                 duration: 2000,
               });
@@ -291,7 +291,7 @@ const handleCancelUpload = (payload) => {
             // Complete when done
             if (progress >= 100) {
               // Show success toast
-              successToast(`Upload complete: ${file.name}`, {
+              toastSuccess(`Upload complete: ${file.name}`, {
                 position: "top-end",
               });
               clearInterval(uploadIntervals.value[fileId]);
@@ -305,7 +305,7 @@ const handleCancelUpload = (payload) => {
         const { file, fileId } = payload;
 
         // Show toast notification
-        warningToast(`Upload cancelled: ${file.name}`, { position: "top-end" });
+        toastWarning(`Upload cancelled: ${file.name}`, { position: "top-end" });
 
         // If there's an active interval for this file, clear it
         if (uploadIntervals.value[fileId]) {
@@ -318,7 +318,7 @@ const handleCancelUpload = (payload) => {
       const handleFileSelect = (payload: { files: File[] }) => {
         const { files } = payload;
         const fileCount = files.length;
-        infoToast(`${fileCount} file${fileCount !== 1 ? "s" : ""} selected`, {
+        toastInfo(`${fileCount} file${fileCount !== 1 ? "s" : ""} selected`, {
           position: "top-end",
         });
       };
@@ -328,7 +328,7 @@ const handleCancelUpload = (payload) => {
         const { file, fileId } = payload;
 
         // Show toast notification
-        infoToast(`File removed: ${file.name}`, { position: "top-end" });
+        toastInfo(`File removed: ${file.name}`, { position: "top-end" });
 
         // Clear any active upload simulation for this file
         if (uploadIntervals.value[fileId]) {
@@ -500,7 +500,7 @@ export const WithToastNotifications: Story = {
   },
 };
 
-export const WithErrorToasts: Story = {
+export const WithtoastErrors: Story = {
   args: {
     label: "Upload with Error Notifications",
     title: "Files will error at 30% upload",
