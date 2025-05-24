@@ -22,7 +22,6 @@
       @input="
         $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
       "
-      @keyup.enter.prevent="handleEnterKey"
     />
     <span v-if="error && errorMsg" class="mt-1 text-sm text-red-500">{{
       errorMsg
@@ -63,14 +62,4 @@ const emit = defineEmits<{
   "update:modelValue": [value: string];
   enter: [value: string];
 }>();
-
-const handleEnterKey = (event: KeyboardEvent) => {
-  const target = event.target as HTMLTextAreaElement;
-  const value = target.value;
-
-  if (value) {
-    emit("enter", value);
-    emit("update:modelValue", "");
-  }
-};
 </script>
