@@ -4,7 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "version": "1.17.0-dev.18",
+  "version": "1.17.0-dev.19",
   "type": "module",
   "files": [
     "dist",
