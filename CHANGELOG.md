@@ -1,3 +1,5 @@
+# [1.17.0-dev.19](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.18...dev-1.17.0-dev.19) (2025-05-24)
+
 # [1.17.0-dev.18](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.17...dev-1.17.0-dev.18) (2025-05-19)
 
 
