@@ -104,14 +104,14 @@ export const showToast = async (config: ToastConfig): Promise<void> => {
 };
 
 // Optional: Convenience functions for common use cases
-export const successToast = (message: string, config?: Partial<ToastConfig>) =>
+export const toastSuccess = (message: string, config?: Partial<ToastConfig>) =>
   showToast({ message, variant: "success", ...config });
 
-export const errorToast = (message: string, config?: Partial<ToastConfig>) =>
+export const toastError = (message: string, config?: Partial<ToastConfig>) =>
   showToast({ message, variant: "danger", ...config });
 
-export const warningToast = (message: string, config?: Partial<ToastConfig>) =>
+export const toastWarning = (message: string, config?: Partial<ToastConfig>) =>
   showToast({ message, variant: "warning", ...config });
 
-export const infoToast = (message: string, config?: Partial<ToastConfig>) =>
+export const toastInfo = (message: string, config?: Partial<ToastConfig>) =>
   showToast({ message, variant: "info", ...config });
