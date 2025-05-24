@@ -1,3 +1,11 @@
+# [1.17.0-dev.18](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.17...dev-1.17.0-dev.18) (2025-05-19)
+
+
+### Features
+
+* **Progress:** add color prop and update size and rounded options; enhance Storybook examples to showcase new features and improve documentation. ([b5059f8](https://github.com/codebridger/lib-vue-components/commit/b5059f815c5dc1f0fde0c0574574adb58cf8b8a1))
+* **Progress:** enhance progress bar component with new features including striped and animated options, label display, and automatic color changes based on progress value; update Storybook stories to demonstrate new functionalities. ([5f53c91](https://github.com/codebridger/lib-vue-components/commit/5f53c91c9ff7583fcf3b4c016d57009ac9cf7fe3))
+
 # [1.17.0-dev.17](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.16...dev-1.17.0-dev.17) (2025-04-04)
 
 
