@@ -9,11 +9,16 @@
       <Icon
         v-if="iconName"
         :name="iconName"
-        class="absolute ltr:left-3 rtl:right-3 top-1/2 transform -translate-y-1/2"
+        :class="[
+          'absolute top-1/2 transform -translate-y-1/2 cursor-pointer',
+          iconPosition === 'left' ? 'left-3' : 'right-3',
+        ]"
+        @click="handleIconClick"
       />
       <input
         :class="[
-          iconName ? 'ltr:pl-10 rtl:pr-10' : '',
+          iconName && iconPosition === 'left' ? 'pl-10 text-left' : '',
+          iconName && iconPosition === 'right' ? 'pr-10 text-right' : '',
           // base classes
           { 'form-input': type !== 'range' },
 
@@ -47,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
 
 interface InputProps {
@@ -70,7 +75,8 @@ interface InputProps {
   id?: string;
   min?: string | number;
   max?: string | number;
-  iconName?: string; // Add this line
+  iconName?: string;
+  iconPosition?: "left" | "right";
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -85,7 +91,8 @@ const props = withDefaults(defineProps<InputProps>(), {
   id: "",
   min: 0,
   max: 100,
-  iconName: "", // Add this line
+  iconName: "",
+  iconPosition: "left", // Default based on LTR preference
 });
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -95,6 +102,7 @@ const emit = defineEmits<{
   blur: [event: FocusEvent];
   focus: [event: FocusEvent];
   enter: [value: string];
+  iconClick: [event: MouseEvent];
 }>();
 
 const handleEnterKey = (event: KeyboardEvent) => {
@@ -105,5 +113,9 @@ const handleEnterKey = (event: KeyboardEvent) => {
     emit("enter", value);
     emit("update:modelValue", "");
   }
+};
+
+const handleIconClick = (event: MouseEvent) => {
+  emit("iconClick", event);
 };
 </script>

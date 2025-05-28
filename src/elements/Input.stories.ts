@@ -56,7 +56,12 @@ const meta = {
         "IconUser",
         "IconX",
       ],
-      description: "Icon name to be displayed on the right side of the input",
+      description: "Icon name to be displayed in the input",
+    },
+    iconPosition: {
+      control: "inline-radio",
+      options: ["left", "right"],
+      description: "Position of the icon (left or right side of input)",
     },
     id: {
       control: "text",
@@ -70,6 +75,10 @@ const meta = {
       control: "number",
       description: "Maximum value for range inputs",
     },
+    onIconClick: {
+      action: "iconClick",
+      description: "Event emitted when icon is clicked",
+    },
   },
   args: {
     type: "text",
@@ -79,6 +88,7 @@ const meta = {
     error: false,
     errorMessage: "",
     iconName: "",
+    iconPosition: "left",
     id: "",
   },
   parameters: {
@@ -87,13 +97,14 @@ const meta = {
         component: `
 # Input Component
 
-A flexible input component that supports various input types, icon integration, and visual states. This component is built with accessibility in mind and supports form validation states.
+A flexible input component that supports various input types, icon integration with click events, and visual states. This component is built with accessibility in mind and supports form validation states.
 
 ## Features
 - Supports common input types (text, email, password, number, etc.)
 - Optional label with required indicator
 - Error state with custom error message
-- Icon support on the right side
+- Icon support with configurable positioning (left/right)
+- Clickable icons with event handling
 - Disabled state
 - Range input with min/max values
 - Fully reactive with Vue's v-model
@@ -132,6 +143,7 @@ export const WithIcon: Story = {
     label: "Search",
     placeholder: "Search for something...",
     iconName: "IconSearch",
+    iconPosition: "left",
   },
   parameters: {
     docs: {
@@ -143,12 +155,84 @@ export const WithIcon: Story = {
   },
 };
 
+export const WithIconRight: Story = {
+  args: {
+    label: "Username",
+    placeholder: "Enter username",
+    iconName: "IconUser",
+    iconPosition: "right",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Input with an icon positioned on the right side.",
+      },
+    },
+  },
+};
+
+export const ClickableIcon: Story = {
+  args: {
+    label: "Password",
+    placeholder: "Enter password",
+    type: "password",
+    iconName: "IconEye",
+    iconPosition: "right",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Input with a clickable icon that can toggle password visibility or perform other actions.",
+      },
+    },
+  },
+  render: (args) => ({
+    components: { Input },
+    setup() {
+      const inputValue = ref("");
+      const isPasswordVisible = ref(false);
+
+      const handleIconClick = () => {
+        isPasswordVisible.value = !isPasswordVisible.value;
+        console.log("Icon clicked! Password visible:", isPasswordVisible.value);
+      };
+
+      return {
+        args,
+        inputValue,
+        isPasswordVisible,
+        handleIconClick,
+        computedType: () => (isPasswordVisible.value ? "text" : "password"),
+        computedIconName: () =>
+          isPasswordVisible.value ? "IconEyeOff" : "IconEye",
+      };
+    },
+    template: `
+      <div class="space-y-2">
+        <Input 
+          v-model="inputValue"
+          v-bind="args"
+          :type="computedType()"
+          :iconName="computedIconName()"
+          @iconClick="handleIconClick"
+        />
+        <p class="text-sm text-gray-600">
+          Click the eye icon to toggle password visibility
+        </p>
+      </div>
+    `,
+  }),
+};
+
 export const EmailInput: Story = {
   args: {
     type: "email",
     label: "Email Address",
     placeholder: "your@email.com",
     required: true,
+    iconName: "IconMail",
+    iconPosition: "left",
   },
   parameters: {
     docs: {
@@ -166,6 +250,8 @@ export const PasswordInput: Story = {
     label: "Password",
     placeholder: "Enter your password",
     required: true,
+    iconName: "IconLock",
+    iconPosition: "left",
   },
   parameters: {
     docs: {
@@ -183,6 +269,8 @@ export const WithError: Story = {
     type: "email",
     error: true,
     errorMessage: "This field is required",
+    iconName: "IconX",
+    iconPosition: "right",
   },
   parameters: {
     docs: {
@@ -198,6 +286,8 @@ export const Disabled: Story = {
     label: "Username",
     placeholder: "This field is disabled",
     disabled: true,
+    iconName: "IconUser",
+    iconPosition: "left",
   },
   parameters: {
     docs: {
@@ -279,6 +369,7 @@ export const WithEnterKeyEvent: Story = {
     label: "Quick Add",
     placeholder: "Type and press Enter",
     iconName: "IconSearch",
+    iconPosition: "right",
   },
   parameters: {
     docs: {
@@ -300,7 +391,20 @@ export const WithEnterKeyEvent: Story = {
         }
       };
 
-      return { args, inputValue, enteredValues, handleEnterKey };
+      const handleIconClick = () => {
+        if (inputValue.value.trim()) {
+          enteredValues.value.push(inputValue.value);
+          inputValue.value = "";
+        }
+      };
+
+      return {
+        args,
+        inputValue,
+        enteredValues,
+        handleEnterKey,
+        handleIconClick,
+      };
     },
     template: `
       <div class="space-y-4">
@@ -308,6 +412,7 @@ export const WithEnterKeyEvent: Story = {
           v-model="inputValue"
           v-bind="args"
           @enter="handleEnterKey"
+          @iconClick="handleIconClick"
         />
         
         <div v-if="enteredValues.length > 0" class="mt-2 p-3 bg-gray-100 rounded">
@@ -318,7 +423,7 @@ export const WithEnterKeyEvent: Story = {
             </li>
           </ul>
           <p class="text-xs text-gray-500 mt-2">
-            Try typing more values and pressing Enter each time
+            Try typing values and pressing Enter or clicking the search icon
           </p>
         </div>
       </div>
