@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import TextArea from "./TextArea.vue";
+import { ref } from "vue";
 
 const meta = {
   title: "Elements/TextArea",
@@ -42,6 +43,32 @@ const meta = {
       control: "text",
       description: "ID for the textarea (used to associate label)",
     },
+    iconName: {
+      control: "select",
+      options: [
+        "",
+        "IconSearch",
+        "IconMail",
+        "IconEye",
+        "IconLock",
+        "IconUser",
+        "IconX",
+      ],
+      description: "Icon name to be displayed in the textarea",
+    },
+    iconPosition: {
+      control: "inline-radio",
+      options: ["left", "right"],
+      description: "Position of the icon (left or right side of textarea)",
+    },
+    onEnter: {
+      action: "enter",
+      description: "Event emitted when Enter key is pressed",
+    },
+    onIconClick: {
+      action: "iconClick",
+      description: "Event emitted when icon is clicked",
+    },
   },
   args: {
     rows: 2,
@@ -50,6 +77,29 @@ const meta = {
     disabled: false,
     error: false,
     errorMsg: "",
+    iconName: "",
+    iconPosition: "left",
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: `
+# TextArea Component
+
+A flexible textarea component that supports icon integration with click events, validation states, and accessibility features. This component is built with accessibility in mind and supports form validation states.
+
+## Features
+- Configurable number of rows
+- Optional label with required indicator
+- Error state with custom error message
+- Icon support with configurable positioning (left/right)
+- Clickable icons with event handling
+- Disabled state
+- Fully reactive with Vue's v-model
+- Enter key event handling
+        `,
+      },
+    },
   },
 } satisfies Meta<typeof TextArea>;
 
@@ -93,6 +143,107 @@ export const WithLabel: Story = {
   },
 };
 
+export const WithIcon: Story = {
+  args: {
+    modelValue: "",
+    rows: 3,
+    placeholder: "Write your message...",
+    label: "Message",
+    iconName: "IconMail",
+    iconPosition: "left",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "TextArea with an icon positioned on the left side with LTR text direction.",
+      },
+    },
+  },
+};
+
+export const WithIconRight: Story = {
+  args: {
+    modelValue: "",
+    rows: 3,
+    placeholder: "Enter your comments...",
+    label: "Comments",
+    iconName: "IconUser",
+    iconPosition: "right",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "TextArea with an icon positioned on the right side with RTL text direction.",
+      },
+    },
+  },
+};
+
+export const ClickableIcon: Story = {
+  args: {
+    modelValue: "",
+    rows: 4,
+    placeholder: "Write a comment and click the search icon to submit...",
+    label: "Quick Comment",
+    iconName: "IconSearch",
+    iconPosition: "right",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "TextArea with a clickable icon that can submit or perform other actions. Notice the RTL text direction when icon is on the right.",
+      },
+    },
+  },
+  render: (args) => ({
+    components: { TextArea },
+    setup() {
+      const textValue = ref("");
+      const submittedComments = ref<string[]>([]);
+
+      const handleIconClick = () => {
+        if (textValue.value.trim()) {
+          submittedComments.value.push(textValue.value);
+          textValue.value = "";
+          console.log("Icon clicked! Comment submitted");
+        }
+      };
+
+      return {
+        args,
+        textValue,
+        submittedComments,
+        handleIconClick,
+      };
+    },
+    template: `
+      <div class="space-y-4">
+        <TextArea 
+          v-model="textValue"
+          v-bind="args"
+          @iconClick="handleIconClick"
+        />
+        
+        <div v-if="submittedComments.length > 0" class="mt-2 p-3 bg-gray-100 rounded">
+          <p class="text-sm font-medium mb-2">Submitted comments:</p>
+          <ul class="space-y-2">
+            <li v-for="(comment, index) in submittedComments" :key="index" class="text-sm bg-white p-2 rounded border">
+              {{ comment }}
+            </li>
+          </ul>
+        </div>
+        
+        <p class="text-sm text-gray-600">
+          Click the search icon to submit your comment. Notice the RTL text direction.
+        </p>
+      </div>
+    `,
+  }),
+};
+
 export const Required: Story = {
   args: {
     modelValue: "",
@@ -102,6 +253,8 @@ export const Required: Story = {
     disabled: false,
     error: false,
     errorMsg: "",
+    iconName: "IconLock",
+    iconPosition: "left",
   },
 };
 
@@ -114,6 +267,8 @@ export const Disabled: Story = {
     disabled: true,
     error: false,
     errorMsg: "",
+    iconName: "IconUser",
+    iconPosition: "left",
   },
 };
 
@@ -126,6 +281,8 @@ export const WithError: Story = {
     disabled: false,
     error: true,
     errorMsg: "This field is required",
+    iconName: "IconX",
+    iconPosition: "right",
   },
 };
 
@@ -138,5 +295,76 @@ export const CustomRows: Story = {
     disabled: false,
     error: false,
     errorMsg: "",
+    iconName: "IconMail",
+    iconPosition: "left",
+  },
+};
+
+export const EnterKeyExample: Story = {
+  render: (args) => ({
+    components: { TextArea },
+    setup() {
+      const inputText = ref("");
+      const notes = ref<string[]>([]);
+
+      const addNote = (value: string) => {
+        notes.value.push(value);
+        // Component already clears the input after enter event
+      };
+
+      const handleIconClick = () => {
+        if (inputText.value.trim()) {
+          notes.value.push(inputText.value);
+          inputText.value = "";
+        }
+      };
+
+      return { args, inputText, notes, addNote, handleIconClick };
+    },
+    template: `
+      <div class="p-4">
+        <h3 class="text-lg font-semibold mb-2">Enter Key Demo</h3>
+        <TextArea 
+          v-model="inputText"
+          v-bind="args"
+          label="Type and press Enter"
+          placeholder="Type something and press Enter or click the icon to add a note"
+          iconName="IconSearch"
+          iconPosition="right"
+          @enter="addNote" 
+          @iconClick="handleIconClick"
+        />
+        
+        <div class="mt-4">
+          <h4 class="font-medium mb-1">Notes:</h4>
+          <ul class="border rounded p-2 min-h-[100px] bg-gray-50">
+            <li v-for="(note, index) in notes" :key="index" class="py-1">
+              {{ note }}
+            </li>
+            <li v-if="notes.length === 0" class="text-gray-400 py-1">
+              No notes yet. Type something and press Enter or click the search icon.
+            </li>
+          </ul>
+        </div>
+        
+        <p class="text-sm text-gray-600 mt-2">
+          Notice how the text direction changes to RTL when the icon is positioned on the right.
+        </p>
+      </div>
+    `,
+  }),
+  args: {
+    rows: 2,
+    required: false,
+    disabled: false,
+    error: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This example demonstrates how to use the Enter key or icon click to capture and display input values from the TextArea component. When you press Enter or click the icon, the current value is added to the list below and the textarea is cleared. Notice the text direction changes based on icon position.",
+      },
+    },
   },
 };
