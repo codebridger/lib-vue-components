@@ -14,6 +14,7 @@ import FileInputDropMode from "./FileInputDropMode.vue";
 import FileInputCombo from "./FileInputCombo.vue";
 import Progress from "./Progress.vue";
 import SwitchBall from "./SwitchBall.vue";
+import Tooltip from "./Tooltip.vue";
 // icons
 import Icon from "../icon/Icon.vue";
 
@@ -34,6 +35,7 @@ export {
   FileInputCombo,
   Progress,
   SwitchBall,
+  Tooltip,
   // Icons
   Icon,
 };
