@@ -37,7 +37,8 @@ type ColorType =
   | "danger"
   | "secondary"
   | "white"
-  | "black";
+  | "black"
+  | "system";
 
 // Define tooltip props interface
 interface TooltipProps {
@@ -72,6 +73,7 @@ const computedColorClass = computed(() => {
     secondary: "!bg-secondary !text-white !border-secondary/20",
     white: "!bg-white !text-gray-800 !border-gray-200",
     black: "!bg-black !text-white !border-gray-800",
+    system: "", // System styling is handled by CSS classes instead
   };
   return colorClasses[props.color];
 });
@@ -207,6 +209,30 @@ const computedColorClass = computed(() => {
 .tooltip-black :deep(.popper #arrow::before) {
   background-color: #000000;
   border: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+/* System theme color variant - adapts to project's theme system */
+.tooltip-system :deep(.tooltip-content) {
+  background-color: #374151;
+  color: white;
+  border-color: rgba(55, 65, 81, 0.3);
+}
+
+.tooltip-system :deep(.popper #arrow::before) {
+  background-color: #374151;
+  border: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+/* Dark mode styles for system variant - uses project's .dark class */
+.dark .tooltip-system :deep(.tooltip-content) {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: rgba(209, 213, 219, 0.5);
+}
+
+.dark .tooltip-system :deep(.popper #arrow::before) {
+  background-color: #f3f4f6;
+  border: 1px solid rgba(209, 213, 219, 0.5);
 }
 
 /* Arrow positioning for different placements */
