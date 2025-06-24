@@ -29,7 +29,15 @@ import { computed } from "vue";
 type PlacementType = "top" | "bottom" | "left" | "right";
 
 // Define color variants
-type ColorType = "primary" | "success" | "info" | "warning" | "danger";
+type ColorType =
+  | "primary"
+  | "success"
+  | "info"
+  | "warning"
+  | "danger"
+  | "secondary"
+  | "white"
+  | "black";
 
 // Define tooltip props interface
 interface TooltipProps {
@@ -61,6 +69,9 @@ const computedColorClass = computed(() => {
     info: "!bg-info !text-white !border-info/20",
     warning: "!bg-warning !text-white !border-warning/20",
     danger: "!bg-danger !text-white !border-danger/20",
+    secondary: "!bg-secondary !text-white !border-secondary/20",
+    white: "!bg-white !text-gray-800 !border-gray-200",
+    black: "!bg-black !text-white !border-gray-800",
   };
   return colorClasses[props.color];
 });
@@ -159,6 +170,43 @@ const computedColorClass = computed(() => {
 .tooltip-danger :deep(.popper #arrow::before) {
   background-color: #e7515a;
   border: 1px solid rgba(231, 81, 90, 0.2);
+}
+
+/* Secondary color variant */
+
+.tooltip-secondary :deep(.tooltip-content) {
+  background-color: #805dca;
+  color: white;
+  border-color: rgba(128, 93, 202, 0.2);
+}
+
+.tooltip-secondary :deep(.popper #arrow::before) {
+  background-color: #805dca;
+  border: 1px solid rgba(128, 93, 202, 0.2);
+}
+
+/* White color variant */
+.tooltip-white :deep(.tooltip-content) {
+  background-color: #ffffff;
+  color: #374151;
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.tooltip-white :deep(.popper #arrow::before) {
+  background-color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+/* Black color variant */
+.tooltip-black :deep(.tooltip-content) {
+  background-color: #000000;
+  color: white;
+  border-color: rgba(55, 65, 81, 0.3);
+}
+
+.tooltip-black :deep(.popper #arrow::before) {
+  background-color: #000000;
+  border: 1px solid rgba(55, 65, 81, 0.3);
 }
 
 /* Arrow positioning for different placements */

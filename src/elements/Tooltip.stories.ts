@@ -24,7 +24,16 @@ const meta = {
     },
     color: {
       control: "select",
-      options: ["primary", "secondary", "success", "info", "warning", "danger"],
+      options: [
+        "primary",
+        "success",
+        "info",
+        "warning",
+        "danger",
+        "secondary",
+        "white",
+        "black",
+      ],
       description: "The color of the tooltip",
       defaultValue: "primary",
     },
