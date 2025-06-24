@@ -1,15 +1,13 @@
 <template>
-  <div :class="['tooltip-wrapper', `tooltip-${color}`]">
+  <div v-bind="$attrs" :class="['tooltip-wrapper', `tooltip-${color}`]">
     <Popper
-      hover
-      arrow
+      :placement="placement"
+      :hover="true"
+      :arrow="true"
       :open-delay="delay"
       :close-delay="delay"
-      :placement="placement"
       :z-index="9999"
       :disabled="disabled"
-      :interactive="interactive"
-      :show="show"
     >
       <!-- Trigger element (wrapped content) -->
       <slot />
@@ -43,12 +41,8 @@ interface TooltipProps {
   placement?: PlacementType;
   /** Color variant of the tooltip */
   color?: ColorType;
-  /** Whether the tooltip is shown (manual control) */
-  show?: boolean | null;
   /** Whether the tooltip is disabled */
   disabled?: boolean;
-  /** Whether the tooltip should be interactive */
-  interactive?: boolean;
 }
 
 // Define tooltip props with defaults
@@ -56,9 +50,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   delay: 0,
   placement: "bottom",
   color: "primary",
-  show: null,
   disabled: false,
-  interactive: true,
 });
 
 // Computed property for color class following the project's pattern
