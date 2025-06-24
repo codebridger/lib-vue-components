@@ -28,30 +28,18 @@ const meta = {
       description: "The color of the tooltip",
       defaultValue: "primary",
     },
-    show: {
-      control: "boolean",
-      description: "Whether to show the tooltip",
-      defaultValue: null,
-    },
     disabled: {
       control: "boolean",
       description: "Whether to disable the tooltip",
       defaultValue: false,
     },
-    interactive: {
-      control: "boolean",
-      description: "Whether the tooltip should be interactive",
-      defaultValue: true,
-    },
   },
   args: {
     text: "This is a helpful tooltip message",
-    delay: 1000,
+    delay: 0,
     placement: "bottom",
     color: "primary",
-    show: null,
     disabled: false,
-    interactive: true,
   },
   parameters: {
     docs: {
@@ -69,12 +57,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     text: "This is a helpful tooltip message",
-    delay: 1000,
+    delay: 0,
     placement: "bottom",
     color: "primary",
-    show: null,
     disabled: false,
-    interactive: true,
   },
   render: (args) => ({
     components: { Tooltip, Button },
@@ -82,7 +68,7 @@ export const Default: Story = {
       return { args };
     },
     template: `
-      <Tooltip v-bind="args">
+      <Tooltip v-bind="args" class="flex justify-center">
         <Button label="Hover me" color="primary" />
       </Tooltip>
     `,
@@ -95,9 +81,7 @@ export const WithDelay: Story = {
     delay: 2000,
     placement: "bottom",
     color: "primary",
-    show: null,
     disabled: false,
-    interactive: true,
   },
   render: (args) => ({
     components: { Tooltip, Button },
@@ -105,7 +89,7 @@ export const WithDelay: Story = {
       return { args };
     },
     template: `
-      <Tooltip v-bind="args">
+      <Tooltip v-bind="args" class="flex justify-center">
         <Button label="Hover for 2 seconds" color="info" />
       </Tooltip>
     `,
@@ -118,9 +102,7 @@ export const LongText: Story = {
     delay: 500,
     placement: "bottom",
     color: "primary",
-    show: null,
     disabled: false,
-    interactive: true,
   },
 
   render: (args) => ({
@@ -129,7 +111,7 @@ export const LongText: Story = {
       return { args };
     },
     template: `
-      <Tooltip v-bind="args">
+      <Tooltip v-bind="args" class="flex justify-center">
         <Button label="Long tooltip text" color="success" />
       </Tooltip>
     `,
