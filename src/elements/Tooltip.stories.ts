@@ -33,6 +33,7 @@ const meta = {
         "secondary",
         "white",
         "black",
+        "system",
       ],
       description: "The color of the tooltip",
       defaultValue: "primary",
