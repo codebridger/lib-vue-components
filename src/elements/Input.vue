@@ -11,14 +11,14 @@
         :name="iconName"
         :class="[
           'absolute top-1/2 transform -translate-y-1/2 cursor-pointer',
-          iconPosition === 'left' ? 'left-3' : 'right-3',
+          actualIconPosition === 'left' ? 'left-3' : 'right-3',
         ]"
         @click="handleIconClick"
       />
       <input
         :class="[
-          iconName && iconPosition === 'left' ? 'pl-10 text-left' : '',
-          iconName && iconPosition === 'right' ? 'pr-10 text-right' : '',
+          iconName && actualIconPosition === 'right' ? 'text-left' : '',
+          iconName && actualIconPosition === 'left' ? 'text-right' : '',
           // base classes
           { 'form-input': type !== 'range' },
 
@@ -54,6 +54,7 @@
 <script setup lang="ts">
 import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
+import { useAppStore } from "../stores/index";
 
 interface InputProps {
   modelValue?: string;
@@ -76,7 +77,7 @@ interface InputProps {
   min?: string | number;
   max?: string | number;
   iconName?: string;
-  iconPosition?: "left" | "right";
+  iconOppositePosition?: boolean;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -92,10 +93,21 @@ const props = withDefaults(defineProps<InputProps>(), {
   min: 0,
   max: 100,
   iconName: "",
-  iconPosition: "left", // Default based on LTR preference
+  iconOppositePosition: false,
 });
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
+const store = useAppStore();
+
+// Calculate icon position based on existing RTL state and iconOppositePosition
+const actualIconPosition = computed(() => {
+  const defaultPosition = store.isRtl ? "left" : "right";
+  return props.iconOppositePosition
+    ? defaultPosition === "left"
+      ? "right"
+      : "left"
+    : defaultPosition;
+});
 
 const emit = defineEmits<{
   "update:modelValue": [value: string];

@@ -56,10 +56,10 @@ const meta = {
       ],
       description: "Icon name to be displayed in the textarea",
     },
-    iconPosition: {
-      control: "inline-radio",
-      options: ["left", "right"],
-      description: "Position of the icon (left or right side of textarea)",
+    iconOppositePosition: {
+      control: "boolean",
+      description:
+        "When true, positions icon opposite to the default RTL/LTR direction (LTR default: right, RTL default: left becomes opposite)",
     },
     onEnter: {
       action: "enter",
@@ -78,7 +78,7 @@ const meta = {
     error: false,
     errorMsg: "",
     iconName: "",
-    iconPosition: "left",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {
@@ -92,11 +92,15 @@ A flexible textarea component that supports icon integration with click events, 
 - Configurable number of rows
 - Optional label with required indicator
 - Error state with custom error message
-- Icon support with configurable positioning (left/right)
+- Icon support with RTL/LTR aware positioning
 - Clickable icons with event handling
 - Disabled state
 - Fully reactive with Vue's v-model
 - Enter key event handling
+
+## Icon Positioning
+- **LTR Mode**: Icons appear on the right by default, left when \`iconOppositePosition: true\`
+- **RTL Mode**: Icons appear on the left by default, right when \`iconOppositePosition: true\`
         `,
       },
     },
@@ -150,32 +154,32 @@ export const WithIcon: Story = {
     placeholder: "Write your message...",
     label: "Message",
     iconName: "IconMail",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "TextArea with an icon positioned on the left side with LTR text direction.",
+          "TextArea with an icon positioned opposite to default (LTR: left, RTL: right).",
       },
     },
   },
 };
 
-export const WithIconRight: Story = {
+export const WithIconDefault: Story = {
   args: {
     modelValue: "",
     rows: 3,
     placeholder: "Enter your comments...",
     label: "Comments",
     iconName: "IconUser",
-    iconPosition: "right",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "TextArea with an icon positioned on the right side with RTL text direction.",
+          "TextArea with an icon using default RTL/LTR positioning (LTR: right, RTL: left).",
       },
     },
   },
@@ -188,13 +192,13 @@ export const ClickableIcon: Story = {
     placeholder: "Write a comment and click the search icon to submit...",
     label: "Quick Comment",
     iconName: "IconSearch",
-    iconPosition: "right",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "TextArea with a clickable icon that can submit or perform other actions. Notice the RTL text direction when icon is on the right.",
+          "TextArea with a clickable icon that can submit or perform other actions using default positioning.",
       },
     },
   },
@@ -237,7 +241,7 @@ export const ClickableIcon: Story = {
         </div>
         
         <p class="text-sm text-gray-600">
-          Click the search icon to submit your comment. Notice the RTL text direction.
+          Click the search icon to submit your comment.
         </p>
       </div>
     `,
@@ -254,7 +258,7 @@ export const Required: Story = {
     error: false,
     errorMsg: "",
     iconName: "IconLock",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
 };
 
@@ -268,7 +272,7 @@ export const Disabled: Story = {
     error: false,
     errorMsg: "",
     iconName: "IconUser",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
 };
 
@@ -282,7 +286,7 @@ export const WithError: Story = {
     error: true,
     errorMsg: "This field is required",
     iconName: "IconX",
-    iconPosition: "right",
+    iconOppositePosition: false,
   },
 };
 
@@ -296,8 +300,56 @@ export const CustomRows: Story = {
     error: false,
     errorMsg: "",
     iconName: "IconMail",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
+};
+
+export const RTLIconComparison: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Comparison showing how icon positioning works with RTL/LTR awareness and iconOppositePosition.",
+      },
+    },
+  },
+  render: (args) => ({
+    components: { TextArea },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <h3 class="font-semibold">Default Icon Positioning (iconOppositePosition: false)</h3>
+          <TextArea 
+            label="Message (Default)"
+            placeholder="LTR: icon on right, RTL: icon on left"
+            iconName="IconMail"
+            :iconOppositePosition="false"
+            rows="2"
+          />
+        </div>
+        
+        <div class="space-y-2">
+          <h3 class="font-semibold">Opposite Icon Positioning (iconOppositePosition: true)</h3>
+          <TextArea 
+            label="Message (Opposite)"
+            placeholder="LTR: icon on left, RTL: icon on right"
+            iconName="IconMail"
+            :iconOppositePosition="true"
+            rows="2"
+          />
+        </div>
+        
+        <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded">
+          <p><strong>Note:</strong> Icon positioning adapts to your app's RTL/LTR direction automatically.</p>
+          <p>• <strong>LTR (Left-to-Right):</strong> Default = right, Opposite = left</p>
+          <p>• <strong>RTL (Right-to-Left):</strong> Default = left, Opposite = right</p>
+        </div>
+      </div>
+    `,
+  }),
 };
 
 export const EnterKeyExample: Story = {
@@ -330,7 +382,7 @@ export const EnterKeyExample: Story = {
           label="Type and press Enter"
           placeholder="Type something and press Enter or click the icon to add a note"
           iconName="IconSearch"
-          iconPosition="right"
+          :iconOppositePosition="false"
           @enter="addNote" 
           @iconClick="handleIconClick"
         />
@@ -348,7 +400,7 @@ export const EnterKeyExample: Story = {
         </div>
         
         <p class="text-sm text-gray-600 mt-2">
-          Notice how the text direction changes to RTL when the icon is positioned on the right.
+          Icon positioning adapts automatically to your app's RTL/LTR direction.
         </p>
       </div>
     `,
@@ -363,7 +415,7 @@ export const EnterKeyExample: Story = {
     docs: {
       description: {
         story:
-          "This example demonstrates how to use the Enter key or icon click to capture and display input values from the TextArea component. When you press Enter or click the icon, the current value is added to the list below and the textarea is cleared. Notice the text direction changes based on icon position.",
+          "This example demonstrates how to use the Enter key or icon click to capture and display input values from the TextArea component. When you press Enter or click the icon, the current value is added to the list below and the textarea is cleared. Icon positioning adapts to RTL/LTR automatically.",
       },
     },
   },
