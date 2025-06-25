@@ -58,10 +58,10 @@ const meta = {
       ],
       description: "Icon name to be displayed in the input",
     },
-    iconPosition: {
-      control: "inline-radio",
-      options: ["left", "right"],
-      description: "Position of the icon (left or right side of input)",
+    iconOppositePosition: {
+      control: "boolean",
+      description:
+        "When true, positions icon opposite to the default RTL/LTR direction (LTR default: right, RTL default: left becomes opposite)",
     },
     id: {
       control: "text",
@@ -88,7 +88,7 @@ const meta = {
     error: false,
     errorMessage: "",
     iconName: "",
-    iconPosition: "left",
+    iconOppositePosition: false,
     id: "",
   },
   parameters: {
@@ -103,11 +103,15 @@ A flexible input component that supports various input types, icon integration w
 - Supports common input types (text, email, password, number, etc.)
 - Optional label with required indicator
 - Error state with custom error message
-- Icon support with configurable positioning (left/right)
+- Icon support with RTL/LTR aware positioning
 - Clickable icons with event handling
 - Disabled state
 - Range input with min/max values
 - Fully reactive with Vue's v-model
+
+## Icon Positioning
+- **LTR Mode**: Icons appear on the right by default, left when \`iconOppositePosition: true\`
+- **RTL Mode**: Icons appear on the left by default, right when \`iconOppositePosition: true\`
         `,
       },
     },
@@ -143,29 +147,30 @@ export const WithIcon: Story = {
     label: "Search",
     placeholder: "Search for something...",
     iconName: "IconSearch",
-    iconPosition: "left",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Input with a search icon to provide visual cues about the input's purpose.",
+          "Input with a search icon using default RTL/LTR positioning (LTR: right, RTL: left).",
       },
     },
   },
 };
 
-export const WithIconRight: Story = {
+export const WithIconOppositePosition: Story = {
   args: {
     label: "Username",
     placeholder: "Enter username",
     iconName: "IconUser",
-    iconPosition: "right",
+    iconOppositePosition: true,
   },
   parameters: {
     docs: {
       description: {
-        story: "Input with an icon positioned on the right side.",
+        story:
+          "Input with an icon positioned opposite to the default direction (LTR: left, RTL: right).",
       },
     },
   },
@@ -177,7 +182,7 @@ export const ClickableIcon: Story = {
     placeholder: "Enter password",
     type: "password",
     iconName: "IconEye",
-    iconPosition: "right",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {
@@ -232,13 +237,13 @@ export const EmailInput: Story = {
     placeholder: "your@email.com",
     required: true,
     iconName: "IconMail",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Email input with an appropriate mail icon and required indicator.",
+          "Email input with mail icon positioned opposite to default (LTR: left, RTL: right).",
       },
     },
   },
@@ -251,12 +256,13 @@ export const PasswordInput: Story = {
     placeholder: "Enter your password",
     required: true,
     iconName: "IconLock",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
   parameters: {
     docs: {
       description: {
-        story: "Password input with a lock icon to visually indicate security.",
+        story:
+          "Password input with a lock icon positioned opposite to default direction.",
       },
     },
   },
@@ -270,12 +276,13 @@ export const WithError: Story = {
     error: true,
     errorMessage: "This field is required",
     iconName: "IconX",
-    iconPosition: "right",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {
       description: {
-        story: "Input in an error state with an alert icon and error message.",
+        story:
+          "Input in an error state with an alert icon using default positioning.",
       },
     },
   },
@@ -287,13 +294,13 @@ export const Disabled: Story = {
     placeholder: "This field is disabled",
     disabled: true,
     iconName: "IconUser",
-    iconPosition: "left",
+    iconOppositePosition: true,
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Disabled input with visual indication of its unavailable state.",
+          "Disabled input with visual indication of its unavailable state and icon in opposite position.",
       },
     },
   },
@@ -364,12 +371,58 @@ export const TelInput: Story = {
   },
 };
 
+export const RTLIconComparison: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Comparison showing how icon positioning works with RTL/LTR awareness and iconOppositePosition.",
+      },
+    },
+  },
+  render: (args) => ({
+    components: { Input },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <h3 class="font-semibold">Default Icon Positioning (iconOppositePosition: false)</h3>
+          <Input 
+            label="Search (Default)"
+            placeholder="LTR: icon on right, RTL: icon on left"
+            iconName="IconSearch"
+            :iconOppositePosition="false"
+          />
+        </div>
+        
+        <div class="space-y-2">
+          <h3 class="font-semibold">Opposite Icon Positioning (iconOppositePosition: true)</h3>
+          <Input 
+            label="Search (Opposite)"
+            placeholder="LTR: icon on left, RTL: icon on right"
+            iconName="IconSearch"
+            :iconOppositePosition="true"
+          />
+        </div>
+        
+        <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded">
+          <p><strong>Note:</strong> Icon positioning adapts to your app's RTL/LTR direction automatically.</p>
+          <p>• <strong>LTR (Left-to-Right):</strong> Default = right, Opposite = left</p>
+          <p>• <strong>RTL (Right-to-Left):</strong> Default = left, Opposite = right</p>
+        </div>
+      </div>
+    `,
+  }),
+};
+
 export const WithEnterKeyEvent: Story = {
   args: {
     label: "Quick Add",
     placeholder: "Type and press Enter",
     iconName: "IconSearch",
-    iconPosition: "right",
+    iconOppositePosition: false,
   },
   parameters: {
     docs: {

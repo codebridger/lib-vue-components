@@ -11,7 +11,7 @@
         :name="iconName"
         :class="[
           'absolute top-3 transform cursor-pointer',
-          iconPosition === 'left' ? 'left-3' : 'right-3',
+          actualIconPosition === 'left' ? 'left-3' : 'right-3',
         ]"
         @click="handleIconClick"
       />
@@ -21,8 +21,8 @@
         :rows="rows"
         :class="[
           'form-textarea w-full',
-          iconName && iconPosition === 'left' ? 'pl-10 text-left' : '',
-          iconName && iconPosition === 'right' ? 'pr-10 text-right' : '',
+          iconName && actualIconPosition === 'right' ? 'text-left' : '',
+          iconName && actualIconPosition === 'left' ? 'text-right' : '',
           disabled || cardDisabled
             ? 'bg-gray-100 cursor-not-allowed'
             : 'bg-white',
@@ -46,8 +46,9 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
+import { useAppStore } from "../stores/index";
 
 interface TextAreaProps {
   modelValue?: string;
@@ -60,7 +61,7 @@ interface TextAreaProps {
   label?: string;
   id?: string;
   iconName?: string;
-  iconPosition?: "left" | "right";
+  iconOppositePosition?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -76,7 +77,19 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   label: "",
   id: "",
   iconName: "",
-  iconPosition: "left", // Default based on LTR preference
+  iconOppositePosition: false,
+});
+
+const store = useAppStore();
+
+// Calculate icon position based on existing RTL state and iconOppositePosition
+const actualIconPosition = computed(() => {
+  const defaultPosition = store.isRtl ? "left" : "right";
+  return props.iconOppositePosition
+    ? defaultPosition === "left"
+      ? "right"
+      : "left"
+    : defaultPosition;
 });
 
 const emit = defineEmits<{
