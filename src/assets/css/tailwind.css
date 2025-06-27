@@ -287,6 +287,19 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
     @apply border-dark text-dark shadow-none hover:bg-dark hover:text-white;
   }
 
+  /* General gradient background class for other components */
+  .bg-gradient {
+    @apply bg-gradient-to-r from-[#EF1262] to-[#4361EE];
+  }
+
+  .btn-gradient {
+    @apply bg-gradient text-white hover:from-[#4361EE] hover:to-[#EF1262];
+  }
+
+  .btn-outline-gradient {
+    @apply shadow-none hover:text-white hover:bg-gradient;
+  }
+
   /* Badge */
   .badge {
     @apply relative my-1 rounded border border-transparent px-2 py-0.5 text-xs font-semibold text-white;

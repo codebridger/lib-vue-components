@@ -102,6 +102,7 @@ const computedColor = computed(() => {
       danger: "bg-red-600 dark:bg-red-500",
       secondary: "bg-gray-600 dark:bg-gray-500",
       dark: "bg-gray-600 dark:bg-gray-500",
+      gradient: "bg-gradient",
     };
     return colors[props.color];
   }
