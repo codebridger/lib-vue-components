@@ -9,11 +9,11 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     rounded: {
-      control: "inline-radio",
+      control: "select",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
     },
     size: {
-      control: "inline-radio",
+      control: "select",
       options: ["xs", "sm", "md", "lg", "xl"],
     },
     icon: {

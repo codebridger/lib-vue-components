@@ -9,7 +9,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     color: {
-      control: "inline-radio",
+      control: "select",
       options: [
         "default",
         "primary",
@@ -22,13 +22,13 @@ const meta = {
         "gradient",
       ],
     },
-    size: { control: "inline-radio", options: ["xs", "sm", "md", "lg"] },
+    size: { control: "select", options: ["xs", "sm", "md", "lg"] },
     textTransform: {
-      control: "inline-radio",
+      control: "select",
       options: ["normal-case", "capitalize", "lowercase", "uppercase"],
     },
     rounded: {
-      control: "inline-radio",
+      control: "select",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
     },
     block: { control: "boolean" },

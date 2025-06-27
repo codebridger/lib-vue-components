@@ -8,7 +8,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     type: {
-      control: "inline-radio",
+      control: "select",
       options: [
         "text",
         "email",

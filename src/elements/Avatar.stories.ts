@@ -17,12 +17,12 @@ const meta = {
       description: "Alternative text for accessibility",
     },
     rounded: {
-      control: "inline-radio",
+      control: "select",
       options: ["none", "xs", "sm", "md", "lg", "xl", "full"],
       description: "Border radius of the avatar",
     },
     size: {
-      control: "inline-radio",
+      control: "select",
       options: ["xs", "sm", "md", "lg"],
       description: "Size of the avatar",
     },
@@ -31,7 +31,7 @@ const meta = {
       description: "Whether to display the status indicator",
     },
     status: {
-      control: "inline-radio",
+      control: "select",
       options: ["online", "offline", "away", "busy"],
       description: "Current status of the user",
     },
