@@ -297,7 +297,26 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
   }
 
   .btn-outline-gradient {
-    @apply shadow-none hover:text-white hover:bg-gradient;
+    @apply relative border-transparent bg-clip-padding transition-all duration-300;
+    background: linear-gradient(to right, #fafafa, #fafafa), linear-gradient(to right, #EF1262, #4361EE);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+  }
+
+  .btn-outline-gradient span {
+    @apply bg-gradient-to-r from-[#EF1262] to-[#4361EE] bg-clip-text text-transparent transition-all duration-300;
+  }
+
+  .dark .btn-outline-gradient {
+    background: linear-gradient(to right, #060818, #060818), linear-gradient(to right, #EF1262, #4361EE);
+  }
+
+  .btn-outline-gradient:hover {
+    @apply bg-gradient text-white;
+  }
+
+  .btn-outline-gradient:hover span {
+    @apply text-white bg-none;
   }
 
   /* Badge */
