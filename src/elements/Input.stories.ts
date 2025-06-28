@@ -61,7 +61,7 @@ const meta = {
     iconOppositePosition: {
       control: "boolean",
       description:
-        "When true, positions icon opposite to the default RTL/LTR direction (LTR default: right, RTL default: left becomes opposite)",
+        "When true, positions icon on the opposite side. Default: icon behind content (LTR: left, RTL: right). Opposite: icon after content (LTR: right, RTL: left)",
     },
     id: {
       control: "text",
@@ -110,8 +110,8 @@ A flexible input component that supports various input types, icon integration w
 - Fully reactive with Vue's v-model
 
 ## Icon Positioning
-- **LTR Mode**: Icons appear on the right by default, left when \`iconOppositePosition: true\`
-- **RTL Mode**: Icons appear on the left by default, right when \`iconOppositePosition: true\`
+- **Default** (\`iconOppositePosition: false\`): Icons appear behind content (LTR: left, RTL: right)
+- **Opposite** (\`iconOppositePosition: true\`): Icons appear after content (LTR: right, RTL: left)
         `,
       },
     },
@@ -153,7 +153,7 @@ export const WithIcon: Story = {
     docs: {
       description: {
         story:
-          "Input with a search icon using default RTL/LTR positioning (LTR: right, RTL: left).",
+          "Input with a search icon using default positioning (behind content: LTR: left, RTL: right).",
       },
     },
   },
@@ -170,7 +170,7 @@ export const WithIconOppositePosition: Story = {
     docs: {
       description: {
         story:
-          "Input with an icon positioned opposite to the default direction (LTR: left, RTL: right).",
+          "Input with an icon positioned on the opposite side (after content: LTR: right, RTL: left).",
       },
     },
   },
@@ -482,4 +482,21 @@ export const WithEnterKeyEvent: Story = {
       </div>
     `,
   }),
+};
+
+export const IconPositioningComparison: Story = {
+  args: {
+    label: "Icon Positioning Demo",
+    placeholder: "See different icon positions",
+    iconName: "IconSearch",
+    iconOppositePosition: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This story demonstrates the two icon positioning modes. Toggle `iconOppositePosition` to see the difference between behind content (default) and after content (opposite).",
+      },
+    },
+  },
 };

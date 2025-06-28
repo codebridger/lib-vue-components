@@ -17,8 +17,8 @@
       />
       <input
         :class="[
-          iconName && actualIconPosition === 'right' ? 'text-left' : '',
-          iconName && actualIconPosition === 'left' ? 'text-right' : '',
+          iconName && actualIconPosition === 'left' ? 'pl-10' : '',
+          iconName && actualIconPosition === 'right' ? 'pr-10' : '',
           // base classes
           { 'form-input': type !== 'range' },
 
@@ -101,12 +101,13 @@ const store = useAppStore();
 
 // Calculate icon position based on existing RTL state and iconOppositePosition
 const actualIconPosition = computed(() => {
-  const defaultPosition = store.isRtl ? "left" : "right";
-  return props.iconOppositePosition
-    ? defaultPosition === "left"
-      ? "right"
-      : "left"
-    : defaultPosition;
+  if (props.iconOppositePosition) {
+    // Opposite side: right in LTR, left in RTL
+    return store.isRtl ? "left" : "right";
+  } else {
+    // Behind content (default): left in LTR, right in RTL
+    return store.isRtl ? "right" : "left";
+  }
 });
 
 const emit = defineEmits<{
