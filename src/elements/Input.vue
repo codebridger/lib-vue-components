@@ -9,11 +9,16 @@
       <Icon
         v-if="iconName"
         :name="iconName"
-        class="absolute ltr:left-3 rtl:right-3 top-1/2 transform -translate-y-1/2"
+        :class="[
+          'absolute top-1/2 transform -translate-y-1/2 cursor-pointer',
+          actualIconPosition === 'left' ? 'left-3' : 'right-3',
+        ]"
+        @click="handleIconClick"
       />
       <input
         :class="[
-          iconName ? 'ltr:pl-10 rtl:pr-10' : '',
+          iconName && actualIconPosition === 'left' ? 'pl-10' : '',
+          iconName && actualIconPosition === 'right' ? 'pr-10' : '',
           // base classes
           { 'form-input': type !== 'range' },
 
@@ -47,8 +52,9 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
+import { useAppStore } from "../stores/index";
 
 interface InputProps {
   modelValue?: string;
@@ -70,7 +76,8 @@ interface InputProps {
   id?: string;
   min?: string | number;
   max?: string | number;
-  iconName?: string; // Add this line
+  iconName?: string;
+  iconOppositePosition?: boolean;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -85,16 +92,54 @@ const props = withDefaults(defineProps<InputProps>(), {
   id: "",
   min: 0,
   max: 100,
-  iconName: "", // Add this line
+  iconName: "",
+  iconOppositePosition: false,
 });
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
+const store = useAppStore();
+
+// Calculate icon position based on existing RTL state and iconOppositePosition
+const actualIconPosition = computed(() => {
+  if (props.iconOppositePosition) {
+    // Opposite side: right in LTR, left in RTL
+    return store.isRtl ? "left" : "right";
+  } else {
+    // Behind content (default): left in LTR, right in RTL
+    return store.isRtl ? "right" : "left";
+  }
+});
 
 const emit = defineEmits<{
+  /**
+   * Emitted when the input value changes.
+   * @storybook Use this to update v-model in stories.
+   */
   "update:modelValue": [value: string];
+
+  /**
+   * Emitted when the input loses focus.
+   * @storybook Useful for simulating blur events in stories.
+   */
   blur: [event: FocusEvent];
+
+  /**
+   * Emitted when the input gains focus.
+   * @storybook Useful for simulating focus events in stories.
+   */
   focus: [event: FocusEvent];
+
+  /**
+   * Emitted when the Enter key is pressed.
+   * @storybook Use this to test Enter key handling in stories.
+   */
   enter: [value: string];
+
+  /**
+   * Emitted when the icon is clicked.
+   * @storybook Use this to simulate icon click interactions in stories.
+   */
+  iconClick: [event: MouseEvent];
 }>();
 
 const handleEnterKey = (event: KeyboardEvent) => {
@@ -105,5 +150,9 @@ const handleEnterKey = (event: KeyboardEvent) => {
     emit("enter", value);
     emit("update:modelValue", "");
   }
+};
+
+const handleIconClick = (event: MouseEvent) => {
+  emit("iconClick", event);
 };
 </script>
