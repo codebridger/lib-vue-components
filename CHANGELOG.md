@@ -1,3 +1,11 @@
+# [1.17.0-dev.22](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.21...dev-1.17.0-dev.22) (2025-06-28)
+
+
+### Features
+
+* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf376 - improve icon positioning descriptions and add comparison stories for Input and TextArea components ([382b9a7](https://github.com/codebridger/lib-vue-components/commit/382b9a72512ba4102dd05f8a0f639be88feedcf8)), closes [#86etkf376](https://github.com/codebridger/lib-vue-components/issues/86etkf376)
+* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf376 update Input and TextArea components to define emitted events for better documentation and type safety ([62e3ee6](https://github.com/codebridger/lib-vue-components/commit/62e3ee67271c288db7f0e49478baea16975a2380)), closes [#86etkf376](https://github.com/codebridger/lib-vue-components/issues/86etkf376)
+
 # [1.17.0-dev.21](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.20...dev-1.17.0-dev.21) (2025-06-28)
 
 
