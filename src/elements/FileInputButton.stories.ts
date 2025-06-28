@@ -7,7 +7,7 @@ const meta: Meta<typeof FileInputButton> = {
   tags: ["autodocs"],
   argTypes: {
     buttonColor: {
-      control: "inline-radio",
+      control: "select",
       options: [
         "primary",
         "info",
