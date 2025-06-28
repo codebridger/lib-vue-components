@@ -59,7 +59,7 @@ const meta = {
     iconOppositePosition: {
       control: "boolean",
       description:
-        "When true, positions icon opposite to the default RTL/LTR direction (LTR default: right, RTL default: left becomes opposite)",
+        "When true, positions icon on the opposite side. Default: icon behind content (LTR: left, RTL: right). Opposite: icon after content (LTR: right, RTL: left)",
     },
     onEnter: {
       action: "enter",
@@ -99,8 +99,8 @@ A flexible textarea component that supports icon integration with click events, 
 - Enter key event handling
 
 ## Icon Positioning
-- **LTR Mode**: Icons appear on the right by default, left when \`iconOppositePosition: true\`
-- **RTL Mode**: Icons appear on the left by default, right when \`iconOppositePosition: true\`
+- **Default** (\`iconOppositePosition: false\`): Icons appear behind content (LTR: left, RTL: right)
+- **Opposite** (\`iconOppositePosition: true\`): Icons appear after content (LTR: right, RTL: left)
         `,
       },
     },
@@ -160,7 +160,7 @@ export const WithIcon: Story = {
     docs: {
       description: {
         story:
-          "TextArea with an icon positioned opposite to default (LTR: left, RTL: right).",
+          "TextArea with an icon positioned on the opposite side (after content: LTR: right, RTL: left).",
       },
     },
   },
@@ -179,7 +179,7 @@ export const WithIconDefault: Story = {
     docs: {
       description: {
         story:
-          "TextArea with an icon using default RTL/LTR positioning (LTR: right, RTL: left).",
+          "TextArea with an icon using default positioning (behind content: LTR: left, RTL: right).",
       },
     },
   },
@@ -416,6 +416,24 @@ export const EnterKeyExample: Story = {
       description: {
         story:
           "This example demonstrates how to use the Enter key or icon click to capture and display input values from the TextArea component. When you press Enter or click the icon, the current value is added to the list below and the textarea is cleared. Icon positioning adapts to RTL/LTR automatically.",
+      },
+    },
+  },
+};
+
+export const IconPositioningComparison: Story = {
+  args: {
+    label: "Icon Positioning Demo",
+    placeholder: "See different icon positions in textarea",
+    rows: 3,
+    iconName: "IconMail",
+    iconOppositePosition: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This story demonstrates the two icon positioning modes in TextArea. Toggle `iconOppositePosition` to see the difference between behind content (default) and after content (opposite).",
       },
     },
   },
