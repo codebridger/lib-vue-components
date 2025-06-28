@@ -75,10 +75,6 @@ const meta = {
       control: "number",
       description: "Maximum value for range inputs",
     },
-    onIconClick: {
-      action: "iconClick",
-      description: "Event emitted when icon is clicked",
-    },
   },
   args: {
     type: "text",

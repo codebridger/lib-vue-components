@@ -93,9 +93,22 @@ const actualIconPosition = computed(() => {
   }
 });
 
+// Storybook: Define emitted events for documentation and type safety
 const emit = defineEmits<{
+  /**
+   * Emitted when the textarea value changes.
+   * @param value The new value of the textarea.
+   */
   "update:modelValue": [value: string];
+  /**
+   * Emitted when the Enter key is pressed in the textarea.
+   * @param value The current value of the textarea.
+   */
   enter: [value: string];
+  /**
+   * Emitted when the icon is clicked.
+   * @param event The mouse event from the icon click.
+   */
   iconClick: [event: MouseEvent];
 }>();
 
