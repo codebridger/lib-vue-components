@@ -9,19 +9,35 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     rounded: {
-      control: "inline-radio",
+      control: "select",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
     },
     size: {
-      control: "inline-radio",
+      control: "select",
       options: ["xs", "sm", "md", "lg", "xl"],
     },
     icon: {
       control: "text",
     },
+    isLoading: {
+      control: "boolean",
+      description: "Shows a loading spinner when true",
+    },
+    loadingIcon: {
+      control: "select",
+      options: ["IconLoader", "IconRefresh", "IconRestore"],
+      description: "Icon to show when loading",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disables the button",
+    },
   },
   args: {
     size: "sm",
+    isLoading: false,
+    loadingIcon: "IconLoader",
+    disabled: false,
   },
 } satisfies Meta<typeof IconButton>;
 
@@ -36,11 +52,39 @@ export const Default: Story = {
   },
 };
 
+export const Loading: Story = {
+  args: {
+    rounded: "full",
+    icon: "IconSun",
+    isLoading: true,
+    size: "md",
+  },
+};
+
+export const LoadingWithCustomIcon: Story = {
+  args: {
+    rounded: "full",
+    icon: "IconSun",
+    isLoading: true,
+    loadingIcon: "IconRefresh",
+    size: "lg",
+  },
+};
+
 import userProfilePicUrl from "../../public/assets/images/user-profile.jpeg";
 export const WithImages: Story = {
   args: {
     rounded: "full",
     size: "xl",
     imgUrl: userProfilePicUrl,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    rounded: "full",
+    icon: "IconSun",
+    disabled: true,
+    size: "md",
   },
 };

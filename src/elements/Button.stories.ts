@@ -9,7 +9,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     color: {
-      control: "inline-radio",
+      control: "select",
       options: [
         "default",
         "primary",
@@ -22,13 +22,13 @@ const meta = {
         "gradient",
       ],
     },
-    size: { control: "inline-radio", options: ["xs", "sm", "md", "lg"] },
+    size: { control: "select", options: ["xs", "sm", "md", "lg"] },
     textTransform: {
-      control: "inline-radio",
+      control: "select",
       options: ["normal-case", "capitalize", "lowercase", "uppercase"],
     },
     rounded: {
-      control: "inline-radio",
+      control: "select",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
     },
     block: { control: "boolean" },
@@ -150,5 +150,38 @@ export const Disabled: Story = {
     size: "md",
     disabled: true,
     to: "/dashboard",
+  },
+};
+
+export const GradientBorders: Story = {
+  render: () => ({
+    components: { Button },
+    template: `
+      <div class="space-y-4">
+        <div class="space-x-4">
+          <Button color="gradient" outline>Default Solid</Button>
+          <Button color="gradient" outline border-type="dashed">Dashed</Button>
+          <Button color="gradient" outline border-type="dotted">Dotted</Button>
+        </div>
+        <div class="space-x-4">
+          <Button color="gradient" outline size="sm">Small</Button>
+          <Button color="gradient" outline size="md">Medium</Button>
+          <Button color="gradient" outline size="lg">Large</Button>
+        </div>
+        <div class="space-x-4">
+          <Button color="gradient" outline rounded="none">No Radius</Button>
+          <Button color="gradient" outline rounded="md">Medium Radius</Button>
+          <Button color="gradient" outline rounded="full">Full Radius</Button>
+        </div>
+      </div>
+    `,
+  }),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Testing gradient border functionality with different border types, sizes, and border radius values.",
+      },
+    },
   },
 };

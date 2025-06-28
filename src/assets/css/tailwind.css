@@ -287,6 +287,38 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
     @apply border-dark text-dark shadow-none hover:bg-dark hover:text-white;
   }
 
+  /* General gradient background class for other components */
+  .bg-gradient {
+    @apply bg-gradient-to-r from-[#EF1262] to-[#4361EE];
+  }
+
+  .btn-gradient {
+    @apply bg-gradient text-white hover:from-[#4361EE] hover:to-[#EF1262];
+  }
+
+  .btn-outline-gradient {
+    @apply relative border-transparent bg-clip-padding transition-all duration-300;
+    background: linear-gradient(to right, #fafafa, #fafafa), linear-gradient(to right, #EF1262, #4361EE);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+  }
+
+  .btn-outline-gradient span {
+    @apply bg-gradient-to-r from-[#EF1262] to-[#4361EE] bg-clip-text text-transparent transition-all duration-300;
+  }
+
+  .dark .btn-outline-gradient {
+    background: linear-gradient(to right, #060818, #060818), linear-gradient(to right, #EF1262, #4361EE);
+  }
+
+  .btn-outline-gradient:hover {
+    @apply bg-gradient text-white;
+  }
+
+  .btn-outline-gradient:hover span {
+    @apply text-white bg-none;
+  }
+
   /* Badge */
   .badge {
     @apply relative my-1 rounded border border-transparent px-2 py-0.5 text-xs font-semibold text-white;
