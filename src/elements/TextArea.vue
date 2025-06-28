@@ -5,24 +5,40 @@
       <span v-if="required" class="text-red-500">*</span>
     </label>
 
-    <textarea
-      :id="id"
-      :value="modelValue"
-      :rows="rows"
-      :class="[
-        'form-textarea w-full',
-        disabled || cardDisabled
-          ? 'bg-gray-100 cursor-not-allowed'
-          : 'bg-white',
-        error ? 'border-red-500' : 'border-gray-300',
-      ]"
-      :placeholder="placeholder"
-      :required="required"
-      :disabled="disabled || cardDisabled"
-      @input="
-        $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
-      "
-    />
+    <div class="relative">
+      <Icon
+        v-if="iconName"
+        :name="iconName"
+        :class="[
+          'absolute top-3 transform cursor-pointer',
+          actualIconPosition === 'left' ? 'left-3' : 'right-3',
+        ]"
+        @click="handleIconClick"
+      />
+      <textarea
+        :id="id"
+        :value="modelValue"
+        :rows="rows"
+        :class="[
+          'form-textarea w-full',
+          iconName && actualIconPosition === 'left' ? 'pl-10' : '',
+          iconName && actualIconPosition === 'right' ? 'pr-10' : '',
+          disabled || cardDisabled
+            ? 'bg-gray-100 cursor-not-allowed'
+            : 'bg-white',
+          error ? 'border-red-500' : 'border-gray-300',
+        ]"
+        :placeholder="placeholder"
+        :required="required"
+        :disabled="disabled || cardDisabled"
+        @input="
+          $emit(
+            'update:modelValue',
+            ($event.target as HTMLTextAreaElement).value
+          )
+        "
+      />
+    </div>
     <span v-if="error && errorMsg" class="mt-1 text-sm text-red-500">{{
       errorMsg
     }}</span>
@@ -30,7 +46,9 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, computed } from "vue";
+import Icon from "../icon/Icon.vue";
+import { useAppStore } from "../stores/index";
 
 interface TextAreaProps {
   modelValue?: string;
@@ -42,6 +60,8 @@ interface TextAreaProps {
   errorMsg?: string;
   label?: string;
   id?: string;
+  iconName?: string;
+  iconOppositePosition?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -56,10 +76,30 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   errorMsg: "",
   label: "",
   id: "",
+  iconName: "",
+  iconOppositePosition: false,
+});
+
+const store = useAppStore();
+
+// Calculate icon position based on existing RTL state and iconOppositePosition
+const actualIconPosition = computed(() => {
+  if (props.iconOppositePosition) {
+    // Opposite side: right in LTR, left in RTL
+    return store.isRtl ? "left" : "right";
+  } else {
+    // Behind content (default): left in LTR, right in RTL
+    return store.isRtl ? "right" : "left";
+  }
 });
 
 const emit = defineEmits<{
   "update:modelValue": [value: string];
   enter: [value: string];
+  iconClick: [event: MouseEvent];
 }>();
+
+const handleIconClick = (event: MouseEvent) => {
+  emit("iconClick", event);
+};
 </script>
