@@ -25,7 +25,7 @@
     <!-- Loading Icon -->
     <span
       :class="[
-        'transition-all overflow-hidden align-middle shrink-0',
+        'transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center',
         isLoading ? 'w-5 ltr:mr-2 rtl:ml-2' : 'w-0',
       ]"
     >
