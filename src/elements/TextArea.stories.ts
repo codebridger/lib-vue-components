@@ -61,14 +61,6 @@ const meta = {
       description:
         "When true, positions icon on the opposite side. Default: icon behind content (LTR: left, RTL: right). Opposite: icon after content (LTR: right, RTL: left)",
     },
-    onEnter: {
-      action: "enter",
-      description: "Event emitted when Enter key is pressed",
-    },
-    onIconClick: {
-      action: "iconClick",
-      description: "Event emitted when icon is clicked",
-    },
   },
   args: {
     rows: 2,
