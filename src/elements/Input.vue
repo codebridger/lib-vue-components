@@ -111,10 +111,34 @@ const actualIconPosition = computed(() => {
 });
 
 const emit = defineEmits<{
+  /**
+   * Emitted when the input value changes.
+   * @storybook Use this to update v-model in stories.
+   */
   "update:modelValue": [value: string];
+
+  /**
+   * Emitted when the input loses focus.
+   * @storybook Useful for simulating blur events in stories.
+   */
   blur: [event: FocusEvent];
+
+  /**
+   * Emitted when the input gains focus.
+   * @storybook Useful for simulating focus events in stories.
+   */
   focus: [event: FocusEvent];
+
+  /**
+   * Emitted when the Enter key is pressed.
+   * @storybook Use this to test Enter key handling in stories.
+   */
   enter: [value: string];
+
+  /**
+   * Emitted when the icon is clicked.
+   * @storybook Use this to simulate icon click interactions in stories.
+   */
   iconClick: [event: MouseEvent];
 }>();
 
