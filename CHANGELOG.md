@@ -1,3 +1,10 @@
+# [1.17.0-dev.21](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.20...dev-1.17.0-dev.21) (2025-06-28)
+
+
+### Bug Fixes
+
+* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf4vv update loading icon container styles for better alignment in Button component ([cd8be65](https://github.com/codebridger/lib-vue-components/commit/cd8be65a9fe7ce4e921a5a6c9c283303200ec9bd)), closes [#86etkf4](https://github.com/codebridger/lib-vue-components/issues/86etkf4)
+
 # [1.17.0-dev.20](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.19...dev-1.17.0-dev.20) (2025-05-25)
 
 
