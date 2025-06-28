@@ -1,17 +1,9 @@
-# [1.17.0-dev.22](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.21...dev-1.17.0-dev.22) (2025-06-28)
+# [1.18.0](https://github.com/codebridger/lib-vue-components/compare/v1.17.0...v1.18.0) (2025-05-25)
 
 
 ### Features
 
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf376 - improve icon positioning descriptions and add comparison stories for Input and TextArea components ([382b9a7](https://github.com/codebridger/lib-vue-components/commit/382b9a72512ba4102dd05f8a0f639be88feedcf8)), closes [#86etkf376](https://github.com/codebridger/lib-vue-components/issues/86etkf376)
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf376 update Input and TextArea components to define emitted events for better documentation and type safety ([62e3ee6](https://github.com/codebridger/lib-vue-components/commit/62e3ee67271c288db7f0e49478baea16975a2380)), closes [#86etkf376](https://github.com/codebridger/lib-vue-components/issues/86etkf376)
-
-# [1.17.0-dev.21](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.20...dev-1.17.0-dev.21) (2025-06-28)
-
-
-### Bug Fixes
-
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf4vv update loading icon container styles for better alignment in Button component ([cd8be65](https://github.com/codebridger/lib-vue-components/commit/cd8be65a9fe7ce4e921a5a6c9c283303200ec9bd)), closes [#86etkf4](https://github.com/codebridger/lib-vue-components/issues/86etkf4)
+* enhance Modal stories with new features and customization options ([793e6f2](https://github.com/codebridger/lib-vue-components/commit/793e6f27626be3b9491c71e413167554c7e0cf0b))
 
 # [1.17.0-dev.20](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.19...dev-1.17.0-dev.20) (2025-05-25)
 
