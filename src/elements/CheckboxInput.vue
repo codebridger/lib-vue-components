@@ -9,59 +9,53 @@
       <span v-if="required" class="text-red-500">*</span>
     </label>
 
-    <div class="space-y-2">
-      <label
-        v-for="(option, index) in options"
-        :key="index"
-        :for="`${id}-${index}`"
-        class="inline-flex items-center cursor-pointer transition-all duration-200 hover:opacity-80"
-        :class="{ 'opacity-50 cursor-not-allowed': disabled || cardDisabled }"
+    <label
+      :for="id"
+      class="inline-flex items-center cursor-pointer transition-all duration-200 hover:opacity-80"
+      :class="{ 'opacity-50 cursor-not-allowed': disabled || cardDisabled }"
+    >
+      <input
+        :id="id"
+        type="checkbox"
+        :value="value"
+        :checked="modelValue"
+        :disabled="disabled || cardDisabled"
+        :required="required"
+        :class="[
+          'form-checkbox transition-all duration-200',
+          // Color variants
+          color === 'primary' ? '' : `text-${color}`,
+          // Outline variant
+          outline ? `outline-${color}` : '',
+          // Rounded variant
+          rounded ? 'rounded-full' : '',
+          // Disabled state
+          disabled || cardDisabled ? 'cursor-not-allowed opacity-50' : '',
+          // Error state
+          error ? 'border-red-500' : '',
+          // Peer class for text color changes
+          peerChecked ? 'peer' : '',
+          // Hover effects
+          !disabled && !cardDisabled
+            ? 'hover:scale-105 focus:ring-2 focus:ring-offset-2'
+            : '',
+        ]"
+        @change="handleChange"
+        @blur="$emit('blur', $event)"
+        @focus="$emit('focus', $event)"
+      />
+      <span
+        class="ml-2 ltr:ml-2 rtl:mr-2 transition-colors duration-200"
+        :class="[
+          // Error state
+          error ? 'text-red-500' : '',
+          // Dark theme support
+          'text-gray-700 dark:text-gray-300',
+        ]"
       >
-        <input
-          :id="`${id}-${index}`"
-          type="checkbox"
-          :value="option.value"
-          :checked="isChecked(option.value)"
-          :disabled="disabled || cardDisabled"
-          :required="required"
-          :class="[
-            'form-checkbox transition-all duration-200',
-            // Color variants
-            color === 'primary' ? '' : `text-${color}`,
-            // Outline variant
-            outline ? `outline-${color}` : '',
-            // Rounded variant
-            rounded ? 'rounded-full' : '',
-            // Disabled state
-            disabled || cardDisabled ? 'cursor-not-allowed opacity-50' : '',
-            // Error state
-            error ? 'border-red-500' : '',
-            // Peer class for text color changes
-            peerChecked ? 'peer' : '',
-            // Hover effects
-            !disabled && !cardDisabled
-              ? 'hover:scale-105 focus:ring-2 focus:ring-offset-2'
-              : '',
-          ]"
-          @change="handleChange(option.value, $event)"
-          @blur="$emit('blur', $event)"
-          @focus="$emit('focus', $event)"
-        />
-        <span
-          class="ml-2 ltr:ml-2 rtl:mr-2 transition-colors duration-200"
-          :class="[
-            // Text color change on checked state
-            peerChecked ? `peer-checked:text-${color}` : '',
-            // Error state
-            error ? 'text-red-500' : '',
-            // Dark theme support
-            'text-gray-700 dark:text-gray-300',
-          ]"
-        >
-          {{ option.label }}
-        </span>
-      </label>
-    </div>
+        {{ text }}
+      </span>
+    </label>
 
     <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">
       {{ errorMessage }}
@@ -73,14 +67,10 @@
 import { inject, computed } from "vue";
 import { useAppStore } from "../stores/index";
 
-interface CheckboxOption {
-  label: string;
-  value: string | number | boolean;
-}
-
 interface CheckboxInputProps {
-  modelValue?: (string | number | boolean)[];
-  options: CheckboxOption[];
+  modelValue?: boolean;
+  value?: string | number | boolean;
+  text?: string;
   label?: string;
   color?:
     | "primary"
@@ -99,8 +89,9 @@ interface CheckboxInputProps {
 }
 
 const props = withDefaults(defineProps<CheckboxInputProps>(), {
-  modelValue: () => [],
-  options: () => [],
+  modelValue: false,
+  value: "",
+  text: "",
   label: "",
   color: "primary",
   variant: "default",
@@ -132,7 +123,7 @@ const emit = defineEmits<{
    * Emitted when the checkbox selection changes.
    * @storybook Use this to update v-model in stories.
    */
-  "update:modelValue": [value: (string | number | boolean)[]];
+  "update:modelValue": [value: boolean];
 
   /**
    * Emitted when a checkbox loses focus.
@@ -148,28 +139,16 @@ const emit = defineEmits<{
 
   /**
    * Emitted when a checkbox value changes.
-   * @storybook Use this to track individual checkbox changes in stories.
+   * @storybook Use this to track checkbox changes in stories.
    */
   change: [value: string | number | boolean, checked: boolean, event: Event];
 }>();
 
-const isChecked = (value: string | number | boolean): boolean => {
-  return props.modelValue.includes(value);
-};
-
-const handleChange = (value: string | number | boolean, event: Event) => {
+const handleChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const checked = target.checked;
 
-  let newValue: (string | number | boolean)[];
-
-  if (checked) {
-    newValue = [...props.modelValue, value];
-  } else {
-    newValue = props.modelValue.filter((v) => v !== value);
-  }
-
-  emit("update:modelValue", newValue);
-  emit("change", value, checked, event);
+  emit("update:modelValue", checked);
+  emit("change", props.value, checked, event);
 };
 </script>
