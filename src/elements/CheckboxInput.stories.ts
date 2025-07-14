@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import CheckboxInput from "./CheckboxInput.vue";
 import { ref } from "vue";
 
-const meta = {
+const meta: Meta<typeof CheckboxInput> = {
   title: "Elements/CheckboxInput",
   component: CheckboxInput,
   tags: ["autodocs"],
@@ -10,14 +10,26 @@ const meta = {
     label: {
       control: "text",
       description: "Label for the checkbox group",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     text: {
       control: "text",
       description: "Text displayed next to the checkbox",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     value: {
       control: "text",
       description: "Value of the checkbox",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     color: {
       control: "select",
@@ -31,31 +43,59 @@ const meta = {
         "dark",
       ],
       description: "Color variant for checkbox",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "primary" },
+      },
     },
     variant: {
       control: "select",
       options: ["default", "outline", "rounded", "outline-rounded"],
       description: "Visual variant of checkbox",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "default" },
+      },
     },
     disabled: {
       control: "boolean",
       description: "Disabled state",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     required: {
       control: "boolean",
       description: "Required state",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     error: {
       control: "boolean",
       description: "Error state",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
     },
     errorMessage: {
       control: "text",
       description: "Error message text",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
     id: {
       control: "text",
       description: "ID for the checkbox",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "undefined" },
+      },
     },
   },
   args: {
@@ -72,13 +112,14 @@ const meta = {
   },
   parameters: {
     docs: {
+      source: {
+        type: "code",
+      },
       description: {
         component: `
-# CheckboxInput Component
+A flexible single checkbox component that supports various visual variants, color schemes, and states. 
+The component features:
 
-A flexible single checkbox component that supports various visual variants, color schemes, and states. This component is built with accessibility in mind and supports form validation states.
-
-## Features
 - Single checkbox with customizable text
 - Various color variants (primary, success, secondary, danger, warning, info, dark)
 - Visual variants (default, outline, rounded, outline-rounded)
@@ -91,13 +132,29 @@ A flexible single checkbox component that supports various visual variants, colo
 - Dark theme support
 - Smooth transitions and hover effects
 
+## Usage
+
+The CheckboxInput component can be used for single checkbox selections:
+
+\`\`\`vue
+<CheckboxInput
+  v-model="isChecked"
+  text="Accept terms and conditions"
+  value="terms"
+  color="primary"
+  variant="default"
+/>
+\`\`\`
+
 ## Variants
+
 - **Default**: Standard checkbox appearance
-- **Outline**: Checkbox with outline styling
+- **Outline**: Checkbox with outline styling  
 - **Rounded**: Checkbox with rounded corners
 - **Outline Rounded**: Combination of outline and rounded styles
 
 ## Colors
+
 - **Primary**: Default primary color
 - **Success**: Green color for success states
 - **Secondary**: Secondary color variant
@@ -105,69 +162,32 @@ A flexible single checkbox component that supports various visual variants, colo
 - **Warning**: Orange color for warning states
 - **Info**: Blue color for informational states
 - **Dark**: Dark color variant
-
-## RTL Support
-The component automatically adapts to RTL layouts using Tailwind's RTL utilities:
-- Text spacing adjusts automatically (ltr:ml-2 rtl:mr-2)
-- All directional styles are RTL-aware
-
-## Theme Support
-Supports both light and dark themes:
-- Labels and text adapt to theme colors
-- Checkbox styling remains consistent across themes
-
-## Usage with Multiple Options
-To create a checkbox group, you can loop through multiple options:
-
-\`\`\`vue
-<template>
-  <div class="space-y-2">
-    <CheckboxInput
-      v-for="option in options"
-      :key="option.value"
-      v-model="selectedValues[option.value]"
-      :text="option.label"
-      :value="option.value"
-      :label="option.label"
-    />
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue'
-import CheckboxInput from './CheckboxInput.vue'
-
-const options = [
-  { label: 'Option 1', value: 'opt1' },
-  { label: 'Option 2', value: 'opt2' },
-  { label: 'Option 3', value: 'opt3' }
-]
-
-const selectedValues = ref({})
-</script>
-\`\`\`
-        `,
+`,
       },
     },
   },
-} satisfies Meta<typeof CheckboxInput>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+
+type Story = StoryObj<typeof CheckboxInput>;
 
 export const Default: Story = {
-  args: {
-    text: "Accept terms and conditions",
-    value: "terms",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Default checkbox with primary color and standard styling.",
-      },
-      source: { type: "code" },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(false);
+      return { args, isChecked };
     },
-  },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+        text="Accept terms and conditions"
+        value="terms"
+      />
+    `,
+  }),
 };
 
 export const WithLabel: Story = {
@@ -177,12 +197,24 @@ export const WithLabel: Story = {
     value: "terms",
     id: "terms-checkbox",
   },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(false);
+      return { args, isChecked };
+    },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+      />
+    `,
+  }),
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with a descriptive label to improve accessibility.",
+        story: "A checkbox with a label and descriptive text for form sections",
       },
-      source: { type: "code" },
     },
   },
 };
@@ -194,63 +226,25 @@ export const SuccessColor: Story = {
     color: "success",
     value: "completed",
   },
-  parameters: {
-    docs: {
-      description: {
-        story: "Checkbox with success color variant.",
-      },
-      source: { type: "code" },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(true);
+      return { args, isChecked };
     },
-  },
-};
-
-export const DangerColor: Story = {
-  args: {
-    label: "Danger Variant",
-    text: "Delete this item permanently",
-    color: "danger",
-    value: "delete",
-  },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+      />
+    `,
+  }),
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with danger color variant.",
+        story:
+          "A checkbox using the success color variant for positive confirmations",
       },
-      source: { type: "code" },
-    },
-  },
-};
-
-export const OutlineVariant: Story = {
-  args: {
-    label: "Outline Variant",
-    text: "Enable notifications",
-    variant: "outline",
-    value: "notifications",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Checkbox with outline styling variant.",
-      },
-      source: { type: "code" },
-    },
-  },
-};
-
-export const RoundedVariant: Story = {
-  args: {
-    label: "Rounded Variant",
-    text: "Subscribe to newsletter",
-    variant: "rounded",
-    value: "newsletter",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Checkbox with rounded corners variant.",
-      },
-      source: { type: "code" },
     },
   },
 };
@@ -262,12 +256,24 @@ export const OutlineRoundedVariant: Story = {
     variant: "outline-rounded",
     value: "dark-mode",
   },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(false);
+      return { args, isChecked };
+    },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+      />
+    `,
+  }),
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with combined outline and rounded styling.",
+        story: "A checkbox combining outline styling with rounded corners",
       },
-      source: { type: "code" },
     },
   },
 };
@@ -279,12 +285,24 @@ export const Disabled: Story = {
     disabled: true,
     value: "disabled-option",
   },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(false);
+      return { args, isChecked };
+    },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+      />
+    `,
+  }),
   parameters: {
     docs: {
       description: {
-        story: "Checkbox in disabled state.",
+        story: "A disabled checkbox that cannot be interacted with",
       },
-      source: { type: "code" },
     },
   },
 };
@@ -297,12 +315,24 @@ export const WithError: Story = {
     errorMessage: "You must accept the terms to continue",
     value: "terms",
   },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(false);
+      return { args, isChecked };
+    },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+      />
+    `,
+  }),
   parameters: {
     docs: {
       description: {
-        story: "Checkbox with error state and error message.",
+        story: "A checkbox in an error state with a validation message",
       },
-      source: { type: "code" },
     },
   },
 };
@@ -314,18 +344,30 @@ export const Required: Story = {
     required: true,
     value: "age-confirmation",
   },
+  render: (args) => ({
+    components: { CheckboxInput },
+    setup() {
+      const isChecked = ref(false);
+      return { args, isChecked };
+    },
+    template: `
+      <CheckboxInput 
+        v-bind="args"
+        v-model="isChecked"
+      />
+    `,
+  }),
   parameters: {
     docs: {
       description: {
-        story: "Checkbox marked as required with asterisk indicator.",
+        story: "A required checkbox with a required field indicator",
       },
-      source: { type: "code" },
     },
   },
 };
 
 export const MultipleCheckboxes: Story = {
-  render: () => ({
+  render: (args) => ({
     components: { CheckboxInput },
     setup() {
       const selectedValues = ref({
@@ -351,10 +393,15 @@ export const MultipleCheckboxes: Story = {
           value: "marketing",
           text: "Receive marketing communications",
         },
-        { label: "Updates", value: "updates", text: "Get product updates" },
+        {
+          label: "Updates",
+          value: "updates",
+          text: "Get product updates",
+        },
       ];
 
       return {
+        args,
         selectedValues,
         options,
       };
@@ -385,9 +432,8 @@ export const MultipleCheckboxes: Story = {
     docs: {
       description: {
         story:
-          "Example of how to use multiple CheckboxInput components to create a checkbox group.",
+          "Multiple checkboxes demonstrating how to create a checkbox group with reactive state tracking",
       },
-      source: { type: "code" },
     },
   },
 };
