@@ -2,7 +2,7 @@ name: CodePress Review
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [opened, reopened]
   issue_comment:
     types: [created]
   workflow_dispatch: # Allows manual triggering from the Actions tab
