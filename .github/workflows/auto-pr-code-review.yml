@@ -1,0 +1,39 @@
+# https://github.com/marketplace/actions/codepress-review
+# How to use:
+# 1. Add the following to your PR description:
+#    @codepress/review
+
+name: CodePress Review
+
+on:
+  pull_request:
+    types: [opened, reopened]
+  issue_comment:
+    types: [created]
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+permissions:
+  pull-requests: write
+  contents: read
+  issues: read # Required to read PR comments
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.issue.pull_request && format('refs/pull/{0}/head', github.event.issue.number) || github.ref }}
+
+      - name: CodePress Review
+        uses: quantfive/codepress-review@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          model_provider: "openai"
+          model_name: "gpt-4.1-mini-2025-04-14"
+          openai_api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
+          # Comment triggers are enabled by default
+          run_on_comment_trigger: false # Disable comment triggers
+          # comment_trigger_phrase: "@codepress/review"  # Default
