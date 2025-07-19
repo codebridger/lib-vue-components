@@ -29,7 +29,7 @@ jobs:
       - name: Get Commit Messages
         id: commit_messages
         run: |
-          COMMITS=$(git log --oneline HEAD^..HEAD)
+          COMMITS=$(git log --oneline ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
           echo "commits=$(echo "$COMMITS" | jq -sRr @uri)" >> $GITHUB_OUTPUT
           echo "=== COMMIT MESSAGES ==="
           echo "$COMMITS"
