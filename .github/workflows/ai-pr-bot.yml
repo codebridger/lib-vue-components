@@ -21,12 +21,35 @@ jobs:
       - name: CodePress Review
         uses: quantfive/codepress-review@v2
         with:
+          # GitHub token for API access. Provided by GitHub Actions automatically.
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Specify the AI model provider (e.g., "openai", "anthropic", "gemini").
           model_provider: "openai"
+          # Specify the exact model name to use.
           model_name: "gpt-4.1-mini-2025-04-14"
+          # API key for OpenAI. Store this in your repository secrets.
           openai_api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
-          run_on_pr_opened: false # Disable automatic review on PR open
-          run_on_pr_reopened: false # Disable automatic review on PR reopen
-          run_on_review_requested: false # Disable automatic review on review request
-          run_on_comment_trigger: true # Enable review via comment (default is true)
-          comment_trigger_phrase: "@codepress/review" # Your custom trigger phrase
+          # API key for Anthropic (uncomment and provide if using Anthropic).
+          # anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # API key for Google Gemini (uncomment and provide if using Gemini).
+          # gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+
+          # Trigger Configuration:
+          # Set to 'false' to disable automatic review when a PR is opened.
+          run_on_pr_opened: false
+          # Set to 'false' to disable automatic review when a PR is reopened.
+          run_on_pr_reopened: false
+          # Set to 'false' to disable automatic review when a re-review is requested from github-actions[bot].
+          run_on_review_requested: false
+          # Set to 'true' to enable review when a comment containing the trigger phrase is posted.
+          run_on_comment_trigger: true
+          # The specific phrase that will trigger a review in comments.
+          comment_trigger_phrase: "@codepress/review"
+
+          # Other configurations:
+          # Enable debug mode for detailed logging (useful for troubleshooting).
+          debug: true
+          # Set to 'true' to enable automatic PR description updates for blank PRs (default is true).
+          update_pr_description: true
+          # Maximum number of turns for the interactive agent (default is 12).
+          # max_turns: 12
