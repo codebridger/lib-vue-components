@@ -1,20 +1,15 @@
-# [1.17.0-dev.24](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.23...dev-1.17.0-dev.24) (2025-07-19)
+# [1.19.0](https://github.com/codebridger/lib-vue-components/compare/v1.18.0...v1.19.0) (2025-06-28)
 
 
 ### Bug Fixes
 
-* resolve issues with CheckboxInput component functionality and documentation ([c4d33ff](https://github.com/codebridger/lib-vue-components/commit/c4d33ff75d4b53420079ddb279acef642c8b517e))
-
-# [1.17.0-dev.23](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.22...dev-1.17.0-dev.23) (2025-07-19)
+* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf4vv update loading icon container styles for better alignment in Button component ([cd8be65](https://github.com/codebridger/lib-vue-components/commit/cd8be65a9fe7ce4e921a5a6c9c283303200ec9bd)), closes [#86etkf4](https://github.com/codebridger/lib-vue-components/issues/86etkf4)
 
 
 ### Features
 
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu4pn7j - add CheckboxInput component with customizable options and states. ([10de143](https://github.com/codebridger/lib-vue-components/commit/10de143f43e09c5848e0aa1ffbcafe5103e06858)), closes [#86eu4pn7](https://github.com/codebridger/lib-vue-components/issues/86eu4pn7)
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu4pn7j - add new icons for lock open, eye, and eye off; update icon imports ([ed45091](https://github.com/codebridger/lib-vue-components/commit/ed4509152e57692a6ecd351a2e0a2e05938af3b4)), closes [#86eu4pn7](https://github.com/codebridger/lib-vue-components/issues/86eu4pn7)
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu4pn7j - add new icons for lock open, eye, and eye off; update icon imports ([fc9347d](https://github.com/codebridger/lib-vue-components/commit/fc9347d841aaf15ca3ea2129c34c5f22f14f8ddc)), closes [#86eu4pn7](https://github.com/codebridger/lib-vue-components/issues/86eu4pn7)
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu4pn7j - enhance CheckboxInput component with single checkbox functionality and improved documentation ([4063b9f](https://github.com/codebridger/lib-vue-components/commit/4063b9f11f60cd1b842c0ea7e96740120a9c365d)), closes [#86eu4pn7](https://github.com/codebridger/lib-vue-components/issues/86eu4pn7)
-* [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu4pn7j - enhance CheckboxInput stories with detailed documentation and improved type definitions ([965077b](https://github.com/codebridger/lib-vue-components/commit/965077b8bd91f221c2ccba7adccc03172d65aeb5)), closes [#86eu4pn7](https://github.com/codebridger/lib-vue-components/issues/86eu4pn7)
+* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf376 - improve icon positioning descriptions and add comparison stories for Input and TextArea components ([382b9a7](https://github.com/codebridger/lib-vue-components/commit/382b9a72512ba4102dd05f8a0f639be88feedcf8)), closes [#86etkf376](https://github.com/codebridger/lib-vue-components/issues/86etkf376)
+* [#86](https://github.com/codebridger/lib-vue-components/issues/86)etkf376 update Input and TextArea components to define emitted events for better documentation and type safety ([62e3ee6](https://github.com/codebridger/lib-vue-components/commit/62e3ee67271c288db7f0e49478baea16975a2380)), closes [#86etkf376](https://github.com/codebridger/lib-vue-components/issues/86etkf376)
 
 # [1.18.0](https://github.com/codebridger/lib-vue-components/compare/v1.17.0...v1.18.0) (2025-05-25)
 
