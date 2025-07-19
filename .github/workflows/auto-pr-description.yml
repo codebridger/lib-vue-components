@@ -20,10 +20,8 @@ jobs:
       - name: Read template content
         id: read-template
         run: |
-          content=$(cat .github/custom-summary-prompt.md)
-          echo "content<<EOF" >> $GITHUB_OUTPUT
-          echo "$content" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          content=$(cat .github/custom-summary-prompt.md | sed ':a;N;$!ba;s/\n/\\n/g')
+          echo "content=$content" >> $GITHUB_OUTPUT
 
   generate-pr-text:
     runs-on: ubuntu-latest
