@@ -1,40 +1,53 @@
-name: Pull Request Text Generator Workflow
+name: Generate PR Description
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
-
-permissions:
-  pull-requests: write
-  contents: read
+    types: [opened, edited, synchronize]
 
 jobs:
-  prepare-template:
+  generate-description:
     runs-on: ubuntu-latest
-    outputs:
-      system_prompt: ${{ steps.read-template.outputs.content }}
+    permissions:
+      contents: read
+      pull-requests: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Read template content
         id: read-template
         run: |
           content=$(cat .github/custom-summary-prompt.md | sed ':a;N;$!ba;s/\n/\\n/g')
-          echo "content=$content" >> $GITHUB_OUTPUT
+          echo "template_content=$content" >> $GITHUB_OUTPUT
 
-  generate-pr-text:
-    runs-on: ubuntu-latest
-    needs: prepare-template
-    steps:
+      - name: Get Git Diff
+        id: git_diff
+        run: |
+          DIFF=$(git diff HEAD^ HEAD)
+          echo "diff=$(echo "$DIFF" | jq -sRr @uri)" >> $GITHUB_OUTPUT
+
       - name: Generate PR Description
-        uses: vblagoje/pr-auto@v1
-        id: pr_auto
+        id: generate_desc
+        uses: alvarocperez/pull-request-description@v1.0.2
         with:
-          openai_api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
-          user_prompt: ${{ needs.prepare-template.outputs.system_prompt }}
+          api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
+          prompt: ${{ steps.read-template.outputs.template_content }}
+          git_diff: ${{ steps.git_diff.outputs.diff }}
 
-      - name: Update PR description
-        uses: vblagoje/update-pr@v1
+      - name: Update PR Description
+        uses: actions/github-script@v6
+        env:
+          PR_DESCRIPTION: ${{ steps.generate_desc.outputs.description }}
         with:
-          pr-body: ${{ steps.pr_auto.outputs.pr-text }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            await github.rest.pulls.update({
+              owner,
+              repo,
+              pull_number: context.payload.pull_request.number,
+              body: process.env.PR_DESCRIPTION
+            });
