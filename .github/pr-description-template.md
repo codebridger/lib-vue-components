@@ -15,4 +15,5 @@
 <!-- Any relevant extra information for reviewers -->
 
 ## 📜 Commit List
-<!-- List of commits in this PR -->
+<!-- List of commit titles in this PR with links -->
+<!-- Format: [commit title](commit-url) -->
