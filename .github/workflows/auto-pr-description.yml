@@ -32,7 +32,7 @@ jobs:
         id: pr_auto
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
-          system_prompt: ${{ needs.prepare-template.outputs.system_prompt }}
+          user_prompt: ${{ needs.prepare-template.outputs.system_prompt }}
 
       - name: Update PR description
         uses: vblagoje/update-pr@v1
