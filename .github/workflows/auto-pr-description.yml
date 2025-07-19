@@ -31,6 +31,9 @@ jobs:
         run: |
           DIFF=$(git diff HEAD^ HEAD)
           echo "diff=$(echo "$DIFF" | jq -sRr @uri)" >> $GITHUB_OUTPUT
+          echo "=== GIT DIFF OUTPUT ==="
+          echo "$DIFF"
+          echo "=== END GIT DIFF ==="
 
       - name: Generate PR Description
         id: generate_desc
