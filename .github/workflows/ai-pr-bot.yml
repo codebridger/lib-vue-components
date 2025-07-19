@@ -17,4 +17,4 @@ jobs:
           enable_auto_approval: true
           model: "anthropic/claude-sonnet-4-20250514"
           max_model_tokens: "100000"
-          require_trigger: true
+          # require_trigger: true
