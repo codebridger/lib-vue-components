@@ -1,0 +1,6 @@
+# [1.17.0-dev.25](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.24...dev-1.17.0-dev.25) (2025-07-19)
+
+
+### Bug Fixes
+
+* update PR description workflow to properly format content by replacing newlines with escaped characters ([4a48764](https://github.com/codebridger/lib-vue-components/commit/4a48764e00c5f81a43a2b98c53016731492f4fb5))
