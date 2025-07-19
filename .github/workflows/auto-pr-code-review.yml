@@ -35,4 +35,4 @@ jobs:
           openai_api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
           update_pr_description: false
           run_on_comment_trigger: true # Disable comment triggers
-          comment_trigger_phrase: "@codepress/review" # Default
+          comment_trigger_phrase: review this
