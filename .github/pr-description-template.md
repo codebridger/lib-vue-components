@@ -3,6 +3,8 @@ Take all below stracture to write a proper PR description
 # Pull Request Description
 
 > **Note**: Not all sections are required for every PR. Use only the sections that are relevant to your changes. Focus on the most important information for your specific pull request.
+> 
+> **Required Sections**: The "🔗 Related Tasks & Commit Analysis" and "📝 Commit Summary" sections are mandatory for all PRs as they provide essential context for reviewers.
 
 ## 📋 Overview & Changes
 <!-- Provide a brief summary of what this PR accomplishes and key changes -->

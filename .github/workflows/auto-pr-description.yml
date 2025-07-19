@@ -4,6 +4,9 @@ on:
   pull_request:
     types: [opened, edited, synchronize]
 
+env:
+  TEMPLATE_FILE_PATH: .github/pr-description-template.md
+
 jobs:
   generate-description:
     runs-on: ubuntu-latest
@@ -20,7 +23,7 @@ jobs:
       - name: Read template content
         id: read-template
         run: |
-          content=$(cat .github/custom-summary-prompt.md | sed ':a;N;$!ba;s/\n/\\n/g')
+          content=$(cat ${{ env.TEMPLATE_FILE_PATH }} | sed ':a;N;$!ba;s/\n/\\n/g')
           echo "template_content=$content" >> $GITHUB_OUTPUT
 
       - name: Get Git Diff
