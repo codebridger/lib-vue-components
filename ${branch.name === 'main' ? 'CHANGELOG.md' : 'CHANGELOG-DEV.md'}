@@ -1,3 +1,10 @@
+# [1.17.0-dev.26](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.25...dev-1.17.0-dev.26) (2025-07-19)
+
+
+### Bug Fixes
+
+* correct parameter name in PR description workflow from system_prompt to user_prompt ([97f4d24](https://github.com/codebridger/lib-vue-components/commit/97f4d2480736d0aeb9caacb4cef66888d4b4af7d))
+
 # [1.17.0-dev.25](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.24...dev-1.17.0-dev.25) (2025-07-19)
 
 
