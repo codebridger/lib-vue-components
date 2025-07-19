@@ -16,4 +16,4 @@
 
 ## 📜 Commit List
 <!-- List of commit titles in this PR with links -->
-<!-- Format: [commit title](commit-url) -->
+<!-- Format: [commit sha](commit-url) [commit title] -->
