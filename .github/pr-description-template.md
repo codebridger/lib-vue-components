@@ -9,7 +9,8 @@
 ## 🔗 Related Tasks
 <!-- Task IDs with links and descriptions from commit messages -->
 <!-- Format: [linked task id] - [task description] -->
-<!-- Example: [#12345](https://app.clickup.com/t/12345) - Implement user authentication -->
+<!-- Example 1: [#12345](https://app.clickup.com/t/12345) - Implement user authentication -->
+<!-- Example 2: [CU-34234](https://app.clickup.com/t/34234) - the description for this task -->
 
 ## 📝 Additional Details
 <!-- Any relevant extra information for reviewers -->
