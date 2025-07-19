@@ -1,3 +1,5 @@
+# https://github.com/marketplace/actions/codepress-review
+
 name: CodePress Review
 
 on:
@@ -23,5 +25,8 @@ jobs:
           model_provider: "openai"
           model_name: "gpt-4.1-mini-2025-04-14"
           openai_api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
-          # All trigger configurations use sensible defaults
-          # + synchronize event runs automatically when included in workflow
+          run_on_pr_opened: false # Disable automatic review on PR open
+          run_on_pr_reopened: false # Disable automatic review on PR reopen
+          run_on_review_requested: false # Disable automatic review on review request
+          run_on_comment_trigger: true # Enable review via comment (default is true)
+          comment_trigger_phrase: "@codepress/review" # Your custom trigger phrase
