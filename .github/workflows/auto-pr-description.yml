@@ -26,14 +26,14 @@ jobs:
           content=$(cat ${{ env.TEMPLATE_FILE_PATH }} | sed ':a;N;$!ba;s/\n/\\n/g')
           echo "template_content=$content" >> $GITHUB_OUTPUT
 
-      - name: Get Git Diff
-        id: git_diff
+      - name: Get Commit Messages
+        id: commit_messages
         run: |
-          DIFF=$(git diff HEAD^ HEAD)
-          echo "diff=$(echo "$DIFF" | jq -sRr @uri)" >> $GITHUB_OUTPUT
-          echo "=== GIT DIFF OUTPUT ==="
-          echo "$DIFF"
-          echo "=== END GIT DIFF ==="
+          COMMITS=$(git log --oneline HEAD^..HEAD)
+          echo "commits=$(echo "$COMMITS" | jq -sRr @uri)" >> $GITHUB_OUTPUT
+          echo "=== COMMIT MESSAGES ==="
+          echo "$COMMITS"
+          echo "=== END COMMIT MESSAGES ==="
 
       - name: Generate PR Description
         id: generate_desc
@@ -41,7 +41,7 @@ jobs:
         with:
           api_key: ${{ secrets.OPENAI_API_KEY_FOR_PR_DESC_GENERATOR }}
           prompt: ${{ steps.read-template.outputs.template_content }}
-          git_diff: ${{ steps.git_diff.outputs.diff }}
+          git_diff: ${{ steps.commit_messages.outputs.commits }}
 
       - name: Update PR Description
         uses: actions/github-script@v6
