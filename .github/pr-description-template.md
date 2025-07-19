@@ -1,4 +1,4 @@
-# Pull Request Description
+> **Important**: Generate a PR description, Only include the sections listed below. Do not add any extra sections, titles, or content beyond what is specified in this template.
 
 ## 🏷️ PR Title
 <!-- Concise, descriptive title for the pull request -->
