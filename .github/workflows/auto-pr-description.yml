@@ -8,7 +8,7 @@ name: Generate PR Description
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [opened, synchronize]
 
 env:
   TEMPLATE_FILE_PATH: .github/pr-description-template.md
