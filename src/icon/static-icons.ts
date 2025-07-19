@@ -35,6 +35,9 @@ import IconUserPlus from "./single/icon-user-plus.vue";
 import IconUsers from "./single/icon-users.vue";
 import IconUsersGroup from "./single/icon-users-group.vue";
 import IconLock from "./single/icon-lock.vue";
+import IconLockOpen from "./single/icon-lock-open.vue";
+import IconEye from "./single/icon-eye.vue";
+import IconEyeOff from "./single/icon-eye-off.vue";
 import IconSettings from "./single/icon-settings.vue";
 import IconMoodSmile from "./single/icon-mood-smile.vue";
 
@@ -175,8 +178,11 @@ const UserAndAccounts = {
   IconUsers,
   IconUsersGroup,
   IconLock,
+  IconLockOpen,
   IconSettings,
   IconMoodSmile,
+  IconEye,
+  IconEyeOff,
 };
 
 const CommerceAndMoney = {

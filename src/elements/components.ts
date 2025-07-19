@@ -15,6 +15,7 @@ import FileInputCombo from "./FileInputCombo.vue";
 import Progress from "./Progress.vue";
 import SwitchBall from "./SwitchBall.vue";
 import Tooltip from "./Tooltip.vue";
+import CheckboxInput from "./CheckboxInput.vue";
 // icons
 import Icon from "../icon/Icon.vue";
 
@@ -36,6 +37,7 @@ export {
   Progress,
   SwitchBall,
   Tooltip,
+  CheckboxInput,
   // Icons
   Icon,
 };
