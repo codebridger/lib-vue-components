@@ -11,6 +11,7 @@
 <!-- Format: [linked task id] - [task description] -->
 <!-- Example 1: [#12345](https://app.clickup.com/t/12345) - Implement user authentication -->
 <!-- Example 2: [CU-34234](https://app.clickup.com/t/34234) - the description for this task -->
+<!-- Note: Merge duplicate task IDs and combine their descriptions into a single task entry -->
 
 ## 📝 Additional Details
 <!-- Any relevant extra information for reviewers -->
