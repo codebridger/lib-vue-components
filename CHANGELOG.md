@@ -1,3 +1,10 @@
+# [1.17.0-dev.24](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.23...dev-1.17.0-dev.24) (2025-07-19)
+
+
+### Bug Fixes
+
+* resolve issues with CheckboxInput component functionality and documentation ([c4d33ff](https://github.com/codebridger/lib-vue-components/commit/c4d33ff75d4b53420079ddb279acef642c8b517e))
+
 # [1.17.0-dev.23](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.22...dev-1.17.0-dev.23) (2025-07-19)
 
 
