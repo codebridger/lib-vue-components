@@ -1,0 +1,15 @@
+# [1.17.0-dev.27](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.26...dev-1.17.0-dev.27) (2025-07-19)
+
+# [1.17.0-dev.26](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.25...dev-1.17.0-dev.26) (2025-07-19)
+
+
+### Bug Fixes
+
+* correct parameter name in PR description workflow from system_prompt to user_prompt ([97f4d24](https://github.com/codebridger/lib-vue-components/commit/97f4d2480736d0aeb9caacb4cef66888d4b4af7d))
+
+# [1.17.0-dev.25](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.24...dev-1.17.0-dev.25) (2025-07-19)
+
+
+### Bug Fixes
+
+* update PR description workflow to properly format content by replacing newlines with escaped characters ([4a48764](https://github.com/codebridger/lib-vue-components/commit/4a48764e00c5f81a43a2b98c53016731492f4fb5))
