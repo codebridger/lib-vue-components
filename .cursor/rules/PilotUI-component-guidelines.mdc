@@ -1,56 +1,80 @@
----
-description: "Lib Vue Components Development Guidelines (for AI Agent)"
-globs: ["src/**/*.vue", "src/**/*.ts", "src/**/*.tsx", "src/**/*.stories.ts"]
-alwaysApply: true
----
-
 ## Preamble
 
-This rule set guides the AI agent in adhering to the development standards for the Lib Vue Components library - a comprehensive Vue 3 + TypeScript + Tailwind CSS component library. The primary goal is to ensure consistency, maintainability, and alignment with the library's core principles of modularity, theming, internationalization, and accessibility.
+This rule set guides the AI agent in adhering to the development standards for the Lib Vue Components library - a Vue 3 + TypeScript + Tailwind CSS component library. The guidelines are based on the actual components and patterns used in the project.
 
 ## Core Principles
 
-- **Component-Driven Architecture**: All components must follow the established modular structure with clear separation between elements, complex components, and shell components.
-- **TypeScript-First Development**: All components and utilities must be built with strict TypeScript typing and interfaces.
-- **Tailwind CSS Integration**: Utilize Tailwind CSS for all styling with the established color system and utility classes.
-- **Storybook Documentation**: Every component must be thoroughly documented in Storybook with comprehensive examples and prop controls.
-- **Accessibility (A11y) Compliant**: Components must be built with accessibility in mind, ensuring usability for all users.
-- **Internationalization (i18n) Ready**: All text content must support multiple languages through the established locale system.
-- **Theme System Integration**: Components must seamlessly integrate with the light/dark/semidark theme system.
+- **Vue 3 Composition API**: All components use `<script setup lang="ts">` syntax with TypeScript
+- **Tailwind CSS**: All styling uses Tailwind CSS with the established color system
+- **TypeScript First**: Strict TypeScript typing for all props, emits, and component data
+- **Accessibility**: Components must be accessible with proper ARIA attributes
+- **Theme Support**: Components support light/dark/semidark themes
+- **RTL Support**: Components support right-to-left layouts
 
-## Project Architecture Understanding
+## Project Structure
 
 ### Component Categories
 
-- **Elements** (`src/elements/`): Basic UI components (Button, Input, Card, etc.)
-- **Complex** (`src/complex/`): Advanced components (Modal, Pagination, etc.)
-- **Shell** (`src/shell/`): Layout and structural components (AppRoot, DashboardShell, etc.)
-- **Icon** (`src/icon/`): Icon system with menu and single icon variants
+- **Elements** (`src/elements/`): Basic UI components
+  - Button, IconButton, Input, TextArea, CheckboxInput
+  - Avatar, AvatarGroup, Card, Progress, SwitchBall
+  - Dropdown, DropdownItem, Tabs, Tooltip
+  - FileInputButton, FileInputCombo, FileInputDropMode
+- **Complex** (`src/complex/`): Advanced components
+  - Modal, Pagination
+- **Shell** (`src/shell/`): Layout components
+  - AppRoot, DashboardShell, SidebarMenu, HorizontalMenu
+  - Footer, ThemeCustomizer
 
 ### State Management
 
-- **Pinia Store** (`src/stores/index.ts`): Centralized state for theme, layout, RTL, and app settings
-- **Theme Classes**: `light`, `dark` on body element; `ltr`, `rtl` on html element
-- **Semidark Mode**: Special theme variant for sidebar and header components
+- **Pinia Store** (`src/stores/index.ts`): Global state for theme, layout, RTL
+- **Theme Classes**: `light`, `dark` on body; `ltr`, `rtl` on html
+- **Semidark Mode**: Special theme for sidebar/header components
 
 ---
 
-## Categorized Rules
+## Component Development Rules
 
-### 1. Component Development & Structure
+### 1. Component Structure
 
-- **Vue 3 Composition API**: All components must use `<script setup lang="ts">` syntax with TypeScript.
-- **Component Naming**: Use PascalCase for component files and registration (e.g., `Button.vue`, `DashboardShell.vue`).
-- **Props Interface**: Define explicit TypeScript interfaces for all component props with proper typing.
-- **Component Registration**: Export all components through their respective `components.ts` files:
-  - `src/elements/components.ts` for elements
-  - `src/complex/components.ts` for complex components
-  - `src/shell/components.ts` for shell components
-- **Slot System**: Utilize named slots for flexible component composition (e.g., `sidebar-menu`, `header`, `content` slots in DashboardShell).
+- **Template**: Use Vue 3 template syntax with Tailwind classes
+- **Script Setup**: Use `<script setup lang="ts">` with TypeScript
+- **Props Interface**: Define explicit TypeScript interfaces for all props
+- **Component Registration**: Export through respective `components.ts` files
+- **Slot System**: Use named slots for flexible composition
 
-### 2. Styling & Theming
+### 2. Props & TypeScript Patterns
 
-- **Tailwind CSS**: Use the established Tailwind configuration with custom color palette:
+- **Props Interface**: Define with explicit types and defaults:
+  ```typescript
+  interface ComponentProps {
+    modelValue?: string;
+    disabled?: boolean;
+    size?: 'sm' | 'md' | 'lg';
+    variant?: 'primary' | 'secondary' | 'success' | 'danger';
+  }
+  
+  const props = withDefaults(defineProps<ComponentProps>(), {
+    disabled: false,
+    size: 'md',
+    variant: 'primary'
+  });
+  ```
+
+- **Emits**: Define explicit emit types:
+  ```typescript
+  const emit = defineEmits<{
+    'update:modelValue': [value: string];
+    'change': [value: string];
+    'focus': [event: FocusEvent];
+    'blur': [event: FocusEvent];
+  }>();
+  ```
+
+### 3. Styling Patterns
+
+- **Tailwind Classes**: Use established color palette:
   - Primary: `#4361ee` (blue)
   - Secondary: `#805dca` (purple)
   - Success: `#00ab55` (green)
@@ -58,112 +82,110 @@ This rule set guides the AI agent in adhering to the development standards for t
   - Warning: `#e2a03f` (orange)
   - Info: `#2196f3` (light blue)
   - Dark: `#3b3f5c` (dark gray)
-- **RTL Support**:
-  - Use logical properties: `ltr:mr-2 rtl:ml-2` instead of `margin-left/right`
-  - Check `store.isRtl` computed property for conditional styling
-  - Apply `ltr:` and `rtl:` prefixes for directional classes
-- **Theme Support**:
-  - Check `store.isDarkMode` for dark theme detection
-  - Use `dark:` prefix for dark theme variants
-  - Support semidark mode with `store.semidark` for sidebar/header
-- **Responsive Design**: Implement responsive classes (`sm:`, `md:`, `lg:`, `xl:`) for all components.
-- **Animation Classes**: Use established animation patterns:
-  - `transition-all duration-300` for smooth transitions
-  - `animate-pulse` for loading states
-  - `animate-[spin_2s_linear_infinite]` for custom animations
 
-### 3. TypeScript & Type Safety
+- **RTL Support**: Use logical properties:
+  - `ltr:mr-2 rtl:ml-2` instead of `ml-2` or `mr-2`
+  - Check `store.isRtl` for conditional styling
+  - Apply `ltr:` and `rtl:` prefixes
 
-- **Interface Definitions**: Create explicit interfaces for all props, emits, and component data.
-- **Type Exports**: Export types through `src/types/types.ts` for reusability.
-- **Generic Types**: Use generic types for flexible components (e.g., dropdown items, table data).
-- **Strict Typing**: Avoid `any` types; use proper TypeScript types or `unknown` when necessary.
+- **Theme Support**: Use dark mode classes:
+  - `dark:` prefix for dark theme variants
+  - Check `store.isDarkMode` for conditional logic
+  - Support `store.semidark` for semidark mode
 
-### 4. Storybook Integration
+- **Responsive Design**: Use responsive classes:
+  - `sm:`, `md:`, `lg:`, `xl:` prefixes
+  - Mobile-first approach
 
-- **Story Structure**: Create comprehensive stories for every component with:
-  - Default story with basic props
-  - Variant stories for different prop combinations
-  - Interactive stories with controls
-  - Code examples using `type: 'code'` in docs
-- **ArgTypes**: Define proper argTypes for all props with appropriate controls:
-  - `select` for enum values
-  - `boolean` for boolean props
-  - `text` for string props
-  - `inline-radio` for mutually exclusive options
-- **Documentation**: Include usage guidelines, prop descriptions, and examples in Storybook docs.
+### 4. Common Component Patterns
 
-### 5. Icon System
+#### Button Components
+- Support multiple variants: `primary`, `secondary`, `success`, `danger`, `warning`, `info`
+- Size variants: `xs`, `sm`, `md`, `lg`
+- States: `disabled`, `loading`, `outline`, `block`
+- Icon support with `iconName` prop
+- Link support with `to` prop
 
-- **Icon Usage**: Use the established icon system with `<Icon name="icon-name" />` component.
-- **Icon Categories**: Follow the established structure:
-  - Menu icons: `src/icon/menu/`
-  - Single icons: `src/icon/single/`
-  - Variant icons: `src/icon/variant/`
-- **Icon Props**: Support `name`, `class`, and other standard icon properties.
+#### Input Components
+- Standard props: `modelValue`, `placeholder`, `disabled`, `required`, `type`
+- Validation: `error`, `errorMessage`
+- Icon support: `iconName`, `iconOppositePosition`
+- Events: `update:modelValue`, `focus`, `blur`, `keyup.enter`
 
-### 6. Internationalization (i18n)
+#### Form Components
+- Use `v-model` with `modelValue` prop
+- Emit `update:modelValue` for two-way binding
+- Support validation states with error styling
+- Include proper labels and helper text
 
-- **Locale Files**: Add all user-facing strings to `src/locales/en.json` and other language files.
-- **Translation Keys**: Use descriptive keys following the established naming convention (e.g., `dashboard`, `user_interface`).
-- **Dynamic Content**: Use i18n functions for dynamic content instead of string concatenation.
+#### Modal Components
+- Use Headless UI Dialog components
+- Support custom triggers via slots
+- Include backdrop and close functionality
+- Proper focus management and ARIA attributes
 
-### 7. State Management Integration
+### 5. Accessibility Patterns
 
-- **Store Usage**: Use `useAppStore()` for accessing global state:
-  - `store.toggleTheme()` for theme switching
-  - `store.toggleRTL()` for RTL switching
-  - `store.toggleSidebar()` for sidebar control
-  - `store.semidark` for semidark mode
-- **Reactive State**: Use `computed` properties for derived state based on store values.
+- **ARIA Attributes**: Use appropriate ARIA attributes:
+  - `aria-label` for icon-only elements
+  - `aria-describedby` for form inputs
+  - `aria-expanded` for expandable elements
+  - `aria-disabled` for disabled elements
 
-### 8. Component Patterns
+- **Keyboard Navigation**: Support keyboard interactions:
+  - Enter/Space for buttons
+  - Arrow keys for dropdowns
+  - Escape for modals
+  - Tab for form navigation
 
-- **Slot Composition**: Design components to be composable using named slots:
-  ```vue
-  <DashboardShell>
-    <template #sidebar-menu>
-      </template>
-    <template #header>
-      </template>
-    <template #content>
-      </template>
-  </DashboardShell>
+- **Focus Management**: Proper focus handling:
+  - Focus trap for modals
+  - Return focus after modal close
+  - Visible focus indicators
+
+### 6. State Management Integration
+
+- **Store Usage**: Use `useAppStore()` for global state:
+  ```typescript
+  const store = useAppStore();
+  const isDarkMode = computed(() => store.isDarkMode);
+  const isRtl = computed(() => store.isRtl);
   ```
-- **Prop Validation**: Use TypeScript interfaces for prop validation instead of runtime validation.
-- **Event Handling**: Define explicit emit types for all component events.
-- **Loading States**: Implement loading states with proper visual feedback (spinners, skeletons).
 
-### 9. File Organization
+- **Reactive State**: Use computed properties for derived state:
+  ```typescript
+  const computedClasses = computed(() => [
+    'base-class',
+    isDarkMode.value ? 'dark:bg-gray-800' : 'bg-white',
+    isRtl.value ? 'rtl:ml-2' : 'ltr:mr-2'
+  ]);
+  ```
 
-- **Component Files**: Place components in their appropriate category folders:
-  - `src/elements/` for basic UI components
-  - `src/complex/` for advanced components
-  - `src/shell/` for layout components
-- **Story Files**: Co-locate `.stories.ts` files with their corresponding components.
-- **Type Files**: Export types through `src/types/` directory.
-- **Asset Organization**: Follow the established structure for images, icons, and other assets.
+### 7. File Organization
 
-### 10. Build & Export Configuration
+- **Component Files**: Place in appropriate category folders
+- **Component Registration**: Export through `components.ts` files
+- **Type Files**: Export types through `src/types/` directory
+- **Story Files**: Co-locate `.stories.ts` files with components
 
-- **Package Exports**: Follow the established export pattern in `package.json`:
+### 8. Build & Export
+
+- **Package Exports**: Follow established pattern in `package.json`:
   - `./elements.ts` for element components
   - `./complex.ts` for complex components
   - `./shell.ts` for shell components
   - `./toast.ts` for utilities
   - `./store.ts` for state management
-- **Type Declarations**: Ensure proper TypeScript declarations are exported.
-- **CSS Exports**: Export styles through `./style.css` for external usage.
 
 ---
 
 ## AI Agent Behavior
 
-- **Component Analysis**: When working with components, analyze their category and follow the appropriate patterns.
-- **Store Integration**: Always check if components need to integrate with the Pinia store for theme/RTL support.
-- **Storybook Creation**: Automatically suggest Storybook stories for new components with proper argTypes and examples.
-- **Type Safety**: Ensure all code changes maintain strict TypeScript typing.
-- **Theme Compliance**: Verify that all styling changes support the established theme system.
-- **RTL Support**: Check that directional styling uses logical properties and RTL classes.
-- **Documentation**: Prompt for comprehensive documentation updates when adding new features or components.
-- **Code Examples**: Provide complete, runnable code examples for all component usage patterns.
+- **Component Analysis**: Analyze component category and follow appropriate patterns
+- **Store Integration**: Check if components need theme/RTL integration
+- **Type Safety**: Ensure strict TypeScript typing in all components
+- **Theme Compliance**: Verify styling supports light/dark/semidark themes
+- **RTL Support**: Check directional styling uses logical properties
+- **Accessibility**: Always consider accessibility when creating/modifying components
+- **Pattern Consistency**: Follow established patterns from existing components
+- **Code Examples**: Provide complete, runnable code examples
