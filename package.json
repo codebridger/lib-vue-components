@@ -1,6 +1,6 @@
 {
   "name": "@codebridger/lib-vue-components",
-  "description": "A collection of Vue 3 components based on Tailwind CSS",
+  "description": "A comprehensive Vue 3 + TypeScript component library featuring 50+ UI components, shell layouts, icon system, and utilities. Built with Tailwind CSS, includes Storybook documentation, theme customization, and Nuxt.js support. Perfect for building modern web applications and dashboards.",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
