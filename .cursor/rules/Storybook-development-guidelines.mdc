@@ -1,10 +1,8 @@
 ---
-description: "Storybook Development Guidelines (for AI Agent)"
+description: "This rule set guides the AI agent in creating comprehensive, accessible, and well-documented Storybook stories for the Lib Vue Components library. The guidelines are based on the actual patterns and implementation used in the project."
 alwaysApply: false
 ---
-## Preamble
 
-This rule set guides the AI agent in creating comprehensive, accessible, and well-documented Storybook stories for the Lib Vue Components library. The guidelines are based on the actual patterns and implementation used in the project.
 
 ## Core Storybook Principles
 

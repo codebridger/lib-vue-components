@@ -1,6 +1,7 @@
-## Preamble
-
-This rule set guides the AI agent in adhering to the development standards for the Lib Vue Components library - a Vue 3 + TypeScript + Tailwind CSS component library. The guidelines are based on the actual components and patterns used in the project.
+---
+description: This rule set guides the AI agent in adhering to the development standards for the Lib Vue Components library - a Vue 3 + TypeScript + Tailwind CSS component library. The guidelines are based on the actual components and patterns used in the project.
+alwaysApply: false
+---
 
 ## Core Principles
 
