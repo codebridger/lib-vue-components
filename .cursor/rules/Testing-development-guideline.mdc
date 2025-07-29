@@ -22,11 +22,10 @@ This rule set guides the AI agent in implementing comprehensive testing strategi
 - **Storybook**: Primary E2E testing platform for component library
 - **@storybook/test**: Interaction testing and user journey validation
 - **@storybook/addon-interactions**: Visual testing and debugging
-- **Chromatic**: Visual regression testing and cross-browser validation
+- **@storybook/test-runner**: Automated test execution for all stories
 
 ### Visual & Accessibility Testing
 - **Storybook**: Component documentation and visual testing
-- **Chromatic**: Visual regression testing
 - **@storybook/test**: Interaction testing in Storybook
 - **axe-core**: Accessibility testing
 
@@ -319,14 +318,8 @@ export const VisualRegression: Story = {
     size: 'md',
   },
   parameters: {
-    // Enable Chromatic for visual regression testing
-    chromatic: { 
-      viewports: [320, 768, 1200],
-      modes: {
-        light: { colorScheme: 'light' },
-        dark: { colorScheme: 'dark' },
-      },
-    },
+    // Visual regression testing configuration
+    viewports: [320, 768, 1200],
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement)
@@ -480,7 +473,6 @@ jobs:
       - run: yarn install
       - run: yarn build-storybook
       - run: yarn test:e2e
-      - run: yarn chromatic --project-token=$CHROMATIC_PROJECT_TOKEN
 ```
 
 ### Package.json Scripts
@@ -491,11 +483,13 @@ jobs:
     "test:unit": "vitest unit",
     "test:component": "vitest component",
     "test:e2e": "storybook test",
+    "test:storybook": "test-storybook",
     "test:visual": "storybook test",
     "test:coverage": "vitest --coverage",
-    "test:ci": "vitest run && playwright test",
+    "test:ci": "vitest run && test-storybook",
     "test:watch": "vitest --watch",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:interactions": "test-storybook --watch"
   }
 }
 ```
@@ -692,14 +686,7 @@ export const ThemeVariations: Story = {
     color: 'primary',
   },
   parameters: {
-    chromatic: {
-      modes: {
-        light: { colorScheme: 'light' },
-        dark: { colorScheme: 'dark' },
-        semidark: { colorScheme: 'semidark' },
-      },
-      viewports: [320, 768, 1200],
-    },
+    viewports: [320, 768, 1200],
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement)
@@ -725,13 +712,11 @@ export const ThemeVariations: Story = {
 // src/shell/DashboardShell.stories.ts
 export const ResponsiveLayout: Story = {
   parameters: {
-    chromatic: {
-      viewports: [
-        { name: 'mobile', width: 320, height: 568 },
-        { name: 'tablet', width: 768, height: 1024 },
-        { name: 'desktop', width: 1200, height: 800 },
-      ],
-    },
+    viewports: [
+      { name: 'mobile', width: 320, height: 568 },
+      { name: 'tablet', width: 768, height: 1024 },
+      { name: 'desktop', width: 1200, height: 800 },
+    ],
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement)
@@ -839,7 +824,6 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions", // Required for interaction testing
     "@storybook/addon-a11y", // Accessibility testing
-    "@chromatic-com/storybook", // Visual regression testing
   ],
   framework: {
     name: "@storybook/vue3-vite",
@@ -874,19 +858,528 @@ const preview: Preview = {
         ],
       },
     },
-    // Global Chromatic settings
-    chromatic: {
-      viewports: [320, 768, 1200],
-      modes: {
-        light: { colorScheme: 'light' },
-        dark: { colorScheme: 'dark' },
-      },
-    },
+
   },
 }
 
 export default preview
 ```
+
+---
+
+## Storybook Component Testing Setup & Configuration
+
+### Installation & Setup
+
+#### Required Dependencies
+```bash
+yarn add --dev @storybook/test @storybook/addon-interactions
+```
+
+#### Storybook Configuration
+```typescript
+// .storybook/main.ts
+import type { StorybookConfig } from '@storybook/vue3-vite'
+
+const config: StorybookConfig = {
+  framework: '@storybook/vue3-vite',
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  addons: [
+    // Other Storybook addons
+    '@storybook/addon-interactions', // 👈 Register the addon
+  ],
+  // Enable interaction testing
+  features: {
+    interactionsDebugger: true,
+  },
+}
+
+export default config
+```
+
+#### Preview Configuration
+```typescript
+// .storybook/preview.ts
+import type { Preview } from '@storybook/vue3'
+
+const preview: Preview = {
+  parameters: {
+    // Global interaction testing settings
+    interactions: {
+      disable: false,
+      enableV6: true,
+    },
+    // Global accessibility settings
+    a11y: {
+      config: {
+        rules: [
+          { id: 'color-contrast', enabled: true },
+          { id: 'label', enabled: true },
+          { id: 'button-name', enabled: true },
+        ],
+      },
+    },
+  },
+  // Global setup for all stories
+  async beforeEach() {
+    // Reset mocks and state before each story
+    MockDate.reset()
+  },
+  // Global cleanup for all stories
+  async beforeAll() {
+    // Initialize global dependencies
+    await init()
+  },
+}
+
+export default preview
+```
+
+### Component Testing with Play Functions
+
+#### Basic Play Function Pattern
+```typescript
+// src/elements/Button.stories.ts
+import type { Meta, StoryObj } from '@storybook/vue3'
+import { userEvent, within, expect } from '@storybook/test'
+import Button from './Button.vue'
+
+const meta: Meta<typeof Button> = {
+  component: Button,
+  parameters: {
+    interactions: {
+      disable: false,
+    },
+  },
+}
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const InteractiveButton: Story = {
+  args: {
+    label: 'Click me',
+    color: 'primary',
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    
+    await step('Click button and verify event emission', async () => {
+      const button = canvas.getByRole('button', { name: /click me/i })
+      await userEvent.click(button)
+      
+      // Verify button state or emitted events
+      expect(button).toBeInTheDocument()
+    })
+  },
+}
+```
+
+#### Form Component Testing with Play Functions
+```typescript
+// src/elements/LoginForm.stories.ts
+import type { Meta, StoryObj } from '@storybook/vue3'
+import { userEvent, within, expect, fn } from '@storybook/test'
+import LoginForm from './LoginForm.vue'
+
+const meta: Meta<typeof LoginForm> = {
+  component: LoginForm,
+  args: {
+    onSubmit: fn(), // Mock function for testing
+  },
+}
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const FilledForm: Story = {
+  play: async ({ canvasElement, args, step }) => {
+    const canvas = within(canvasElement)
+    
+    await step('Enter credentials', async () => {
+      await userEvent.type(canvas.getByTestId('email'), 'email@provider.com')
+      await userEvent.type(canvas.getByTestId('password'), 'a-random-password')
+    })
+    
+    await step('Submit form', async () => {
+      await userEvent.click(canvas.getByRole('button'))
+    })
+    
+    // Assert form submission
+    await expect(
+      canvas.getByText('Everything is perfect. Your account is ready!')
+    ).toBeInTheDocument()
+    
+    // Verify mock function was called
+    await expect(args.onSubmit).toHaveBeenCalled()
+  },
+}
+```
+
+### Advanced Play Function Patterns
+
+#### Pre-Rendering Setup with Mount
+```typescript
+// src/elements/Page.stories.ts
+import MockDate from 'mockdate'
+
+export const ChristmasUI: Story = {
+  async play({ mount }) {
+    MockDate.set('2024-12-25')
+    // 👇 Render the component with the mocked date
+    await mount()
+    // ... rest of test
+  },
+}
+```
+
+#### Dynamic Data Creation
+```typescript
+// src/elements/Page.stories.ts
+export const DynamicData: Story = {
+  play: async ({ mount, args }) => {
+    const note = await db.note.create({
+      data: { title: 'Mount inside of play' },
+    })
+    
+    const canvas = await mount(
+      // 👇 Pass data created inside play function to component
+      <Page {...args} params={{ id: String(note.id) }} />
+    )
+    
+    await userEvent.click(await canvas.findByRole('menuitem', { name: /login to add/i }))
+  },
+  argTypes: {
+    // 👇 Make params prop un-controllable
+    params: { control: { disable: true } },
+  },
+}
+```
+
+#### File-Level Setup with beforeEach
+```typescript
+// src/elements/Page.stories.ts
+import MockDate from 'mockdate'
+
+const meta: Meta<typeof Page> = {
+  component: Page,
+  // 👇 Set up for every story in the file
+  async beforeEach() {
+    MockDate.set('2024-02-14')
+    
+    // 👇 Reset after each story
+    return () => {
+      MockDate.reset()
+    }
+  },
+}
+```
+
+### User Event API Reference
+
+#### Core User Events
+```typescript
+// Complete user event examples
+await userEvent.clear(canvas.getByRole('myinput'))
+await userEvent.click(canvas.getByText('mycheckbox'))
+await userEvent.dblClick(canvas.getByText('mycheckbox'))
+await userEvent.hover(canvas.getByTestId('example-test'))
+await userEvent.unhover(canvas.getByLabelText(/Example/i))
+await userEvent.type(canvas.getByRole('my-input'), 'Some text')
+await userEvent.keyboard('foo')
+await userEvent.selectOptions(canvas.getByRole('listbox'), ['1', '2'])
+await userEvent.deselectOptions(canvas.getByRole('listbox'), '1')
+```
+
+#### Complex Interaction Patterns
+```typescript
+// Multi-step form interaction
+await step('Fill out form fields', async () => {
+  const emailInput = canvas.getByRole('textbox', { name: /email/i })
+  const passwordInput = canvas.getByRole('textbox', { name: /password/i })
+  const checkbox = canvas.getByRole('checkbox', { name: /remember me/i })
+  
+  await userEvent.type(emailInput, 'test@example.com')
+  await userEvent.type(passwordInput, 'password123')
+  await userEvent.click(checkbox)
+  
+  expect(emailInput).toHaveValue('test@example.com')
+  expect(passwordInput).toHaveValue('password123')
+  expect(checkbox).toBeChecked()
+})
+```
+
+### Mocking and State Management
+
+#### Module Mocking
+```typescript
+// src/elements/NoteUI.stories.ts
+import { saveNote } from '#app/actions.mock' // Mocked module
+import { createNotes } from '#mocks/notes'
+
+export const SaveFlow: Story = {
+  args: {
+    isEditing: true,
+    note: createNotes()[0],
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    
+    const saveButton = canvas.getByRole('menuitem', { name: /done/i })
+    await userEvent.click(saveButton)
+    
+    // 👇 Assert on mocked function behavior
+    await expect(saveNote).toHaveBeenCalled()
+  },
+}
+```
+
+#### State Reset Patterns
+```typescript
+// .storybook/preview.ts
+const preview: Preview = {
+  async beforeEach() {
+    // Reset global state before each story
+    MockDate.reset()
+    // Reset any other global mocks or state
+  },
+  async beforeAll() {
+    // Initialize global dependencies once
+    await init()
+  },
+}
+```
+
+### Test Runner Integration
+
+#### Command Line Execution
+```bash
+# Run all Storybook tests
+yarn test-storybook
+
+# Run with specific options
+yarn test-storybook --watch
+yarn test-storybook --coverage
+```
+
+#### CI/CD Integration
+```yaml
+# .github/workflows/test.yml
+name: Storybook Tests
+
+on: [push, pull_request]
+
+jobs:
+  storybook-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: yarn install
+      - run: yarn build-storybook
+      - run: yarn test-storybook
+```
+
+### Interactive Debugging
+
+#### Debugger Panel Features
+- **Step-by-step execution**: View each interaction step
+- **Pause/Resume**: Control test execution flow
+- **Rewind**: Go back to previous steps
+- **Visual feedback**: See exactly what's happening in the browser
+
+#### Error Handling
+```typescript
+export const ErrorHandling: Story = {
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    
+    await step('Handle expected errors', async () => {
+      try {
+        await userEvent.click(canvas.getByRole('button', { name: /non-existent/i }))
+      } catch (error) {
+        // Handle expected errors gracefully
+        expect(error.message).toContain('Unable to find')
+      }
+    })
+  },
+}
+```
+
+### Performance Testing Patterns
+
+#### Render Performance Testing
+```typescript
+export const PerformanceTest: Story = {
+  args: {
+    data: generateLargeDataset(1000), // 1000 rows
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    
+    await step('Measure render performance', async () => {
+      const startTime = performance.now()
+      
+      const table = canvas.getByRole('table')
+      expect(table).toBeInTheDocument()
+      
+      const endTime = performance.now()
+      const renderTime = endTime - startTime
+      
+      // Assert reasonable render time
+      expect(renderTime).toBeLessThan(100) // 100ms threshold
+    })
+  },
+}
+```
+
+#### Memory Usage Testing
+```typescript
+export const MemoryTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    await step('Monitor memory usage', async () => {
+      const initialMemory = performance.memory?.usedJSHeapSize || 0
+      
+      // Perform memory-intensive operations
+      for (let i = 0; i < 1000; i++) {
+        await userEvent.click(canvas.getByRole('button'))
+      }
+      
+      const finalMemory = performance.memory?.usedJSHeapSize || 0
+      const memoryIncrease = finalMemory - initialMemory
+      
+      // Assert reasonable memory usage
+      expect(memoryIncrease).toBeLessThan(50 * 1024 * 1024) // 50MB threshold
+    })
+  },
+}
+```
+
+### Accessibility Testing Integration
+
+#### Automated A11y Testing
+```typescript
+export const AccessibilityAudit: Story = {
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          { id: 'color-contrast', enabled: true },
+          { id: 'label', enabled: true },
+          { id: 'button-name', enabled: true },
+          { id: 'form-field-multiple-labels', enabled: true },
+        ],
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    
+    await step('Verify accessibility attributes', async () => {
+      const input = canvas.getByRole('textbox', { name: /email address/i })
+      const label = canvas.getByText(/email address/i)
+      
+      expect(input).toHaveAttribute('type', 'email')
+      expect(input).toHaveAttribute('required')
+      expect(label).toBeInTheDocument()
+    })
+    
+    await step('Test keyboard navigation', async () => {
+      const input = canvas.getByRole('textbox', { name: /email address/i })
+      
+      await userEvent.tab()
+      expect(input).toHaveFocus()
+      
+      await userEvent.type(input, 'test@example.com')
+      expect(input).toHaveValue('test@example.com')
+    })
+  },
+}
+```
+
+### Visual Regression Testing
+
+#### Visual Regression Testing
+```typescript
+export const VisualRegression: Story = {
+  args: {
+    label: 'Primary Button',
+    color: 'primary',
+    size: 'md',
+  },
+  parameters: {
+    viewports: [320, 768, 1200],
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    
+    await step('Verify visual appearance', async () => {
+      const button = canvas.getByRole('button', { name: /primary button/i })
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveClass('btn-primary')
+    })
+  },
+}
+```
+
+### Troubleshooting Common Issues
+
+#### Test Isolation
+- **State Reset**: Always reset state between tests using `beforeEach`
+- **Mock Cleanup**: Storybook automatically restores mocks between stories
+- **Component Cleanup**: Ensure components properly clean up event listeners
+
+#### Performance Issues
+- **Test Timeout**: Increase timeout for complex interactions
+- **Memory Leaks**: Monitor memory usage in long-running tests
+- **Async Operations**: Use `waitFor` for asynchronous operations
+
+#### Debugging Tips
+- **Interactive Debugger**: Use Storybook's interaction panel for step-by-step debugging
+- **Error Permalinks**: Share error URLs for easy reproduction
+- **Visual Feedback**: See exactly what's happening in the browser during tests
+
+---
+
+## Testing Strategy Comparison
+
+### Component Tests vs Visual Tests
+- **Component Tests**: Test functional behavior, user interactions, and business logic
+- **Visual Tests**: Test visual appearance, layout, and design consistency
+- **Combination**: Use both for comprehensive coverage with less maintenance
+- **Recommendation**: Focus component tests on critical user workflows, use visual tests for design validation
+
+### Component Tests vs Jest + Testing Library Alone
+- **Storybook Integration**: Tests run in real browser environment vs JSDOM limitations
+- **Visual Debugging**: See component during test execution vs command line output
+- **Co-location**: Keep stories and tests together vs separate test files
+- **Browser Features**: Access to real browser APIs vs mocked implementations
+- **Debugging**: Visual debugging in browser vs command line debugging
+
+### When to Use Each Approach
+
+#### Use Component Tests (Storybook) For:
+- User interaction workflows
+- Form validation and submission
+- Component state management
+- Accessibility testing
+- Complex user journeys
+- Visual feedback validation
+
+#### Use Unit Tests (Vitest) For:
+- Pure function testing
+- Utility function validation
+- Component prop validation
+- Event emission testing
+- Simple component logic
+- Performance-critical code
+
+#### Use Visual Tests For:
+- Design consistency
+- Cross-browser compatibility
+- Responsive design validation
+- Theme variations
+- Visual regression detection
 
 ---
 
@@ -900,6 +1393,8 @@ export default preview
 - **Best Practices**: Suggest testing best practices and improvements
 - **Documentation**: Provide clear test documentation and examples
 - **Storybook Integration**: Leverage Storybook for comprehensive E2E testing
-- **Visual Testing**: Include visual regression testing with Chromatic
+- **Visual Testing**: Include visual regression testing
+- **Component Testing**: Prioritize user behavior testing over implementation details
+- **Test Strategy**: Recommend appropriate testing approach based on component complexity
 alwaysApply: false
 ---
