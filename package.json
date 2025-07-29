@@ -37,6 +37,7 @@
     "build-dev": "vue-tsc --noEmit && vite build --minify false",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
     "test": "vitest --run",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest --coverage",
