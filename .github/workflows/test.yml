@@ -53,6 +53,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Install Playwright browsers
+        run: yarn playwright install --with-deps
+
       - name: Start Storybook
         run: yarn storybook &
 
