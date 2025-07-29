@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shell/AppRoot Default smoke-test 1`] = `
+<app colorscheme="light"
+     layoutstyle="full"
+     direction="ltr"
+>
+  <div class="h-screen flex justify-center items-center">
+    <p>
+      The very beginning of the app
+    </p>
+  </div>
+</app>
+`;
