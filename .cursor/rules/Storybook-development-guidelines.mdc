@@ -1,0 +1,391 @@
+---
+description: "This rule set guides the AI agent in creating comprehensive, accessible, and well-documented Storybook stories for the Lib Vue Components library. The guidelines are based on the actual patterns and implementation used in the project."
+alwaysApply: false
+---
+
+
+## Core Storybook Principles
+
+- **Comprehensive Documentation**: Every component must have thorough Storybook documentation with usage examples, prop descriptions, and best practices.
+- **Interactive Testing**: All components must be testable through Storybook with proper interaction testing and accessibility validation.
+- **Consistent Structure**: All stories must follow established naming conventions, organization patterns, and documentation standards.
+- **Accessibility First**: Every story must include accessibility testing and demonstrate proper ARIA usage.
+- **Responsive Design**: Stories must showcase component behavior across different viewports and screen sizes.
+- **Theme Integration**: All stories must demonstrate component appearance in light, dark, and semidark themes.
+
+## Storybook Architecture Understanding
+
+### Story Organization
+
+- **Story Files**: Co-located with components (e.g., `Button.stories.ts` next to `Button.vue`)
+- **Story Categories**: Organized by component type (Elements, Complex, Shell)
+- **Story Hierarchy**: Logical grouping of related stories and variants
+- **Story Parameters**: Global and story-specific parameters for consistent behavior
+
+### Global Configuration
+
+- **Global Types**: Defined in `.storybook/globalTypes.ts` for theme, direction, layout controls
+- **Main Decorator**: Wraps all stories with `AppRoot` and theme management
+- **Preview Configuration**: Global parameters and decorators in `.storybook/preview.ts`
+
+---
+
+## Storybook Development Rules
+
+### 1. Story Structure & Organization
+
+- **Story File Naming**: Use `.stories.ts` extension and co-locate with component files
+- **Story Export Pattern**: Export stories as default export with component metadata
+- **Story Naming Conventions**: Use descriptive, consistent story names:
+  - `Default`: Default/primary variant of the component
+  - `Rounded`: Rounded variant (for buttons)
+  - `Outline`: Outline variant (for buttons)
+  - `Loading`: Component in loading state
+  - `Disabled`: Component in disabled state
+  - `WithIcon`: Component with icon integration
+  - `WithError`: Component in error state
+  - `CustomTrigger`: Custom trigger variant (for modals)
+  - `FullSetupShell`: Complete shell setup (for layout components)
+  - `SimpleShell`: Simple shell setup (for layout components)
+- **Story Hierarchy**: Organize stories in logical groups:
+  - Group variants under the same component
+  - Use story parameters for different contexts
+  - Maintain consistent ordering across components
+
+### 2. Story Configuration & Metadata
+
+- **Component Title**: Use consistent title format: `Category/ComponentName`
+  - Elements: `Elements/Button`, `Elements/Input`, `Elements/Tabs`, etc.
+  - Complex: `Complex/Modal`, `Complex/Pagination`, etc.
+  - Shell: `Shell/DashboardShell`, `Shell/Sidebar`, etc.
+- **Component Parameters**: Set global parameters for consistent behavior:
+  - `layout`: Use `padded` for most components, `fullscreen` for layout components, `centered` for modals
+  - `docs`: Enable documentation and controls with `tags: ["autodocs"]`
+  - `source`: Set `type: "code"` for code examples
+- **Story Parameters**: Set story-specific parameters:
+  - `docs.story.inline`: Set to `false` for full-screen stories
+  - `docs.story.height`: Set height for constrained stories
+  - `skipMainDecorator`: Skip main decorator when needed
+
+### 3. Story Implementation Patterns
+
+- **Meta Configuration**: Use TypeScript with proper typing:
+  ```typescript
+  const meta = {
+    title: "Elements/ComponentName",
+    component: ComponentName,
+    tags: ["autodocs"],
+    argTypes: {
+      // prop definitions
+    },
+    args: {
+      // default values
+    },
+    parameters: {
+      // story parameters
+    }
+  } satisfies Meta<typeof ComponentName>;
+  ```
+
+- **Story Type Definition**: Use proper TypeScript typing:
+  ```typescript
+  type Story = StoryObj<typeof meta>;
+  ```
+
+- **Render Function Pattern**: Use render functions for complex stories:
+  ```typescript
+  export const ComplexStory: Story = {
+    render: (args) => ({
+      components: { ComponentName, OtherComponent },
+      setup() {
+        return { args };
+      },
+      template: `
+        <ComponentName v-bind="args">
+          <!-- custom content -->
+        </ComponentName>
+      `
+    })
+  };
+  ```
+
+- **Setup Function Pattern**: Use setup functions for reactive stories:
+  ```typescript
+  export const ReactiveStory: Story = {
+    render: (args) => ({
+      components: { ComponentName },
+      setup() {
+        const reactiveValue = ref('initial');
+        const handleChange = (value: string) => {
+          reactiveValue.value = value;
+        };
+        return { args, reactiveValue, handleChange };
+      },
+      template: `
+        <ComponentName 
+          v-bind="args" 
+          :model-value="reactiveValue"
+          @update:model-value="handleChange"
+        />
+      `
+    })
+  };
+  ```
+
+### 4. ArgTypes & Controls Configuration
+
+- **ArgTypes Definition**: Define comprehensive argTypes for all props:
+  ```typescript
+  argTypes: {
+    variant: {
+      control: "select",
+      options: ['primary', 'secondary', 'success', 'danger', 'warning', 'info'],
+      description: 'The visual variant of the component'
+    },
+    size: {
+      control: "select",
+      options: ['sm', 'md', 'lg'],
+      description: 'The size of the component'
+    },
+    disabled: {
+      control: "boolean",
+      description: 'Whether the component is disabled'
+    },
+    modelValue: {
+      control: "text",
+      description: 'The v-model value'
+    },
+    "onUpdate:modelValue": {
+      action: "update:modelValue",
+      description: "Event emitted when value changes",
+      table: {
+        category: "events",
+        type: { summary: "string" }
+      }
+    }
+  }
+  ```
+
+- **Control Types**: Use appropriate control types:
+  - `select`: For enum values with predefined options
+  - `inline-radio`: For mutually exclusive options
+  - `boolean`: For true/false values
+  - `text`: For string inputs
+  - `number`: For numeric inputs
+  - `object`: For complex objects (arrays, objects)
+  - `action`: For event handlers
+
+- **Args Defaults**: Set meaningful default values:
+  ```typescript
+  args: {
+    disabled: false,
+    size: 'md',
+    variant: 'primary',
+    modelValue: '',
+    placeholder: 'Enter text...'
+  }
+  ```
+
+### 5. Component Documentation
+
+- **MDX Documentation**: Include comprehensive component documentation:
+  ```typescript
+  parameters: {
+    docs: {
+      description: {
+        component: `
+# Component Name
+
+A description of the component and its purpose.
+
+## Features
+- Feature 1
+- Feature 2
+- Feature 3
+
+## Usage
+
+\`\`\`vue
+<ComponentName v-model="value" />
+\`\`\`
+        `
+      }
+    }
+  }
+  ```
+
+- **Code Examples**: Include practical usage examples:
+  - Basic usage patterns
+  - Advanced configurations
+  - Integration examples
+  - Customization patterns
+
+### 6. Global Types & Theme Integration
+
+- **Global Types**: Use predefined global types for consistent controls:
+  ```typescript
+  import { getColorScheme, getDirection, getLayoutStyle } from "../../.storybook/globalTypes";
+  
+  // Use in argTypes for global controls
+  argTypes: {
+    colorScheme: getColorScheme(),
+    direction: getDirection(),
+    layoutStyle: getLayoutStyle()
+  }
+  ```
+
+- **Theme Integration**: Leverage the main decorator for theme management:
+  - Stories automatically get theme switching via global controls
+  - RTL support via direction control
+  - Layout style switching via layout control
+  - No need to manually implement theme logic in stories
+
+### 7. Layout & Decorators
+
+- **Layout Parameters**: Use appropriate layout for component type:
+  - `layout: "padded"` - Default for most components
+  - `layout: "fullscreen"` - For layout/shell components
+  - `layout: "centered"` - For modals and overlays
+
+- **Custom Decorators**: Use decorators for specific contexts:
+  ```typescript
+  decorators: [
+    () => ({
+      template: '<div class="w-[400px] flex justify-center"><story /></div>'
+    })
+  ]
+  ```
+
+- **Skip Main Decorator**: Skip main decorator when needed:
+  ```typescript
+  parameters: {
+    skipMainDecorator: true
+  }
+  ```
+
+### 8. Interactive Stories & Testing
+
+- **Reactive Stories**: Create stories with reactive state:
+  ```typescript
+  export const InteractiveStory: Story = {
+    render: (args) => ({
+      components: { ComponentName },
+      setup() {
+        const value = ref(args.modelValue || '');
+        const handleChange = (newValue: string) => {
+          value.value = newValue;
+        };
+        return { args, value, handleChange };
+      },
+      template: `
+        <ComponentName 
+          v-bind="args" 
+          :model-value="value"
+          @update:model-value="handleChange"
+        />
+        <div class="mt-4">Current value: {{ value }}</div>
+      `
+    })
+  };
+  ```
+
+- **Event Testing**: Use action controls for event testing:
+  ```typescript
+  argTypes: {
+    "onUpdate:modelValue": {
+      action: "update:modelValue"
+    },
+    "onClick": {
+      action: "clicked"
+    }
+  }
+  ```
+
+### 9. Complex Component Stories
+
+- **Modal Stories**: Handle modal-specific patterns:
+  ```typescript
+  export const CustomTrigger: Story = {
+    render: (args) => ({
+      components: { Modal, Button },
+      setup() {
+        return { args };
+      },
+      template: `
+        <Modal v-bind="args">
+          <template #trigger="{ toggleModal }">
+            <Button @click="toggleModal">Custom Trigger</Button>
+          </template>
+          <template #default="{ toggleModal }">
+            <div class="text-center">
+              <h3>Modal Content</h3>
+              <Button @click="toggleModal(false)">Close</Button>
+            </div>
+          </template>
+        </Modal>
+      `
+    })
+  };
+  ```
+
+- **Shell Stories**: Handle layout component patterns:
+  ```typescript
+  export const FullSetupShell: Story = {
+    render(args) {
+      return {
+        components: { DashboardShell, SidebarMenu },
+        setup() {
+          return { args, sidebarData };
+        },
+        template: `
+          <DashboardShell v-bind="args">
+            <template #sidebar-menu="{ closeSidebar }">
+              <SidebarMenu :items="sidebarData" />
+            </template>
+            <template #content>
+              <div>Content goes here</div>
+            </template>
+          </DashboardShell>
+        `
+      };
+    }
+  };
+  ```
+
+### 10. Accessibility & Testing
+
+- **Accessibility Addon**: Enable accessibility testing:
+  - Stories automatically get accessibility validation
+  - Use `@storybook/addon-a11y` for comprehensive testing
+  - Validate ARIA attributes, color contrast, keyboard navigation
+
+- **Responsive Testing**: Test across viewports:
+  - Use viewport controls in Storybook
+  - Test mobile, tablet, and desktop layouts
+  - Validate responsive behavior
+
+### 11. Storybook Maintenance
+
+- **Story Updates**: Update stories when component APIs change:
+  - Update argTypes when props change
+  - Update examples when usage patterns change
+  - Update documentation when features are added
+
+- **Performance**: Keep stories performant:
+  - Avoid complex computations in story setup
+  - Use proper cleanup for reactive stories
+  - Optimize large component stories
+
+---
+
+## AI Agent Behavior for Storybook Development
+
+- **Story Creation**: Automatically create comprehensive stories for new components with proper structure, argTypes, and documentation.
+- **Pattern Consistency**: Follow established patterns from existing stories in the project.
+- **TypeScript Integration**: Ensure proper TypeScript typing for all stories and meta configurations.
+- **Theme Integration**: Leverage global theme controls and main decorator for consistent theming.
+- **Documentation Quality**: Include comprehensive component documentation with usage examples.
+- **Interactive Examples**: Create interactive stories that demonstrate component functionality.
+- **Accessibility**: Ensure all stories support accessibility testing and validation.
+- **Code Examples**: Provide practical, runnable code examples for all component usage patterns.
+- **Maintenance**: Update stories when component APIs or usage patterns change.

@@ -1,0 +1,192 @@
+---
+description: This rule set guides the AI agent in adhering to the development standards for the Lib Vue Components library - a Vue 3 + TypeScript + Tailwind CSS component library. The guidelines are based on the actual components and patterns used in the project.
+alwaysApply: false
+---
+
+## Core Principles
+
+- **Vue 3 Composition API**: All components use `<script setup lang="ts">` syntax with TypeScript
+- **Tailwind CSS**: All styling uses Tailwind CSS with the established color system
+- **TypeScript First**: Strict TypeScript typing for all props, emits, and component data
+- **Accessibility**: Components must be accessible with proper ARIA attributes
+- **Theme Support**: Components support light/dark/semidark themes
+- **RTL Support**: Components support right-to-left layouts
+
+## Project Structure
+
+### Component Categories
+
+- **Elements** (`src/elements/`): Basic UI components
+  - Button, IconButton, Input, TextArea, CheckboxInput
+  - Avatar, AvatarGroup, Card, Progress, SwitchBall
+  - Dropdown, DropdownItem, Tabs, Tooltip
+  - FileInputButton, FileInputCombo, FileInputDropMode
+- **Complex** (`src/complex/`): Advanced components
+  - Modal, Pagination
+- **Shell** (`src/shell/`): Layout components
+  - AppRoot, DashboardShell, SidebarMenu, HorizontalMenu
+  - Footer, ThemeCustomizer
+
+### State Management
+
+- **Pinia Store** (`src/stores/index.ts`): Global state for theme, layout, RTL
+- **Theme Classes**: `light`, `dark` on body; `ltr`, `rtl` on html
+- **Semidark Mode**: Special theme for sidebar/header components
+
+---
+
+## Component Development Rules
+
+### 1. Component Structure
+
+- **Template**: Use Vue 3 template syntax with Tailwind classes
+- **Script Setup**: Use `<script setup lang="ts">` with TypeScript
+- **Props Interface**: Define explicit TypeScript interfaces for all props
+- **Component Registration**: Export through respective `components.ts` files
+- **Slot System**: Use named slots for flexible composition
+
+### 2. Props & TypeScript Patterns
+
+- **Props Interface**: Define with explicit types and defaults:
+  ```typescript
+  interface ComponentProps {
+    modelValue?: string;
+    disabled?: boolean;
+    size?: 'sm' | 'md' | 'lg';
+    variant?: 'primary' | 'secondary' | 'success' | 'danger';
+  }
+  
+  const props = withDefaults(defineProps<ComponentProps>(), {
+    disabled: false,
+    size: 'md',
+    variant: 'primary'
+  });
+  ```
+
+- **Emits**: Define explicit emit types:
+  ```typescript
+  const emit = defineEmits<{
+    'update:modelValue': [value: string];
+    'change': [value: string];
+    'focus': [event: FocusEvent];
+    'blur': [event: FocusEvent];
+  }>();
+  ```
+
+### 3. Styling Patterns
+
+- **Tailwind Classes**: Use established color palette:
+  - Primary: `#4361ee` (blue)
+  - Secondary: `#805dca` (purple)
+  - Success: `#00ab55` (green)
+  - Danger: `#e7515a` (red)
+  - Warning: `#e2a03f` (orange)
+  - Info: `#2196f3` (light blue)
+  - Dark: `#3b3f5c` (dark gray)
+
+- **RTL Support**: Use logical properties:
+  - `ltr:mr-2 rtl:ml-2` instead of `ml-2` or `mr-2`
+  - Check `store.isRtl` for conditional styling
+  - Apply `ltr:` and `rtl:` prefixes
+
+- **Theme Support**: Use dark mode classes:
+  - `dark:` prefix for dark theme variants
+  - Check `store.isDarkMode` for conditional logic
+  - Support `store.semidark` for semidark mode
+
+- **Responsive Design**: Use responsive classes:
+  - `sm:`, `md:`, `lg:`, `xl:` prefixes
+  - Mobile-first approach
+
+### 4. Common Component Patterns
+
+#### Button Components
+- Support multiple variants: `primary`, `secondary`, `success`, `danger`, `warning`, `info`
+- Size variants: `xs`, `sm`, `md`, `lg`
+- States: `disabled`, `loading`, `outline`, `block`
+- Icon support with `iconName` prop
+- Link support with `to` prop
+
+#### Input Components
+- Standard props: `modelValue`, `placeholder`, `disabled`, `required`, `type`
+- Validation: `error`, `errorMessage`
+- Icon support: `iconName`, `iconOppositePosition`
+- Events: `update:modelValue`, `focus`, `blur`, `keyup.enter`
+
+#### Form Components
+- Use `v-model` with `modelValue` prop
+- Emit `update:modelValue` for two-way binding
+- Support validation states with error styling
+- Include proper labels and helper text
+
+#### Modal Components
+- Use Headless UI Dialog components
+- Support custom triggers via slots
+- Include backdrop and close functionality
+- Proper focus management and ARIA attributes
+
+### 5. Accessibility Patterns
+
+- **ARIA Attributes**: Use appropriate ARIA attributes:
+  - `aria-label` for icon-only elements
+  - `aria-describedby` for form inputs
+  - `aria-expanded` for expandable elements
+  - `aria-disabled` for disabled elements
+
+- **Keyboard Navigation**: Support keyboard interactions:
+  - Enter/Space for buttons
+  - Arrow keys for dropdowns
+  - Escape for modals
+  - Tab for form navigation
+
+- **Focus Management**: Proper focus handling:
+  - Focus trap for modals
+  - Return focus after modal close
+  - Visible focus indicators
+
+### 6. State Management Integration
+
+- **Store Usage**: Use `useAppStore()` for global state:
+  ```typescript
+  const store = useAppStore();
+  const isDarkMode = computed(() => store.isDarkMode);
+  const isRtl = computed(() => store.isRtl);
+  ```
+
+- **Reactive State**: Use computed properties for derived state:
+  ```typescript
+  const computedClasses = computed(() => [
+    'base-class',
+    isDarkMode.value ? 'dark:bg-gray-800' : 'bg-white',
+    isRtl.value ? 'rtl:ml-2' : 'ltr:mr-2'
+  ]);
+  ```
+
+### 7. File Organization
+
+- **Component Files**: Place in appropriate category folders
+- **Component Registration**: Export through `components.ts` files
+- **Type Files**: Export types through `src/types/` directory
+- **Story Files**: Co-locate `.stories.ts` files with components
+
+### 8. Build & Export
+
+- **Package Exports**: Follow established pattern in `package.json`:
+  - `./elements.ts` for element components
+  - `./complex.ts` for complex components
+  - `./shell.ts` for shell components
+  - `./toast.ts` for utilities
+  - `./store.ts` for state management
+
+---
+
+## AI Agent Behavior
+
+- **Component Analysis**: Analyze component category and follow appropriate patterns
+- **Store Integration**: Check if components need theme/RTL integration
+- **Type Safety**: Ensure strict TypeScript typing in all components
+- **Theme Compliance**: Verify styling supports light/dark/semidark themes
+- **RTL Support**: Check directional styling uses logical properties
+- **Accessibility**: Always consider accessibility when creating/modifying components
+- **Pattern Consistency**: Follow established patterns from existing components
+- **Code Examples**: Provide complete, runnable code examples
