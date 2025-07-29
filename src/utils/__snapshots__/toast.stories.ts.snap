@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Utilities/Toast DefaultToast smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <button data-v-e3f15263
+          type="button"
+          class="btn text-xs sm:text-sm transition-all btn-primary shadow-none normal-case border-solid active:btn-primary"
+  >
+    <span data-v-e3f15263
+          class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+    >
+    </span>
+    <span data-v-e3f15263
+          class
+    >
+      Send a Toast
+    </span>
+  </button>
+</div>
+`;

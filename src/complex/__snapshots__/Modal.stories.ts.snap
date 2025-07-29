@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Complex/Modal CustomAnimation smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal CustomSize smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal CustomTrigger smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all btn-lg shadow-none normal-case border-solid"
+              variant="primary"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          🚀 Launch Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal Default smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal NoCloseButton smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal Persistent smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal SmallSize smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Delete Item
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal WithFooter smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal WithTitle smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Complex/Modal WithTitleSlot smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="w-[400px] flex justify-center">
+    <div>
+      <button data-v-e3f15263
+              type="button"
+              class="btn text-xs sm:text-sm transition-all shadow-none normal-case border-solid"
+      >
+        <span data-v-e3f15263
+              class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
+        >
+        </span>
+        <span data-v-e3f15263
+              class
+        >
+          Open Modal
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
