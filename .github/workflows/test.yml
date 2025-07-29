@@ -28,14 +28,6 @@ jobs:
       - name: Run unit tests with coverage
         run: yarn test:coverage
 
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v4
-        with:
-          file: ./coverage/lcov.info
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
-
   storybook-tests:
     name: Storybook Tests
     runs-on: ubuntu-latest
@@ -67,11 +59,3 @@ jobs:
         run: yarn test:storybook
         env:
           STORYBOOK_URL: http://localhost:6006
-
-      - name: Upload Storybook test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: storybook-test-results
-          path: storybook-static/
-          retention-days: 7
