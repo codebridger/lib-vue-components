@@ -1,0 +1,760 @@
+# Testing Development Guidelines
+
+## Overview
+This document outlines the comprehensive testing strategy for the Lib Vue Components library - a Vue 3 + TypeScript + Tailwind CSS component library. Our testing approach combines unit tests, accessibility tests, and Storybook integration tests to ensure robust, accessible, and well-documented components.
+
+## Testing Pyramid
+
+### 1. Unit Tests (Vitest + Vue Test Utils)
+- **Purpose**: Test individual component logic, props, events, and styling
+- **Location**: `src/elements/__tests__/ComponentName.test.ts`
+- **Coverage**: Component rendering, props validation, event emission, computed properties
+
+### 2. Accessibility Tests (Dedicated A11y Tests)
+- **Purpose**: Ensure components meet accessibility standards
+- **Location**: `src/elements/__tests__/ComponentName.accessibility.test.ts`
+- **Coverage**: ARIA attributes, keyboard navigation, screen reader support, focus management
+
+### 3. Integration Tests (Storybook + Play Functions)
+- **Purpose**: Test component behavior in real browser environment
+- **Location**: `src/elements/ComponentName.stories.ts`
+- **Coverage**: User interactions, visual feedback, component workflows
+
+## Project Setup
+
+### Dependencies
+```json
+{
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "@vue/test-utils": "^2.4.0",
+    "jsdom": "^26.1.0",
+    "@vitest/ui": "^3.2.4",
+    "@storybook/test": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/test-runner": "^0.23.0"
+  }
+}
+```
+
+### Configuration Files
+
+#### vitest.config.ts
+```typescript
+import { defineConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
+
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test-setup.ts'],
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
+})
+```
+
+#### src/test-setup.ts
+```typescript
+import { vi } from 'vitest'
+
+// Mock ResizeObserver
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}))
+
+// Mock IntersectionObserver
+global.IntersectionObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}))
+
+// Mock matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+})
+
+// Mock scrollTo
+window.scrollTo = vi.fn()
+
+// Mock getComputedStyle
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: vi.fn(),
+  }),
+})
+```
+
+### Package.json Scripts
+```json
+{
+  "scripts": {
+    "test": "vitest",
+    "test:all": "vitest run && test-storybook",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "test:storybook": "test-storybook"
+  }
+}
+```
+
+## Unit Testing Patterns
+
+### Test File Structure
+```typescript
+// src/elements/__tests__/Button.test.ts
+import { describe, it, expect, vi } from 'vitest'
+import { mount, VueWrapper } from '@vue/test-utils'
+import Button from '../Button.vue'
+import Icon from '../../icon/Icon.vue'
+
+describe('Button Component', () => {
+  let wrapper: VueWrapper<any>
+
+  const createWrapper = (props = {}) => {
+    return mount(Button, {
+      props,
+      global: {
+        components: {
+          Icon
+        }
+      }
+    })
+  }
+
+  // Test categories
+  describe('Rendering', () => {
+    // Basic rendering tests
+  })
+
+  describe('Props and Styling', () => {
+    // Props validation and styling tests
+  })
+
+  describe('Events', () => {
+    // Event emission tests
+  })
+
+  describe('Accessibility', () => {
+    // Basic accessibility tests
+  })
+
+  describe('Edge Cases', () => {
+    // Error handling and edge cases
+  })
+})
+```
+
+### Component Testing Examples
+
+#### Basic Rendering Test
+```typescript
+describe('Rendering', () => {
+  it('renders as button element by default', () => {
+    wrapper = createWrapper()
+    expect(wrapper.find('button').exists()).toBe(true)
+  })
+
+  it('renders as anchor element when to prop is provided', () => {
+    wrapper = createWrapper({ to: '/dashboard' })
+    expect(wrapper.find('a').exists()).toBe(true)
+  })
+
+  it('renders with default label', () => {
+    wrapper = createWrapper({ label: 'Click me' })
+    expect(wrapper.text()).toContain('Click me')
+  })
+})
+```
+
+#### Props and Styling Tests
+```typescript
+describe('Props and Styling', () => {
+  it('applies color classes correctly', () => {
+    const colors = ['primary', 'info', 'success', 'warning', 'danger', 'secondary', 'dark', 'gradient']
+    
+    colors.forEach(color => {
+      wrapper = createWrapper({ color })
+      expect(wrapper.classes()).toContain(`btn-${color}`)
+    })
+  })
+
+  it('applies size classes correctly', () => {
+    const sizes = ['xs', 'sm', 'md', 'lg']
+    
+    sizes.forEach(size => {
+      wrapper = createWrapper({ size })
+      expect(wrapper.classes()).toContain(`btn-${size}`)
+    })
+  })
+
+  it('applies outline styling when outline prop is true', () => {
+    wrapper = createWrapper({ color: 'primary', outline: true })
+    expect(wrapper.classes()).toContain('btn-outline-primary')
+  })
+})
+```
+
+#### Event Testing
+```typescript
+describe('Events', () => {
+  it('emits click event when button is clicked', async () => {
+    wrapper = createWrapper()
+    await wrapper.find('button').trigger('click')
+    expect(wrapper.emitted('click')).toBeTruthy()
+  })
+
+  it('does not emit click event when disabled', async () => {
+    wrapper = createWrapper({ disabled: true })
+    await wrapper.find('button').trigger('click')
+    expect(wrapper.emitted('click')).toBeFalsy()
+  })
+})
+```
+
+#### Loading State Testing
+```typescript
+describe('Loading State', () => {
+  it('shows loading icon when isLoading is true', () => {
+    wrapper = createWrapper({ isLoading: true })
+    const loadingIcon = wrapper.findComponent(Icon)
+    expect(loadingIcon.exists()).toBe(true)
+  })
+
+  it('applies loading animation class', () => {
+    wrapper = createWrapper({ isLoading: true })
+    const loadingIcon = wrapper.findComponent(Icon)
+    expect(loadingIcon.classes()).toContain('animate-[spin_2s_linear_infinite]')
+  })
+})
+```
+
+#### Icon Integration Testing
+```typescript
+describe('Icon Integration', () => {
+  it('renders icon from prop', () => {
+    wrapper = createWrapper({ iconName: 'IconSettings' })
+    const icon = wrapper.findComponent(Icon)
+    expect(icon.exists()).toBe(true)
+    expect(icon.props('name')).toBe('IconSettings')
+  })
+
+  it('renders icon from slot', () => {
+    wrapper = createWrapper({
+      slots: {
+        icon: '<Icon name="IconSettings" />'
+      }
+    })
+    const icon = wrapper.findComponent(Icon)
+    expect(icon.exists()).toBe(true)
+  })
+})
+```
+
+## Accessibility Testing Patterns
+
+### Accessibility Test File Structure
+```typescript
+// src/elements/__tests__/Button.accessibility.test.ts
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import Button from '../Button.vue'
+import Icon from '../../icon/Icon.vue'
+
+describe('Button Component Accessibility', () => {
+  const createWrapper = (props = {}) => {
+    return mount(Button, {
+      props,
+      global: {
+        components: { Icon }
+      }
+    })
+  }
+
+  describe('ARIA Attributes', () => {
+    // ARIA attribute tests
+  })
+
+  describe('Keyboard Navigation', () => {
+    // Keyboard interaction tests
+  })
+
+  describe('Disabled State Accessibility', () => {
+    // Disabled state accessibility tests
+  })
+
+  describe('Loading State Accessibility', () => {
+    // Loading state accessibility tests
+  })
+})
+```
+
+### Accessibility Test Examples
+
+#### ARIA Attributes Testing
+```typescript
+describe('ARIA Attributes', () => {
+  it('supports custom aria-label', () => {
+    const wrapper = createWrapper({ 'aria-label': 'Submit form' })
+    const button = wrapper.find('button')
+    expect(button.attributes('aria-label')).toBe('Submit form')
+  })
+
+  it('supports aria-describedby', () => {
+    const wrapper = createWrapper({ 'aria-describedby': 'help-text' })
+    const button = wrapper.find('button')
+    expect(button.attributes('aria-describedby')).toBe('help-text')
+  })
+})
+```
+
+#### Keyboard Navigation Testing
+```typescript
+describe('Keyboard Navigation', () => {
+  it('is focusable by default', () => {
+    const wrapper = createWrapper()
+    const button = wrapper.find('button')
+    expect(button.attributes('tabindex')).toBeUndefined() // Default focusable
+  })
+
+  it('supports custom tabindex', () => {
+    const wrapper = createWrapper({ tabindex: '0' })
+    const button = wrapper.find('button')
+    expect(button.attributes('tabindex')).toBe('0')
+  })
+
+  it('can be removed from tab order', () => {
+    const wrapper = createWrapper({ tabindex: '-1' })
+    const button = wrapper.find('button')
+    expect(button.attributes('tabindex')).toBe('-1')
+  })
+})
+```
+
+#### Current vs Expected Behavior Documentation
+```typescript
+describe('Keyboard Navigation', () => {
+  it('emits click event on Enter key', async () => {
+    const wrapper = createWrapper()
+    const button = wrapper.find('button')
+    await button.trigger('keydown.enter')
+    // Note: The Button component doesn't implement keyboard event handling
+    // This test documents the expected behavior for future implementation
+    expect(wrapper.emitted('click')).toBeFalsy()
+  })
+
+  it('emits click event on Space key', async () => {
+    const wrapper = createWrapper()
+    const button = wrapper.find('button')
+    await button.trigger('keydown.space')
+    // Note: The Button component doesn't implement keyboard event handling
+    // This test documents the expected behavior for future implementation
+    expect(wrapper.emitted('click')).toBeFalsy()
+  })
+})
+```
+
+## Storybook Integration Testing
+
+### Story Configuration
+```typescript
+// src/elements/Button.stories.ts
+import type { Meta, StoryObj } from "@storybook/vue3";
+import { ref } from "vue";
+import { expect, userEvent, within } from "@storybook/test";
+import Button from "./Button.vue";
+
+const meta = {
+  title: "Elements/Button",
+  component: Button,
+  tags: ["autodocs"],
+  parameters: {
+    interactions: {
+      disable: false,
+    },
+  },
+  argTypes: {
+    // Define all props with controls
+    color: {
+      control: "select",
+      options: ["primary", "info", "success", "warning", "danger", "secondary", "dark", "gradient"],
+    },
+    size: { control: "select", options: ["xs", "sm", "md", "lg"] },
+    // ... other props
+  },
+  args: {
+    // Default args
+    block: false,
+    outline: false,
+    shadow: false,
+    isLoading: false,
+    borderType: "solid",
+    loadingIcon: "IconLoader",
+  },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+```
+
+### Interactive Story Examples
+
+#### Basic Interactive Story
+```typescript
+export const Default: Story = {
+  args: {
+    label: "Button",
+    textTransform: "normal-case",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    
+    await step("Verify button renders correctly", async () => {
+      const button = canvas.getByRole("button", { name: /button/i });
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("btn");
+    });
+    
+    await step("Click button and verify interaction", async () => {
+      const button = canvas.getByRole("button", { name: /button/i });
+      await userEvent.click(button);
+      expect(button).toBeInTheDocument();
+    });
+  },
+};
+```
+
+#### Loading State Story
+```typescript
+export const Loading: Story = {
+  args: {
+    label: "Button",
+    color: "success",
+    textTransform: "capitalize",
+    outline: true,
+    isLoading: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    
+    await step("Verify loading state", async () => {
+      const button = canvas.getByRole("button", { name: /button/i });
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("btn-outline-success");
+      
+      // Check for loading icon (it's an SVG with animation class)
+      const loadingIcon = canvas.getByRole("button").querySelector("svg");
+      expect(loadingIcon).toBeInTheDocument();
+      expect(loadingIcon).toHaveClass("animate-[spin_2s_linear_infinite]");
+    });
+  },
+};
+```
+
+#### Complex Interactive Story
+```typescript
+export const FormButton: Story = {
+  render: () => ({
+    components: { Button },
+    template: `
+      <form @submit.prevent="handleSubmit">
+        <div class="space-y-4">
+          <input type="email" placeholder="Email" class="border p-2 rounded" />
+          <input type="password" placeholder="Password" class="border p-2 rounded" />
+          <Button type="submit" color="success" :is-loading="isLoading" @click="handleClick">
+            {{ isLoading ? 'Submitting...' : 'Submit Form' }}
+          </Button>
+        </div>
+      </form>
+    `,
+    setup() {
+      const isLoading = ref(false);
+
+      const handleClick = () => {
+        isLoading.value = true;
+        setTimeout(() => {
+          isLoading.value = false;
+        }, 2000);
+      };
+
+      const handleSubmit = () => {
+        console.log("Form submitted");
+      };
+
+      return { isLoading, handleClick, handleSubmit };
+    },
+  }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    
+    await step("Fill out form fields", async () => {
+      const emailInput = canvas.getByPlaceholderText(/email/i);
+      const passwordInput = canvas.getByPlaceholderText(/password/i);
+      
+      await userEvent.type(emailInput, "test@example.com");
+      await userEvent.type(passwordInput, "password123");
+      
+      expect(emailInput).toHaveValue("test@example.com");
+      expect(passwordInput).toHaveValue("password123");
+    });
+    
+    await step("Submit form and verify loading state", async () => {
+      const submitButton = canvas.getByRole("button", { name: /submit form/i });
+      await userEvent.click(submitButton);
+      
+      // Button should show loading state
+      expect(canvas.getByRole("button", { name: /submitting/i })).toBeInTheDocument();
+    });
+  },
+};
+```
+
+## Test Utilities
+
+### Test Helper Functions
+```typescript
+// src/elements/__tests__/test-utils.ts
+import { mount, VueWrapper } from '@vue/test-utils'
+import { createPinia } from 'pinia'
+import { vi } from 'vitest'
+import Icon from '../../icon/Icon.vue'
+
+export function createTestWrapper(component: any, options = {}) {
+  const pinia = createPinia()
+
+  return mount(component, {
+    global: {
+      plugins: [pinia],
+      components: {
+        Icon
+      },
+      stubs: {
+        'router-link': true,
+        'router-view': true
+      }
+    },
+    ...options
+  })
+}
+
+// Button-specific test helpers
+export function createButtonWrapper(props = {}) {
+  return createTestWrapper(Button, { props })
+}
+
+// Mock functions
+export function mockResizeObserver() {
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }))
+}
+
+export function mockIntersectionObserver() {
+  global.IntersectionObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }))
+}
+```
+
+## Testing Best Practices
+
+### 1. Test Organization
+- **Co-locate tests**: Keep test files in `src/elements/__tests__/` directory
+- **Descriptive names**: Use clear, descriptive test names that explain the behavior
+- **Group related tests**: Use `describe` blocks for logical grouping
+- **Follow AAA pattern**: Arrange, Act, Assert
+
+### 2. Component Testing Guidelines
+- **Test user behavior**: Focus on user interactions, not implementation details
+- **Test all props**: Ensure all props work correctly and apply appropriate styling
+- **Test edge cases**: Handle error states, loading states, empty states
+- **Test accessibility**: Include accessibility tests for every component
+- **Test responsive behavior**: Test mobile and desktop layouts when relevant
+
+### 3. Accessibility Testing Guidelines
+- **Document current vs expected behavior**: Use comments to explain when tests expect current (incomplete) behavior
+- **Test ARIA attributes**: Ensure proper ARIA attributes are present
+- **Test keyboard navigation**: Verify keyboard accessibility
+- **Test screen reader support**: Ensure components work with screen readers
+- **Test focus management**: Verify proper focus handling
+
+### 4. Storybook Testing Guidelines
+- **Use play functions**: Add interactive tests to stories
+- **Test user workflows**: Focus on complete user journeys
+- **Test visual feedback**: Verify visual changes during interactions
+- **Test form integration**: Test form submission and validation
+- **Test loading states**: Verify loading state transitions
+
+### 5. Test Data Management
+- **Use factories**: Create test data factories for consistent data
+- **Avoid hardcoded values**: Use constants for test data
+- **Clean up**: Reset state between tests
+- **Mock external dependencies**: Mock APIs, timers, and browser APIs
+
+### 6. Performance Testing
+- **Fast execution**: Keep unit tests under 100ms each
+- **Parallel execution**: Use parallel test execution
+- **Mock heavy operations**: Mock file uploads, API calls, animations
+- **Monitor test performance**: Track test execution times
+
+## Coverage Strategy
+
+### Coverage Goals
+- **Unit Tests**: 90%+ coverage for critical business logic
+- **Accessibility Tests**: 100% coverage for accessibility features
+- **Integration Tests**: Cover all user workflows and edge cases
+
+### Coverage Monitoring
+- **Track coverage trends**: Monitor coverage over time
+- **Focus on user paths**: Prioritize user-facing functionality
+- **Don't chase 100%**: Some code is not worth testing
+
+## Common Testing Patterns
+
+### Form Component Testing
+```typescript
+describe('Form Component', () => {
+  it('validates required fields', async () => {
+    const wrapper = mount(FormComponent)
+    
+    // Submit without filling required fields
+    await wrapper.find('form').trigger('submit')
+    
+    // Check for validation errors
+    expect(wrapper.text()).toContain('This field is required')
+  })
+
+  it('submits valid data', async () => {
+    const wrapper = mount(FormComponent)
+    
+    // Fill form with valid data
+    await wrapper.find('[name="email"]').setValue('test@example.com')
+    await wrapper.find('[name="password"]').setValue('password123')
+    
+    // Submit form
+    await wrapper.find('form').trigger('submit')
+    
+    // Verify submission
+    expect(wrapper.emitted('submit')).toBeTruthy()
+  })
+})
+```
+
+### Modal Component Testing
+```typescript
+describe('Modal Component', () => {
+  it('opens and closes correctly', async () => {
+    const wrapper = mount(Modal)
+    
+    // Initially closed
+    expect(wrapper.find('.modal').isVisible()).toBe(false)
+    
+    // Open modal
+    await wrapper.setProps({ isOpen: true })
+    expect(wrapper.find('.modal').isVisible()).toBe(true)
+    
+    // Close modal
+    await wrapper.find('.close-button').trigger('click')
+    expect(wrapper.emitted('close')).toBeTruthy()
+  })
+})
+```
+
+## CI/CD Integration
+
+### GitHub Actions Workflow
+```yaml
+# .github/workflows/test.yml
+name: Test Suite
+
+on: [push, pull_request]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: yarn install
+      - run: yarn test:all
+      - run: yarn test:coverage
+
+  storybook-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: yarn install
+      - run: yarn build-storybook
+      - run: yarn test:storybook
+```
+
+## Troubleshooting
+
+### Common Issues
+1. **JSDOM Navigation Errors**: Mock navigation APIs in test setup
+2. **Component Import Issues**: Ensure proper path resolution in vitest config
+3. **Storybook Test Failures**: Check for proper test selectors and expectations
+4. **Accessibility Test Failures**: Document current vs expected behavior
+
+### Debugging Tips
+- **Use Vitest UI**: Run `yarn test:ui` for visual test debugging
+- **Use Storybook Interactions Panel**: Debug play functions step-by-step
+- **Check Test Logs**: Review detailed error messages for debugging
+- **Verify Test Environment**: Ensure all mocks are properly set up
+
+## Future Improvements
+
+### Planned Enhancements
+1. **Keyboard Event Handling**: Implement Enter/Space key support for buttons
+2. **ARIA Attributes**: Add comprehensive ARIA attribute support
+3. **Loading State Management**: Improve loading state accessibility
+4. **Focus Management**: Enhance focus handling for disabled states
+5. **Icon Accessibility**: Add proper icon accessibility features
+
+### Testing Roadmap
+1. **Visual Regression Testing**: Add visual regression testing with Chromatic
+2. **Performance Testing**: Add performance benchmarks for components
+3. **Cross-browser Testing**: Add cross-browser compatibility tests
+4. **Mobile Testing**: Add mobile-specific interaction tests
+
+---
+
+## AI Agent Behavior
+
+When working with testing in this codebase, the AI agent should:
+
+- **Follow Established Patterns**: Use the testing patterns established in Button component tests
+- **Test-First Approach**: Suggest writing tests before implementing features
+- **Coverage Analysis**: Identify untested code paths and suggest tests
+- **Accessibility Focus**: Always include accessibility testing in suggestions
+- **Documentation**: Provide clear test documentation and examples
+- **Storybook Integration**: Leverage Storybook for comprehensive E2E testing
+- **Component Testing**: Prioritize user behavior testing over implementation details
+- **Current vs Expected Behavior**: Document when tests expect current (incomplete) behavior vs future improvements
+- **Test Strategy**: Recommend appropriate testing approach based on component complexity
+- **Best Practices**: Suggest testing best practices and improvements

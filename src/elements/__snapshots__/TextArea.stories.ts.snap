@@ -1,0 +1,553 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Elements/TextArea ClickableIcon smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="space-y-4">
+    <div>
+      <label for
+             class="text-sm font-medium text-gray-700"
+      >
+        Quick Comment
+      </label>
+      <div class="relative">
+        <svg width="16"
+             height="16"
+             viewbox="0 0 24 24"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+             class="absolute top-3 transform cursor-pointer left-3"
+        >
+          <circle cx="11.5"
+                  cy="11.5"
+                  r="9.5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  opacity="0.5"
+          >
+          </circle>
+          <path d="M18.5 18.5L22 22"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+          >
+          </path>
+        </svg>
+        <textarea id
+                  rows="4"
+                  class="form-textarea w-full pl-10 bg-white border-gray-300"
+                  placeholder="Write a comment and click the search icon to submit..."
+                  value
+        >
+        </textarea>
+      </div>
+    </div>
+    <p class="text-sm text-gray-600">
+      Click the search icon to submit your comment.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea CustomRows smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <div class="relative">
+      <svg width="18"
+           height="18"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-3 transform cursor-pointer right-3"
+      >
+        <path opacity="0.5"
+              d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+        >
+        </path>
+        <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+        >
+        </path>
+      </svg>
+      <textarea id
+                rows="5"
+                class="form-textarea w-full pr-10 bg-white border-gray-300"
+                placeholder="This textarea has 5 rows"
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea Default smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <div class="relative">
+      <textarea id
+                rows="3"
+                class="form-textarea w-full bg-white border-gray-300"
+                placeholder="Enter Textarea"
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea Disabled smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <div class="relative">
+      <svg width="18"
+           height="18"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-3 transform cursor-pointer right-3"
+      >
+        <circle cx="12"
+                cy="6"
+                r="4"
+                stroke="currentColor"
+                stroke-width="1.5"
+        >
+        </circle>
+        <path opacity="0.5"
+              d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+        >
+        </path>
+      </svg>
+      <textarea id
+                rows="3"
+                class="form-textarea w-full pr-10 bg-gray-100 cursor-not-allowed border-gray-300"
+                placeholder="Enter Textarea"
+                disabled
+                value="This textarea is disabled"
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea EnterKeyExample smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="p-4">
+    <h3 class="text-lg font-semibold mb-2">
+      Enter Key Demo
+    </h3>
+    <div>
+      <label for
+             class="text-sm font-medium text-gray-700"
+      >
+        Type and press Enter
+      </label>
+      <div class="relative">
+        <svg width="16"
+             height="16"
+             viewbox="0 0 24 24"
+             fill="none"
+             xmlns="http://www.w3.org/2000/svg"
+             class="absolute top-3 transform cursor-pointer left-3"
+        >
+          <circle cx="11.5"
+                  cy="11.5"
+                  r="9.5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  opacity="0.5"
+          >
+          </circle>
+          <path d="M18.5 18.5L22 22"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+          >
+          </path>
+        </svg>
+        <textarea id
+                  rows="2"
+                  class="form-textarea w-full pl-10 bg-white border-gray-300"
+                  placeholder="Type something and press Enter or click the icon to add a note"
+                  value
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="mt-4">
+      <h4 class="font-medium mb-1">
+        Notes:
+      </h4>
+      <ul class="border rounded p-2 min-h-[100px] bg-gray-50">
+        <li class="text-gray-400 py-1">
+          No notes yet. Type something and press Enter or click the search icon.
+        </li>
+      </ul>
+    </div>
+    <p class="text-sm text-gray-600 mt-2">
+      Icon positioning adapts automatically to your app's RTL/LTR direction.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea Filled smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <div class="relative">
+      <textarea id
+                rows="3"
+                class="form-textarea w-full bg-white border-gray-300"
+                placeholder="Enter Textarea"
+                value="This is a sample text in the textarea"
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea IconPositioningComparison smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <label for
+           class="text-sm font-medium text-gray-700"
+    >
+      Icon Positioning Demo
+    </label>
+    <div class="relative">
+      <svg width="18"
+           height="18"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-3 transform cursor-pointer left-3"
+      >
+        <path opacity="0.5"
+              d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+        >
+        </path>
+        <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+        >
+        </path>
+      </svg>
+      <textarea id
+                rows="3"
+                class="form-textarea w-full pl-10 bg-white border-gray-300"
+                placeholder="See different icon positions in textarea"
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea RTLIconComparison smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="space-y-6">
+    <div class="space-y-2">
+      <h3 class="font-semibold">
+        Default Icon Positioning (iconOppositePosition: false)
+      </h3>
+      <div>
+        <label for
+               class="text-sm font-medium text-gray-700"
+        >
+          Message (Default)
+        </label>
+        <div class="relative">
+          <svg width="18"
+               height="18"
+               viewbox="0 0 24 24"
+               fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+               class="absolute top-3 transform cursor-pointer left-3"
+          >
+            <path opacity="0.5"
+                  d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+            >
+            </path>
+            <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+            >
+            </path>
+          </svg>
+          <textarea id
+                    rows="2"
+                    class="form-textarea w-full pl-10 bg-white border-gray-300"
+                    placeholder="LTR: icon on right, RTL: icon on left"
+                    value
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="space-y-2">
+      <h3 class="font-semibold">
+        Opposite Icon Positioning (iconOppositePosition: true)
+      </h3>
+      <div>
+        <label for
+               class="text-sm font-medium text-gray-700"
+        >
+          Message (Opposite)
+        </label>
+        <div class="relative">
+          <svg width="18"
+               height="18"
+               viewbox="0 0 24 24"
+               fill="none"
+               xmlns="http://www.w3.org/2000/svg"
+               class="absolute top-3 transform cursor-pointer right-3"
+          >
+            <path opacity="0.5"
+                  d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+            >
+            </path>
+            <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+            >
+            </path>
+          </svg>
+          <textarea id
+                    rows="2"
+                    class="form-textarea w-full pr-10 bg-white border-gray-300"
+                    placeholder="LTR: icon on left, RTL: icon on right"
+                    value
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="text-sm text-gray-600 bg-blue-50 p-3 rounded">
+      <p>
+        <strong>
+          Note:
+        </strong>
+        Icon positioning adapts to your app's RTL/LTR direction automatically.
+      </p>
+      <p>
+        •
+        <strong>
+          LTR (Left-to-Right):
+        </strong>
+        Default = right, Opposite = left
+      </p>
+      <p>
+        •
+        <strong>
+          RTL (Right-to-Left):
+        </strong>
+        Default = left, Opposite = right
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea Required smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <div class="relative">
+      <svg width="20"
+           height="20"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-3 transform cursor-pointer right-3"
+      >
+        <path d="M2 16C2 13.1716 2 11.7574 2.87868 10.8787C3.75736 10 5.17157 10 8 10H16C18.8284 10 20.2426 10 21.1213 10.8787C22 11.7574 22 13.1716 22 16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H8C5.17157 22 3.75736 22 2.87868 21.1213C2 20.2426 2 18.8284 2 16Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+        >
+        </path>
+        <path opacity="0.5"
+              d="M6 10V8C6 4.68629 8.68629 2 12 2C15.3137 2 18 4.68629 18 8V10"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+        >
+        </path>
+      </svg>
+      <textarea id
+                rows="3"
+                class="form-textarea w-full pr-10 bg-white border-gray-300"
+                placeholder="Required textarea"
+                required
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea WithError smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <div class="relative">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="24"
+           height="24"
+           viewbox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.5"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           class="absolute top-3 transform cursor-pointer left-3"
+      >
+        <line x1="18"
+              y1="6"
+              x2="6"
+              y2="18"
+        >
+        </line>
+        <line x1="6"
+              y1="6"
+              x2="18"
+              y2="18"
+        >
+        </line>
+      </svg>
+      <textarea id
+                rows="3"
+                class="form-textarea w-full pl-10 bg-white border-red-500"
+                placeholder="Enter Textarea"
+                required
+                value
+      >
+      </textarea>
+    </div>
+    <span class="mt-1 text-sm text-red-500">
+      This field is required
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea WithIcon smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <label for
+           class="text-sm font-medium text-gray-700"
+    >
+      Message
+    </label>
+    <div class="relative">
+      <svg width="18"
+           height="18"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-3 transform cursor-pointer right-3"
+      >
+        <path opacity="0.5"
+              d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+        >
+        </path>
+        <path d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908L18 8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+        >
+        </path>
+      </svg>
+      <textarea id
+                rows="3"
+                class="form-textarea w-full pr-10 bg-white border-gray-300"
+                placeholder="Write your message..."
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea WithIconDefault smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <label for
+           class="text-sm font-medium text-gray-700"
+    >
+      Comments
+    </label>
+    <div class="relative">
+      <svg width="18"
+           height="18"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-3 transform cursor-pointer left-3"
+      >
+        <circle cx="12"
+                cy="6"
+                r="4"
+                stroke="currentColor"
+                stroke-width="1.5"
+        >
+        </circle>
+        <path opacity="0.5"
+              d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+        >
+        </path>
+      </svg>
+      <textarea id
+                rows="3"
+                class="form-textarea w-full pl-10 bg-white border-gray-300"
+                placeholder="Enter your comments..."
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Elements/TextArea WithLabel smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div>
+    <label for
+           class="text-sm font-medium text-gray-700"
+    >
+      Comments
+    </label>
+    <div class="relative">
+      <textarea id
+                rows="3"
+                class="form-textarea w-full bg-white border-gray-300"
+                placeholder="Enter your comments"
+                value
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+`;
