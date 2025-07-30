@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/codebridger/lib-vue-components/compare/v1.21.0...v1.21.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* **workflows:** update Storybook build command in deployment workflow to use 'yarn storybook:build' ([b741b4f](https://github.com/codebridger/lib-vue-components/commit/b741b4f8dd5ca48ddf7d0947c1b15a57c4062615))
+
 # [1.21.0](https://github.com/codebridger/lib-vue-components/compare/v1.20.0...v1.21.0) (2025-07-30)
 
 
