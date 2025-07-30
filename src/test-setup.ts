@@ -33,6 +33,9 @@ global.DataTransfer = vi.fn().mockImplementation(() => ({
   setDragImage: vi.fn(),
 }));
 
+// Mock FileList
+global.FileList = vi.fn().mockImplementation(() => []);
+
 // Mock matchMedia
 Object.defineProperty(window, "matchMedia", {
   writable: true,
@@ -53,9 +56,9 @@ window.scrollTo = vi.fn();
 
 // Mock getComputedStyle
 Object.defineProperty(window, "getComputedStyle", {
-  value: () => ({
-    getPropertyValue: vi.fn(),
-  }),
+  value: vi.fn(() => ({
+    getPropertyValue: vi.fn(() => ""),
+  })),
 });
 
 // Mock URL.createObjectURL
@@ -73,6 +76,7 @@ document.createElement = vi.fn((tagName: string) => {
       addEventListener: vi.fn(),
       click: vi.fn(),
       value: "",
+      files: [],
     } as any;
   }
   return originalCreateElement.call(document, tagName);
@@ -90,3 +94,33 @@ Object.defineProperty(document, "documentElement", {
   },
   writable: true,
 });
+
+// Mock Element.prototype.insertBefore
+if (!Element.prototype.insertBefore) {
+  Element.prototype.insertBefore = vi.fn();
+}
+
+// Mock Element.prototype.appendChild
+if (!Element.prototype.appendChild) {
+  Element.prototype.appendChild = vi.fn();
+}
+
+// Mock Element.prototype.removeChild
+if (!Element.prototype.removeChild) {
+  Element.prototype.removeChild = vi.fn();
+}
+
+// Mock Node.prototype.insertBefore
+if (!Node.prototype.insertBefore) {
+  Node.prototype.insertBefore = vi.fn();
+}
+
+// Mock Node.prototype.appendChild
+if (!Node.prototype.appendChild) {
+  Node.prototype.appendChild = vi.fn();
+}
+
+// Mock Node.prototype.removeChild
+if (!Node.prototype.removeChild) {
+  Node.prototype.removeChild = vi.fn();
+}
