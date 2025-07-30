@@ -2,14 +2,41 @@
 
 import puppeteer from "puppeteer";
 import fs from "fs/promises";
+import TurndownService from "turndown";
 
 class DocGenerator {
-  constructor(baseUrl = "http://localhost:6006") {
+  constructor(baseUrl = "http://localhost:6006", options = {}) {
     this.baseUrl = baseUrl;
     this.browser = null;
     this.page = null;
     this.allDocs = [];
     this.visitedUrls = new Set();
+    this.options = {
+      outputFormat: options.outputFormat || "markdown", // 'markdown' or 'text'
+      ...options,
+    };
+
+    // Initialize turndown service for HTML to Markdown conversion
+    this.turndownService = new TurndownService({
+      headingStyle: "atx",
+      codeBlockStyle: "fenced",
+      emDelimiter: "*",
+      bulletListMarker: "-",
+      strongDelimiter: "**",
+    });
+
+    // Configure turndown service for better code block handling
+    this.turndownService.addRule("codeBlocks", {
+      filter: ["pre"],
+      replacement: function (content, node) {
+        const code = node.querySelector("code");
+        if (code) {
+          const language = code.className?.match(/language-(\w+)/)?.[1] || "";
+          return `\n\`\`\`${language}\n${code.textContent}\n\`\`\`\n\n`;
+        }
+        return `\n\`\`\`\n${content}\n\`\`\`\n\n`;
+      },
+    });
   }
 
   async init() {
@@ -63,11 +90,13 @@ class DocGenerator {
           document.querySelectorAll('[data-action="expand-all"]')
         );
         console.log("Found expand-all buttons:", expandAllButtons.length);
+        console.log("🖱️  Starting to click expand-all buttons...");
 
-        expandAllButtons.forEach((button, index) => {
-          console.log(`Clicking expand-all button ${index + 1}`);
+        expandAllButtons.forEach((button) => {
           button.click();
         });
+
+        console.log("✅ Finished clicking expand-all buttons");
       });
 
       // Wait for expansion to complete
@@ -84,15 +113,14 @@ class DocGenerator {
         });
 
         console.log("Found expandable items:", expandableItems.length);
+        console.log("🖱️  Starting to click expandable items...");
 
         // Click on each expandable item to expand it
-        expandableItems.forEach((item, index) => {
-          const dataItemId = item.getAttribute("data-item-id");
-          console.log(
-            `Clicking on expandable item ${index + 1}: ${dataItemId}`
-          );
+        expandableItems.forEach((item) => {
           item.click();
         });
+
+        console.log("✅ Finished clicking expandable items");
       });
 
       // Wait a bit more for the expansion to complete
@@ -100,14 +128,11 @@ class DocGenerator {
 
       // Find all elements with data-item-id ending in --docs
       const docElements = await this.page.evaluate(() => {
-        // Debug: Log all data-item-id elements first
+        // Get total count of all elements
         const allElements = Array.from(
           document.querySelectorAll("[data-item-id]")
         );
-        console.log("All data-item-id elements found:", allElements.length);
-        allElements.forEach((el) => {
-          console.log("data-item-id:", el.getAttribute("data-item-id"));
-        });
+        console.log("📊 Total elements with data-item-id:", allElements.length);
 
         // Get all elements with data-item-id ending in --docs that have links
         const allElementsWithLinks = Array.from(
@@ -118,80 +143,12 @@ class DocGenerator {
         });
 
         console.log(
-          "Elements with data-item-id that have links:",
+          "📄 Documentation pages (--docs):",
           allElementsWithLinks.length
         );
 
-        // Separate docs from stories
-        const docsElements = allElementsWithLinks.filter((el) => {
-          const dataItemId = el.getAttribute("data-item-id");
-          return dataItemId && dataItemId.includes("--docs");
-        });
-
-        const storyElements = allElementsWithLinks.filter((el) => {
-          const dataItemId = el.getAttribute("data-item-id");
-          return dataItemId && !dataItemId.includes("--docs");
-        });
-
-        console.log("Documentation elements (--docs):", docsElements.length);
-        console.log("Story elements (non-docs):", storyElements.length);
-
-        // Also look for any <a> tags that might be story links
-        const allLinks = Array.from(
-          document.querySelectorAll('a[href*="story"], a[href*="docs"]')
-        );
-        console.log("All links with story or docs in href:", allLinks.length);
-        allLinks.forEach((link) => {
-          console.log("Link href:", link.href);
-        });
-
-        // Also look for story pages (elements with data-item-id that have links but don't end with --docs)
-        const additionalStoryElements = Array.from(
-          document.querySelectorAll("[data-item-id]")
-        ).filter((el) => {
-          const link = el.querySelector("a");
-          const dataItemId = el.getAttribute("data-item-id");
-          return (
-            link && link.href && dataItemId && !dataItemId.endsWith("--docs")
-          );
-        });
-
-        console.log(
-          "Additional story elements found:",
-          additionalStoryElements.length
-        );
-        additionalStoryElements.forEach((el, index) => {
-          const dataItemId = el.getAttribute("data-item-id");
-          const link = el.querySelector("a");
-          console.log(`Story ${index + 1}: ${dataItemId} -> ${link.href}`);
-        });
-
-        // Use all elements with links (both docs and stories)
-        const elements = allElementsWithLinks.concat(additionalStoryElements);
-
-        // Debug: Print all elements with their details
-        console.log("\n🔍 All elements with data-item-id:");
-        allElements.forEach((el, index) => {
-          const dataItemId = el.getAttribute("data-item-id");
-          const link = el.querySelector("a");
-          const hasLink = link && link.href;
-          const linkText = link ? link.textContent?.trim() : "No link";
-          console.log(
-            `  ${index + 1}. ${dataItemId} - ${linkText} ${
-              hasLink ? "(has link)" : "(no link)"
-            }`
-          );
-        });
-
-        console.log("\n🔍 Elements with links:");
-        elements.forEach((el, index) => {
-          const dataItemId = el.getAttribute("data-item-id");
-          const link = el.querySelector("a");
-          const linkText = link.textContent?.trim() || "No text";
-          console.log(
-            `  ${index + 1}. ${dataItemId} - ${linkText} -> ${link.href}`
-          );
-        });
+        // Use only documentation elements (ending with --docs)
+        const elements = allElementsWithLinks;
 
         return elements
           .map((element) => {
@@ -200,16 +157,33 @@ class DocGenerator {
             const link = element.querySelector("a");
 
             if (link && link.href) {
+              // Extract meaningful title from data-item-id
+              let title = "";
+              if (dataItemId) {
+                // Remove --docs suffix and convert to readable format
+                const cleanId = dataItemId.replace("--docs", "");
+                // Split by hyphens and capitalize each part
+                const parts = cleanId
+                  .split("-")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+
+                // Add separator between category and item
+                if (parts.length >= 2) {
+                  title =
+                    parts.slice(0, -1).join(" ") +
+                    " / " +
+                    parts[parts.length - 1];
+                } else {
+                  title = parts.join(" ");
+                }
+              }
+
               return {
                 dataItemId: dataItemId,
                 href: link.href,
                 text:
                   link.textContent?.trim() || element.textContent?.trim() || "",
-                title:
-                  link.title ||
-                  link.textContent?.trim() ||
-                  element.textContent?.trim() ||
-                  "",
+                title: title || link.textContent?.trim() || "Documentation",
               };
             }
 
@@ -218,12 +192,9 @@ class DocGenerator {
           .filter((item) => item !== null && item.dataItemId && item.href);
       });
 
-      console.log(`📄 Found ${docElements.length} documentation pages`);
-
-      // Log the found elements for debugging
-      docElements.forEach((item) => {
-        console.log(`  - ${item.text}: ${item.dataItemId}`);
-      });
+      console.log(
+        `📄 Found ${docElements.length} documentation pages to process`
+      );
 
       return docElements;
     } catch (error) {
@@ -320,97 +291,53 @@ class DocGenerator {
           }
         }
 
-        // Convert HTML to markdown-like format
-        const convertToMarkdown = (element) => {
-          let markdown = "";
+        // Return the HTML content for processing outside
+        if (contentElement) {
+          const result = contentElement.outerHTML;
+          console.log(`Extracted content length: ${result.length} characters`);
+          return result;
+        }
 
-          // Handle headings
-          const headings = element.querySelectorAll("h1, h2, h3, h4, h5, h6");
-          headings.forEach((heading) => {
-            const level = parseInt(heading.tagName.charAt(1));
-            const prefix = "#".repeat(level);
-            markdown += `\n${prefix} ${heading.textContent.trim()}\n\n`;
-          });
-
-          // Handle paragraphs
-          const paragraphs = element.querySelectorAll("p");
-          paragraphs.forEach((p) => {
-            const text = p.textContent.trim();
-            if (text) {
-              markdown += `${text}\n\n`;
-            }
-          });
-
-          // Handle code blocks
-          const codeBlocks = element.querySelectorAll("pre code, code");
-          codeBlocks.forEach((code) => {
-            const language = code.className?.match(/language-(\w+)/)?.[1] || "";
-            const codeText = code.textContent.trim();
-            if (codeText) {
-              markdown += `\n\`\`\`${language}\n${codeText}\n\`\`\`\n\n`;
-            }
-          });
-
-          // Handle lists
-          const lists = element.querySelectorAll("ul, ol");
-          lists.forEach((list) => {
-            const items = list.querySelectorAll("li");
-            items.forEach((item) => {
-              const text = item.textContent.trim();
-              if (text) {
-                markdown += `- ${text}\n`;
-              }
-            });
-            markdown += "\n";
-          });
-
-          // Handle tables
-          const tables = element.querySelectorAll("table");
-          tables.forEach((table) => {
-            const rows = table.querySelectorAll("tr");
-            rows.forEach((row, index) => {
-              const cells = row.querySelectorAll("td, th");
-              const rowContent = Array.from(cells)
-                .map((cell) => cell.textContent.trim())
-                .join(" | ");
-              if (rowContent) {
-                markdown += `| ${rowContent} |\n`;
-
-                // Add header separator after first row
-                if (index === 0) {
-                  const separator = Array.from(cells)
-                    .map(() => "---")
-                    .join(" | ");
-                  markdown += `| ${separator} |\n`;
-                }
-              }
-            });
-            markdown += "\n";
-          });
-
-          // If no structured content found, get all text
-          if (!markdown.trim()) {
-            const allText = element.textContent || element.innerText || "";
-            const lines = allText
-              .split("\n")
-              .map((line) => line.trim())
-              .filter((line) => line.length > 0);
-            markdown = lines.join("\n\n");
-          }
-
-          return markdown.trim();
-        };
-
-        const result = convertToMarkdown(contentElement);
-        console.log(`Extracted content length: ${result.length} characters`);
-        return result;
+        return "";
       }, docElement.dataItemId);
+
+      // Convert HTML to markdown or text based on options
+      let finalContent = "";
+      if (this.options.outputFormat === "text") {
+        // Extract text-only content
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = content;
+        const allText = tempDiv.textContent || tempDiv.innerText || "";
+        const lines = allText
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0);
+        finalContent = lines.join("\n\n");
+      } else {
+        // Convert to markdown using turndown service
+        try {
+          finalContent = this.turndownService.turndown(content);
+        } catch (error) {
+          console.log(
+            "Error converting to markdown, falling back to text extraction"
+          );
+          // Fallback to text extraction if markdown conversion fails
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = content;
+          const allText = tempDiv.textContent || tempDiv.innerText || "";
+          const lines = allText
+            .split("\n")
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0);
+          finalContent = lines.join("\n\n");
+        }
+      }
 
       return {
         title: docElement.title,
         dataItemId: docElement.dataItemId,
         url: docElement.href,
-        content: content,
+        content: finalContent.trim(),
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
@@ -429,48 +356,57 @@ class DocGenerator {
 
     console.log(`📊 Total pages to crawl: ${docElements.length}`);
 
-    // DEBUG: Show all found elements
-    console.log("\n🔍 DEBUG: Found documentation elements:");
-    docElements.forEach((element, index) => {
-      console.log(`  ${index + 1}. ${element.title} (${element.dataItemId})`);
-    });
+    // Initialize the markdown file
+    await this.initializeMarkdownFile();
 
-    // Temporarily disable page crawling for fast iteration
-    console.log("\n⏸️  Page crawling disabled for fast iteration");
-    return;
+    // Re-enable page crawling
+    console.log("\n🚀 Starting page crawling...");
+
+    // Crawl each page
+    for (let i = 0; i < docElements.length; i++) {
+      const docElement = docElements[i];
+      console.log(
+        `\n[${i + 1}/${docElements.length}] Processing: ${docElement.title}`
+      );
+
+      const docContent = await this.extractPageContent(docElement);
+      if (docContent) {
+        // Write content immediately to file
+        await this.appendDocumentToFile(docContent);
+        this.allDocs.push(docContent);
+      }
+
+      // Add a small delay to be respectful to the server
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+
+    // Finalize the file
+    await this.finalizeMarkdownFile();
   }
 
-  async generateMarkdownFile() {
-    console.log("📝 Generating consolidated markdown file...");
-
-    let markdownContent = `# Lib Vue Components Documentation
+  async initializeMarkdownFile() {
+    const header = `# Lib Vue Components Documentation
 
 Generated on: ${new Date().toISOString()}
-Total pages: ${this.allDocs.length}
 
 ---
 
+## 📚 Documentation
+
 `;
+    await fs.writeFile("doc.llm.md", header, "utf8");
+    console.log("📝 Initialized markdown file");
+  }
 
-    // Add documentation
-    if (this.allDocs.length > 0) {
-      markdownContent += `## 📚 Documentation\n\n`;
-      this.allDocs.forEach((doc) => {
-        markdownContent += `### ${doc.title}\n\n`;
-        markdownContent += `**Data Item ID:** ${doc.dataItemId}\n`;
-        markdownContent += `**Source:** ${doc.url}\n\n`;
-        markdownContent += `${doc.content}\n\n`;
-        markdownContent += `---\n\n`;
-      });
-    }
+  async appendDocumentToFile(doc) {
+    const content = `### ${doc.title}\n\n${doc.content}\n\n---\n\n`;
+    await fs.appendFile("doc.llm.md", content, "utf8");
+  }
 
-    // Write to file
-    const outputPath = "doc.llm.md";
-    await fs.writeFile(outputPath, markdownContent, "utf8");
-    console.log(`✅ Documentation written to: ${outputPath}`);
-    console.log(
-      `📊 Total content length: ${markdownContent.length} characters`
-    );
+  async finalizeMarkdownFile() {
+    const stats = await fs.stat("doc.llm.md");
+    console.log(`✅ Documentation written to: doc.llm.md`);
+    console.log(`📊 Total content length: ${stats.size} characters`);
   }
 
   async cleanup() {
@@ -485,7 +421,6 @@ Total pages: ${this.allDocs.length}
       await this.init();
       await this.navigateToStorybook();
       await this.crawlAllPages();
-      await this.generateMarkdownFile();
       console.log("\n🎉 Documentation generation completed successfully!");
     } catch (error) {
       console.error("❌ Error during documentation generation:", error);
@@ -500,11 +435,20 @@ async function main() {
   const args = process.argv.slice(2);
   const baseUrl = args[0] || "http://localhost:6006";
 
+  // Parse options
+  const options = {};
+  if (args.includes("--text-only")) {
+    options.outputFormat = "text";
+  } else if (args.includes("--markdown")) {
+    options.outputFormat = "markdown";
+  }
+
   console.log("🤖 Lib Vue Components - LLM Documentation Generator");
   console.log(`🎯 Target URL: ${baseUrl}`);
+  console.log(`📝 Output Format: ${options.outputFormat || "markdown"}`);
   console.log("");
 
-  const generator = new DocGenerator(baseUrl);
+  const generator = new DocGenerator(baseUrl, options);
   await generator.run();
 }
 
