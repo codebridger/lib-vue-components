@@ -8,6 +8,8 @@ node_modules
 dist
 storybook-static
 .npmrc
-
+html
 *storybook.log
 .DS_Store
+coverage/
+doc.llm.md

@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+
+## Framework Versions:
+- Vue 3.x
+- Stroybook 8.x
+JS package manage is `yarn`

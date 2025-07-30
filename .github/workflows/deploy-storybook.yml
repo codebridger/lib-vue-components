@@ -33,6 +33,20 @@ jobs:
       - name: Build Storybook
         run: yarn build-storybook
 
+      - name: Start Storybook
+        run: npx static-serve storybook-static -p 6006 &
+        env:
+          CI: false
+
+      - name: Generate LLM Docs
+        run: yarn generate-docs
+
+      - name: Stop Storybook
+        run: pkill -f "static-serve" || true
+
+      - name: Copy LLM Docs to Storybook Static
+        run: cp llm.md storybook-static/
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
