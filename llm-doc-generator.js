@@ -101,9 +101,17 @@ class DocGenerator {
   async init() {
     console.log("🚀 Initializing Puppeteer browser...");
     this.browser = await puppeteer.launch({
-      headless: false,
+      headless: process.env.CI ? "new" : false,
       defaultViewport: { width: 1920, height: 1080 },
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process",
+      ],
     });
     this.page = await this.browser.newPage();
 
@@ -111,6 +119,15 @@ class DocGenerator {
     await this.page.setUserAgent(
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     );
+
+    // Additional settings for CI environment
+    if (process.env.CI) {
+      console.log(
+        "🔧 Running in CI environment - applying CI-specific settings"
+      );
+      await this.page.setViewport({ width: 1920, height: 1080 });
+      await this.page.setDefaultTimeout(30000);
+    }
 
     // Capture console output from the page
     this.page.on("console", (msg) => {
@@ -484,6 +501,14 @@ class DocGenerator {
 
       // Add a small delay to be respectful to the server
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // In CI, periodically clear memory to prevent issues
+      if (process.env.CI && (i + 1) % 5 === 0) {
+        console.log("🧹 Clearing memory...");
+        await this.page.evaluate(() => {
+          if (window.gc) window.gc();
+        });
+      }
     }
 
     // Finalize the file
@@ -522,12 +547,17 @@ Generated on: ${new Date().toISOString()}
 
   async run() {
     try {
+      console.log(
+        `🔧 Environment: CI=${process.env.CI}, NODE_ENV=${process.env.NODE_ENV}`
+      );
       await this.init();
       await this.navigateToStorybook();
       await this.crawlAllPages();
       console.log("\n🎉 Documentation generation completed successfully!");
     } catch (error) {
       console.error("❌ Error during documentation generation:", error);
+      console.error("Stack trace:", error.stack);
+      process.exit(1);
     } finally {
       await this.cleanup();
     }

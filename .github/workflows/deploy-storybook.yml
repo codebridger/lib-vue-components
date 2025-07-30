@@ -40,6 +40,8 @@ jobs:
 
       - name: Generate LLM Docs
         run: yarn generate-docs
+        env:
+          CI: true
 
       - name: Stop Storybook
         run: pkill -f "static-serve" || true
