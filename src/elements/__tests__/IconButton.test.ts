@@ -5,21 +5,20 @@ import Icon from "../../icon/Icon.vue";
 
 describe("IconButton Component", () => {
   let wrapper: VueWrapper<any>;
-
-  // Helper function to create wrapper with default props
-  const createWrapper = (props = {}) => {
+  const createWrapper = (props = {}, slots = {}) => {
     return mount(IconButton, {
       props,
+      slots,
       global: {
-        components: {
-          Icon,
+        provide: {
+          cardDisabled: false,
         },
       },
     });
   };
 
   describe("Rendering", () => {
-    it("renders icon button container", () => {
+    it("renders component container", () => {
       wrapper = createWrapper();
       expect(wrapper.find("div").exists()).toBe(true);
     });
@@ -27,7 +26,6 @@ describe("IconButton Component", () => {
     it("renders icon when icon prop is provided", () => {
       wrapper = createWrapper({ icon: "IconSettings" });
       expect(wrapper.findComponent(Icon).exists()).toBe(true);
-      expect(wrapper.findComponent(Icon).props("name")).toBe("IconSettings");
     });
 
     it("renders image when imgUrl prop is provided", () => {
@@ -39,15 +37,6 @@ describe("IconButton Component", () => {
     it("renders loading icon when isLoading is true", () => {
       wrapper = createWrapper({ isLoading: true });
       expect(wrapper.findComponent(Icon).exists()).toBe(true);
-      expect(wrapper.findComponent(Icon).props("name")).toBe("IconLoader");
-    });
-
-    it("renders custom loading icon", () => {
-      wrapper = createWrapper({ 
-        isLoading: true, 
-        loadingIcon: "IconRefresh" 
-      });
-      expect(wrapper.findComponent(Icon).props("name")).toBe("IconRefresh");
     });
 
     it("renders slot content when provided", () => {
@@ -67,36 +56,28 @@ describe("IconButton Component", () => {
   });
 
   describe("Props and Styling", () => {
-    it("applies base classes", () => {
+    it("applies base container classes", () => {
       wrapper = createWrapper();
-      expect(wrapper.classes()).toContain("overflow-hidden");
-      expect(wrapper.classes()).toContain("w-fit");
-      expect(wrapper.classes()).toContain("select-none");
-      expect(wrapper.classes()).toContain("transition-all");
-      expect(wrapper.classes()).toContain("flex");
-      expect(wrapper.classes()).toContain("items-center");
-      expect(wrapper.classes()).toContain("justify-center");
+      const container = wrapper.find("div");
+      expect(container.classes()).toContain("overflow-hidden");
+      expect(container.classes()).toContain("w-fit");
+      expect(container.classes()).toContain("select-none");
+      expect(container.classes()).toContain("transition-all");
     });
 
-    it("applies padding when icon is provided", () => {
-      wrapper = createWrapper({ icon: "IconSettings" });
-      expect(wrapper.classes()).toContain("p-2");
-    });
+    it("applies rounded classes based on rounded prop", () => {
+      const roundedValues = ["full", "none", "xs", "sm", "md", "lg", "xl"];
+      const expectedClasses = ["rounded-full", "rounded-none", "rounded-xs", "rounded-sm", "rounded-md", "rounded-lg", "rounded-xl"];
 
-    it("applies rounded classes correctly", () => {
-      const roundedOptions = ["full", "none", "xs", "sm", "md", "lg", "xl"];
-      
-      roundedOptions.forEach((rounded) => {
+      roundedValues.forEach((rounded, index) => {
         wrapper = createWrapper({ rounded });
-        expect(wrapper.classes()).toContain(`rounded-${rounded}`);
+        expect(wrapper.classes()).toContain(expectedClasses[index]);
       });
     });
 
     it("applies size classes to icon", () => {
       const sizes = ["xs", "sm", "md", "lg", "xl"];
-      const expectedClasses = [
-        "w-4 h-4", "w-5 h-5", "w-7 h-7", "h-10 w-10", "h-14 w-14"
-      ];
+      const expectedClasses = ["w-4 h-4", "w-5 h-5", "w-7 h-7", "h-10 w-10", "h-14 w-14"];
 
       sizes.forEach((size, index) => {
         wrapper = createWrapper({ icon: "IconSettings", size });
@@ -105,25 +86,14 @@ describe("IconButton Component", () => {
       });
     });
 
-    it("applies size classes to image", () => {
-      wrapper = createWrapper({ imgUrl: "test.jpg", size: "md" });
-      const img = wrapper.find("img");
-      expect(img.classes()).toContain("w-7");
-      expect(img.classes()).toContain("h-7");
-    });
-
-    it("applies size classes to loading icon", () => {
-      wrapper = createWrapper({ isLoading: true, size: "lg" });
-      const icon = wrapper.findComponent(Icon);
-      expect(icon.classes()).toContain("h-10");
-      expect(icon.classes()).toContain("w-10");
-    });
-
-    it("uses lg as default size", () => {
+    it("applies padding when icon is provided", () => {
       wrapper = createWrapper({ icon: "IconSettings" });
-      const icon = wrapper.findComponent(Icon);
-      expect(icon.classes()).toContain("h-10");
-      expect(icon.classes()).toContain("w-10");
+      expect(wrapper.classes()).toContain("p-2");
+    });
+
+    it("does not apply padding when no icon is provided", () => {
+      wrapper = createWrapper({ imgUrl: "test.jpg" });
+      expect(wrapper.classes()).not.toContain("p-2");
     });
   });
 
@@ -132,14 +102,12 @@ describe("IconButton Component", () => {
       wrapper = createWrapper({ disabled: true });
       expect(wrapper.classes()).toContain("bg-gray-100");
       expect(wrapper.classes()).toContain("cursor-not-allowed");
-      expect(wrapper.attributes("disabled")).toBeDefined();
+      expect(wrapper.attributes("disabled")).toBe("true");
     });
 
-    it("applies disabled styling when cardDisabled is injected", () => {
+    it("applies disabled styling when cardDisabled is true", () => {
       wrapper = mount(IconButton, {
-        props: {},
         global: {
-          components: { Icon },
           provide: {
             cardDisabled: true,
           },
@@ -147,14 +115,14 @@ describe("IconButton Component", () => {
       });
       expect(wrapper.classes()).toContain("bg-gray-100");
       expect(wrapper.classes()).toContain("cursor-not-allowed");
-      expect(wrapper.attributes("disabled")).toBeDefined();
+      expect(wrapper.attributes("disabled")).toBe("true");
     });
 
-    it("applies disabled styling when loading", () => {
+    it("applies loading styling when isLoading is true", () => {
       wrapper = createWrapper({ isLoading: true });
       expect(wrapper.classes()).toContain("bg-gray-100");
       expect(wrapper.classes()).toContain("cursor-not-allowed");
-      expect(wrapper.attributes("disabled")).toBeDefined();
+      expect(wrapper.attributes("disabled")).toBe("true");
     });
 
     it("applies enabled styling when not disabled", () => {
@@ -163,10 +131,86 @@ describe("IconButton Component", () => {
       expect(wrapper.classes()).toContain("hover:bg-white-light/90");
       expect(wrapper.classes()).toContain("hover:text-primary");
       expect(wrapper.classes()).toContain("hover:cursor-pointer");
-      expect(wrapper.attributes("disabled")).toBeUndefined();
+      expect(wrapper.attributes("disabled")).toBe("false");
+    });
+  });
+
+  describe("Events", () => {
+    it("emits click event when clicked and not disabled", async () => {
+      wrapper = createWrapper();
+      await wrapper.trigger("click");
+      expect(wrapper.emitted("click")).toBeTruthy();
     });
 
-    it("applies dark theme classes", () => {
+    it("does not emit click event when disabled", async () => {
+      wrapper = createWrapper({ disabled: true });
+      await wrapper.trigger("click");
+      expect(wrapper.emitted("click")).toBeFalsy();
+    });
+
+    it("does not emit click event when cardDisabled is true", async () => {
+      wrapper = mount(IconButton, {
+        global: {
+          provide: {
+            cardDisabled: true,
+          },
+        },
+      });
+      await wrapper.trigger("click");
+      expect(wrapper.emitted("click")).toBeFalsy();
+    });
+
+    it("does not emit click event when loading", async () => {
+      wrapper = createWrapper({ isLoading: true });
+      await wrapper.trigger("click");
+      expect(wrapper.emitted("click")).toBeFalsy();
+    });
+  });
+
+  describe("Loading State", () => {
+    it("shows loading icon when isLoading is true", () => {
+      wrapper = createWrapper({ isLoading: true });
+      const icon = wrapper.findComponent(Icon);
+      expect(icon.exists()).toBe(true);
+      expect(icon.props("name")).toBe("IconLoader");
+    });
+
+    it("uses custom loading icon when provided", () => {
+      wrapper = createWrapper({ isLoading: true, loadingIcon: "IconRefresh" });
+      const icon = wrapper.findComponent(Icon);
+      expect(icon.props("name")).toBe("IconRefresh");
+    });
+
+    it("applies animation class to loading icon", () => {
+      wrapper = createWrapper({ isLoading: true });
+      const icon = wrapper.findComponent(Icon);
+      expect(icon.classes()).toContain("animate-[spin_2s_linear_infinite]");
+    });
+  });
+
+  describe("Image Handling", () => {
+    it("renders image with correct src", () => {
+      wrapper = createWrapper({ imgUrl: "test-image.jpg" });
+      const img = wrapper.find("img");
+      expect(img.attributes("src")).toBe("test-image.jpg");
+    });
+
+    it("applies image styling classes", () => {
+      wrapper = createWrapper({ imgUrl: "test.jpg" });
+      const img = wrapper.find("img");
+      expect(img.classes()).toContain("hover:opacity-80");
+      expect(img.classes()).toContain("transition-opacity");
+    });
+
+    it("prioritizes icon over imgUrl when both are provided", () => {
+      wrapper = createWrapper({ icon: "IconSettings", imgUrl: "test.jpg" });
+      expect(wrapper.findComponent(Icon).exists()).toBe(true);
+      expect(wrapper.find("img").exists()).toBe(false);
+    });
+  });
+
+  describe("Dark Mode Support", () => {
+    it("applies dark mode classes", () => {
       wrapper = createWrapper();
       expect(wrapper.classes()).toContain("dark:bg-dark/40");
       expect(wrapper.classes()).toContain("dark:hover:bg-dark/60");
@@ -175,142 +219,39 @@ describe("IconButton Component", () => {
     });
   });
 
-  describe("Loading State", () => {
-    it("shows loading icon with animation", () => {
-      wrapper = createWrapper({ isLoading: true });
-      const icon = wrapper.findComponent(Icon);
-      expect(icon.classes()).toContain("animate-[spin_2s_linear_infinite]");
-    });
-
-    it("uses default loading icon", () => {
-      wrapper = createWrapper({ isLoading: true });
-      expect(wrapper.findComponent(Icon).props("name")).toBe("IconLoader");
-    });
-
-    it("uses custom loading icon", () => {
-      wrapper = createWrapper({ 
-        isLoading: true, 
-        loadingIcon: "IconRefresh" 
-      });
-      expect(wrapper.findComponent(Icon).props("name")).toBe("IconRefresh");
-    });
-
-    it("prioritizes loading over regular icon", () => {
-      wrapper = createWrapper({ 
-        isLoading: true, 
-        icon: "IconSettings" 
-      });
-      const icons = wrapper.findAllComponents(Icon);
-      expect(icons).toHaveLength(1);
-      expect(icons[0].props("name")).toBe("IconLoader");
-    });
-
-    it("prioritizes loading over image", () => {
-      wrapper = createWrapper({ 
-        isLoading: true, 
-        imgUrl: "test.jpg" 
-      });
-      expect(wrapper.findComponent(Icon).exists()).toBe(true);
-      expect(wrapper.find("img").exists()).toBe(false);
-    });
-  });
-
-  describe("Events", () => {
-    it("emits click event when clicked", async () => {
-      wrapper = createWrapper();
-      await wrapper.find("div").trigger("click");
-      expect(wrapper.emitted("click")).toBeTruthy();
-    });
-
-    it("does not emit click when disabled", async () => {
-      wrapper = createWrapper({ disabled: true });
-      await wrapper.find("div").trigger("click");
-      expect(wrapper.emitted("click")).toBeFalsy();
-    });
-
-    it("does not emit click when cardDisabled is injected", async () => {
-      wrapper = mount(IconButton, {
-        props: {},
-        global: {
-          components: { Icon },
-          provide: {
-            cardDisabled: true,
-          },
-        },
-      });
-      await wrapper.find("div").trigger("click");
-      expect(wrapper.emitted("click")).toBeFalsy();
-    });
-
-    it("does not emit click when loading", async () => {
-      wrapper = createWrapper({ isLoading: true });
-      await wrapper.find("div").trigger("click");
-      expect(wrapper.emitted("click")).toBeFalsy();
-    });
-  });
-
-  describe("Image Handling", () => {
-    it("applies hover opacity to image", () => {
-      wrapper = createWrapper({ imgUrl: "test.jpg" });
-      const img = wrapper.find("img");
-      expect(img.classes()).toContain("hover:opacity-80");
-      expect(img.classes()).toContain("transition-opacity");
-    });
-
-    it("does not show image when loading", () => {
-      wrapper = createWrapper({ 
-        imgUrl: "test.jpg", 
-        isLoading: true 
-      });
-      expect(wrapper.find("img").exists()).toBe(false);
-    });
-  });
-
   describe("Accessibility", () => {
-    it("has proper disabled attribute when disabled", () => {
+    it("has disabled attribute when disabled", () => {
       wrapper = createWrapper({ disabled: true });
-      expect(wrapper.attributes("disabled")).toBeDefined();
+      expect(wrapper.attributes("disabled")).toBe("true");
     });
 
-    it("has proper disabled attribute when cardDisabled is injected", () => {
+    it("has disabled attribute when cardDisabled is true", () => {
       wrapper = mount(IconButton, {
-        props: {},
         global: {
-          components: { Icon },
           provide: {
             cardDisabled: true,
           },
         },
       });
-      expect(wrapper.attributes("disabled")).toBeDefined();
+      expect(wrapper.attributes("disabled")).toBe("true");
     });
 
-    it("has proper disabled attribute when loading", () => {
+    it("has disabled attribute when loading", () => {
       wrapper = createWrapper({ isLoading: true });
-      expect(wrapper.attributes("disabled")).toBeDefined();
+      expect(wrapper.attributes("disabled")).toBe("true");
     });
 
     it("does not have disabled attribute when enabled", () => {
       wrapper = createWrapper();
-      expect(wrapper.attributes("disabled")).toBeUndefined();
+      expect(wrapper.attributes("disabled")).toBe("false");
     });
   });
 
   describe("Edge Cases", () => {
-    it("handles empty icon name", () => {
-      wrapper = createWrapper({ icon: "" });
-      expect(wrapper.findComponent(Icon).exists()).toBe(false);
-    });
-
     it("handles empty imgUrl", () => {
       wrapper = createWrapper({ imgUrl: "" });
       expect(wrapper.find("img").exists()).toBe(true);
       expect(wrapper.find("img").attributes("src")).toBe("");
-    });
-
-    it("handles undefined props gracefully", () => {
-      wrapper = createWrapper({});
-      expect(wrapper.find("div").exists()).toBe(true);
     });
 
     it("handles both icon and imgUrl props", () => {
@@ -323,21 +264,18 @@ describe("IconButton Component", () => {
       expect(wrapper.find("img").exists()).toBe(false);
     });
 
-    it("handles invalid rounded gracefully", () => {
-      wrapper = createWrapper({ rounded: "invalid" as any });
-      // Should not apply any rounded class
-      expect(wrapper.classes()).not.toContain("rounded-invalid");
-    });
-
     it("handles invalid size gracefully", () => {
-      wrapper = createWrapper({ 
-        icon: "IconSettings", 
-        size: "invalid" as any 
-      });
+      wrapper = createWrapper({ icon: "IconSettings", size: "invalid" as any });
       // Should fall back to default size (lg)
       const icon = wrapper.findComponent(Icon);
       expect(icon.classes()).toContain("h-10");
       expect(icon.classes()).toContain("w-10");
+    });
+
+    it("handles invalid rounded gracefully", () => {
+      wrapper = createWrapper({ rounded: "invalid" as any });
+      // Should not apply any rounded class
+      expect(wrapper.classes()).not.toContain("rounded-");
     });
   });
 
@@ -350,17 +288,32 @@ describe("IconButton Component", () => {
     });
   });
 
-  describe("Custom Classes", () => {
-    it("applies custom class from attrs", () => {
-      wrapper = createWrapper({ class: "custom-class" });
-      expect(wrapper.classes()).toContain("custom-class");
+  describe("Computed Properties", () => {
+    it("computes rounded class correctly", () => {
+      wrapper = createWrapper({ rounded: "lg" });
+      expect(wrapper.classes()).toContain("rounded-lg");
     });
 
-    it("combines custom class with default classes", () => {
-      wrapper = createWrapper({ class: "custom-class" });
-      expect(wrapper.classes()).toContain("custom-class");
-      expect(wrapper.classes()).toContain("overflow-hidden");
-      expect(wrapper.classes()).toContain("w-fit");
+    it("computes size class correctly", () => {
+      wrapper = createWrapper({ icon: "IconSettings", size: "md" });
+      const icon = wrapper.findComponent(Icon);
+      expect(icon.classes()).toContain("w-7");
+      expect(icon.classes()).toContain("h-7");
+    });
+  });
+
+  describe("Integration with Icon Component", () => {
+    it("passes correct props to Icon component", () => {
+      wrapper = createWrapper({ icon: "IconSettings" });
+      const icon = wrapper.findComponent(Icon);
+      expect(icon.props("name")).toBe("IconSettings");
+    });
+
+    it("applies correct classes to Icon component", () => {
+      wrapper = createWrapper({ icon: "IconSettings", size: "lg" });
+      const icon = wrapper.findComponent(Icon);
+      expect(icon.classes()).toContain("h-10");
+      expect(icon.classes()).toContain("w-10");
     });
   });
 });

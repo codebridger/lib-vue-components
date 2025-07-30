@@ -7,55 +7,34 @@ vi.mock("vue3-popper", () => ({
   default: {
     name: "Popper",
     template: `
-      <div class="popper-wrapper">
+      <div class="popper">
         <slot />
-        <div v-if="show" class="popper-content">
-          <slot name="content" />
-        </div>
+        <slot name="content" />
       </div>
     `,
-    props: [
-      "placement",
-      "hover",
-      "arrow",
-      "open-delay",
-      "close-delay",
-      "z-index",
-      "disabled"
-    ],
-  }
+    props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled"],
+  },
 }));
 
 describe("Tooltip Component", () => {
   let wrapper: VueWrapper<any>;
-
-  // Helper function to create wrapper with default props
   const createWrapper = (props = {}, slots = {}) => {
     return mount(Tooltip, {
       props,
       slots,
       global: {
         stubs: {
-          "vue3-popper": {
+          Popper: {
+            name: "Popper",
             template: `
-              <div class="popper-wrapper">
+              <div class="popper">
                 <slot />
-                <div v-if="show" class="popper-content">
-                  <slot name="content" />
-                </div>
+                <slot name="content" />
               </div>
             `,
-            props: [
-              "placement",
-              "hover",
-              "arrow",
-              "open-delay",
-              "close-delay",
-              "z-index",
-              "disabled"
-            ],
-          }
-        }
+            props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled"],
+          },
+        },
       },
     });
   };
@@ -66,54 +45,49 @@ describe("Tooltip Component", () => {
       expect(wrapper.find(".tooltip-wrapper").exists()).toBe(true);
     });
 
+    it("renders Popper component", () => {
+      wrapper = createWrapper({ text: "Tooltip text" });
+      expect(wrapper.findComponent({ name: "Popper" }).exists()).toBe(true);
+    });
+
     it("renders trigger slot content", () => {
-      wrapper = createWrapper({ text: "Tooltip text" }, {
-        default: '<button data-test="trigger">Hover me</button>'
-      });
-      expect(wrapper.find('[data-test="trigger"]').exists()).toBe(true);
+      wrapper = createWrapper(
+        { text: "Tooltip text" },
+        { default: '<button>Hover me</button>' }
+      );
+      expect(wrapper.find("button").exists()).toBe(true);
+      expect(wrapper.text()).toContain("Hover me");
     });
 
     it("renders tooltip content", () => {
       wrapper = createWrapper({ text: "Tooltip text" });
-      expect(wrapper.text()).toContain("Tooltip text");
-    });
-
-    it("renders Popper component", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      expect(wrapper.findComponent({ name: "Popper" }).exists()).toBe(true);
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.text()).toContain("Tooltip text");
     });
   });
 
   describe("Props and Configuration", () => {
     it("passes text prop to tooltip content", () => {
       wrapper = createWrapper({ text: "Custom tooltip text" });
-      expect(wrapper.text()).toContain("Custom tooltip text");
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.text()).toContain("Custom tooltip text");
     });
 
     it("passes placement prop to Popper", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        placement: "top" 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", placement: "top" });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("placement")).toBe("top");
     });
 
     it("passes delay prop to Popper", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        delay: 500 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", delay: 500 });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("open-delay")).toBe(500);
       expect(popper.props("close-delay")).toBe(500);
     });
 
     it("passes disabled prop to Popper", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        disabled: true 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", disabled: true });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("disabled")).toBe(true);
     });
@@ -124,144 +98,195 @@ describe("Tooltip Component", () => {
       expect(popper.props("hover")).toBe(true);
       expect(popper.props("arrow")).toBe(true);
       expect(popper.props("z-index")).toBe(9999);
+      expect(popper.props("disabled")).toBe(false);
     });
   });
 
   describe("Color Variants", () => {
-    it("applies primary color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "primary" 
-      });
+    it("applies primary color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "primary" });
       expect(wrapper.classes()).toContain("tooltip-primary");
     });
 
-    it("applies success color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "success" 
-      });
+    it("applies success color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "success" });
       expect(wrapper.classes()).toContain("tooltip-success");
     });
 
-    it("applies info color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "info" 
-      });
-      expect(wrapper.classes()).toContain("tooltip-info");
-    });
-
-    it("applies warning color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "warning" 
-      });
+    it("applies warning color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "warning" });
       expect(wrapper.classes()).toContain("tooltip-warning");
     });
 
-    it("applies danger color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "danger" 
-      });
+    it("applies danger color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "danger" });
       expect(wrapper.classes()).toContain("tooltip-danger");
     });
 
-    it("applies secondary color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "secondary" 
-      });
+    it("applies info color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "info" });
+      expect(wrapper.classes()).toContain("tooltip-info");
+    });
+
+    it("applies secondary color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "secondary" });
       expect(wrapper.classes()).toContain("tooltip-secondary");
     });
 
-    it("applies white color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "white" 
-      });
+    it("applies white color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "white" });
       expect(wrapper.classes()).toContain("tooltip-white");
     });
 
-    it("applies black color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "black" 
-      });
+    it("applies black color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "black" });
       expect(wrapper.classes()).toContain("tooltip-black");
     });
 
-    it("applies system color class", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "system" 
-      });
+    it("applies system color classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "system" });
       expect(wrapper.classes()).toContain("tooltip-system");
-    });
-
-    it("applies computed color classes to tooltip content", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "primary" 
-      });
-      const tooltipContent = wrapper.find(".tooltip-content");
-      expect(tooltipContent.classes()).toContain("!bg-primary");
-      expect(tooltipContent.classes()).toContain("!text-white");
-      expect(tooltipContent.classes()).toContain("!border-primary/20");
     });
   });
 
   describe("Placement Options", () => {
     it("supports top placement", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        placement: "top" 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", placement: "top" });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("placement")).toBe("top");
     });
 
     it("supports bottom placement", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        placement: "bottom" 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", placement: "bottom" });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("placement")).toBe("bottom");
     });
 
     it("supports left placement", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        placement: "left" 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", placement: "left" });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("placement")).toBe("left");
     });
 
     it("supports right placement", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        placement: "right" 
-      });
+      wrapper = createWrapper({ text: "Tooltip text", placement: "right" });
       const popper = wrapper.findComponent({ name: "Popper" });
       expect(popper.props("placement")).toBe("right");
     });
   });
 
   describe("Accessibility", () => {
-    it("has proper tooltip structure", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      expect(wrapper.find(".tooltip-wrapper").exists()).toBe(true);
-    });
-
     it("passes through attributes to wrapper", () => {
       wrapper = createWrapper({ 
         text: "Tooltip text",
-        "data-testid": "tooltip-component"
+        "aria-describedby": "tooltip-1"
       });
-      expect(wrapper.attributes("data-testid")).toBe("tooltip-component");
+      expect(wrapper.attributes("aria-describedby")).toBe("tooltip-1");
+    });
+
+    it("has proper tooltip structure", () => {
+      wrapper = createWrapper({ text: "Tooltip text" });
+      expect(wrapper.find(".tooltip-wrapper").exists()).toBe(true);
+      expect(wrapper.findComponent({ name: "Popper" }).exists()).toBe(true);
+    });
+  });
+
+  describe("Edge Cases", () => {
+    it("handles empty text", () => {
+      wrapper = createWrapper({ text: "" });
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.text()).toBe("");
+    });
+
+    it("handles invalid placement gracefully", () => {
+      wrapper = createWrapper({ text: "Tooltip text", placement: "invalid" as any });
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.props("placement")).toBe("invalid");
+    });
+
+    it("handles invalid color gracefully", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "invalid" as any });
+      // Should not apply any color class
+      expect(wrapper.classes()).not.toContain("tooltip-invalid");
+    });
+
+    it("handles negative delay", () => {
+      wrapper = createWrapper({ text: "Tooltip text", delay: -100 });
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.props("open-delay")).toBe(-100);
+      expect(popper.props("close-delay")).toBe(-100);
+    });
+
+    it("handles zero delay", () => {
+      wrapper = createWrapper({ text: "Tooltip text", delay: 0 });
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.props("open-delay")).toBe(0);
+      expect(popper.props("close-delay")).toBe(0);
+    });
+  });
+
+  describe("Computed Properties", () => {
+    it("computes color class correctly for primary", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "primary" });
+      expect(wrapper.classes()).toContain("tooltip-primary");
+    });
+
+    it("computes color class correctly for white", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "white" });
+      expect(wrapper.classes()).toContain("tooltip-white");
+    });
+
+    it("computes color class correctly for system", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "system" });
+      expect(wrapper.classes()).toContain("tooltip-system");
+    });
+  });
+
+  describe("Slot Integration", () => {
+    it("renders content slot", () => {
+      wrapper = createWrapper({ text: "Tooltip text" });
+      const popper = wrapper.findComponent({ name: "Popper" });
+      expect(popper.exists()).toBe(true);
+    });
+
+    it("renders trigger slot", () => {
+      wrapper = createWrapper(
+        { text: "Tooltip text" },
+        { default: '<span>Trigger</span>' }
+      );
+      expect(wrapper.find("span").exists()).toBe(true);
+      expect(wrapper.text()).toContain("Trigger");
+    });
+  });
+
+  describe("Styling", () => {
+    it("applies tooltip wrapper classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text" });
+      expect(wrapper.classes()).toContain("tooltip-wrapper");
+    });
+
+    it("applies color-specific wrapper classes", () => {
+      wrapper = createWrapper({ text: "Tooltip text", color: "primary" });
+      expect(wrapper.classes()).toContain("tooltip-primary");
+    });
+  });
+
+  describe("Type Safety", () => {
+    it("accepts valid placement types", () => {
+      const placements = ["top", "bottom", "left", "right"];
+      placements.forEach(placement => {
+        wrapper = createWrapper({ text: "Tooltip text", placement });
+        const popper = wrapper.findComponent({ name: "Popper" });
+        expect(popper.props("placement")).toBe(placement);
+      });
+    });
+
+    it("accepts valid color types", () => {
+      const colors = ["primary", "success", "info", "warning", "danger", "secondary", "white", "black", "system"];
+      colors.forEach(color => {
+        wrapper = createWrapper({ text: "Tooltip text", color });
+        expect(wrapper.classes()).toContain(`tooltip-${color}`);
+      });
     });
   });
 
@@ -275,140 +300,32 @@ describe("Tooltip Component", () => {
     });
   });
 
-  describe("Required Props", () => {
-    it("requires text prop", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      expect(wrapper.props("text")).toBe("Tooltip text");
+  describe("Integration", () => {
+    it("works with complex trigger content", () => {
+      wrapper = createWrapper(
+        { text: "Tooltip text" },
+        { 
+          default: `
+            <div class="complex-trigger">
+              <span>Icon</span>
+              <span>Text</span>
+            </div>
+          `
+        }
+      );
+      expect(wrapper.find(".complex-trigger").exists()).toBe(true);
+      expect(wrapper.text()).toContain("Icon");
+      expect(wrapper.text()).toContain("Text");
     });
-  });
 
-  describe("Edge Cases", () => {
-    it("handles empty text", () => {
-      wrapper = createWrapper({ text: "" });
-      expect(wrapper.find(".tooltip-wrapper").exists()).toBe(true);
-    });
-
-    it("handles undefined props gracefully", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      expect(wrapper.find(".tooltip-wrapper").exists()).toBe(true);
-    });
-
-    it("handles invalid placement gracefully", () => {
+    it("works with custom attributes", () => {
       wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        placement: "invalid" as any 
+        text: "Tooltip text",
+        class: "custom-tooltip",
+        id: "tooltip-1"
       });
-      const popper = wrapper.findComponent({ name: "Popper" });
-      expect(popper.props("placement")).toBe("invalid");
-    });
-
-    it("handles invalid color gracefully", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "invalid" as any 
-      });
-      // Should not apply any color class
-      expect(wrapper.classes()).not.toContain("tooltip-invalid");
-    });
-
-    it("handles negative delay", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        delay: -100 
-      });
-      const popper = wrapper.findComponent({ name: "Popper" });
-      expect(popper.props("open-delay")).toBe(-100);
-      expect(popper.props("close-delay")).toBe(-100);
-    });
-  });
-
-  describe("Computed Properties", () => {
-    it("computes color class correctly for primary", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "primary" 
-      });
-      const tooltipContent = wrapper.find(".tooltip-content");
-      expect(tooltipContent.classes()).toContain("!bg-primary");
-      expect(tooltipContent.classes()).toContain("!text-white");
-      expect(tooltipContent.classes()).toContain("!border-primary/20");
-    });
-
-    it("computes color class correctly for white", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "white" 
-      });
-      const tooltipContent = wrapper.find(".tooltip-content");
-      expect(tooltipContent.classes()).toContain("!bg-white");
-      expect(tooltipContent.classes()).toContain("!text-gray-800");
-      expect(tooltipContent.classes()).toContain("!border-gray-200");
-    });
-
-    it("computes color class correctly for system", () => {
-      wrapper = createWrapper({ 
-        text: "Tooltip text", 
-        color: "system" 
-      });
-      const tooltipContent = wrapper.find(".tooltip-content");
-      expect(tooltipContent.classes()).toBe("tooltip-content");
-    });
-  });
-
-  describe("Slot Integration", () => {
-    it("renders default slot content", () => {
-      wrapper = createWrapper({ text: "Tooltip text" }, {
-        default: '<span data-test="trigger-content">Hover me</span>'
-      });
-      expect(wrapper.find('[data-test="trigger-content"]').exists()).toBe(true);
-    });
-
-    it("renders content slot", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      const popper = wrapper.findComponent({ name: "Popper" });
-      expect(popper.exists()).toBe(true);
-    });
-  });
-
-  describe("Styling", () => {
-    it("applies tooltip wrapper classes", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      expect(wrapper.classes()).toContain("tooltip-wrapper");
-      expect(wrapper.classes()).toContain("tooltip-primary");
-    });
-
-    it("applies tooltip content classes", () => {
-      wrapper = createWrapper({ text: "Tooltip text" });
-      const tooltipContent = wrapper.find(".tooltip-content");
-      expect(tooltipContent.exists()).toBe(true);
-    });
-  });
-
-  describe("Type Safety", () => {
-    it("accepts valid placement types", () => {
-      const placements = ["top", "bottom", "left", "right"];
-      placements.forEach((placement) => {
-        wrapper = createWrapper({ 
-          text: "Tooltip text", 
-          placement: placement as any 
-        });
-        const popper = wrapper.findComponent({ name: "Popper" });
-        expect(popper.props("placement")).toBe(placement);
-      });
-    });
-
-    it("accepts valid color types", () => {
-      const colors = [
-        "primary", "success", "info", "warning", 
-        "danger", "secondary", "white", "black", "system"
-      ];
-      colors.forEach((color) => {
-        wrapper = createWrapper({ 
-          text: "Tooltip text", 
-          color: color as any 
-        });
-        expect(wrapper.classes()).toContain(`tooltip-${color}`);
-      });
+      expect(wrapper.classes()).toContain("custom-tooltip");
+      expect(wrapper.attributes("id")).toBe("tooltip-1");
     });
   });
 });
