@@ -201,7 +201,7 @@ describe("Input Component", () => {
       wrapper = createWrapper({ modelValue: "test" });
       const input = wrapper.find("input");
       await input.trigger("keyup.enter");
-      expect(wrapper.emitted("update:modelValue")?.[1]).toEqual([""]);
+      expect(wrapper.emitted("update:modelValue")?.[0]).toEqual([""]);
     });
 
     it("emits iconClick when icon is clicked", async () => {

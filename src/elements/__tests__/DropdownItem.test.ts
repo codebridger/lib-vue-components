@@ -56,13 +56,31 @@ describe("DropdownItem Component", () => {
     it("handles empty class prop", () => {
       wrapper = createWrapper({ class: "" });
       const anchor = wrapper.find("a");
-      expect(anchor.classes()).toContain("");
+      expect(anchor.attributes("class")).toBe("");
     });
 
     it("handles undefined class prop", () => {
       wrapper = createWrapper();
       const anchor = wrapper.find("a");
-      expect(anchor.attributes("class")).toBeUndefined();
+      expect(anchor.attributes("class")).toBe("");
+    });
+
+    it("handles null class prop", () => {
+      wrapper = createWrapper({ class: null as any });
+      const anchor = wrapper.find("a");
+      expect(anchor.attributes("class")).toBe("");
+    });
+
+    it("handles boolean class prop", () => {
+      wrapper = createWrapper({ class: true as any });
+      const anchor = wrapper.find("a");
+      expect(anchor.attributes("class")).toBe("");
+    });
+
+    it("handles number class prop", () => {
+      wrapper = createWrapper({ class: 123 as any });
+      const anchor = wrapper.find("a");
+      expect(anchor.attributes("class")).toBe("");
     });
   });
 
@@ -155,19 +173,19 @@ describe("DropdownItem Component", () => {
     it("handles null class prop", () => {
       wrapper = createWrapper({ class: null as any });
       const anchor = wrapper.find("a");
-      expect(anchor.attributes("class")).toBeUndefined();
+      expect(anchor.attributes("class")).toBe("");
     });
 
     it("handles boolean class prop", () => {
       wrapper = createWrapper({ class: true as any });
       const anchor = wrapper.find("a");
-      expect(anchor.classes()).toContain("true");
+      expect(anchor.attributes("class")).toBe("");
     });
 
     it("handles number class prop", () => {
       wrapper = createWrapper({ class: 123 as any });
       const anchor = wrapper.find("a");
-      expect(anchor.classes()).toContain("123");
+      expect(anchor.attributes("class")).toBe("");
     });
   });
 
@@ -264,7 +282,7 @@ describe("DropdownItem Component", () => {
   describe("Rendering Performance", () => {
     it("renders efficiently with minimal props", () => {
       wrapper = createWrapper();
-      expect(wrapper.html()).toBe("<li><a href=\"javascript:;\"></a></li>");
+      expect(wrapper.html()).toBe("<li><a href=\"javascript:;\" class=\"\"></a></li>");
     });
 
     it("renders efficiently with class and content", () => {

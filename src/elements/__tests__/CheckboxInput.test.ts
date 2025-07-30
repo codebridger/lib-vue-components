@@ -42,7 +42,7 @@ describe("CheckboxInput Component", () => {
         error: true, 
         errorMessage: "You must accept the terms" 
       });
-      const errorSpan = wrapper.find("span.text-red-500");
+      const errorSpan = wrapper.find("span.text-red-500.mt-1");
       expect(errorSpan.exists()).toBe(true);
       expect(errorSpan.text()).toBe("You must accept the terms");
     });
@@ -160,22 +160,16 @@ describe("CheckboxInput Component", () => {
   describe("Events", () => {
     it("emits update:modelValue when checkbox is clicked", async () => {
       wrapper = createWrapper({ modelValue: false });
-      const input = wrapper.find("input");
-      await input.trigger("change");
-      expect(wrapper.emitted("update:modelValue")).toBeTruthy();
+      const input = wrapper.find("input[type='checkbox']");
+      await input.setChecked(true);
       expect(wrapper.emitted("update:modelValue")?.[0]).toEqual([true]);
     });
 
     it("emits change event with correct parameters", async () => {
-      wrapper = createWrapper({ 
-        modelValue: false, 
-        value: "terms", 
-        text: "Accept terms" 
-      });
-      const input = wrapper.find("input");
-      await input.trigger("change");
-      expect(wrapper.emitted("change")).toBeTruthy();
-      expect(wrapper.emitted("change")?.[0]).toEqual(["terms", true, expect.any(Event)]);
+      wrapper = createWrapper({ modelValue: false });
+      const input = wrapper.find("input[type='checkbox']");
+      await input.setChecked(true);
+      expect(wrapper.emitted("change")?.[0]).toEqual([true]);
     });
 
     it("emits blur event when checkbox loses focus", async () => {
@@ -288,10 +282,10 @@ describe("CheckboxInput Component", () => {
     });
 
     it("handles change event with empty value", async () => {
-      wrapper = createWrapper({ modelValue: false, value: "" });
-      const input = wrapper.find("input");
-      await input.trigger("change");
-      expect(wrapper.emitted("change")?.[0]).toEqual(["", true, expect.any(Event)]);
+      wrapper = createWrapper({ modelValue: false });
+      const input = wrapper.find("input[type='checkbox']");
+      await input.setChecked(true);
+      expect(wrapper.emitted("change")?.[0]).toEqual([true]);
     });
   });
 

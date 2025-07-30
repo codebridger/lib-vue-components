@@ -82,7 +82,7 @@ describe("IconButton Component", () => {
       sizes.forEach((size, index) => {
         wrapper = createWrapper({ icon: "IconSettings", size });
         const icon = wrapper.findComponent(Icon);
-        expect(icon.classes()).toContain(expectedClasses[index]);
+        expect(icon.attributes("class")).toContain(expectedClasses[index]);
       });
     });
 
@@ -268,8 +268,8 @@ describe("IconButton Component", () => {
       wrapper = createWrapper({ icon: "IconSettings", size: "invalid" as any });
       // Should fall back to default size (lg)
       const icon = wrapper.findComponent(Icon);
-      expect(icon.classes()).toContain("h-10");
-      expect(icon.classes()).toContain("w-10");
+      expect(icon.attributes("class")).toContain("h-10");
+      expect(icon.attributes("class")).toContain("w-10");
     });
 
     it("handles invalid rounded gracefully", () => {

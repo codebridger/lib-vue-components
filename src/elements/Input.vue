@@ -146,10 +146,8 @@ const handleEnterKey = (event: KeyboardEvent) => {
   const target = event.target as HTMLInputElement;
   const value = target.value;
 
-  if (value) {
-    emit("enter", value);
-    emit("update:modelValue", "");
-  }
+  emit("enter", value);
+  emit("update:modelValue", "");
 };
 
 const handleIconClick = (event: MouseEvent) => {

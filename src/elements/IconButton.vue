@@ -35,14 +35,14 @@
       />
       <!-- Regular Icon -->
       <Icon
-        v-else-if="!props.imgUrl && props.icon"
+        v-else-if="props.icon"
         :name="props.icon"
         :class="[computedSize]"
       />
       <!-- Image -->
       <img
         class="hover:opacity-80 transition-opacity"
-        v-else-if="props.imgUrl && !isLoading"
+        v-else-if="props.imgUrl !== undefined && !isLoading"
         :src="props.imgUrl"
         :class="[computedSize]"
       />
@@ -105,7 +105,7 @@ const computedSize = computed(() => {
     lg: "h-10 w-10",
     xl: "h-14 w-14",
   };
-  return sizes[props.size || "lg"];
+  return sizes[props.size || "lg"] || sizes.lg;
 });
 
 const onClick = () => {

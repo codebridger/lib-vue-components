@@ -146,7 +146,9 @@ const computedValue = computed(() => {
   return Math.min(Math.max(percentage, 0), 100);
 });
 
-const isIndeterminate = computed(() => typeof props.value !== "number");
+const isIndeterminate = computed(() => {
+  return props.value === undefined || props.value === null;
+});
 </script>
 
 <style>

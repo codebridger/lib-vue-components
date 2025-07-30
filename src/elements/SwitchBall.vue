@@ -102,7 +102,7 @@ const computedColor = computed(() => {
       dark: "peer-checked:bg-dark bg-gray-200 dark:bg-gray-700",
       gradient: "peer-checked:bg-gradient bg-gray-200 dark:bg-gray-700",
     };
-    return colors[props.color];
+    return colors[props.color] || "peer-checked:bg-primary bg-gray-200 dark:bg-gray-700";
   }
   return "peer-checked:bg-primary bg-gray-200 dark:bg-gray-700";
 });

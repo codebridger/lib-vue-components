@@ -225,7 +225,7 @@ describe("Progress Component", () => {
 
   describe("Indeterminate Progress", () => {
     it("shows indeterminate animation when value is not a number", () => {
-      wrapper = createWrapper({ value: undefined as any });
+      wrapper = createWrapper({ value: null as any });
       const progressBar = wrapper.find(".progress-bar");
       expect(progressBar.classes()).toContain("animate-progress-indeterminate");
       expect(progressBar.attributes("style")).toContain("width: 100%");
