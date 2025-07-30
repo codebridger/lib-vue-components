@@ -169,7 +169,7 @@ describe("CheckboxInput Component", () => {
       wrapper = createWrapper({ modelValue: false });
       const input = wrapper.find("input[type='checkbox']");
       await input.setChecked(true);
-      expect(wrapper.emitted("change")?.[0]).toEqual([true]);
+      expect(wrapper.emitted("change")?.[0]).toEqual(["", true, expect.any(Event)]);
     });
 
     it("emits blur event when checkbox loses focus", async () => {
@@ -285,7 +285,7 @@ describe("CheckboxInput Component", () => {
       wrapper = createWrapper({ modelValue: false });
       const input = wrapper.find("input[type='checkbox']");
       await input.setChecked(true);
-      expect(wrapper.emitted("change")?.[0]).toEqual([true]);
+      expect(wrapper.emitted("change")?.[0]).toEqual(["", true, expect.any(Event)]);
     });
   });
 
