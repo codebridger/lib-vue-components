@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "src/**/__tests__/**/*",
+    "src/**/*.test.ts",
+    "src/**/*.test.js", 
+    "src/**/*.spec.ts",
+    "src/**/*.spec.js",
+    "src/**/__snapshots__/**/*",
+    "coverage/**/*",
+    "node_modules/**/*",
+    "**/*.stories.ts",
+    "**/*.stories.js"
+  ]
+} 

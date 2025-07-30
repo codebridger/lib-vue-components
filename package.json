@@ -33,8 +33,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "build-dev": "vue-tsc --noEmit && vite build --minify false",
+    "build": "vue-tsc --noEmit --project tsconfig.build.json && vite build",
+    "build-dev": "vue-tsc --noEmit --project tsconfig.build.json && vite build --minify false",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
     "test": "vitest --run",
