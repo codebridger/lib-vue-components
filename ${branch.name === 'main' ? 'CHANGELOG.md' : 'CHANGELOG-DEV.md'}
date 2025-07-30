@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/codebridger/lib-vue-components/compare/v1.21.1...v1.22.0) (2025-07-30)
+
+
+### Features
+
+* **doc-generator:** enhance Puppeteer settings for CI environment and improve memory management during documentation generation ([7c6af74](https://github.com/codebridger/lib-vue-components/commit/7c6af743e85dc6397c19236c14a1f0a35074d9a4))
+
 ## [1.21.1](https://github.com/codebridger/lib-vue-components/compare/v1.21.0...v1.21.1) (2025-07-30)
 
 
