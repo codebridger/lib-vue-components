@@ -17,14 +17,7 @@ describe("FileInputDropMode Component", () => {
   };
 
   beforeEach(() => {
-    // Mock document.documentElement
-    Object.defineProperty(document, "documentElement", {
-      value: {
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      },
-      writable: true,
-    });
+    // Removed override of document.documentElement to use the real HTMLElement
   });
 
   afterEach(() => {
