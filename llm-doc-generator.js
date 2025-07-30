@@ -31,10 +31,69 @@ class DocGenerator {
       replacement: function (content, node) {
         const code = node.querySelector("code");
         if (code) {
+          // Extract language from class name (e.g., "language-javascript" -> "javascript")
           const language = code.className?.match(/language-(\w+)/)?.[1] || "";
-          return `\n\`\`\`${language}\n${code.textContent}\n\`\`\`\n\n`;
+          const codeContent = code.textContent || code.innerText || "";
+          return `\n\`\`\`${language}\n${codeContent}\n\`\`\`\n\n`;
         }
-        return `\n\`\`\`\n${content}\n\`\`\`\n\n`;
+        // If no code element found, treat the pre content as plain text
+        const preContent = node.textContent || node.innerText || content;
+        return `\n\`\`\`\n${preContent}\n\`\`\`\n\n`;
+      },
+    });
+
+    // Configure turndown service for better table handling
+    this.turndownService.addRule("tables", {
+      filter: ["table"],
+      replacement: function (content, node) {
+        const rows = Array.from(node.querySelectorAll("tr"));
+        if (rows.length === 0) return content;
+
+        let markdown = "\n";
+
+        // Process each row
+        rows.forEach((row, rowIndex) => {
+          const cells = Array.from(row.querySelectorAll("td, th"));
+          if (cells.length === 0) return;
+
+          // Create the row content
+          const rowContent = cells
+            .map((cell) => {
+              const cellText = cell.textContent?.trim() || "";
+              return cellText.replace(/\|/g, "\\|"); // Escape pipe characters
+            })
+            .join(" | ");
+
+          markdown += `| ${rowContent} |\n`;
+
+          // Add header separator after the first row (if it has th elements)
+          if (rowIndex === 0 && row.querySelector("th")) {
+            const separator = cells.map(() => "---").join(" | ");
+            markdown += `| ${separator} |\n`;
+          }
+        });
+
+        return markdown + "\n";
+      },
+    });
+
+    // Configure turndown service to increase header levels for sub-headers
+    this.turndownService.addRule("increaseHeaderLevels", {
+      filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
+      replacement: function (content, node) {
+        const level = parseInt(node.tagName.charAt(1));
+        const newLevel = Math.min(level + 2, 6); // Increase by 2 levels, max h6
+        const hashes = "#".repeat(newLevel);
+        return `\n${hashes} ${content}\n\n`;
+      },
+    });
+
+    // Configure turndown service to remove links while preserving text
+    this.turndownService.addRule("removeLinks", {
+      filter: ["a"],
+      replacement: function (content, node) {
+        // Return just the text content of the link
+        return node.textContent || content;
       },
     });
   }
@@ -128,12 +187,6 @@ class DocGenerator {
 
       // Find all elements with data-item-id ending in --docs
       const docElements = await this.page.evaluate(() => {
-        // Get total count of all elements
-        const allElements = Array.from(
-          document.querySelectorAll("[data-item-id]")
-        );
-        console.log("📊 Total elements with data-item-id:", allElements.length);
-
         // Get all elements with data-item-id ending in --docs that have links
         const allElementsWithLinks = Array.from(
           document.querySelectorAll('[data-item-id$="--docs"]')
@@ -234,104 +287,52 @@ class DocGenerator {
         console.log("No specific content selectors found, continuing...");
       }
 
+      // Handle "Show code" buttons before extracting content
+      await this.handleShowCodeButtons();
+
       // Extract content from the iframe
       const content = await this.page.evaluate((dataItemId) => {
-        // First try to find the iframe
+        // Get the iframe
         const iframe = document.querySelector("#storybook-preview-iframe");
-
         if (!iframe) {
-          console.log("Storybook preview iframe not found");
-          return "";
+          throw new Error("Storybook preview iframe not found");
         }
 
         // Get the iframe document
         const iframeDoc =
           iframe.contentDocument || iframe.contentWindow.document;
-
         if (!iframeDoc) {
-          console.log("Cannot access iframe content");
-          return "";
+          throw new Error("Cannot access iframe content");
         }
 
-        console.log("Found iframe, extracting content from iframe document");
+        console.log("Extracting content from iframe document");
 
-        // Try to find content within the iframe
-        const contentSelectors = [
-          ".docblock",
-          ".docblock-source",
-          ".markdown",
-          "article",
-          "main",
-          ".docs-story",
-          ".storybook-docs",
-          '[data-testid="story-panel"]',
-          "body",
-        ];
-
-        let contentElement = null;
-        for (const selector of contentSelectors) {
-          contentElement = iframeDoc.querySelector(selector);
-          if (contentElement) {
-            console.log(`Found content with selector: ${selector} in iframe`);
-            break;
-          }
-        }
-
-        // If no content found in iframe, fall back to main document
+        // Get content from iframe body
+        const contentElement = iframeDoc.querySelector("#storybook-docs");
         if (!contentElement) {
-          // Try to find content in the main document
-          for (const selector of contentSelectors) {
-            contentElement = document.querySelector(selector);
-            if (contentElement) {
-              console.log(
-                `Found content with selector: ${selector} in main document`
-              );
-              break;
-            }
-          }
+          throw new Error("No body element found in iframe");
         }
 
-        // Return the HTML content for processing outside
-        if (contentElement) {
-          const result = contentElement.outerHTML;
-          console.log(`Extracted content length: ${result.length} characters`);
-          return result;
-        }
+        // Clone the content element to avoid modifying the original
+        const clonedContent = contentElement.cloneNode(true);
 
-        return "";
+        // Remove all style tags and buttons from the cloned content
+        const elementsToRemove = clonedContent.querySelectorAll(
+          "style, button, [role='button'], .btn, .button"
+        );
+        elementsToRemove.forEach((element) => {
+          element.remove();
+        });
+
+        const result = clonedContent.outerHTML;
+        console.log(
+          `Extracted content length: ${result.length} characters (after removing ${elementsToRemove.length} elements)`
+        );
+        return result;
       }, docElement.dataItemId);
 
-      // Convert HTML to markdown or text based on options
-      let finalContent = "";
-      if (this.options.outputFormat === "text") {
-        // Extract text-only content
-        const tempDiv = document.createElement("div");
-        tempDiv.innerHTML = content;
-        const allText = tempDiv.textContent || tempDiv.innerText || "";
-        const lines = allText
-          .split("\n")
-          .map((line) => line.trim())
-          .filter((line) => line.length > 0);
-        finalContent = lines.join("\n\n");
-      } else {
-        // Convert to markdown using turndown service
-        try {
-          finalContent = this.turndownService.turndown(content);
-        } catch (error) {
-          console.log(
-            "Error converting to markdown, falling back to text extraction"
-          );
-          // Fallback to text extraction if markdown conversion fails
-          const tempDiv = document.createElement("div");
-          tempDiv.innerHTML = content;
-          const allText = tempDiv.textContent || tempDiv.innerText || "";
-          const lines = allText
-            .split("\n")
-            .map((line) => line.trim())
-            .filter((line) => line.length > 0);
-          finalContent = lines.join("\n\n");
-        }
-      }
+      // Convert HTML to markdown using turndown service
+      const finalContent = this.turndownService.turndown(content);
 
       return {
         title: docElement.title,
@@ -346,6 +347,111 @@ class DocGenerator {
         error.message
       );
       return null;
+    }
+  }
+
+  async handleShowCodeButtons() {
+    console.log("🔍 Looking for 'Show code' buttons...");
+
+    try {
+      // Wait a bit for any dynamic content to load
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Try to find and click "Show code" buttons in the main document
+      const mainDocButtonsClicked = await this.page.evaluate(() => {
+        const showCodeButtons = Array.from(
+          document.querySelectorAll('button, [role="button"], .btn, .button')
+        ).filter((button) => {
+          const text = button.textContent?.trim().toLowerCase();
+          return text === "show code" || text.includes("show code");
+        });
+
+        console.log(
+          `Found ${showCodeButtons.length} 'Show code' buttons in main document`
+        );
+
+        let clickedCount = 0;
+        showCodeButtons.forEach((button) => {
+          try {
+            button.click();
+            clickedCount++;
+            console.log('Clicked "Show code" button in main document');
+          } catch (error) {
+            console.log(
+              "Failed to click button in main document:",
+              error.message
+            );
+          }
+        });
+
+        return clickedCount;
+      });
+
+      // Wait for any animations or content loading after clicking
+      if (mainDocButtonsClicked > 0) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+
+      // Also try to find and click "Show code" buttons in the iframe
+      const iframeButtonsClicked = await this.page.evaluate(() => {
+        const iframe = document.querySelector("#storybook-preview-iframe");
+        if (!iframe) {
+          console.log("No iframe found for 'Show code' button search");
+          return 0;
+        }
+
+        const iframeDoc =
+          iframe.contentDocument || iframe.contentWindow.document;
+        if (!iframeDoc) {
+          console.log(
+            "Cannot access iframe content for 'Show code' button search"
+          );
+          return 0;
+        }
+
+        const showCodeButtons = Array.from(
+          iframeDoc.querySelectorAll('button, [role="button"], .btn, .button')
+        ).filter((button) => {
+          const text = button.textContent?.trim().toLowerCase();
+          return text === "show code" || text.includes("show code");
+        });
+
+        console.log(
+          `Found ${showCodeButtons.length} 'Show code' buttons in iframe`
+        );
+
+        let clickedCount = 0;
+        showCodeButtons.forEach((button) => {
+          try {
+            button.click();
+            clickedCount++;
+            console.log('Clicked "Show code" button in iframe');
+          } catch (error) {
+            console.log("Failed to click button in iframe:", error.message);
+          }
+        });
+
+        return clickedCount;
+      });
+
+      // Wait for any animations or content loading after clicking iframe buttons
+      if (iframeButtonsClicked > 0) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+
+      const totalClicked = mainDocButtonsClicked + iframeButtonsClicked;
+      if (totalClicked > 0) {
+        console.log(
+          `✅ Successfully clicked ${totalClicked} 'Show code' button(s)`
+        );
+      } else {
+        console.log("ℹ️  No 'Show code' buttons found on this page");
+      }
+    } catch (error) {
+      console.log(
+        "⚠️  Error while handling 'Show code' buttons:",
+        error.message
+      );
     }
   }
 
@@ -391,15 +497,13 @@ Generated on: ${new Date().toISOString()}
 
 ---
 
-## 📚 Documentation
-
 `;
     await fs.writeFile("doc.llm.md", header, "utf8");
     console.log("📝 Initialized markdown file");
   }
 
   async appendDocumentToFile(doc) {
-    const content = `### ${doc.title}\n\n${doc.content}\n\n---\n\n`;
+    const content = `## ${doc.title}\n\n${doc.content}\n\n---\n\n`;
     await fs.appendFile("doc.llm.md", content, "utf8");
   }
 
