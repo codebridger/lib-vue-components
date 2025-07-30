@@ -97,3 +97,42 @@ vi.mock("vue3-popper", () => ({
     props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled"],
   },
 }));
+
+// Provide a minimal DataTransfer implementation for JSDOM
+class DataTransferItemListMock {
+  constructor(filesRef) {
+    this._filesRef = filesRef;
+    this._items = [];
+  }
+  _filesRef;
+  _items;
+  add(file) {
+    this._items.push(file);
+    this._filesRef.push(file);
+  }
+  remove(index) {
+    this._items.splice(index, 1);
+    this._filesRef.splice(index, 1);
+  }
+  clear() {
+    this._items.length = 0;
+    this._filesRef.length = 0;
+  }
+  get length() {
+    return this._items.length;
+  }
+}
+global.DataTransfer = class DataTransfer {
+  constructor() {
+    this.files = [];
+    this.items = new DataTransferItemListMock(this.files);
+    this.types = [];
+  }
+  files;
+  items;
+  types;
+  setData() {}
+  getData() { return ""; }
+  clearData() {}
+  setDragImage() {}
+};
