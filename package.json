@@ -43,7 +43,8 @@
     "test:coverage": "vitest --coverage --run",
     "test:coverage:open": "vitest --coverage --run && open coverage/index.html",
     "test:storybook": "test-storybook",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "generate-docs": "node llm-doc-generator.js"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
@@ -86,6 +87,7 @@
     "jsdom": "^26.1.0",
     "postcss": "^8.4.49",
     "postcss-loader": "^8.1.1",
+    "puppeteer": "^24.15.0",
     "remark-gfm": "^4.0.0",
     "sass": "^1.83.4",
     "semantic-release": "^24.2.0",
