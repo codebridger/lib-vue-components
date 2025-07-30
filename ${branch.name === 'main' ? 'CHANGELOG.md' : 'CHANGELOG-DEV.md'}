@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/codebridger/lib-vue-components/compare/v1.22.0...v1.22.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* **docs:** update how-to-use documentation for LLM agents and format import statements ([7bbfbd0](https://github.com/codebridger/lib-vue-components/commit/7bbfbd0c89a4cdb31e18b0c4e0668b5ef78bdbc8))
+
 # [1.22.0](https://github.com/codebridger/lib-vue-components/compare/v1.21.1...v1.22.0) (2025-07-30)
 
 
