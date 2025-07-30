@@ -1,3 +1,13 @@
+# [1.21.0](https://github.com/codebridger/lib-vue-components/compare/v1.20.0...v1.21.0) (2025-07-30)
+
+
+### Features
+
+* **doc-generator:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - add LLM documentation generator using Puppeteer to automate documentation extraction from Storybook ([e685a2e](https://github.com/codebridger/lib-vue-components/commit/e685a2eed9f8e2798088a1758ce57eb198f6d218)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+* **doc-generator:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - enhance content extraction by implementing 'Show code' button handling and improving iframe content retrieval ([33223b0](https://github.com/codebridger/lib-vue-components/commit/33223b03be941626999a773d9f855ec6a33e8648)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+* **doc-generator:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - enhance documentation generation with Turndown integration for HTML to Markdown conversion and add output format options ([9b232c0](https://github.com/codebridger/lib-vue-components/commit/9b232c0d80fdfbe3b7a1501d1fc19b2fa17b0044)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+* **workflows:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - add Storybook server start and stop steps in deploy workflow to enhance documentation generation process ([405d0bf](https://github.com/codebridger/lib-vue-components/commit/405d0bf454fc04a249d9d4dd0d8efcaebb2c7aa2)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+
 # [1.20.0](https://github.com/codebridger/lib-vue-components/compare/v1.19.0...v1.20.0) (2025-07-19)
 
 
