@@ -684,35 +684,6 @@ describe('Modal Component', () => {
 })
 ```
 
-## CI/CD Integration
-
-### GitHub Actions Workflow
-```yaml
-# .github/workflows/test.yml
-name: Test Suite
-
-on: [push, pull_request]
-
-jobs:
-  unit-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: yarn install
-      - run: yarn test:all
-      - run: yarn test:coverage
-
-  storybook-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: yarn install
-      - run: yarn build-storybook
-      - run: yarn test:storybook
-```
-
 ## Troubleshooting
 
 ### Common Issues
@@ -722,7 +693,6 @@ jobs:
 4. **Accessibility Test Failures**: Document current vs expected behavior
 
 ### Debugging Tips
-- **Use Vitest UI**: Run `yarn test:ui` for visual test debugging
 - **Use Storybook Interactions Panel**: Debug play functions step-by-step
 - **Check Test Logs**: Review detailed error messages for debugging
 - **Verify Test Environment**: Ensure all mocks are properly set up
