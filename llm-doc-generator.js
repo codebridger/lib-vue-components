@@ -498,18 +498,18 @@ Generated on: ${new Date().toISOString()}
 ---
 
 `;
-    await fs.writeFile("doc.llm.md", header, "utf8");
+    await fs.writeFile("llm.md", header, "utf8");
     console.log("📝 Initialized markdown file");
   }
 
   async appendDocumentToFile(doc) {
     const content = `## ${doc.title}\n\n${doc.content}\n\n---\n\n`;
-    await fs.appendFile("doc.llm.md", content, "utf8");
+    await fs.appendFile("llm.md", content, "utf8");
   }
 
   async finalizeMarkdownFile() {
-    const stats = await fs.stat("doc.llm.md");
-    console.log(`✅ Documentation written to: doc.llm.md`);
+    const stats = await fs.stat("llm.md");
+    console.log(`✅ Documentation written to: llm.md`);
     console.log(`📊 Total content length: ${stats.size} characters`);
   }
 

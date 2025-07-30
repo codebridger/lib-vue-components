@@ -33,6 +33,12 @@ jobs:
       - name: Build Storybook
         run: yarn build-storybook
 
+      - name: Generate LLM Docs
+        run: yarn generate-docs
+
+      - name: Copy LLM Docs to Storybook Static
+        run: cp llm.md storybook-static/
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
