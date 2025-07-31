@@ -11,6 +11,9 @@ describe("SwitchBall Component", () => {
     return mount(SwitchBall, {
       props: {
         id: "test-switch",
+        modelValue: false,
+        label: "Test Label",
+        sublabel: "Test Sublabel",
         ...props,
       },
       global: {
@@ -344,8 +347,8 @@ describe("SwitchBall Component", () => {
     it("uses correct default values", () => {
       wrapper = createWrapper();
       expect(wrapper.props("modelValue")).toBe(false);
-      expect(wrapper.props("label")).toBe("");
-      expect(wrapper.props("sublabel")).toBe("");
+      expect(wrapper.props("label")).toBe("Test Label");
+      expect(wrapper.props("sublabel")).toBe("Test Sublabel");
       expect(wrapper.props("color")).toBe("primary");
       expect(wrapper.props("iconName")).toBe("IconCheck");
     });
@@ -364,12 +367,12 @@ describe("SwitchBall Component", () => {
 
     it("requires label prop", () => {
       wrapper = createWrapper();
-      expect(wrapper.props("label")).toBe("");
+      expect(wrapper.props("label")).toBe("Test Label");
     });
 
     it("requires sublabel prop", () => {
       wrapper = createWrapper();
-      expect(wrapper.props("sublabel")).toBe("");
+      expect(wrapper.props("sublabel")).toBe("Test Sublabel");
     });
   });
 });

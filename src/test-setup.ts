@@ -105,14 +105,6 @@ vi.mock("./stores/index", () => ({
   }),
 }));
 
-// Mock Button component
-vi.mock("./elements/Button.vue", () => ({
-  default: {
-    name: "Button",
-    template: "<button><slot /></button>",
-    props: ["disabled", "class"],
-  },
-}));
 
 // Mock Icon component
 vi.mock("./icon/Icon.vue", () => ({
