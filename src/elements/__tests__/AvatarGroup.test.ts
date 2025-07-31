@@ -117,7 +117,7 @@ describe("AvatarGroup Component", () => {
 
     it("provides hoverAnimation when prop is undefined", () => {
       wrapper = createWrapper();
-      expect(wrapper.vm.hoverAnimation).toBeUndefined();
+      expect(wrapper.vm.hoverAnimation).toBe(false);
     });
 
     it("provides readonly hoverAnimation value", () => {
@@ -231,7 +231,7 @@ describe("AvatarGroup Component", () => {
   describe("Default Values", () => {
     it("uses correct default values", () => {
       wrapper = createWrapper();
-      expect(wrapper.props("hoverAnimation")).toBeUndefined();
+      expect(wrapper.vm.hoverAnimation).toBe(false);
     });
   });
 
@@ -298,7 +298,7 @@ describe("AvatarGroup Component", () => {
 
     it("accepts undefined hoverAnimation prop", () => {
       wrapper = createWrapper();
-      expect(wrapper.props("hoverAnimation")).toBeUndefined();
+      expect(wrapper.vm.hoverAnimation).toBe(false);
     });
   });
 

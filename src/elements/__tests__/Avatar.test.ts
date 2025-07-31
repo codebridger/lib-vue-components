@@ -6,9 +6,10 @@ describe("Avatar Component", () => {
   let wrapper: VueWrapper<any>;
 
   // Helper function to create wrapper with default props
-  const createWrapper = (props = {}) => {
+  const createWrapper = (props = {}, slots = {}) => {
     return mount(Avatar, {
       props,
+      slots,
     });
   };
 

@@ -64,9 +64,9 @@ import Icon from "../icon/Icon.vue";
 
 interface SwitchBallProps {
   id: string;
-  modelValue: boolean;
-  label: string;
-  sublabel: string;
+  modelValue?: boolean;
+  label?: string;
+  sublabel?: string;
   color?:
     | "default"
     | "primary"

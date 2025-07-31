@@ -91,10 +91,36 @@ vi.mock("vue3-popper", () => ({
     template: `
       <div class="popper">
         <slot />
-        <slot name="content" />
+        <slot name="content" :close="() => {}" :isOpen="false" />
       </div>
     `,
-    props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled"],
+    props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled", "disable-click-away", "offset-skid", "offset-distance", "show", "open-delay", "close-delay", "arrow-padding", "interactive", "locked"],
+  },
+}));
+
+// Mock stores
+vi.mock("./stores/index", () => ({
+  useAppStore: () => ({
+    rtlClass: "ltr",
+  }),
+}));
+
+// Mock Button component
+vi.mock("./elements/Button.vue", () => ({
+  default: {
+    name: "Button",
+    template: "<button><slot /></button>",
+    props: ["disabled", "class"],
+  },
+}));
+
+// Mock Icon component
+vi.mock("./icon/Icon.vue", () => ({
+  default: {
+    name: "Icon",
+    template: "<span :class='$attrs.class || $props.class'><slot /></span>",
+    props: ["name", "class"],
+    inheritAttrs: false,
   },
 }));
 

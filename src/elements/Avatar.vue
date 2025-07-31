@@ -88,6 +88,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   showStatus: false,
   status: "online",
   disabled: false,
+  size: "lg",
 });
 
 const hoverAnimation = inject("hoverAnimation", false);
@@ -103,7 +104,7 @@ const computedRounded = computed(() => {
     xl: "rounded-xl",
     full: "rounded-full",
   };
-  return roundedMap[props.rounded];
+  return roundedMap[props.rounded] || "rounded-full";
 });
 
 const computedSize = computed(() => {
@@ -113,7 +114,7 @@ const computedSize = computed(() => {
     md: "w-16 h-16",
     lg: "h-20 w-20",
   };
-  return sizes[props.size || "lg"];
+  return sizes[props.size] || "h-20 w-20";
 });
 
 const computedStatusColor = computed(() => {
@@ -123,6 +124,6 @@ const computedStatusColor = computed(() => {
     away: "bg-warning",
     busy: "bg-danger",
   };
-  return statusColorMap[props.status];
+  return statusColorMap[props.status] || "bg-success";
 });
 </script>
