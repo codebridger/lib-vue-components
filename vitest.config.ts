@@ -8,6 +8,9 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test-setup.ts"],
+    deps: {
+      inline: ["@headlessui/vue", "vue3-popper"]
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html", "lcov", "text-summary"],

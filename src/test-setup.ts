@@ -5,6 +5,70 @@ import { createPinia, setActivePinia } from "pinia";
 const pinia = createPinia();
 setActivePinia(pinia);
 
+// Mock Headless UI components with simple, working implementations
+vi.mock("@headlessui/vue", () => ({
+  TransitionRoot: {
+    name: "TransitionRoot",
+    template: '<div><slot /></div>',
+    props: ["appear", "show", "as"],
+  },
+  TransitionChild: {
+    name: "TransitionChild",
+    template: '<div><slot /></div>',
+    props: ["as", "enter", "enter-from", "enter-to", "leave", "leave-from", "leave-to"],
+  },
+  Dialog: {
+    name: "Dialog",
+    template: '<div><slot /></div>',
+    props: ["as", "class", "open"],
+    emits: ["close"],
+  },
+  DialogPanel: {
+    name: "DialogPanel",
+    template: '<div><slot /></div>',
+    props: ["class"],
+  },
+  DialogOverlay: {
+    name: "DialogOverlay",
+    template: '<div><slot /></div>',
+    props: ["class"],
+  },
+  Listbox: {
+    name: "Listbox",
+    template: '<div><slot /></div>',
+    props: ["modelValue", "by", "disabled"],
+  },
+  ListboxButton: {
+    name: "ListboxButton",
+    template: '<button><slot /></button>',
+    props: ["as", "disabled"],
+  },
+  ListboxOptions: {
+    name: "ListboxOptions",
+    template: '<ul><slot /></ul>',
+    props: ["as", "static", "unmount", "hold"],
+  },
+  ListboxOption: {
+    name: "ListboxOption",
+    template: '<li><slot /></li>',
+    props: ["value", "as", "disabled", "class"],
+  },
+}));
+
+// Mock vue3-popper with a simple implementation
+vi.mock("vue3-popper", () => ({
+  default: {
+    name: "Popper",
+    template: `
+      <div class="popper">
+        <slot />
+        <slot name="content" :close="() => {}" :isOpen="false" />
+      </div>
+    `,
+    props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled", "disable-click-away", "offset-skid", "offset-distance", "show", "open-delay", "close-delay", "arrow-padding", "interactive", "locked"],
+  },
+}));
+
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
@@ -40,71 +104,12 @@ window.scrollTo = vi.fn();
 // Mock URL.createObjectURL
 global.URL.createObjectURL = vi.fn(() => "mock-url");
 
-// Mock Headless UI components
-vi.mock("@headlessui/vue", () => ({
-  TransitionRoot: {
-    name: "TransitionRoot",
-    template: "<div><slot /></div>",
-    props: ["show", "appear", "unmount", "tag", "as"],
-  },
-  Dialog: {
-    name: "Dialog",
-    template: "<div><slot /></div>",
-    props: ["open", "static", "unmount", "as"],
-  },
-  DialogOverlay: {
-    name: "DialogOverlay",
-    template: "<div><slot /></div>",
-    props: ["as", "static", "unmount"],
-  },
-  DialogPanel: {
-    name: "DialogPanel",
-    template: "<div><slot /></div>",
-    props: ["as", "static", "unmount"],
-  },
-  Listbox: {
-    name: "Listbox",
-    template: "<div><slot /></div>",
-    props: ["modelValue", "by", "disabled"],
-  },
-  ListboxButton: {
-    name: "ListboxButton",
-    template: "<button><slot /></button>",
-    props: ["as", "disabled"],
-  },
-  ListboxOptions: {
-    name: "ListboxOptions",
-    template: "<ul><slot /></ul>",
-    props: ["as", "static", "unmount", "hold"],
-  },
-  ListboxOption: {
-    name: "ListboxOption",
-    template: "<li><slot /></li>",
-    props: ["value", "as", "disabled", "class"],
-  },
-}));
-
-// Mock vue3-popper
-vi.mock("vue3-popper", () => ({
-  default: {
-    name: "Popper",
-    template: `
-      <div class="popper">
-        <slot />
-        <slot name="content" :close="() => {}" :isOpen="false" />
-      </div>
-    `,
-    props: ["placement", "hover", "arrow", "open-delay", "close-delay", "z-index", "disabled", "disable-click-away", "offset-skid", "offset-distance", "show", "open-delay", "close-delay", "arrow-padding", "interactive", "locked"],
-  },
-}));
-
 // Mock stores
 vi.mock("./stores/index", () => ({
   useAppStore: () => ({
     rtlClass: "ltr",
   }),
 }));
-
 
 // Mock Icon component
 vi.mock("./icon/Icon.vue", () => ({

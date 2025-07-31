@@ -3,36 +3,6 @@ import { mount, VueWrapper } from "@vue/test-utils";
 import Modal from "../Modal.vue";
 import Button from "../../elements/Button.vue";
 
-// Mock Headless UI components
-vi.mock("@headlessui/vue", () => ({
-  TransitionRoot: {
-    name: "TransitionRoot",
-    template: '<div><slot /></div>',
-    props: ["appear", "show", "as"],
-  },
-  TransitionChild: {
-    name: "TransitionChild",
-    template: '<div><slot /></div>',
-    props: ["as", "enter", "enter-from", "enter-to", "leave", "leave-from", "leave-to"],
-  },
-  Dialog: {
-    name: "Dialog",
-    template: '<div><slot /></div>',
-    props: ["as", "class"],
-    emits: ["close"],
-  },
-  DialogPanel: {
-    name: "DialogPanel",
-    template: '<div><slot /></div>',
-    props: ["class"],
-  },
-  DialogOverlay: {
-    name: "DialogOverlay",
-    template: '<div><slot /></div>',
-    props: ["class"],
-  },
-}));
-
 describe("Modal Component", () => {
   let wrapper: VueWrapper<any>;
 
@@ -44,29 +14,6 @@ describe("Modal Component", () => {
       global: {
         components: {
           Button,
-        },
-        stubs: {
-          "TransitionRoot": {
-            template: '<div><slot /></div>',
-            props: ["appear", "show", "as"],
-          },
-          "TransitionChild": {
-            template: '<div><slot /></div>',
-            props: ["as", "enter", "enter-from", "enter-to", "leave", "leave-from", "leave-to"],
-          },
-          "Dialog": {
-            template: '<div><slot /></div>',
-            props: ["as", "class"],
-            emits: ["close"],
-          },
-          "DialogPanel": {
-            template: '<div><slot /></div>',
-            props: ["class"],
-          },
-          "DialogOverlay": {
-            template: '<div><slot /></div>',
-            props: ["class"],
-          },
         },
       },
     });

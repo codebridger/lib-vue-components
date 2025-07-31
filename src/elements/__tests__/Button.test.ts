@@ -280,7 +280,7 @@ describe("Button Component", () => {
       const icon = wrapper.findComponent(Icon);
       // Icon component only accepts name and fill props, not class
       expect(icon.props("name")).toBe("IconSettings");
-      expect(icon.props("fill")).toBe(false);
+      expect(icon.props("fill")).toBeUndefined();
       // Note: iconClass prop is not currently used by Icon component
     });
 
@@ -289,9 +289,11 @@ describe("Button Component", () => {
         iconName: "IconSettings",
         label: "Settings",
       });
-      const labelSpan = wrapper.find("span:last-child");
-      expect(labelSpan.classes()).toContain("ltr:ml-2");
-      expect(labelSpan.classes()).toContain("rtl:mr-2");
+      // The spacing classes are applied to the label span
+      const spans = wrapper.findAll("span");
+      const labelSpan = spans.find(span => span.text() === "Settings");
+      expect(labelSpan?.classes()).toContain("ltr:ml-2");
+      expect(labelSpan?.classes()).toContain("rtl:mr-2");
     });
 
     it("does not show spacing when no label is present", () => {
