@@ -64,13 +64,8 @@ vi.mock("@/composables/use-meta", () => ({
   useMeta: vi.fn(),
 }));
 
-// Mock vue-router
-vi.mock("vue-router", () => ({
-  RouterView: {
-    name: "RouterView",
-    template: "<div class='router-view'></div>",
-  },
-}));
+// Import RouterView for global component registration
+import { RouterView } from "vue-router";
 
 describe("App Component", () => {
   beforeEach(() => {
