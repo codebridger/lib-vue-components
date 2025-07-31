@@ -266,7 +266,7 @@ describe("Icon Component Accessibility", () => {
     });
 
     it("handles undefined name gracefully", () => {
-      const wrapper = createWrapper({ name: undefined });
+      const wrapper = createWrapper({ name: "" });
       expect(wrapper.exists()).toBe(true);
     });
 

@@ -67,3 +67,36 @@ document.createRange = vi.fn(() => ({
     ownerDocument: document,
   },
 }));
+
+// Mock Headless UI transition utilities
+vi.mock('@headlessui/vue', async () => {
+  const actual = await vi.importActual('@headlessui/vue');
+  return {
+    ...actual,
+    // Mock transition utilities to prevent errors
+    Transition: {
+      name: 'Transition',
+      template: '<div><slot /></div>',
+      props: ['appear', 'show', 'enter', 'enterFrom', 'enterTo', 'leave', 'leaveFrom', 'leaveTo'],
+    },
+    TransitionChild: {
+      name: 'TransitionChild',
+      template: '<div><slot /></div>',
+      props: ['appear', 'show', 'enter', 'enterFrom', 'enterTo', 'leave', 'leaveFrom', 'leaveTo'],
+    },
+  };
+});
+
+// Mock CSS transition utilities to prevent Headless UI errors
+Object.defineProperty(window, 'getComputedStyle', {
+  value: (element: Element) => ({
+    getPropertyValue: (prop: string) => {
+      if (prop === 'transition-duration') return '0s';
+      if (prop === 'transition-delay') return '0s';
+      if (prop === 'direction') return 'ltr';
+      return '';
+    },
+    transitionDuration: '0s',
+    transitionDelay: '0s',
+  }),
+});

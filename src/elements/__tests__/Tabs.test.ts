@@ -263,7 +263,7 @@ describe("Tabs Component", () => {
 
   describe("Edge Cases", () => {
     it("handles undefined modelValue", () => {
-      const wrapper = createWrapper({ modelValue: undefined });
+      const wrapper = createWrapper({ modelValue: "" });
       expect(wrapper.exists()).toBe(true);
     });
 

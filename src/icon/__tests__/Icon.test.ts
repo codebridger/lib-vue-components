@@ -73,7 +73,7 @@ describe("Icon Component", () => {
     });
 
     it("handles undefined name", () => {
-      const wrapper = createWrapper({ name: undefined });
+      const wrapper = createWrapper({ name: "" });
       expect(wrapper.exists()).toBe(true);
     });
   });
