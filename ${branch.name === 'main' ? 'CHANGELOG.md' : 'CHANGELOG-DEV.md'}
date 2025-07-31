@@ -1,3 +1,10 @@
+# [1.17.0-dev.29](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.28...dev-1.17.0-dev.29) (2025-07-31)
+
+
+### Bug Fixes
+
+* **workflows:** add pull request trigger types to test workflow ([d3c9115](https://github.com/codebridger/lib-vue-components/commit/d3c911533657b900dd5a74d66a9f74da297dca75))
+
 # [1.17.0-dev.28](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.27...dev-1.17.0-dev.28) (2025-07-31)
 
 
