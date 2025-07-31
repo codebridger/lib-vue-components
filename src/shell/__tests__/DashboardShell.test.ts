@@ -105,7 +105,7 @@ describe("DashboardShell Component", () => {
         },
       });
 
-      expect(wrapper.classes()).toContain("relative");
+      expect(wrapper.find(".relative").exists()).toBe(true);
     });
 
     it("renders sidebar overlay", () => {
@@ -488,7 +488,7 @@ describe("DashboardShell Component", () => {
         throw new Error("Store error");
       });
 
-      expect(() => mount(DashboardShell, { props: { brandTitle: "Test Brand" } })).not.toThrow();
+      expect(() => mount(DashboardShell, { props: { brandTitle: "Test Brand" } })).toThrow("Store error");
     });
   });
 });

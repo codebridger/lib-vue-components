@@ -116,7 +116,7 @@ describe("App Component", () => {
     it("renders RouterView component", () => {
       const wrapper = mount(App);
 
-      const routerView = wrapper.find(".router-view");
+      const routerView = wrapper.findComponent({ name: "RouterView" });
       expect(routerView.exists()).toBe(true);
     });
 
@@ -153,7 +153,7 @@ describe("App Component", () => {
       expect(dashboardShell.exists()).toBe(true);
 
       // Check that DashboardShell contains RouterView
-      const routerView = dashboardShell.find(".router-view");
+      const routerView = dashboardShell.findComponent({ name: "RouterView" });
       expect(routerView.exists()).toBe(true);
     });
 
@@ -350,7 +350,7 @@ describe("App Component", () => {
       expect(wrapper.find(".theme-customizer").exists()).toBe(true);
       expect(wrapper.find(".sidebar-menu").exists()).toBe(true);
       expect(wrapper.find(".footer").exists()).toBe(true);
-      expect(wrapper.find(".router-view").exists()).toBe(true);
+      expect(wrapper.findComponent({ name: "RouterView" }).exists()).toBe(true);
     });
   });
 
@@ -399,7 +399,7 @@ describe("App Component", () => {
     it("integrates with router", () => {
       const wrapper = mount(App);
 
-      const routerView = wrapper.find(".router-view");
+      const routerView = wrapper.findComponent({ name: "RouterView" });
       expect(routerView.exists()).toBe(true);
     });
 

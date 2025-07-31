@@ -27,22 +27,22 @@ const mockClassList = {
   remove: vi.fn(),
 };
 
-const mockElement = {
-  classList: mockClassList,
-  closest: vi.fn().mockReturnValue({
-    querySelectorAll: vi.fn().mockReturnValue([{
-      classList: mockClassList,
-    }]),
-  }),
-};
-
 const mockUlElement = {
   classList: mockClassList,
   closest: vi.fn().mockReturnValue({
+    classList: mockClassList,
     querySelectorAll: vi.fn().mockReturnValue([{
       classList: mockClassList,
     }]),
   }),
+  querySelectorAll: vi.fn().mockReturnValue([{
+    classList: mockClassList,
+  }]),
+};
+
+const mockElement = {
+  classList: mockClassList,
+  closest: vi.fn().mockReturnValue(mockUlElement),
 };
 
 Object.defineProperty(document, "querySelector", {
@@ -65,7 +65,7 @@ describe("HorizontalMenu Component", () => {
     vi.clearAllMocks();
     mockRoute.path = "/";
     window.location.pathname = "/";
-    mockQuerySelector.mockReturnValue(mockElement);
+    mockQuerySelector.mockReturnValue(mockUlElement);
   });
 
   const mockItems = [
