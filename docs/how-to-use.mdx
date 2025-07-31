@@ -8,6 +8,10 @@ We are two indie developers who love to build things. We are building a componen
 
 You need to follow these principles in order to use the component library properly.
 
+## LLM Friendly docs
+
+You can use this doc for [llm](https://codebridger.github.io/lib-vue-components/llm.md) agents.
+
 ## AppRoot
 
 All components should be wrapped with the main ancestor component called `AppRoot`.
@@ -21,24 +25,34 @@ It's really important to wrap all components with `AppRoot` because it's respons
 
 ```typescript
 // Shell components
-import { App, DashboardShell, ThemeCustomizer, SidebarMenu, HorizontalMenu } from '@codebridger/lib-vue-components/shell.ts';
+import {
+  App,
+  DashboardShell,
+  ThemeCustomizer,
+  SidebarMenu,
+  HorizontalMenu,
+} from "@codebridger/lib-vue-components/shell.ts";
 
 // Element components
-import { Button } from '@codebridger/lib-vue-components/elements.ts';
+import { Button } from "@codebridger/lib-vue-components/elements.ts";
 
 // Complex components
-import { Modal } from '@codebridger/lib-vue-components/complex.ts';
+import { Modal } from "@codebridger/lib-vue-components/complex.ts";
 
 // Type imports
-import type { SidebarItemType, HorizontalMenuItemType } from '@codebridger/lib-vue-components/types.ts';
+import type {
+  SidebarItemType,
+  HorizontalMenuItemType,
+} from "@codebridger/lib-vue-components/types.ts";
 ```
 
 ## Global Configuration
+
 There is pinia store for global configuration. see full documentation [here](/docs/introduction.mdx#store)
 
 ```typescript
-import { useAppStore } from '@codebridger/lib-vue-components/store.ts';
+import { useAppStore } from "@codebridger/lib-vue-components/store.ts";
 
 const appStore = useAppStore();
-appStore.setTheme('dark');
+appStore.setTheme("dark");
 ```
