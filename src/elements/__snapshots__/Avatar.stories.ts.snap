@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/Avatar Default smoke-test 1`] = `
+exports[`Elements/Avatar Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-full"
@@ -13,7 +13,7 @@ exports[`Elements/Avatar Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar FullyRoundedAvatar smoke-test 1`] = `
+exports[`Elements/Avatar FullyRoundedAvatar play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-full"
@@ -26,7 +26,7 @@ exports[`Elements/Avatar FullyRoundedAvatar smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar SlightlyRoundedAvatar smoke-test 1`] = `
+exports[`Elements/Avatar SlightlyRoundedAvatar play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-sm"
@@ -39,7 +39,7 @@ exports[`Elements/Avatar SlightlyRoundedAvatar smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar SquareAvatar smoke-test 1`] = `
+exports[`Elements/Avatar SquareAvatar play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-none"
@@ -52,7 +52,7 @@ exports[`Elements/Avatar SquareAvatar smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar WithAwayStatus smoke-test 1`] = `
+exports[`Elements/Avatar WithAwayStatus play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-full"
@@ -65,7 +65,7 @@ exports[`Elements/Avatar WithAwayStatus smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar WithBusyStatus smoke-test 1`] = `
+exports[`Elements/Avatar WithBusyStatus play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-full"
@@ -78,7 +78,7 @@ exports[`Elements/Avatar WithBusyStatus smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar WithOfflineStatus smoke-test 1`] = `
+exports[`Elements/Avatar WithOfflineStatus play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-full"
@@ -91,7 +91,7 @@ exports[`Elements/Avatar WithOfflineStatus smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Avatar WithOnlineStatus smoke-test 1`] = `
+exports[`Elements/Avatar WithOnlineStatus play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="h-20 w-20 overflow-hidden relative flex justify-center items-center text-center text-2xl">
     <img class="w-full h-full object-cover rounded-full"

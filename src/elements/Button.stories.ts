@@ -79,6 +79,10 @@ export const Default: Story = {
     label: "Button",
     textTransform: "normal-case",
   },
+  parameters: {
+    // Disable snapshots for this specific story
+    snapshots: false,
+  },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 

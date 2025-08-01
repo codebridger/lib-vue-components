@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import SwitchBall from "./SwitchBall.vue";
 
 const meta = {
@@ -101,6 +102,26 @@ export const Default: Story = {
   args: {
     label: "Default Switch",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify switch renders correctly", async () => {
+      const switchInput = canvas.getByRole("checkbox");
+      expect(switchInput).toBeInTheDocument();
+      expect(switchInput).not.toBeChecked();
+    });
+
+    await step("Verify label is displayed", async () => {
+      const label = canvas.getByText("Default Switch");
+      expect(label).toBeInTheDocument();
+    });
+
+    await step("Test switch interaction", async () => {
+      const switchInput = canvas.getByRole("checkbox");
+      await userEvent.click(switchInput);
+      expect(switchInput).toBeChecked();
+    });
+  },
 };
 
 export const WithSublabel: Story = {
@@ -116,6 +137,31 @@ export const WithSublabel: Story = {
       },
     },
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify switch with sublabel renders correctly", async () => {
+      const switchInput = canvas.getByRole("checkbox");
+      expect(switchInput).toBeInTheDocument();
+      expect(switchInput).not.toBeChecked();
+    });
+
+    await step("Verify main label is displayed", async () => {
+      const label = canvas.getByText("Notifications");
+      expect(label).toBeInTheDocument();
+    });
+
+    await step("Verify sublabel is displayed", async () => {
+      const sublabel = canvas.getByText("Receive email notifications");
+      expect(sublabel).toBeInTheDocument();
+    });
+
+    await step("Test switch interaction", async () => {
+      const switchInput = canvas.getByRole("checkbox");
+      await userEvent.click(switchInput);
+      expect(switchInput).toBeChecked();
+    });
+  },
 };
 
 export const CustomIcon: Story = {
@@ -130,5 +176,25 @@ export const CustomIcon: Story = {
         story: "Switch with a custom icon instead of the default check icon.",
       },
     },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify custom icon switch renders correctly", async () => {
+      const switchInput = canvas.getByRole("checkbox");
+      expect(switchInput).toBeInTheDocument();
+      expect(switchInput).not.toBeChecked();
+    });
+
+    await step("Verify label is displayed", async () => {
+      const label = canvas.getByText("Custom Icon Switch");
+      expect(label).toBeInTheDocument();
+    });
+
+    await step("Test switch interaction", async () => {
+      const switchInput = canvas.getByRole("checkbox");
+      await userEvent.click(switchInput);
+      expect(switchInput).toBeChecked();
+    });
   },
 };

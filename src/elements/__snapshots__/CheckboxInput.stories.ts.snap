@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/CheckboxInput Default smoke-test 1`] = `
+exports[`Elements/CheckboxInput Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -15,6 +15,7 @@ exports[`Elements/CheckboxInput Default smoke-test 1`] = `
              type="checkbox"
              class="form-checkbox transition-all duration-200 peer hover:scale-105 focus:ring-2 focus:ring-offset-2"
              value="terms"
+             checked
       >
       <span class="ml-2 ltr:ml-2 rtl:mr-2 transition-colors duration-200 text-gray-700 dark:text-gray-300">
         Accept terms and conditions
@@ -24,7 +25,7 @@ exports[`Elements/CheckboxInput Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput Disabled smoke-test 1`] = `
+exports[`Elements/CheckboxInput Disabled play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -49,7 +50,7 @@ exports[`Elements/CheckboxInput Disabled smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput MultipleCheckboxes smoke-test 1`] = `
+exports[`Elements/CheckboxInput MultipleCheckboxes play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -88,6 +89,7 @@ exports[`Elements/CheckboxInput MultipleCheckboxes smoke-test 1`] = `
                  type="checkbox"
                  class="form-checkbox transition-all duration-200 peer hover:scale-105 focus:ring-2 focus:ring-offset-2"
                  value="newsletter"
+                 checked
           >
           <span class="ml-2 ltr:ml-2 rtl:mr-2 transition-colors duration-200 text-gray-700 dark:text-gray-300">
             Subscribe to our newsletter
@@ -135,14 +137,14 @@ exports[`Elements/CheckboxInput MultipleCheckboxes smoke-test 1`] = `
     </div>
     <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded">
       <p class="text-sm text-gray-600 dark:text-gray-400">
-        Selected: None
+        Selected: newsletter
       </p>
     </div>
   </div>
 </div>
 `;
 
-exports[`Elements/CheckboxInput OutlineRoundedVariant smoke-test 1`] = `
+exports[`Elements/CheckboxInput OutlineRoundedVariant play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -166,7 +168,7 @@ exports[`Elements/CheckboxInput OutlineRoundedVariant smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput Required smoke-test 1`] = `
+exports[`Elements/CheckboxInput Required play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -194,7 +196,7 @@ exports[`Elements/CheckboxInput Required smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput SuccessColor smoke-test 1`] = `
+exports[`Elements/CheckboxInput SuccessColor play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -219,7 +221,7 @@ exports[`Elements/CheckboxInput SuccessColor smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput WithError smoke-test 1`] = `
+exports[`Elements/CheckboxInput WithError play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -246,7 +248,7 @@ exports[`Elements/CheckboxInput WithError smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput WithLabel smoke-test 1`] = `
+exports[`Elements/CheckboxInput WithLabel play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="terms-checkbox"
@@ -261,6 +263,7 @@ exports[`Elements/CheckboxInput WithLabel smoke-test 1`] = `
              type="checkbox"
              class="form-checkbox transition-all duration-200 peer hover:scale-105 focus:ring-2 focus:ring-offset-2"
              value="terms"
+             checked
       >
       <span class="ml-2 ltr:ml-2 rtl:mr-2 transition-colors duration-200 text-gray-700 dark:text-gray-300">
         I agree to the terms and conditions

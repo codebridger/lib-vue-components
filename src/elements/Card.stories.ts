@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import Card from "./Card.vue";
 import Input from "./Input.vue";
 
@@ -84,6 +85,33 @@ export const Default: Story = {
       return { args };
     },
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify default card renders correctly", async () => {
+      const card = canvas
+        .getByText("Default Card")
+        .closest("div").parentElement;
+      expect(card).toBeInTheDocument();
+      expect(card).toHaveClass(
+        "bg-white",
+        "shadow-[4px_6px_10px_-3px_#bfc9d4]",
+        "dark:bg-[#191e3a]",
+        "border",
+        "border-[#e0e6ed]",
+        "dark:border-[#1b2e4b]"
+      );
+    });
+
+    await step("Verify card content is displayed", async () => {
+      const title = canvas.getByText("Default Card");
+      const content = canvas.getByText(
+        "This is a default card with some example content."
+      );
+      expect(title).toBeInTheDocument();
+      expect(content).toBeInTheDocument();
+    });
+  },
 };
 
 export const CardWithInput: Story = {
@@ -115,6 +143,29 @@ export const CardWithInput: Story = {
       return { args };
     },
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled card renders correctly", async () => {
+      const card = canvas
+        .getByText("Card with Input")
+        .closest("div").parentElement;
+      expect(card).toBeInTheDocument();
+      expect(card).toHaveClass("opacity-50");
+    });
+
+    await step("Verify inputs are rendered", async () => {
+      const emailInput = canvas.getByPlaceholderText("Enter your email");
+      const numberInput = canvas.getByPlaceholderText("Enter a number");
+      expect(emailInput).toBeInTheDocument();
+      expect(numberInput).toBeInTheDocument();
+    });
+
+    await step("Verify disabled input is properly disabled", async () => {
+      const numberInput = canvas.getByPlaceholderText("Enter a number");
+      expect(numberInput).toBeDisabled();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -142,6 +193,26 @@ export const CustomClassCard: Story = {
       return { args };
     },
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify custom class card renders correctly", async () => {
+      const card = canvas
+        .getByText("Card with Custom Classes")
+        .closest("div").parentElement;
+      expect(card).toBeInTheDocument();
+      expect(card).toHaveClass("flex", "items-center", "justify-start");
+    });
+
+    await step("Verify custom content is displayed", async () => {
+      const title = canvas.getByText("Card with Custom Classes");
+      const content = canvas.getByText(
+        "This card uses additional flex classes for layout."
+      );
+      expect(title).toBeInTheDocument();
+      expect(content).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -178,6 +249,24 @@ export const DisabledCard: Story = {
       </Card>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled card renders correctly", async () => {
+      const card = canvas
+        .getByText("Disabled Card")
+        .closest("div").parentElement;
+      expect(card).toBeInTheDocument();
+    });
+
+    await step("Verify disabled input and button", async () => {
+      const input = canvas.getByPlaceholderText("This input is disabled");
+      const button = canvas.getByRole("button", { name: "Disabled Button" });
+
+      expect(input).toBeInTheDocument();
+      expect(button).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -222,6 +311,41 @@ export const MultipleInteractiveElements: Story = {
       return { args };
     },
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify card with multiple interactive elements", async () => {
+      const card = canvas
+        .getByText("Interactive Elements")
+        .closest("div").parentElement;
+      expect(card).toBeInTheDocument();
+    });
+
+    await step("Verify all interactive elements are present", async () => {
+      const input = canvas.getByPlaceholderText("Enter text");
+      const select = canvas.getByRole("combobox");
+      const button = canvas.getByRole("button", { name: "Perform Action" });
+
+      expect(input).toBeInTheDocument();
+      expect(select).toBeInTheDocument();
+      expect(button).toBeInTheDocument();
+    });
+
+    await step("Test interactive elements functionality", async () => {
+      const input = canvas.getByPlaceholderText("Enter text");
+      const select = canvas.getByRole("combobox");
+      const button = canvas.getByRole("button", { name: "Perform Action" });
+
+      await userEvent.type(input, "test input");
+      expect(input).toHaveValue("test input");
+
+      await userEvent.selectOptions(select, "Option 2");
+      expect(select).toHaveValue("Option 2");
+
+      await userEvent.click(button);
+      expect(button).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
