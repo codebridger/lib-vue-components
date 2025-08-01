@@ -12,8 +12,8 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
-    # Only run on push events OR pull_request events, but not both
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    # Only run on push to main OR pull_request events (not both)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout code
@@ -37,8 +37,8 @@ jobs:
   storybook-tests:
     name: Storybook Tests
     runs-on: ubuntu-latest
-    # Only run on push events OR pull_request events, but not both
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    # Only run on push to main OR pull_request events (not both)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout code
