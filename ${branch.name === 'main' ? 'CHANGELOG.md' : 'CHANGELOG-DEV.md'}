@@ -1,3 +1,26 @@
+# [1.23.0](https://github.com/codebridger/lib-vue-components/compare/v1.22.1...v1.23.0) (2025-08-01)
+
+
+### Bug Fixes
+
+* **workflows:** add pull request trigger types to test workflow ([d3c9115](https://github.com/codebridger/lib-vue-components/commit/d3c911533657b900dd5a74d66a9f74da297dca75))
+* **workflows:** specify branches for pull request triggers in test workflow ([870bfdd](https://github.com/codebridger/lib-vue-components/commit/870bfdd72a1a62441a7de4e0ba6d6d42a8fb2bf7))
+
+
+### Features
+
+* Add comprehensive unit and accessibility tests for Avatar component ([038af1c](https://github.com/codebridger/lib-vue-components/commit/038af1cc807f7ce2aff0b7010ba96f1a90fe5d58))
+* Add comprehensive unit and accessibility tests for AvatarGroup component ([ce29e59](https://github.com/codebridger/lib-vue-components/commit/ce29e59e21dda711e666c3c5602ee5c85bd2b634))
+* Add comprehensive unit and accessibility tests for Card component ([55a88da](https://github.com/codebridger/lib-vue-components/commit/55a88da12be002554c372200933f764c38f3f13a))
+* Add comprehensive unit and accessibility tests for DropdownItem component ([804abd3](https://github.com/codebridger/lib-vue-components/commit/804abd3d50dac4d8bf34ebb3f8d5058eee8eed11))
+* Add comprehensive unit and accessibility tests for FileInputButton component ([52f401b](https://github.com/codebridger/lib-vue-components/commit/52f401b08df364c7de0b7c5d9f6b246f0f329795))
+* Add comprehensive unit and accessibility tests for Icon component ([98da155](https://github.com/codebridger/lib-vue-components/commit/98da155205243d473b24a4f99e063272a191d3f9))
+* Add comprehensive unit and accessibility tests for IconButton component ([2524ec9](https://github.com/codebridger/lib-vue-components/commit/2524ec978fa8ad5228794c2d1b1046b33b68fc62))
+* Add comprehensive unit and accessibility tests for Progress component ([9c0e389](https://github.com/codebridger/lib-vue-components/commit/9c0e389ff2ea4522d59b429c7714e03a1b52f1f9))
+* Add comprehensive unit and accessibility tests for SwitchBall component ([464fcea](https://github.com/codebridger/lib-vue-components/commit/464fcead89ac8314507bc36c7b9bda1256705a5a))
+* Add comprehensive unit and accessibility tests for Tooltip component ([194db27](https://github.com/codebridger/lib-vue-components/commit/194db27dd9539c8e4198afbfc177764fd34d7195))
+* Update test setup with Pinia support and attempt CheckboxInput tests ([39b0eae](https://github.com/codebridger/lib-vue-components/commit/39b0eae22c3d4b6079e9b496aadc9a0da1bd7dff))
+
 # [1.17.0-dev.30](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.29...dev-1.17.0-dev.30) (2025-08-01)
 
 
