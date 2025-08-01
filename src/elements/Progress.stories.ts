@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within } from "@storybook/test";
 import Progress from "./Progress.vue";
 
 const meta = {
@@ -171,6 +172,16 @@ export const Default: Story = {
     value: 50,
     max: 100,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify progress bar renders correctly", async () => {
+      const progressBar = canvas.getByRole("progressbar");
+      expect(progressBar).toBeInTheDocument();
+      expect(progressBar).toHaveAttribute("aria-valuenow", "50");
+      expect(progressBar).toHaveAttribute("aria-valuemax", "100");
+    });
+  },
 };
 
 // Progress Examples
@@ -192,6 +203,23 @@ export const ProgressExamples: Story = {
       </div>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify all progress bars are rendered", async () => {
+      const progressBars = canvas.getAllByRole("progressbar");
+      expect(progressBars).toHaveLength(5);
+    });
+
+    await step("Verify progress values are correct", async () => {
+      const progressBars = canvas.getAllByRole("progressbar");
+      expect(progressBars[0]).toHaveAttribute("aria-valuenow", "0");
+      expect(progressBars[1]).toHaveAttribute("aria-valuenow", "25");
+      expect(progressBars[2]).toHaveAttribute("aria-valuenow", "50");
+      expect(progressBars[3]).toHaveAttribute("aria-valuenow", "75");
+      expect(progressBars[4]).toHaveAttribute("aria-valuenow", "100");
+    });
+  },
 };
 
 // Different Sizes
@@ -208,6 +236,21 @@ export const Sizes: Story = {
       </div>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify all size variants are rendered", async () => {
+      const progressBars = canvas.getAllByRole("progressbar");
+      expect(progressBars).toHaveLength(5);
+    });
+
+    await step("Verify all progress bars have correct value", async () => {
+      const progressBars = canvas.getAllByRole("progressbar");
+      progressBars.forEach(bar => {
+        expect(bar).toHaveAttribute("aria-valuenow", "50");
+      });
+    });
+  },
 };
 
 // Striped & Animated Progress Bars
@@ -223,4 +266,20 @@ export const StripedAnimated: Story = {
       </div>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify all animated progress bars are rendered", async () => {
+      const progressBars = canvas.getAllByRole("progressbar");
+      expect(progressBars).toHaveLength(4);
+    });
+
+    await step("Verify progress values are correct", async () => {
+      const progressBars = canvas.getAllByRole("progressbar");
+      expect(progressBars[0]).toHaveAttribute("aria-valuenow", "25");
+      expect(progressBars[1]).toHaveAttribute("aria-valuenow", "50");
+      expect(progressBars[2]).toHaveAttribute("aria-valuenow", "75");
+      expect(progressBars[3]).toHaveAttribute("aria-valuenow", "100");
+    });
+  },
 };

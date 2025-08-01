@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/Progress Default smoke-test 1`] = `
+exports[`Elements/Progress Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div role="progressbar"
        aria-valuenow="50"
@@ -16,7 +16,7 @@ exports[`Elements/Progress Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Progress ProgressExamples smoke-test 1`] = `
+exports[`Elements/Progress ProgressExamples play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <div>
@@ -100,7 +100,7 @@ exports[`Elements/Progress ProgressExamples smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Progress Sizes smoke-test 1`] = `
+exports[`Elements/Progress Sizes play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <div role="progressbar"
@@ -162,7 +162,7 @@ exports[`Elements/Progress Sizes smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Progress StripedAnimated smoke-test 1`] = `
+exports[`Elements/Progress StripedAnimated play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <div role="progressbar"

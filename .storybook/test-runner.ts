@@ -10,6 +10,7 @@ const config: TestRunnerConfig = {
     const dynamicComponents = [
       "Elements/Dropdown", // Has animations and dynamic positioning
       "Elements/Tooltip", // Has dynamic positioning
+      "Elements/Tabs", // Has dynamic content switching
       "Complex/Modal", // Has animations
     ];
 
