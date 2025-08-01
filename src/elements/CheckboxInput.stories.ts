@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import CheckboxInput from "./CheckboxInput.vue";
 import { ref } from "vue";
 
@@ -188,6 +189,26 @@ export const Default: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify checkbox renders correctly", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).not.toBeChecked();
+    });
+
+    await step("Verify checkbox text is displayed", async () => {
+      const text = canvas.getByText("Accept terms and conditions");
+      expect(text).toBeInTheDocument();
+    });
+
+    await step("Test checkbox interaction", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      await userEvent.click(checkbox);
+      expect(checkbox).toBeChecked();
+    });
+  },
 };
 
 export const WithLabel: Story = {
@@ -210,6 +231,27 @@ export const WithLabel: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify checkbox with label renders correctly", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      const label = canvas.getByText("Terms and Conditions");
+      expect(checkbox).toBeInTheDocument();
+      expect(label).toBeInTheDocument();
+    });
+
+    await step("Verify checkbox has correct ID", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      expect(checkbox).toHaveAttribute("id", "terms-checkbox");
+    });
+
+    await step("Test checkbox interaction", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      await userEvent.click(checkbox);
+      expect(checkbox).toBeChecked();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -239,6 +281,21 @@ export const SuccessColor: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify success checkbox renders correctly", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).toBeChecked();
+    });
+
+    await step("Verify success color styling", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      const checkboxContainer = checkbox.closest("div");
+      expect(checkboxContainer).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -269,6 +326,24 @@ export const OutlineRoundedVariant: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "Verify outline rounded checkbox renders correctly",
+      async () => {
+        const checkbox = canvas.getByRole("checkbox");
+        expect(checkbox).toBeInTheDocument();
+        expect(checkbox).not.toBeChecked();
+      }
+    );
+
+    await step("Verify outline rounded styling", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      const checkboxContainer = checkbox.closest("div");
+      expect(checkboxContainer).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -298,6 +373,21 @@ export const Disabled: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled checkbox renders correctly", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).toBeDisabled();
+    });
+
+    await step("Verify disabled styling", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      const checkboxContainer = checkbox.closest("div");
+      expect(checkboxContainer).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -328,6 +418,27 @@ export const WithError: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify error checkbox renders correctly", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
+    });
+
+    await step("Verify error message is displayed", async () => {
+      const errorMessage = canvas.getByText(
+        "You must accept the terms to continue"
+      );
+      expect(errorMessage).toBeInTheDocument();
+    });
+
+    await step("Verify error styling", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      const checkboxContainer = checkbox.closest("div");
+      expect(checkboxContainer).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -357,6 +468,20 @@ export const Required: Story = {
       />
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify required checkbox renders correctly", async () => {
+      const checkbox = canvas.getByRole("checkbox");
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).toHaveAttribute("required");
+    });
+
+    await step("Verify required indicator", async () => {
+      const label = canvas.getByText("Required Checkbox");
+      expect(label).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -428,6 +553,41 @@ export const MultipleCheckboxes: Story = {
       </div>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify multiple checkboxes render correctly", async () => {
+      const checkboxes = canvas.getAllByRole("checkbox");
+      expect(checkboxes).toHaveLength(4);
+    });
+
+    await step("Verify all checkbox labels are displayed", async () => {
+      expect(canvas.getByText("Email Notifications")).toBeInTheDocument();
+      expect(canvas.getByText("Newsletter")).toBeInTheDocument();
+      expect(canvas.getByText("Marketing")).toBeInTheDocument();
+      expect(canvas.getByText("Updates")).toBeInTheDocument();
+    });
+
+    await step("Test checkbox interactions", async () => {
+      const checkboxes = canvas.getAllByRole("checkbox");
+
+      // Click first checkbox
+      await userEvent.click(checkboxes[0]);
+      expect(checkboxes[0]).toBeChecked();
+
+      // Click second checkbox
+      await userEvent.click(checkboxes[1]);
+      expect(checkboxes[1]).toBeChecked();
+    });
+
+    await step("Verify selected values display", async () => {
+      const checkboxes = canvas.getAllByRole("checkbox");
+      await userEvent.click(checkboxes[0]);
+
+      const selectedText = canvas.getByText(/Selected:/);
+      expect(selectedText).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {

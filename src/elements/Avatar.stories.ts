@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within } from "@storybook/test";
 import Avatar from "./Avatar.vue";
 
 const meta = {
@@ -60,6 +61,30 @@ export const Default: Story = {
     rounded: "full",
     size: "lg",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify avatar renders correctly", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+      expect(avatar).toHaveAttribute(
+        "src",
+        "https://html.vristo.sbthemes.com/assets/images/profile-12.jpeg"
+      );
+      expect(avatar).toHaveClass("rounded-full");
+    });
+
+    await step("Verify avatar container has correct classes", async () => {
+      const avatarContainer = canvas.getByAltText("User avatar").parentElement;
+      expect(avatarContainer).toHaveClass(
+        "overflow-hidden",
+        "relative",
+        "flex",
+        "justify-center",
+        "items-center"
+      );
+    });
+  },
 };
 
 // Online Status Avatar
@@ -68,6 +93,18 @@ export const WithOnlineStatus: Story = {
     ...Default.args,
     showStatus: true,
     status: "online",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify avatar with online status", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+
+      const statusIndicator = avatar.parentElement?.querySelector("span");
+      expect(statusIndicator).toBeInTheDocument();
+      expect(statusIndicator).toHaveClass("bg-success");
+    });
   },
 };
 
@@ -78,6 +115,18 @@ export const WithOfflineStatus: Story = {
     showStatus: true,
     status: "offline",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify avatar with offline status", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+
+      const statusIndicator = avatar.parentElement?.querySelector("span");
+      expect(statusIndicator).toBeInTheDocument();
+      expect(statusIndicator).toHaveClass("bg-secondary");
+    });
+  },
 };
 
 // Away Status Avatar
@@ -86,6 +135,18 @@ export const WithAwayStatus: Story = {
     ...Default.args,
     showStatus: true,
     status: "away",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify avatar with away status", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+
+      const statusIndicator = avatar.parentElement?.querySelector("span");
+      expect(statusIndicator).toBeInTheDocument();
+      expect(statusIndicator).toHaveClass("bg-warning");
+    });
   },
 };
 
@@ -96,6 +157,18 @@ export const WithBusyStatus: Story = {
     showStatus: true,
     status: "busy",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify avatar with busy status", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+
+      const statusIndicator = avatar.parentElement?.querySelector("span");
+      expect(statusIndicator).toBeInTheDocument();
+      expect(statusIndicator).toHaveClass("bg-danger");
+    });
+  },
 };
 
 // Square Avatar (No Border Radius)
@@ -103,6 +176,15 @@ export const SquareAvatar: Story = {
   args: {
     ...Default.args,
     rounded: "none",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify square avatar", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+      expect(avatar).toHaveClass("rounded-none");
+    });
   },
 };
 
@@ -112,6 +194,15 @@ export const SlightlyRoundedAvatar: Story = {
     ...Default.args,
     rounded: "sm",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify slightly rounded avatar", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+      expect(avatar).toHaveClass("rounded-sm");
+    });
+  },
 };
 
 // Fully Rounded Avatar
@@ -119,5 +210,14 @@ export const FullyRoundedAvatar: Story = {
   args: {
     ...Default.args,
     rounded: "full",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify fully rounded avatar", async () => {
+      const avatar = canvas.getByAltText("User avatar");
+      expect(avatar).toBeInTheDocument();
+      expect(avatar).toHaveClass("rounded-full");
+    });
   },
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import Input from "./Input.vue";
 import { ref } from "vue";
 
@@ -121,6 +122,21 @@ export const Default: Story = {
   args: {
     placeholder: "Default input field",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify default input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Default input field");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "text");
+    });
+
+    await step("Test input interaction", async () => {
+      const input = canvas.getByPlaceholderText("Default input field");
+      await userEvent.type(input, "test value");
+      expect(input).toHaveValue("test value");
+    });
+  },
 };
 
 export const WithLabel: Story = {
@@ -128,6 +144,27 @@ export const WithLabel: Story = {
     label: "Username",
     placeholder: "Enter username",
     id: "username-input",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify input with label renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter username");
+      const label = canvas.getByText("Username");
+      expect(input).toBeInTheDocument();
+      expect(label).toBeInTheDocument();
+    });
+
+    await step("Verify input has correct ID", async () => {
+      const input = canvas.getByPlaceholderText("Enter username");
+      expect(input).toHaveAttribute("id", "username-input");
+    });
+
+    await step("Test input interaction", async () => {
+      const input = canvas.getByPlaceholderText("Enter username");
+      await userEvent.type(input, "john_doe");
+      expect(input).toHaveValue("john_doe");
+    });
   },
   parameters: {
     docs: {
@@ -144,6 +181,26 @@ export const WithIcon: Story = {
     placeholder: "Search for something...",
     iconName: "IconSearch",
     iconOppositePosition: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify input with icon renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Search for something...");
+      expect(input).toBeInTheDocument();
+    });
+
+    await step("Verify search icon is present", async () => {
+      const input = canvas.getByPlaceholderText("Search for something...");
+      const icon = input.parentElement?.querySelector("svg");
+      expect(icon).toBeInTheDocument();
+    });
+
+    await step("Test input interaction", async () => {
+      const input = canvas.getByPlaceholderText("Search for something...");
+      await userEvent.type(input, "search term");
+      expect(input).toHaveValue("search term");
+    });
   },
   parameters: {
     docs: {
@@ -162,6 +219,20 @@ export const WithIconOppositePosition: Story = {
     iconName: "IconUser",
     iconOppositePosition: true,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify input with opposite icon position renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter username");
+      expect(input).toBeInTheDocument();
+    });
+
+    await step("Verify user icon is present", async () => {
+      const input = canvas.getByPlaceholderText("Enter username");
+      const icon = input.parentElement?.querySelector("svg");
+      expect(icon).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -179,6 +250,27 @@ export const ClickableIcon: Story = {
     type: "password",
     iconName: "IconEye",
     iconOppositePosition: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify password input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter password");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "password");
+    });
+
+    await step("Verify eye icon is present", async () => {
+      const input = canvas.getByPlaceholderText("Enter password");
+      const icon = input.parentElement?.querySelector("svg");
+      expect(icon).toBeInTheDocument();
+    });
+
+    await step("Test password input interaction", async () => {
+      const input = canvas.getByPlaceholderText("Enter password");
+      await userEvent.type(input, "secret123");
+      expect(input).toHaveValue("secret123");
+    });
   },
   parameters: {
     docs: {
@@ -235,6 +327,26 @@ export const EmailInput: Story = {
     iconName: "IconMail",
     iconOppositePosition: true,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify email input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("your@email.com");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "email");
+    });
+
+    await step("Verify required attribute", async () => {
+      const input = canvas.getByPlaceholderText("your@email.com");
+      expect(input).toHaveAttribute("required");
+    });
+
+    await step("Test email input interaction", async () => {
+      const input = canvas.getByPlaceholderText("your@email.com");
+      await userEvent.type(input, "test@example.com");
+      expect(input).toHaveValue("test@example.com");
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -253,6 +365,21 @@ export const PasswordInput: Story = {
     required: true,
     iconName: "IconLock",
     iconOppositePosition: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify password input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter your password");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "password");
+    });
+
+    await step("Verify lock icon is present", async () => {
+      const input = canvas.getByPlaceholderText("Enter your password");
+      const icon = input.parentElement?.querySelector("svg");
+      expect(icon).toBeInTheDocument();
+    });
   },
   parameters: {
     docs: {
@@ -274,6 +401,25 @@ export const WithError: Story = {
     iconName: "IconX",
     iconOppositePosition: false,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify error input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter email");
+      expect(input).toBeInTheDocument();
+    });
+
+    await step("Verify error message is displayed", async () => {
+      const errorMessage = canvas.getByText("This field is required");
+      expect(errorMessage).toBeInTheDocument();
+    });
+
+    await step("Verify error icon is present", async () => {
+      const input = canvas.getByPlaceholderText("Enter email");
+      const icon = input.parentElement?.querySelector("svg");
+      expect(icon).toBeInTheDocument();
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -292,6 +438,21 @@ export const Disabled: Story = {
     iconName: "IconUser",
     iconOppositePosition: true,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("This field is disabled");
+      expect(input).toBeInTheDocument();
+      expect(input).toBeDisabled();
+    });
+
+    await step("Verify disabled styling", async () => {
+      const input = canvas.getByPlaceholderText("This field is disabled");
+      expect(input).toHaveClass("cursor-not-allowed");
+      expect(input).toHaveClass("bg-gray-100");
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -307,6 +468,20 @@ export const Required: Story = {
     label: "Name",
     placeholder: "Enter your name",
     required: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify required input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter your name");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("required");
+    });
+
+    await step("Verify required indicator", async () => {
+      const label = canvas.getByText("Name");
+      expect(label).toBeInTheDocument();
+    });
   },
   parameters: {
     docs: {
@@ -324,6 +499,20 @@ export const NumberInput: Story = {
     placeholder: "Enter your age",
     min: 0,
     max: 120,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify number input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Enter your age");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "number");
+    });
+
+    await step("Verify number input type", async () => {
+      const input = canvas.getByPlaceholderText("Enter your age");
+      expect(input).toHaveAttribute("type", "number");
+    });
   },
   parameters: {
     docs: {
@@ -343,6 +532,21 @@ export const Range: Story = {
     min: 0,
     max: 100,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify range input renders correctly", async () => {
+      const input = canvas.getByRole("slider");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "range");
+    });
+
+    await step("Verify range attributes", async () => {
+      const input = canvas.getByRole("slider");
+      expect(input).toHaveAttribute("min", "0");
+      expect(input).toHaveAttribute("max", "100");
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -358,6 +562,21 @@ export const TelInput: Story = {
     label: "Phone Number",
     placeholder: "(123) 456-7890",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify telephone input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("(123) 456-7890");
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute("type", "tel");
+    });
+
+    await step("Test telephone input interaction", async () => {
+      const input = canvas.getByPlaceholderText("(123) 456-7890");
+      await userEvent.type(input, "1234567890");
+      expect(input).toHaveValue("1234567890");
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -368,6 +587,20 @@ export const TelInput: Story = {
 };
 
 export const RTLIconComparison: Story = {
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify RTL icon comparison renders correctly", async () => {
+      const inputs = canvas.getAllByRole("textbox");
+      expect(inputs.length).toBeGreaterThan(0);
+    });
+
+    await step("Verify inputs have icons", async () => {
+      const inputs = canvas.getAllByRole("textbox");
+      const icons = inputs.map(input => input.parentElement?.querySelector("svg")).filter(Boolean);
+      expect(icons.length).toBeGreaterThan(0);
+    });
+  },
   parameters: {
     docs: {
       description: {
@@ -419,6 +652,21 @@ export const WithEnterKeyEvent: Story = {
     placeholder: "Type and press Enter",
     iconName: "IconSearch",
     iconOppositePosition: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify enter key input renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("Type and press Enter");
+      expect(input).toBeInTheDocument();
+    });
+
+    await step("Test enter key functionality", async () => {
+      const input = canvas.getByPlaceholderText("Type and press Enter");
+      await userEvent.type(input, "test item");
+      await userEvent.keyboard("{Enter}");
+      expect(input).toBeInTheDocument();
+    });
   },
   parameters: {
     docs: {
@@ -486,6 +734,20 @@ export const IconPositioningComparison: Story = {
     placeholder: "See different icon positions",
     iconName: "IconSearch",
     iconOppositePosition: false,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify icon positioning comparison renders correctly", async () => {
+      const input = canvas.getByPlaceholderText("See different icon positions");
+      expect(input).toBeInTheDocument();
+    });
+
+    await step("Verify search icon is present", async () => {
+      const input = canvas.getByPlaceholderText("See different icon positions");
+      const icon = input.parentElement?.querySelector("svg");
+      expect(icon).toBeInTheDocument();
+    });
   },
   parameters: {
     docs: {

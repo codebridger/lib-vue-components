@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import FileInputButton from "./FileInputButton.vue";
 
 const meta: Meta<typeof FileInputButton> = {
@@ -74,6 +75,19 @@ export const Default: Story = {
     error: false,
     errorMessage: "",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify file input renders correctly", async () => {
+      const fileInput = canvas.getByDisplayValue("");
+      expect(fileInput).toBeInTheDocument();
+    });
+
+    await step("Verify label is present", async () => {
+      const label = canvas.getByText("Upload File");
+      expect(label).toBeInTheDocument();
+    });
+  },
 };
 
 export const WithAcceptedTypes: Story = {
@@ -82,6 +96,22 @@ export const WithAcceptedTypes: Story = {
     label: "Upload Images",
     accept: "image/*",
     multiple: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "Verify file input with accepted types renders correctly",
+      async () => {
+        const fileInput = canvas.getByDisplayValue("");
+        expect(fileInput).toBeInTheDocument();
+      }
+    );
+
+    await step("Verify label is present", async () => {
+      const label = canvas.getByText("Upload Images");
+      expect(label).toBeInTheDocument();
+    });
   },
 };
 
@@ -92,6 +122,24 @@ export const WithError: Story = {
     error: true,
     errorMessage: "Please select a valid file",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify file input with error renders correctly", async () => {
+      const fileInput = canvas.getByDisplayValue("");
+      expect(fileInput).toBeInTheDocument();
+    });
+
+    await step("Verify label is present", async () => {
+      const label = canvas.getByText("Upload Document");
+      expect(label).toBeInTheDocument();
+    });
+
+    await step("Verify error message is displayed", async () => {
+      const errorMessage = canvas.getByText("Please select a valid file");
+      expect(errorMessage).toBeInTheDocument();
+    });
+  },
 };
 
 export const Disabled: Story = {
@@ -99,6 +147,19 @@ export const Disabled: Story = {
     ...Default.args,
     label: "Upload File",
     disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled file input renders correctly", async () => {
+      const fileInput = canvas.getByDisplayValue("");
+      expect(fileInput).toBeInTheDocument();
+    });
+
+    await step("Verify label is present", async () => {
+      const label = canvas.getByText("Upload File");
+      expect(label).toBeInTheDocument();
+    });
   },
 };
 
@@ -108,5 +169,18 @@ export const WithCapture: Story = {
     label: "Take Photo",
     accept: "image/*",
     capture: "environment",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify file input with capture renders correctly", async () => {
+      const fileInput = canvas.getByDisplayValue("");
+      expect(fileInput).toBeInTheDocument();
+    });
+
+    await step("Verify label is present", async () => {
+      const label = canvas.getByText("Take Photo");
+      expect(label).toBeInTheDocument();
+    });
   },
 };

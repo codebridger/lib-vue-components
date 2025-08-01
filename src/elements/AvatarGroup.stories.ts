@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within } from "@storybook/test";
 import AvatarGroup from "./AvatarGroup.vue";
 import Avatar from "./Avatar.vue";
 
@@ -73,6 +74,28 @@ export const Default: Story = {
       </AvatarGroup>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify avatar group renders correctly", async () => {
+      const avatarGroup = canvas.getByRole("group");
+      expect(avatarGroup).toBeInTheDocument();
+      expect(avatarGroup).toHaveClass("flex", "items-center");
+    });
+
+    await step("Verify all avatars are rendered", async () => {
+      const avatars = canvas.getAllByAltText(/User \d/);
+      expect(avatars).toHaveLength(3);
+
+      avatars.forEach((avatar, index) => {
+        expect(avatar).toBeInTheDocument();
+        expect(avatar).toHaveAttribute(
+          "src",
+          "https://html.vristo.sbthemes.com/assets/images/profile-12.jpeg"
+        );
+      });
+    });
+  },
 };
 
 export const WithMoreAvatars: Story = {
@@ -111,6 +134,19 @@ export const WithMoreAvatars: Story = {
       </AvatarGroup>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify extended avatar group renders correctly", async () => {
+      const avatarGroup = canvas.getByRole("group");
+      expect(avatarGroup).toBeInTheDocument();
+    });
+
+    await step("Verify all 5 avatars are rendered", async () => {
+      const avatars = canvas.getAllByAltText(/User \d/);
+      expect(avatars).toHaveLength(5);
+    });
+  },
 };
 
 export const AnimateX: Story = {
@@ -142,6 +178,26 @@ export const AnimateX: Story = {
       </div>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify animated avatar group renders correctly", async () => {
+      const avatarGroup = canvas.getByRole("group");
+      expect(avatarGroup).toBeInTheDocument();
+    });
+
+    await step("Verify hover animation classes are applied", async () => {
+      const avatars = canvas.getAllByAltText(/User \d/);
+      avatars.forEach((avatar) => {
+        const avatarContainer = avatar.parentElement;
+        expect(avatarContainer).toHaveClass(
+          "transition-all",
+          "duration-300",
+          "hover:translate-x-2"
+        );
+      });
+    });
+  },
 };
 
 export const RTLSupport: Story = {
@@ -170,4 +226,20 @@ export const RTLSupport: Story = {
       </div>
     `,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify RTL avatar group renders correctly", async () => {
+      const rtlContainer = canvas.getByRole("group").parentElement;
+      expect(rtlContainer).toHaveAttribute("dir", "rtl");
+
+      const avatarGroup = canvas.getByRole("group");
+      expect(avatarGroup).toBeInTheDocument();
+    });
+
+    await step("Verify all avatars are rendered in RTL context", async () => {
+      const avatars = canvas.getAllByAltText(/User \d/);
+      expect(avatars).toHaveLength(3);
+    });
+  },
 };

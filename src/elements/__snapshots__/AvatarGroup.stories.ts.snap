@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/AvatarGroup AnimateX smoke-test 1`] = `
+exports[`Elements/AvatarGroup AnimateX play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="flex items-center justify-center -space-x-4 rtl:space-x-reverse text-white relative"
@@ -30,7 +30,7 @@ exports[`Elements/AvatarGroup AnimateX smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/AvatarGroup Default smoke-test 1`] = `
+exports[`Elements/AvatarGroup Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex items-center justify-center -space-x-4 rtl:space-x-reverse text-white relative"
        role="group"
@@ -58,7 +58,7 @@ exports[`Elements/AvatarGroup Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/AvatarGroup RTLSupport smoke-test 1`] = `
+exports[`Elements/AvatarGroup RTLSupport play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div dir="rtl">
     <div class="flex items-center justify-center -space-x-4 rtl:space-x-reverse text-white relative"
@@ -88,7 +88,7 @@ exports[`Elements/AvatarGroup RTLSupport smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/AvatarGroup WithMoreAvatars smoke-test 1`] = `
+exports[`Elements/AvatarGroup WithMoreAvatars play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex items-center justify-center -space-x-4 rtl:space-x-reverse text-white relative"
        role="group"

@@ -376,6 +376,25 @@ describe('Keyboard Navigation', () => {
 
 ## Storybook Integration Testing
 
+### Snapshot Testing Strategy
+
+**Smart Snapshot Approach**: Skip snapshots for dynamic components (Dropdown, Tooltip, Modal) that have animations, transitions, or dynamic positioning. Keep snapshots for static components (Button, Input, Card, etc.).
+
+```typescript
+// .storybook/test-runner.ts
+const dynamicComponents = [
+  "Elements/Dropdown", // Has animations and dynamic positioning
+  "Elements/Tooltip", // Has dynamic positioning
+  "Complex/Modal", // Has animations
+];
+
+const shouldCreateSnapshot = !dynamicComponents.some((component) =>
+  context.title?.startsWith(component)
+);
+```
+
+**Commands**: `yarn test:storybook -u` (update), `yarn test:storybook` (run)
+
 ### Story Configuration
 ```typescript
 // src/elements/Button.stories.ts
