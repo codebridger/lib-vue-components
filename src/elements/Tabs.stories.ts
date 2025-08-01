@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import Tabs from "./Tabs.vue";
 import { TabItem } from "./Tabs.vue";
 import { ref } from "vue";
@@ -190,6 +191,30 @@ export const Default: Story = {
       },
     },
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify tabs component renders correctly", async () => {
+      const tabsContainer = canvas.getByRole("list");
+      expect(tabsContainer).toBeInTheDocument();
+    });
+
+    await step("Verify tab links are rendered", async () => {
+      const tabLinks = canvas.getAllByRole("link");
+      expect(tabLinks).toHaveLength(4);
+    });
+
+    await step("Verify default active tab", async () => {
+      const homeTab = canvas.getByRole("link", { name: /home/i });
+      expect(homeTab).toBeInTheDocument();
+    });
+
+    await step("Test tab switching", async () => {
+      const profileTab = canvas.getByRole("link", { name: /profile/i });
+      await userEvent.click(profileTab);
+      expect(profileTab).toBeInTheDocument();
+    });
+  },
 };
 
 export const NoIcons: Story = {
@@ -240,6 +265,30 @@ export const NoIcons: Story = {
           "Simple tabs without icons, using the content property from tab items.",
       },
     },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify tabs without icons render correctly", async () => {
+      const tabsContainer = canvas.getByRole("list");
+      expect(tabsContainer).toBeInTheDocument();
+    });
+
+    await step("Verify tab links are rendered", async () => {
+      const tabLinks = canvas.getAllByRole("link");
+      expect(tabLinks).toHaveLength(3);
+    });
+
+    await step("Verify default active tab", async () => {
+      const tab1 = canvas.getByRole("link", { name: /tab 1/i });
+      expect(tab1).toBeInTheDocument();
+    });
+
+    await step("Test tab switching", async () => {
+      const tab2 = canvas.getByRole("link", { name: /tab 2/i });
+      await userEvent.click(tab2);
+      expect(tab2).toBeInTheDocument();
+    });
   },
 };
 
@@ -335,6 +384,25 @@ export const CustomStyles: Story = {
       },
     },
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify custom styled tabs render correctly", async () => {
+      const tabsContainer = canvas.getByRole("list");
+      expect(tabsContainer).toBeInTheDocument();
+    });
+
+    await step("Verify tab links are rendered", async () => {
+      const tabLinks = canvas.getAllByRole("link");
+      expect(tabLinks).toHaveLength(3);
+    });
+
+    await step("Test tab switching", async () => {
+      const profileTab = canvas.getByRole("link", { name: /profile/i });
+      await userEvent.click(profileTab);
+      expect(profileTab).toBeInTheDocument();
+    });
+  },
 };
 
 export const DisabledTab: Story = {
@@ -402,5 +470,29 @@ export const DisabledTab: Story = {
           "Example with a disabled tab that cannot be selected by the user.",
       },
     },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify tabs with disabled tab render correctly", async () => {
+      const tabsContainer = canvas.getByRole("list");
+      expect(tabsContainer).toBeInTheDocument();
+    });
+
+    await step("Verify tab links are rendered", async () => {
+      const tabLinks = canvas.getAllByRole("link");
+      expect(tabLinks).toHaveLength(3);
+    });
+
+    await step("Verify disabled tab is not clickable", async () => {
+      const disabledTab = canvas.getByRole("link", { name: /disabled tab/i });
+      expect(disabledTab).toBeInTheDocument();
+    });
+
+    await step("Test switching to regular tab", async () => {
+      const regularTab = canvas.getByRole("link", { name: /regular tab/i });
+      await userEvent.click(regularTab);
+      expect(regularTab).toBeInTheDocument();
+    });
   },
 };

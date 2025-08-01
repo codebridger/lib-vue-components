@@ -29,7 +29,7 @@ export default defineConfig({
         "**/vite-env.d.ts",
         "**/vue.ts",
         "**/nuxt.ts",
-        "**/main.ts",
+
         "**/router/**",
         "**/stores/**",
         "**/types/**",

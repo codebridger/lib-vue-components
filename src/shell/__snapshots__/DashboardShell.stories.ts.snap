@@ -1945,22 +1945,22 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         sales
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         analytics
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         finance
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         crypto
                       </a>
                     </li>
@@ -2046,32 +2046,32 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         chat
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         mailbox
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         todo_list
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         notes
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         scrumboard
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         contacts
                       </a>
                     </li>
@@ -2107,29 +2107,29 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             list
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             preview
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             add
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             edit
                           </a>
                         </li>
                       </ul>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         calendar
                       </a>
                     </li>
@@ -2195,72 +2195,72 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         tabs
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         accordions
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         modals
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         cards
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         carousel
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         countdown
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         counter
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         sweet_alerts
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         timeline
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         notifications
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         media_object
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         list_group
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         pricing_tables
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         lightbox
                       </a>
                     </li>
@@ -2323,92 +2323,92 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         alerts
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         avatar
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         badges
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         breadcrumbs
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         buttons
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         button_groups
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         color_library
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         dropdown
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         infobox
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         jumbotron
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         loader
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         pagination
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         popovers
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         progress_bar
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         search
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         tooltips
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         treeview
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         typography
                       </a>
                     </li>
@@ -2480,7 +2480,7 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         tables
                       </a>
                     </li>
@@ -2516,72 +2516,72 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             basic
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             advanced
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             skin
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             order_sorting
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             columns_filter
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             multi_column
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             multiple_tables
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             alt_pagination
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             checkbox
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             range_search
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             export
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             sticky_header
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             clone_header
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             column_chooser
                           </a>
                         </li>
@@ -2654,77 +2654,77 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         basic
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         input_group
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         layouts
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         validation
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         input_mask
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         select2
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         touchspin
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         checkbox_and_radio
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         switches
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         wizards
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         file_upload
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         quill_editor
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         markdown_editor
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         date_and_range_picker
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         clipboard
                       </a>
                     </li>
@@ -2826,49 +2826,49 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             profile
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             account_settings
                           </a>
                         </li>
                       </ul>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         knowledge_base
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         contact_us_boxed
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         contact_us_cover
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         FAQ
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         coming_soon_boxed
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         coming_soon_cover
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         maintenence
                       </a>
                     </li>
@@ -2904,17 +2904,17 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             404
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             500
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             503
                           </a>
                         </li>
@@ -2952,12 +2952,12 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             login_cover
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             login_boxed
                           </a>
                         </li>
@@ -2995,12 +2995,12 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             register_cover
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             register_boxed
                           </a>
                         </li>
@@ -3038,12 +3038,12 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             recover_id_cover
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             recover_id_boxed
                           </a>
                         </li>
@@ -3081,12 +3081,12 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                       </a>
                       <ul class="rounded absolute top-0 ltr:left-[95%] rtl:right-[95%] min-w-[180px] bg-white z-[10] text-dark dark:text-white-dark dark:bg-[#1b2e4b] shadow p-0 py-2 hidden">
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             unlock_cover
                           </a>
                         </li>
                         <li class="cursor-pointer">
-                          <a>
+                          <a href="javascript:;">
                             unlock_boxed
                           </a>
                         </li>
@@ -3149,27 +3149,27 @@ exports[`Shell/DashboardShell FullSetupShell smoke-test 1`] = `
                   </a>
                   <ul class="sub-menu">
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         drag_and_drop
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         charts
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         font_icons
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         widgets
                       </a>
                     </li>
                     <li class="cursor-pointer">
-                      <a>
+                      <a href="javascript:;">
                         documentation
                       </a>
                     </li>

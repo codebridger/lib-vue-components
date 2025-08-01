@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 
 import IconButton from "./IconButton.vue";
 
@@ -50,6 +51,23 @@ export const Default: Story = {
     rounded: "full",
     icon: "IconSun",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify icon button renders correctly", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("rounded-full");
+    });
+
+    await step("Test icon button interaction", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      await userEvent.click(button);
+      expect(button).toBeInTheDocument();
+    });
+  },
 };
 
 export const Loading: Story = {
@@ -58,6 +76,24 @@ export const Loading: Story = {
     icon: "IconSun",
     isLoading: true,
     size: "md",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify loading icon button renders correctly", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("rounded-full");
+    });
+
+    await step("Verify loading state", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      const loadingIcon = button.querySelector("svg");
+      expect(loadingIcon).toBeInTheDocument();
+      expect(loadingIcon).toHaveClass("animate-[spin_2s_linear_infinite]");
+    });
   },
 };
 
@@ -69,6 +105,27 @@ export const LoadingWithCustomIcon: Story = {
     loadingIcon: "IconRefresh",
     size: "lg",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "Verify custom loading icon button renders correctly",
+      async () => {
+        const buttons = canvas.getAllByRole("generic");
+        const button = buttons[1]; // Skip the main wrapper, get the actual button
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveClass("rounded-full");
+      }
+    );
+
+    await step("Verify custom loading icon is displayed", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      const loadingIcon = button.querySelector("svg");
+      expect(loadingIcon).toBeInTheDocument();
+      expect(loadingIcon).toHaveClass("animate-[spin_2s_linear_infinite]");
+    });
+  },
 };
 
 import userProfilePicUrl from "../../public/assets/images/user-profile.jpeg";
@@ -78,6 +135,22 @@ export const WithImages: Story = {
     size: "xl",
     imgUrl: userProfilePicUrl,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify image icon button renders correctly", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("rounded-full");
+    });
+
+    await step("Verify image is displayed", async () => {
+      const image = canvas.getByRole("img");
+      expect(image).toBeInTheDocument();
+      expect(image).toHaveAttribute("src", userProfilePicUrl);
+    });
+  },
 };
 
 export const Disabled: Story = {
@@ -86,5 +159,21 @@ export const Disabled: Story = {
     icon: "IconSun",
     disabled: true,
     size: "md",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled icon button renders correctly", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("rounded-full");
+    });
+
+    await step("Verify disabled state", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      expect(button).toHaveAttribute("disabled", "true");
+    });
   },
 };

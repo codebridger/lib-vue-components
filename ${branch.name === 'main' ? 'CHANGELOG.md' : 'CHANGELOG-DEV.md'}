@@ -1,3 +1,45 @@
+# [1.17.0-dev.30](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.29...dev-1.17.0-dev.30) (2025-08-01)
+
+
+### Features
+
+* Add comprehensive unit and accessibility tests for Avatar component ([038af1c](https://github.com/codebridger/lib-vue-components/commit/038af1cc807f7ce2aff0b7010ba96f1a90fe5d58))
+* Add comprehensive unit and accessibility tests for AvatarGroup component ([ce29e59](https://github.com/codebridger/lib-vue-components/commit/ce29e59e21dda711e666c3c5602ee5c85bd2b634))
+* Add comprehensive unit and accessibility tests for Card component ([55a88da](https://github.com/codebridger/lib-vue-components/commit/55a88da12be002554c372200933f764c38f3f13a))
+* Add comprehensive unit and accessibility tests for DropdownItem component ([804abd3](https://github.com/codebridger/lib-vue-components/commit/804abd3d50dac4d8bf34ebb3f8d5058eee8eed11))
+* Add comprehensive unit and accessibility tests for FileInputButton component ([52f401b](https://github.com/codebridger/lib-vue-components/commit/52f401b08df364c7de0b7c5d9f6b246f0f329795))
+* Add comprehensive unit and accessibility tests for Icon component ([98da155](https://github.com/codebridger/lib-vue-components/commit/98da155205243d473b24a4f99e063272a191d3f9))
+* Add comprehensive unit and accessibility tests for IconButton component ([2524ec9](https://github.com/codebridger/lib-vue-components/commit/2524ec978fa8ad5228794c2d1b1046b33b68fc62))
+* Add comprehensive unit and accessibility tests for Progress component ([9c0e389](https://github.com/codebridger/lib-vue-components/commit/9c0e389ff2ea4522d59b429c7714e03a1b52f1f9))
+* Add comprehensive unit and accessibility tests for SwitchBall component ([464fcea](https://github.com/codebridger/lib-vue-components/commit/464fcead89ac8314507bc36c7b9bda1256705a5a))
+* Add comprehensive unit and accessibility tests for Tooltip component ([194db27](https://github.com/codebridger/lib-vue-components/commit/194db27dd9539c8e4198afbfc177764fd34d7195))
+* Update test setup with Pinia support and attempt CheckboxInput tests ([39b0eae](https://github.com/codebridger/lib-vue-components/commit/39b0eae22c3d4b6079e9b496aadc9a0da1bd7dff))
+
+# [1.17.0-dev.29](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.28...dev-1.17.0-dev.29) (2025-07-31)
+
+
+### Bug Fixes
+
+* **workflows:** add pull request trigger types to test workflow ([d3c9115](https://github.com/codebridger/lib-vue-components/commit/d3c911533657b900dd5a74d66a9f74da297dca75))
+
+# [1.17.0-dev.28](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.27...dev-1.17.0-dev.28) (2025-07-31)
+
+
+### Bug Fixes
+
+* **docs:** update how-to-use documentation for LLM agents and format import statements ([7bbfbd0](https://github.com/codebridger/lib-vue-components/commit/7bbfbd0c89a4cdb31e18b0c4e0668b5ef78bdbc8))
+* **workflows:** specify branches for pull request triggers in test workflow ([870bfdd](https://github.com/codebridger/lib-vue-components/commit/870bfdd72a1a62441a7de4e0ba6d6d42a8fb2bf7))
+* **workflows:** update Storybook build command in deployment workflow to use 'yarn storybook:build' ([b741b4f](https://github.com/codebridger/lib-vue-components/commit/b741b4f8dd5ca48ddf7d0947c1b15a57c4062615))
+
+
+### Features
+
+* **doc-generator:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - add LLM documentation generator using Puppeteer to automate documentation extraction from Storybook ([e685a2e](https://github.com/codebridger/lib-vue-components/commit/e685a2eed9f8e2798088a1758ce57eb198f6d218)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+* **doc-generator:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - enhance content extraction by implementing 'Show code' button handling and improving iframe content retrieval ([33223b0](https://github.com/codebridger/lib-vue-components/commit/33223b03be941626999a773d9f855ec6a33e8648)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+* **doc-generator:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - enhance documentation generation with Turndown integration for HTML to Markdown conversion and add output format options ([9b232c0](https://github.com/codebridger/lib-vue-components/commit/9b232c0d80fdfbe3b7a1501d1fc19b2fa17b0044)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+* **doc-generator:** enhance Puppeteer settings for CI environment and improve memory management during documentation generation ([7c6af74](https://github.com/codebridger/lib-vue-components/commit/7c6af743e85dc6397c19236c14a1f0a35074d9a4))
+* **workflows:** [#86](https://github.com/codebridger/lib-vue-components/issues/86)eu42p3u - add Storybook server start and stop steps in deploy workflow to enhance documentation generation process ([405d0bf](https://github.com/codebridger/lib-vue-components/commit/405d0bf454fc04a249d9d4dd0d8efcaebb2c7aa2)), closes [#86eu42p3](https://github.com/codebridger/lib-vue-components/issues/86eu42p3)
+
 ## [1.22.1](https://github.com/codebridger/lib-vue-components/compare/v1.22.0...v1.22.1) (2025-07-30)
 
 

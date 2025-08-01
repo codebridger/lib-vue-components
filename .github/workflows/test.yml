@@ -1,13 +1,19 @@
 name: Test
 
 on:
-  push:
   pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
+      - dev
 
 jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    # Only run on push to main OR pull_request events (not both)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout code
@@ -31,6 +37,8 @@ jobs:
   storybook-tests:
     name: Storybook Tests
     runs-on: ubuntu-latest
+    # Only run on push to main OR pull_request events (not both)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout code

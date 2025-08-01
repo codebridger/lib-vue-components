@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/SwitchBall CustomIcon smoke-test 1`] = `
+exports[`Elements/SwitchBall CustomIcon play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <label for="switch-1"
          class="relative inline-flex items-center cursor-pointer"
@@ -44,7 +44,7 @@ exports[`Elements/SwitchBall CustomIcon smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/SwitchBall Default smoke-test 1`] = `
+exports[`Elements/SwitchBall Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <label for="switch-1"
          class="relative inline-flex items-center cursor-pointer"
@@ -82,7 +82,7 @@ exports[`Elements/SwitchBall Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/SwitchBall WithSublabel smoke-test 1`] = `
+exports[`Elements/SwitchBall WithSublabel play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <label for="notifications-switch"
          class="relative inline-flex items-center cursor-pointer"

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/Input ClickableIcon smoke-test 1`] = `
+exports[`Elements/Input ClickableIcon play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-2">
     <div class="flex flex-col gap-1">
@@ -33,7 +33,7 @@ exports[`Elements/Input ClickableIcon smoke-test 1`] = `
                id
                type="password"
                placeholder="Enter password"
-               value
+               value="secret123"
         >
       </div>
     </div>
@@ -44,7 +44,7 @@ exports[`Elements/Input ClickableIcon smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Default smoke-test 1`] = `
+exports[`Elements/Input Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <div class="relative">
@@ -59,7 +59,7 @@ exports[`Elements/Input Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Disabled smoke-test 1`] = `
+exports[`Elements/Input Disabled play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -101,7 +101,7 @@ exports[`Elements/Input Disabled smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input EmailInput smoke-test 1`] = `
+exports[`Elements/Input EmailInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -145,7 +145,7 @@ exports[`Elements/Input EmailInput smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input IconPositioningComparison smoke-test 1`] = `
+exports[`Elements/Input IconPositioningComparison play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -187,7 +187,7 @@ exports[`Elements/Input IconPositioningComparison smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input NumberInput smoke-test 1`] = `
+exports[`Elements/Input NumberInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -207,7 +207,7 @@ exports[`Elements/Input NumberInput smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input PasswordInput smoke-test 1`] = `
+exports[`Elements/Input PasswordInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -251,7 +251,7 @@ exports[`Elements/Input PasswordInput smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input RTLIconComparison smoke-test 1`] = `
+exports[`Elements/Input RTLIconComparison play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-6">
     <div class="space-y-2">
@@ -364,7 +364,7 @@ exports[`Elements/Input RTLIconComparison smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Range smoke-test 1`] = `
+exports[`Elements/Input Range play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="volume-input"
@@ -386,7 +386,7 @@ exports[`Elements/Input Range smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Required smoke-test 1`] = `
+exports[`Elements/Input Required play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -410,7 +410,7 @@ exports[`Elements/Input Required smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input TelInput smoke-test 1`] = `
+exports[`Elements/Input TelInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -430,7 +430,7 @@ exports[`Elements/Input TelInput smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithEnterKeyEvent smoke-test 1`] = `
+exports[`Elements/Input WithEnterKeyEvent play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <div class="flex flex-col gap-1">
@@ -470,11 +470,24 @@ exports[`Elements/Input WithEnterKeyEvent smoke-test 1`] = `
         >
       </div>
     </div>
+    <div class="mt-2 p-3 bg-gray-100 rounded">
+      <p class="text-sm font-medium mb-2">
+        Entered values:
+      </p>
+      <ul class="list-disc pl-5">
+        <li class="text-sm">
+          test item
+        </li>
+      </ul>
+      <p class="text-xs text-gray-500 mt-2">
+        Try typing values and pressing Enter or clicking the search icon
+      </p>
+    </div>
   </div>
 </div>
 `;
 
-exports[`Elements/Input WithError smoke-test 1`] = `
+exports[`Elements/Input WithError play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -521,7 +534,7 @@ exports[`Elements/Input WithError smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithIcon smoke-test 1`] = `
+exports[`Elements/Input WithIcon play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -563,7 +576,7 @@ exports[`Elements/Input WithIcon smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithIconOppositePosition smoke-test 1`] = `
+exports[`Elements/Input WithIconOppositePosition play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -604,7 +617,7 @@ exports[`Elements/Input WithIconOppositePosition smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithLabel smoke-test 1`] = `
+exports[`Elements/Input WithLabel play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="username-input"

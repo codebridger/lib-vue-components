@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import FileInputCombo from "./FileInputCombo.vue";
 import { ref } from "vue";
 import {
@@ -391,12 +392,41 @@ type Story = StoryObj<typeof meta>;
 // Export the stories
 export const Default: Story = {
   args: {},
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify file input combo renders correctly", async () => {
+      const uploadArea = canvas.getByText("Drop files to upload");
+      expect(uploadArea).toBeInTheDocument();
+    });
+
+    await step("Verify browse button is present", async () => {
+      const browseButton = canvas.getByText("Browse");
+      expect(browseButton).toBeInTheDocument();
+    });
+  },
 };
 
 export const WithLabel: Story = {
   args: {
     label: "Upload Documents",
     required: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "Verify file input combo with label renders correctly",
+      async () => {
+        const label = canvas.getByText("Upload Documents");
+        expect(label).toBeInTheDocument();
+      }
+    );
+
+    await step("Verify required indicator is present", async () => {
+      const requiredIndicator = canvas.getByText("*");
+      expect(requiredIndicator).toBeInTheDocument();
+    });
   },
 };
 
@@ -409,6 +439,19 @@ export const ImageUploader: Story = {
     uploadIcon: "IconImage",
     maxSize: 5 * 1024 * 1024, // 5MB
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify image uploader renders correctly", async () => {
+      const title = canvas.getByText("Drop your images here");
+      expect(title).toBeInTheDocument();
+    });
+
+    await step("Verify description is present", async () => {
+      const description = canvas.getByText("JPG, PNG, GIF and WebP files only");
+      expect(description).toBeInTheDocument();
+    });
+  },
 };
 
 export const DocumentUploader: Story = {
@@ -420,6 +463,19 @@ export const DocumentUploader: Story = {
     uploadIcon: "IconDocument",
     maxFiles: 3,
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify document uploader renders correctly", async () => {
+      const title = canvas.getByText("Drop your documents here");
+      expect(title).toBeInTheDocument();
+    });
+
+    await step("Verify description is present", async () => {
+      const description = canvas.getByText("PDF, Word, and text files only");
+      expect(description).toBeInTheDocument();
+    });
+  },
 };
 
 export const AutoUpload: Story = {
@@ -428,6 +484,14 @@ export const AutoUpload: Story = {
     autoUpload: true,
     showControls: false,
     title: "Files will upload automatically",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify auto upload renders correctly", async () => {
+      const title = canvas.getByText("Files will upload automatically");
+      expect(title).toBeInTheDocument();
+    });
   },
 };
 
@@ -438,6 +502,21 @@ export const Disabled: Story = {
     title: "Upload disabled",
     description: "You cannot upload files at this time",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify disabled upload renders correctly", async () => {
+      const title = canvas.getByText("Upload disabled");
+      expect(title).toBeInTheDocument();
+    });
+
+    await step("Verify disabled description is present", async () => {
+      const description = canvas.getByText(
+        "You cannot upload files at this time"
+      );
+      expect(description).toBeInTheDocument();
+    });
+  },
 };
 
 export const NoPreview: Story = {
@@ -445,6 +524,19 @@ export const NoPreview: Story = {
     showPreview: false,
     title: "Simple Upload",
     description: "No file previews will be shown",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify no preview upload renders correctly", async () => {
+      const title = canvas.getByText("Simple Upload");
+      expect(title).toBeInTheDocument();
+    });
+
+    await step("Verify description is present", async () => {
+      const description = canvas.getByText("No file previews will be shown");
+      expect(description).toBeInTheDocument();
+    });
   },
 };
 
@@ -454,6 +546,14 @@ export const CustomIcons: Story = {
     dropModeIcon: "IconCloud",
     dropModeLabel: "Drop files anywhere",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify custom icons upload renders correctly", async () => {
+      const browseButton = canvas.getByText("Browse");
+      expect(browseButton).toBeInTheDocument();
+    });
+  },
 };
 
 export const WithFileSizeLimit: Story = {
@@ -461,6 +561,14 @@ export const WithFileSizeLimit: Story = {
     label: "Limited Upload Size",
     maxSize: 1024 * 1024, // 1MB
     description: "Maximum file size: 1MB",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify file size limit upload renders correctly", async () => {
+      const description = canvas.getByText("Maximum file size: 1MB");
+      expect(description).toBeInTheDocument();
+    });
   },
 };
 
@@ -470,6 +578,14 @@ export const WithMaxFiles: Story = {
     maxFiles: 2,
     description: "Maximum 2 files allowed",
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify max files upload renders correctly", async () => {
+      const description = canvas.getByText("Maximum 2 files allowed");
+      expect(description).toBeInTheDocument();
+    });
+  },
 };
 
 export const WithUploadError: Story = {
@@ -477,6 +593,16 @@ export const WithUploadError: Story = {
     label: "Upload with Error Simulation",
     autoUpload: true,
     description: "Files will fail to upload after progress reaches 30%",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify upload error simulation renders correctly", async () => {
+      const description = canvas.getByText(
+        "Files will fail to upload after progress reaches 30%"
+      );
+      expect(description).toBeInTheDocument();
+    });
   },
 };
 
@@ -489,6 +615,26 @@ export const WithToastNotifications: Story = {
     autoUpload: true,
     maxFiles: 5,
     showControls: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "Verify toast notifications upload renders correctly",
+      async () => {
+        const title = canvas.getByText(
+          "Upload files to see toast notifications"
+        );
+        expect(title).toBeInTheDocument();
+      }
+    );
+
+    await step("Verify description is present", async () => {
+      const description = canvas.getByText(
+        "All component events will be displayed as toast notifications"
+      );
+      expect(description).toBeInTheDocument();
+    });
   },
   parameters: {
     docs: {
@@ -507,6 +653,24 @@ export const WithtoastErrors: Story = {
     description: "Demonstrates error toast notifications",
     autoUpload: true,
     maxFiles: 3,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step(
+      "Verify error notifications upload renders correctly",
+      async () => {
+        const title = canvas.getByText("Files will error at 30% upload");
+        expect(title).toBeInTheDocument();
+      }
+    );
+
+    await step("Verify description is present", async () => {
+      const description = canvas.getByText(
+        "Demonstrates error toast notifications"
+      );
+      expect(description).toBeInTheDocument();
+    });
   },
   parameters: {
     name: "withuploaderror", // This triggers the error simulation
