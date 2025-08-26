@@ -47,17 +47,12 @@ exports[`Elements/FileInputCombo AutoUpload play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Click to browse files
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -152,17 +147,12 @@ exports[`Elements/FileInputCombo CustomIcons play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Click to browse files
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -277,17 +267,12 @@ exports[`Elements/FileInputCombo Default play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Click to browse files
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -406,18 +391,13 @@ exports[`Elements/FileInputCombo Disabled play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 You cannot upload files at this time
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all bg-gray-100 cursor-not-allowed shadow-none rounded-lg normal-case border-solid"
                       disabled
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -515,17 +495,12 @@ exports[`Elements/FileInputCombo DocumentUploader play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 PDF, Word, and text files only
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -623,17 +598,12 @@ exports[`Elements/FileInputCombo ImageUploader play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 JPG, PNG, GIF and WebP files only
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -748,17 +718,12 @@ exports[`Elements/FileInputCombo NoPreview play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 No file previews will be shown
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -876,17 +841,12 @@ exports[`Elements/FileInputCombo WithFileSizeLimit play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Maximum file size: 1MB
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -1007,17 +967,12 @@ exports[`Elements/FileInputCombo WithLabel play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Click to browse files
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -1135,17 +1090,12 @@ exports[`Elements/FileInputCombo WithMaxFiles play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Maximum 2 files allowed
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -1242,17 +1192,12 @@ exports[`Elements/FileInputCombo WithToastNotifications play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 All component events will be displayed as toast notifications
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -1349,17 +1294,12 @@ exports[`Elements/FileInputCombo WithUploadError play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Files will fail to upload after progress reaches 30%
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>
@@ -1456,17 +1396,12 @@ exports[`Elements/FileInputCombo WithtoastErrors play-test 1`] = `
               <p class="mt-1 text-sm text-gray-500">
                 Demonstrates error toast notifications
               </p>
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all shadow-none rounded-lg normal-case border-solid"
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Browse
                 </span>
               </button>

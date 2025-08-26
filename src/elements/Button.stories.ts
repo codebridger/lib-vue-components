@@ -8,6 +8,12 @@ const meta = {
   component: Button,
   tags: ["autodocs"],
   parameters: {
+    docs: {
+      description: {
+        component:
+          "Chip mode adds a close icon inside the button on the opposite side of the label (LTR: right, RTL: left). When chip is true, the default click is disabled and only the chip-click event is emitted when the close icon is pressed.",
+      },
+    },
     interactions: {
       disable: false,
     },
@@ -59,6 +65,7 @@ const meta = {
       control: "text",
       description: "Additional classes for the icon",
     },
+    chip: { control: "boolean", description: "Enable chip mode (close icon)" },
   },
   args: {
     block: false,
@@ -139,6 +146,8 @@ export const Loading: Story = {
       const loadingIcon = canvas.getByRole("button").querySelector("svg");
       expect(loadingIcon).toBeInTheDocument();
       expect(loadingIcon).toHaveClass("animate-[spin_2s_linear_infinite]");
+      // Cursor should not be pointer in loading state
+      expect(button).toHaveClass("cursor-default");
     });
 
     await step("Verify button is disabled during loading", async () => {
@@ -360,6 +369,67 @@ export const FormButton: Story = {
       expect(
         canvas.getByRole("button", { name: /submitting/i })
       ).toBeInTheDocument();
+    });
+  },
+};
+
+export const Chip: Story = {
+  args: {
+    chip: true,
+    label: "Chip Label",
+    color: "primary",
+  },
+  parameters: {
+    // Disable snapshots for this interactive story to avoid play-time diffs
+    snapshots: false,
+  },
+  render: (args) => ({
+    components: { Button },
+    setup() {
+      const chipClicks = ref(0);
+      const btnClicks = ref(0);
+      const onChipClick = () => {
+        chipClicks.value += 1;
+      };
+      const onBtnClick = () => {
+        btnClicks.value += 1;
+      };
+      return { args, chipClicks, btnClicks, onChipClick, onBtnClick };
+    },
+    template: `
+      <div>
+        <Button v-bind="args" @click="onBtnClick" @chip-click="onChipClick" />
+        <div class="mt-2 text-xs text-gray-500">
+          <span>Button clicks: </span><span id="btnClicks">{{ btnClicks }}</span>
+        </div>
+        <div class="text-xs text-gray-500">
+          <span>Chip clicks: </span><span id="chipClicks">{{ chipClicks }}</span>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Default click is suppressed when chip is true", async () => {
+      const button = canvas.getByRole("button", { name: /chip label/i });
+      // Root has pointer-events-none in chip mode; assert non-interactive class instead
+      expect(button).toHaveClass("pointer-events-none");
+      const btnClicks = canvasElement.querySelector(
+        "#btnClicks"
+      ) as HTMLElement;
+      expect(btnClicks.textContent).toBe("0");
+    });
+
+    await step("Close icon emits chip-click", async () => {
+      const button = canvas.getByRole("button", { name: /chip label/i });
+      const closeIcon = button.querySelector("svg") as SVGElement;
+      expect(closeIcon).toBeInTheDocument();
+      await userEvent.click(closeIcon);
+      const chipClicks = canvasElement.querySelector(
+        "#chipClicks"
+      ) as HTMLElement;
+      expect(chipClicks.textContent).toBe("1");
     });
   },
 };

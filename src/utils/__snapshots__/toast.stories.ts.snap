@@ -2,17 +2,12 @@
 
 exports[`Utilities/Toast DefaultToast smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
-  <button data-v-e3f15263
-          type="button"
-          class="btn text-xs sm:text-sm transition-all btn-primary shadow-none normal-case border-solid active:btn-primary"
+  <button type="button"
+          class="btn text-xs sm:text-sm transition-all btn-primary shadow-none normal-case border-solid active:brightness-95"
   >
-    <span data-v-e3f15263
-          class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-    >
+    <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
     </span>
-    <span data-v-e3f15263
-          class
-    >
+    <span class>
       Send a Toast
     </span>
   </button>

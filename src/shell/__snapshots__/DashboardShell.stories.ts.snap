@@ -3243,18 +3243,13 @@ exports[`Shell/DashboardShell SimpleShell smoke-test 1`] = `
               Sidebar Menu Placeholder
             </h1>
             <div class="p-2 flex flex-col items-center">
-              <button data-v-e3f15263
-                      type="button"
+              <button type="button"
                       class="btn text-xs sm:text-sm transition-all btn-xs shadow-none normal-case border-solid my-2 scale-75"
                       full
               >
-                <span data-v-e3f15263
-                      class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0"
-                >
+                <span class="transition-all overflow-hidden align-middle shrink-0 flex items-center justify-center w-0">
                 </span>
-                <span data-v-e3f15263
-                      class
-                >
+                <span class>
                   Toggle
                 </span>
               </button>
