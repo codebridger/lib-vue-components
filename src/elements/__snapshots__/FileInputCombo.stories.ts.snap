@@ -82,7 +82,7 @@ exports[`Elements/FileInputCombo CustomIcons play-test 1`] = `
     <section>
       <div class="flex flex-col gap-4">
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -111,7 +111,7 @@ exports[`Elements/FileInputCombo CustomIcons play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -187,7 +187,7 @@ exports[`Elements/FileInputCombo Default play-test 1`] = `
     <section>
       <div class="flex flex-col gap-4">
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -216,7 +216,7 @@ exports[`Elements/FileInputCombo Default play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -315,7 +315,7 @@ exports[`Elements/FileInputCombo Disabled play-test 1`] = `
           Disabled Upload
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-gray-100 cursor-not-allowed bg-gray-100 cursor-not-allowed dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-gray-100 cursor-not-allowed bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="true"
                title="Select files"
                label="Select files"
@@ -344,7 +344,7 @@ exports[`Elements/FileInputCombo Disabled play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-gray-100 cursor-not-allowed bg-gray-100 cursor-not-allowed dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-gray-100 cursor-not-allowed bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="true"
                title="Start Upload"
                label="Start Upload"
@@ -445,7 +445,7 @@ exports[`Elements/FileInputCombo DocumentUploader play-test 1`] = `
           Upload Documents
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -474,7 +474,7 @@ exports[`Elements/FileInputCombo DocumentUploader play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -553,7 +553,7 @@ exports[`Elements/FileInputCombo ImageUploader play-test 1`] = `
           Upload Images
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -582,7 +582,7 @@ exports[`Elements/FileInputCombo ImageUploader play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -658,7 +658,7 @@ exports[`Elements/FileInputCombo NoPreview play-test 1`] = `
     <section>
       <div class="flex flex-col gap-4">
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -687,7 +687,7 @@ exports[`Elements/FileInputCombo NoPreview play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -786,7 +786,7 @@ exports[`Elements/FileInputCombo WithFileSizeLimit play-test 1`] = `
           Limited Upload Size
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -815,7 +815,7 @@ exports[`Elements/FileInputCombo WithFileSizeLimit play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -917,7 +917,7 @@ exports[`Elements/FileInputCombo WithLabel play-test 1`] = `
           </span>
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -946,7 +946,7 @@ exports[`Elements/FileInputCombo WithLabel play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -1045,7 +1045,7 @@ exports[`Elements/FileInputCombo WithMaxFiles play-test 1`] = `
           Limited Number of Files
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -1074,7 +1074,7 @@ exports[`Elements/FileInputCombo WithMaxFiles play-test 1`] = `
               </line>
             </svg>
           </div>
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Start Upload"
                label="Start Upload"
@@ -1173,7 +1173,7 @@ exports[`Elements/FileInputCombo WithToastNotifications play-test 1`] = `
           File Upload with Toast Notifications
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -1280,7 +1280,7 @@ exports[`Elements/FileInputCombo WithUploadError play-test 1`] = `
           Upload with Error Simulation
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
@@ -1387,7 +1387,7 @@ exports[`Elements/FileInputCombo WithtoastErrors play-test 1`] = `
           Upload with Error Notifications
         </label>
         <div class="mb-4 flex items-center gap-2">
-          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer dark:text-[#d0d2d6] rounded-full"
+          <div class="p-2 overflow-hidden w-fit select-none transition-all flex items-center justify-center hover:cursor-pointer bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6] rounded-full"
                disabled="false"
                title="Select files"
                label="Select files"
