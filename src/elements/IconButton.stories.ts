@@ -4,8 +4,6 @@ import { expect, within, userEvent } from "@storybook/test";
 import IconButton from "./IconButton.vue";
 
 const iconButtonDescription = `
-# IconButton Component
-
 A compact, versatile button optimized for icons or avatars. Works as a clickable control by default and as a decorative badge when badge is true.
 
 ## Features

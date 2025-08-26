@@ -11,8 +11,6 @@ import { sidebarData, horizontalMenuItems } from "./sidebar-data";
 import Button from "../elements/Button.vue";
 
 const dashboardShellDescription = `
-# DashboardShell
-
 Composable page shell providing header, horizontal menu, sidebar, content, and footer slots. Supports vertical and horizontal navigation styles.
 
 ## Features

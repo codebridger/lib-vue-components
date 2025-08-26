@@ -4,8 +4,6 @@ import { expect, userEvent, within } from "@storybook/test";
 import Button from "./Button.vue";
 
 const buttonDescription = `
-# Button Component
-
 A flexible, accessible button with rich visual variants and behaviors. Use it for primary and secondary actions, icon-only actions, links, and async/loading flows.
 
 ## Features

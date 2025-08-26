@@ -4,8 +4,6 @@ import AvatarGroup from "./AvatarGroup.vue";
 import Avatar from "./Avatar.vue";
 
 const avatarGroupDescription = `
-# AvatarGroup Component
-
 Groups multiple Avatar components with an overlapping layout to indicate participants or teams.
 
 ## Features

@@ -7,8 +7,6 @@ import staticIcons from "./static-icons";
 import menuIcons from "./menu-icons";
 
 const iconDescription = `
-# Icon Component
-
 Renders SVG icons from bundled packs (variant, static, and menu). Provides a simple API for choosing names and optional fill styles.
 
 ## Features

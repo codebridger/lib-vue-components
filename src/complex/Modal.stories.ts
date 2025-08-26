@@ -4,8 +4,6 @@ import Modal from "./Modal.vue";
 import Button from "../elements/Button.vue";
 
 const modalDescription = `
-# Modal Component
-
 A flexible dialog for confirmations, forms, and rich content. Provides slots for trigger, title, default content, and footer; supports sizes, vertical alignment, and animations.
 
 ## Features

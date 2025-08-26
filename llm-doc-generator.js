@@ -137,17 +137,62 @@ class DocGenerator {
     });
   }
 
+  async checkServerHealth() {
+    console.log("🏥 Checking server health...");
+    try {
+      const response = await this.page.goto(this.baseUrl, {
+        waitUntil: "domcontentloaded",
+        timeout: 10000,
+      });
+
+      if (response && response.ok()) {
+        console.log("✅ Server health check passed");
+        return true;
+      } else {
+        console.log(`⚠️ Server responded with status: ${response?.status()}`);
+        return false;
+      }
+    } catch (error) {
+      console.log(`⚠️ Health check failed: ${error.message}`);
+      return false;
+    }
+  }
+
   async navigateToStorybook() {
     console.log(`📖 Navigating to Storybook at ${this.baseUrl}...`);
-    try {
-      await this.page.goto(this.baseUrl, {
-        waitUntil: "domcontentloaded",
-        timeout: 30000,
-      });
-      console.log("✅ Successfully loaded Storybook");
-    } catch (error) {
-      console.error("❌ Failed to load Storybook:", error.message);
-      throw error;
+
+    const maxRetries = 5;
+    const retryDelay = 2000;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(
+          `🔄 Attempt ${attempt}/${maxRetries} to connect to Storybook...`
+        );
+
+        // First check if server is healthy
+        if (await this.checkServerHealth()) {
+          await this.page.goto(this.baseUrl, {
+            waitUntil: "domcontentloaded",
+            timeout: 30000,
+          });
+
+          console.log("✅ Successfully loaded Storybook");
+          return;
+        } else {
+          throw new Error("Server health check failed");
+        }
+      } catch (error) {
+        console.error(`❌ Attempt ${attempt} failed: ${error.message}`);
+
+        if (attempt === maxRetries) {
+          console.error("❌ All retry attempts failed. Exiting...");
+          throw error;
+        }
+
+        console.log(`⏳ Waiting ${retryDelay}ms before retry...`);
+        await new Promise((resolve) => setTimeout(resolve, retryDelay));
+      }
     }
   }
 
