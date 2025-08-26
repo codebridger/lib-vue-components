@@ -12,26 +12,24 @@ export default defineConfig({
       },
     ],
   },
-  // optimizeDeps: {
-  //   include: ["quill"],
-  // },
   build: {
     lib: {
       entry: {
         vue: resolve(__dirname, "src/vue.ts"),
         nuxt: resolve(__dirname, "src/nuxt.ts"),
+        shell: resolve(__dirname, "src/shell/components.ts"),
+        elements: resolve(__dirname, "src/elements/components.ts"),
+        complex: resolve(__dirname, "src/complex/components.ts"),
+        toast: resolve(__dirname, "src/utils/toast.ts"),
+        store: resolve(__dirname, "src/stores/index.ts"),
+        types: resolve(__dirname, "src/types/types.ts"),
       },
-      // formats: ["es", "cjs", "umd"],
+      formats: ["es", "cjs"],
       fileName: (format, entryName) => `${entryName}.${format}.js`,
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
       external: ["vue", "pinia", "vue-router", "@nuxt/kit"],
-
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
         globals: {
           vue: "Vue",
           pinia: "Pinia",
