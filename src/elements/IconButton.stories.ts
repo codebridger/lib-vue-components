@@ -8,6 +8,14 @@ const meta = {
   component: IconButton,
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "IconButton is a versatile icon container that works as an interactive button by default and as a non-interactive badge when `badge` is true. Pointer cursor shows only when clickable; disabled and loading states are non-interactive with a not-allowed cursor.",
+      },
+    },
+  },
   argTypes: {
     color: {
       control: "select",
@@ -27,13 +35,16 @@ const meta = {
     rounded: {
       control: "select",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
+      description: "Border radius size",
     },
     size: {
       control: "select",
       options: ["xs", "sm", "md", "lg", "xl"],
+      description: "Visual size of the inner icon or image",
     },
     icon: {
       control: "text",
+      description: "Icon name to render from the icon set",
     },
     isLoading: {
       control: "boolean",
@@ -48,6 +59,11 @@ const meta = {
       control: "boolean",
       description: "Disables the button",
     },
+    badge: {
+      control: "boolean",
+      description:
+        "Enable badge mode (non-interactive): no click events and default cursor",
+    },
   },
   args: {
     color: "default",
@@ -55,6 +71,7 @@ const meta = {
     isLoading: false,
     loadingIcon: "IconLoader",
     disabled: false,
+    badge: false,
   },
 } satisfies Meta<typeof IconButton>;
 
@@ -66,6 +83,14 @@ export const Default: Story = {
   args: {
     rounded: "full",
     icon: "IconSun",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Interactive usage. Emits `click` and shows a pointer cursor when not disabled/loading.",
+      },
+    },
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -92,6 +117,14 @@ export const Loading: Story = {
     icon: "IconSun",
     isLoading: true,
     size: "md",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Shows the built-in spinner and is non-interactive while loading.",
+      },
+    },
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -121,6 +154,13 @@ export const LoadingWithCustomIcon: Story = {
     loadingIcon: "IconRefresh",
     size: "lg",
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Customize the spinner icon via the `loadingIcon` prop.",
+      },
+    },
+  },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -144,12 +184,21 @@ export const LoadingWithCustomIcon: Story = {
   },
 };
 
-import userProfilePicUrl from "../../public/assets/images/user-profile.jpeg";
+// Use public URL for assets rather than importing from /public
+const userProfilePicUrl = "/assets/images/user-profile.jpeg";
 export const WithImages: Story = {
   args: {
     rounded: "full",
     size: "xl",
     imgUrl: userProfilePicUrl,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Pass `imgUrl` to render an image instead of an icon. Works in both interactive and badge modes.",
+      },
+    },
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -175,6 +224,14 @@ export const Disabled: Story = {
     icon: "IconSun",
     disabled: true,
     size: "md",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Disabled state is non-interactive and shows a not-allowed cursor.",
+      },
+    },
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -248,6 +305,13 @@ export const ColorVariants: Story = {
     rounded: "full",
     size: "md",
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Preview of all color variants.",
+      },
+    },
+  },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -291,5 +355,116 @@ export const ToolbarExample: Story = {
   args: {
     rounded: "md",
     size: "sm",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Example layout with multiple IconButtons.",
+      },
+    },
+  },
+};
+
+export const Badge: Story = {
+  args: {
+    rounded: "full",
+    icon: "IconStar",
+    badge: true,
+    color: "primary",
+    size: "md",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Badge mode: decorative only. Shows default cursor and does not emit `click`.",
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify badge icon button renders correctly", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveClass("rounded-full");
+      expect(button).toHaveClass("cursor-default");
+    });
+
+    await step("Verify badge has no click functionality", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      const button = buttons[1]; // Skip the main wrapper, get the actual button
+      // Badge should not have pointer cursor
+      expect(button).not.toHaveClass("hover:cursor-pointer");
+    });
+  },
+};
+
+export const BadgeVariants: Story = {
+  render: (args) => ({
+    components: { IconButton },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="p-6 bg-gray-50 dark:bg-gray-900">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">IconButton Badge Variants</h3>
+        <div class="flex gap-4 items-center flex-wrap">
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="primary" icon="IconStar" badge />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Primary Badge</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="success" icon="IconCheck" badge />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Success Badge</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="warning" icon="IconAlertTriangle" badge />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Warning Badge</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="danger" icon="IconX" badge />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Danger Badge</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="info" icon="IconInfo" badge />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Info Badge</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="secondary" icon="IconSettings" badge />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Secondary Badge</span>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-3">
+          Badge mode removes click functionality and shows default cursor
+        </p>
+      </div>
+    `,
+  }),
+  args: {
+    rounded: "full",
+    size: "md",
+    badge: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Multiple badge color examples.",
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify badge variants story renders correctly", async () => {
+      // Verify the story renders without errors
+      const title = canvas.getByText("IconButton Badge Variants");
+      expect(title).toBeInTheDocument();
+
+      // Verify we have some IconButton elements
+      const iconButtons = canvas.getAllByRole("generic");
+      expect(iconButtons.length).toBeGreaterThan(0);
+    });
   },
 };

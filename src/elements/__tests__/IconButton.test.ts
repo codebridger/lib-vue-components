@@ -93,6 +93,18 @@ describe("IconButton Component", () => {
       expect(wrapper.classes()).toContain("bg-gray-100");
       expect(wrapper.classes()).toContain("cursor-not-allowed");
     });
+
+    it("applies badge styling when badge is true", () => {
+      const wrapper = createWrapper({ badge: true, icon: "IconStar" });
+      expect(wrapper.classes()).toContain("cursor-default");
+      expect(wrapper.classes()).not.toContain("hover:cursor-pointer");
+    });
+
+    it("applies interactive styling when badge is false", () => {
+      const wrapper = createWrapper({ badge: false, icon: "IconStar" });
+      expect(wrapper.classes()).toContain("hover:cursor-pointer");
+      expect(wrapper.classes()).not.toContain("cursor-default");
+    });
   });
 
   describe("Icon Rendering", () => {
@@ -132,6 +144,12 @@ describe("IconButton Component", () => {
 
     it("does not emit click event when loading", async () => {
       const wrapper = createWrapper({ isLoading: true });
+      await wrapper.trigger("click");
+      expect(wrapper.emitted("click")).toBeFalsy();
+    });
+
+    it("does not emit click event when in badge mode", async () => {
+      const wrapper = createWrapper({ badge: true, icon: "IconStar" });
       await wrapper.trigger("click");
       expect(wrapper.emitted("click")).toBeFalsy();
     });

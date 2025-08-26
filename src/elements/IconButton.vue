@@ -15,7 +15,9 @@
       props.color !== 'default' ? 'border' : '',
       disabled || cardDisabled || isLoading
         ? 'bg-gray-100 cursor-not-allowed'
-        : 'hover:cursor-pointer',
+        : isClickable
+        ? 'hover:cursor-pointer'
+        : 'cursor-default',
       computedColor,
 
       computedRounded,
@@ -72,6 +74,10 @@ interface IconButtonProps {
    */
   loadingIcon?: "IconLoader" | "IconRefresh" | "IconRestore" | string;
   isLoading?: boolean;
+  /**
+   * Enable badge mode - removes click functionality and pointer cursor
+   */
+  badge?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -82,6 +88,7 @@ const props = withDefaults(defineProps<IconButtonProps>(), {
   rounded: "full",
   isLoading: false,
   loadingIcon: "IconLoader",
+  badge: false,
 });
 
 const emit = defineEmits<{
@@ -89,6 +96,10 @@ const emit = defineEmits<{
 }>();
 
 // Computed properties
+const isClickable = computed(() => {
+  return !props.badge && !props.disabled && !cardDisabled && !props.isLoading;
+});
+
 const computedColor = computed(() => {
   if (props.color) {
     const colors = {
@@ -141,7 +152,7 @@ const computedSize = computed(() => {
 });
 
 const onClick = () => {
-  if (!props.isLoading && !props.disabled && !cardDisabled) {
+  if (isClickable.value) {
     emit("click");
   }
 };
