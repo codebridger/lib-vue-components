@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/codebridger/lib-vue-components/compare/v1.24.0...v1.25.0) (2025-08-26)
+
+
+### Features
+
+* Enhance Storybook server management and health checks ([5079f22](https://github.com/codebridger/lib-vue-components/commit/5079f228c3154954e91eb6fba2d0d245b5dc172b))
+
 # [1.24.0](https://github.com/codebridger/lib-vue-components/compare/v1.23.0...v1.24.0) (2025-08-26)
 
 
