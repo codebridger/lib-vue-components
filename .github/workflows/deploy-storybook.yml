@@ -34,17 +34,62 @@ jobs:
         run: yarn storybook:build
 
       - name: Start Storybook
-        run: npx static-serve storybook-static -p 6006 &
+        run: |
+          echo "Starting Storybook server..."
+          npx static-serve storybook-static -p 6006 > storybook.log 2>&1 &
+          echo $! > storybook.pid
+          echo "Storybook server started with PID: $(cat storybook.pid)"
         env:
           CI: false
 
+      - name: Wait for Storybook to be ready
+        run: |
+          echo "Waiting for Storybook server to be ready..."
+          for i in {1..30}; do
+            if curl -s -f http://localhost:6006 > /dev/null 2>&1; then
+              echo "✅ Storybook server is ready and responding!"
+              break
+            fi
+            echo "Attempt $i: Storybook server not ready yet, waiting..."
+            sleep 2
+          done
+
+          # Final check
+          if ! curl -s -f http://localhost:6006 > /dev/null 2>&1; then
+            echo "❌ Error: Storybook server failed to start after 60 seconds"
+            echo "Storybook logs:"
+            cat storybook.log
+            exit 1
+          fi
+
+          echo "✅ Storybook server health check passed"
+
       - name: Generate LLM Docs
-        run: yarn generate-docs
+        run: |
+          echo "🚀 Starting LLM documentation generation..."
+          echo "Current working directory: $(pwd)"
+          echo "Storybook server status:"
+          curl -s -I http://localhost:6006 | head -5 || echo "Cannot check server status"
+
+          # Run the docs generation
+          yarn generate-docs
+
+          echo "✅ LLM documentation generation completed"
         env:
           CI: true
 
       - name: Stop Storybook
-        run: pkill -f "static-serve" || true
+        run: |
+          echo "Stopping Storybook server..."
+          if [ -f storybook.pid ]; then
+            PID=$(cat storybook.pid)
+            echo "Killing process with PID: $PID"
+            kill $PID 2>/dev/null || true
+            rm -f storybook.pid
+          fi
+          # Fallback cleanup
+          pkill -f "static-serve" 2>/dev/null || true
+          echo "✅ Storybook server stopped"
 
       - name: Copy LLM Docs to Storybook Static
         run: cp llm.md storybook-static/
