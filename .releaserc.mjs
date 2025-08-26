@@ -17,7 +17,7 @@ const getCurrentBranch = () => {
 const currentBranch = getCurrentBranch();
 const isMainBranch = currentBranch === "main";
 
-module.exports = {
+export default {
   branches: [
     "main",
     {
