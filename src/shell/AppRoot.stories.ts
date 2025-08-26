@@ -8,8 +8,6 @@ import {
 import AppRoot from "./AppRoot.vue";
 
 const appRootDescription = `
-# AppRoot Shell
-
 Top-level shell that wires global layout concerns: color scheme, direction (LTR/RTL), and layout style. Wrap your application to ensure consistent theming and structure.
 
 ## Features

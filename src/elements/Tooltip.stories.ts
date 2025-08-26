@@ -3,8 +3,6 @@ import Tooltip from "./Tooltip.vue";
 import Button from "./Button.vue";
 
 const tooltipDescription = `
-# Tooltip Component
-
 Wrap any element to show helpful text on hover or focus. Placement, delay, and color are configurable for consistent guidance.
 
 ## Features

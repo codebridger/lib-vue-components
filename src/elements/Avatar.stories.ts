@@ -3,8 +3,6 @@ import { expect, within } from "@storybook/test";
 import Avatar from "./Avatar.vue";
 
 const avatarDescription = `
-# Avatar Component
-
 Displays a user image or placeholder with configurable size and rounding. Optional presence indicator conveys online/offline state.
 
 ## Features

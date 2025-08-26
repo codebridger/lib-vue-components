@@ -4,8 +4,6 @@ import { horizontalMenuItems } from "./sidebar-data";
 import { Meta, StoryFn } from "@storybook/vue3";
 
 const horizontalMenuDescription = `
-# HorizontalMenu
-
 Responsive top navigation bar rendering a hierarchy of items with icons and labels. Integrates with the shell store to switch layout style.
 
 ## Features

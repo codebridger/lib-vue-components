@@ -3,8 +3,6 @@ import { expect, within, userEvent } from "@storybook/test";
 import FileInputButton from "./FileInputButton.vue";
 
 const fileInputButtonDescription = `
-# FileInputButton
-
 Accessible file picker that pairs a styled button with a native file input under the hood. Supports accept filters, capture hints, and multiple selection.
 
 ## Features

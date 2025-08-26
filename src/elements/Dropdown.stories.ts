@@ -8,8 +8,6 @@ import Icon from "@/icon/Icon.vue";
 import Button from "./Button.vue";
 
 const dropdownDescription = `
-# Dropdown Component
-
 Contextual menu/popover for secondary actions. Provides trigger slot and body slot, positioning via Popper, and rich interaction modes.
 
 ## Features
