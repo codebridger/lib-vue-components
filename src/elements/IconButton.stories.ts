@@ -3,6 +3,25 @@ import { expect, within, userEvent } from "@storybook/test";
 
 import IconButton from "./IconButton.vue";
 
+const iconButtonDescription = `
+# IconButton Component
+
+A compact, versatile button optimized for icons or avatars. Works as a clickable control by default and as a decorative badge when badge is true.
+
+## Features
+- Color themes and rounded radii for circular or rounded styles
+- Sizes: xs, sm, md, lg, xl
+- Loading state with customizable spinner icon
+- Disabled state; optional badge (non-interactive) mode
+- Supports either an icon name or an image via imgUrl
+
+## Accessibility
+- Focusable and keyboard operable when interactive
+- Loading/disabled states use non-pointer cursors to signal non-interactivity
+
+## Usage
+Use for toolbar actions, quick affordances, and avatars. Prefer tooltips or aria-labels to convey meaning for icon-only buttons.
+`;
 const meta = {
   title: "Elements/IconButton",
   component: IconButton,
@@ -11,8 +30,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          "IconButton is a versatile icon container that works as an interactive button by default and as a non-interactive badge when `badge` is true. Pointer cursor shows only when clickable; disabled and loading states are non-interactive with a not-allowed cursor.",
+        component: iconButtonDescription,
       },
     },
   },

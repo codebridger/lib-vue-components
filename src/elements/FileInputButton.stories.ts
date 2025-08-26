@@ -2,10 +2,33 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { expect, within, userEvent } from "@storybook/test";
 import FileInputButton from "./FileInputButton.vue";
 
+const fileInputButtonDescription = `
+# FileInputButton
+
+Accessible file picker that pairs a styled button with a native file input under the hood. Supports accept filters, capture hints, and multiple selection.
+
+## Features
+- Button color themes; customizable label
+- Accept and capture attributes; multiple selection
+- Disabled/required states; error messaging
+
+## Accessibility
+- Uses a real input type=file with proper labeling; ensure descriptive button text.
+
+## Usage
+Use when you need a simple, button-driven file chooser without drag-and-drop.
+`;
 const meta: Meta<typeof FileInputButton> = {
   title: "Elements/FileInputButton",
   component: FileInputButton,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: fileInputButtonDescription,
+      },
+    },
+  },
   argTypes: {
     buttonColor: {
       control: "select",

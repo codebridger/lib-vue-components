@@ -17,6 +17,21 @@ export default {
   parameters: {
     layout: "fullscreen",
     docs: {
+      description: {
+        component: `
+# SidebarMenu
+
+Vertical navigation menu suitable for dashboards and admin panels. Displays labeled items, groups, and nested sections.
+
+## Features
+- Sticky sidebar layout with collapsible sections
+- Integrates with store to control visibility
+- Dark mode and RTL support
+
+## Usage
+Provide an items tree with groups and links. Keep the hierarchy shallow for discoverability.
+`,
+      },
       story: {
         inline: false,
         height: "600px",

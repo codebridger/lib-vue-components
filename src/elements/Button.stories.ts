@@ -3,6 +3,27 @@ import { ref } from "vue";
 import { expect, userEvent, within } from "@storybook/test";
 import Button from "./Button.vue";
 
+const buttonDescription = `
+# Button Component
+
+A flexible, accessible button with rich visual variants and behaviors. Use it for primary and secondary actions, icon-only actions, links, and async/loading flows.
+
+## Features
+- Color themes: default, primary, info, success, warning, danger, secondary, dark, gradient
+- Sizes: xs, sm, md, lg; block layout and rounded radii
+- Outline, shadow, and border styles (solid, dashed, dotted)
+- Loading state with customizable spinner icon
+- Icon support before/after label; icon-only usage works too
+- Link mode via the to prop for navigation
+- Optional chip mode: adds a close icon and emits the chip-click event
+
+## Accessibility
+- Renders semantic button or link depending on props
+- Keyboard-focus styles; loading and disabled states are visually communicated
+
+## Usage
+Wrap actions, confirm flows, and toolbar icons. Prefer meaningful labels; use icons to reinforce meaning, not replace it.
+`;
 const meta = {
   title: "Elements/Button",
   component: Button,
@@ -10,8 +31,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          "Chip mode adds a close icon inside the button on the opposite side of the label (LTR: right, RTL: left). When chip is true, the default click is disabled and only the chip-click event is emitted when the close icon is pressed.",
+        component: buttonDescription,
       },
     },
     interactions: {

@@ -3,12 +3,33 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import Modal from "./Modal.vue";
 import Button from "../elements/Button.vue";
 
+const modalDescription = `
+# Modal Component
+
+A flexible dialog for confirmations, forms, and rich content. Provides slots for trigger, title, default content, and footer; supports sizes, vertical alignment, and animations.
+
+## Features
+- Sizes: sm, md, lg, xl, full; center/top/bottom positioning
+- Animations: fade, slide, rotate, zoom (and none)
+- Persistent and prevent-close modes; optional close button hiding
+- Custom content and footer slots; content class passthrough
+
+## Accessibility
+- Focus trapping and ESC/overlay behaviors configurable via props
+- Ensure meaningful titles and keyboard operability of controls.
+
+## Usage
+Use for tasks that require focused attention. Keep content concise; avoid nesting modals.
+`;
 const meta = {
   title: "Complex/Modal",
   component: Modal,
   tags: ["autodocs"],
   parameters: {
     docs: {
+      description: {
+        component: modalDescription,
+      },
       source: {
         type: "code",
       },

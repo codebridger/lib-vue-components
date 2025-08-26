@@ -10,6 +10,19 @@ import { sidebarData, horizontalMenuItems } from "./sidebar-data";
 // import DashboardShellDocs from "./DashboardShell.mdx";
 import Button from "../elements/Button.vue";
 
+const dashboardShellDescription = `
+# DashboardShell
+
+Composable page shell providing header, horizontal menu, sidebar, content, and footer slots. Supports vertical and horizontal navigation styles.
+
+## Features
+- Slot-based regions: header, horizontal-menu, sidebar-menu, content, footer
+- Toggleable menu visibility; vertical/horizontal navigation styles
+- Works with HorizontalMenu and SidebarMenu components
+
+## Usage
+Wrap application pages to provide consistent navigation and scaffolding. Fill slots with your own menus and content.
+`;
 const meta = {
   title: "Shell/DashboardShell",
   component: DashboardShell,
@@ -34,6 +47,9 @@ const meta = {
   parameters: {
     layout: "fullscreen",
     docs: {
+      description: {
+        component: dashboardShellDescription,
+      },
       story: {
         inline: false,
         height: "400px",

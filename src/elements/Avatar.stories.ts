@@ -2,10 +2,34 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { expect, within } from "@storybook/test";
 import Avatar from "./Avatar.vue";
 
+const avatarDescription = `
+# Avatar Component
+
+Displays a user image or placeholder with configurable size and rounding. Optional presence indicator conveys online/offline state.
+
+## Features
+- Sizes: xs, sm, md, lg
+- Rounding: none → full
+- Optional status dot (online, offline, away, busy)
+- Dark mode and RTL-aware spacing
+
+## Accessibility
+- Always provide a meaningful alt describing the person/content shown.
+
+## Usage
+Use in lists, headers, and cards. Combine with AvatarGroup to show multiple participants.
+`;
 const meta = {
   title: "Elements/Avatar",
   component: Avatar,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: avatarDescription,
+      },
+    },
+  },
   argTypes: {
     src: {
       control: "text",
