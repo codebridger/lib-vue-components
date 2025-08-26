@@ -9,6 +9,21 @@ const meta = {
   // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   argTypes: {
+    color: {
+      control: "select",
+      options: [
+        "default",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "secondary",
+        "dark",
+        "gradient",
+      ],
+      description: "Color theme for the icon button",
+    },
     rounded: {
       control: "select",
       options: ["full", "none", "xs", "sm", "md", "lg", "xl"],
@@ -35,6 +50,7 @@ const meta = {
     },
   },
   args: {
+    color: "default",
     size: "sm",
     isLoading: false,
     loadingIcon: "IconLoader",
@@ -175,5 +191,101 @@ export const Disabled: Story = {
       const button = buttons[1]; // Skip the main wrapper, get the actual button
       expect(button).toHaveAttribute("disabled", "true");
     });
+  },
+};
+
+export const ColorVariants: Story = {
+  render: (args) => ({
+    components: { IconButton },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="p-6 bg-gray-50 dark:bg-gray-900">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">IconButton Color Variants</h3>
+        <div class="flex gap-4 items-center flex-wrap">
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="default" icon="IconSettings" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Default</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="primary" icon="IconSun" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Primary</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="info" icon="IconInfoCircle" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Info</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="success" icon="IconCheck" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Success</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="warning" icon="IconAlertTriangle" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Warning</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="danger" icon="IconX" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Danger</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="secondary" icon="IconSettings" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Secondary</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="dark" icon="IconMoon" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Dark</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="gradient" icon="IconStar" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Gradient</span>
+          </div>
+        </div>
+      </div>
+    `,
+  }),
+  args: {
+    rounded: "full",
+    size: "md",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify all color variants are rendered", async () => {
+      const buttons = canvas.getAllByRole("generic");
+      // We expect 10 buttons (9 color variants + 1 wrapper)
+      expect(buttons).toHaveLength(10);
+    });
+  },
+};
+
+export const ToolbarExample: Story = {
+  render: (args) => ({
+    components: { IconButton },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="p-6 bg-white dark:bg-gray-800 border rounded-lg">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">Toolbar Example</h3>
+        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+          <div class="flex gap-2 items-center flex-wrap">
+            <IconButton v-bind="args" color="primary" icon="IconEdit" size="sm" />
+            <IconButton v-bind="args" color="success" icon="IconCheck" size="sm" />
+            <IconButton v-bind="args" color="danger" icon="IconTrash" size="sm" />
+            <IconButton v-bind="args" color="info" icon="IconInfo" size="sm" />
+            <IconButton v-bind="args" color="warning" icon="IconAlertTriangle" size="sm" />
+            <IconButton v-bind="args" color="secondary" icon="IconSettings" size="sm" />
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-3">
+          Different colored IconButtons in a practical toolbar context
+        </p>
+      </div>
+    `,
+  }),
+  args: {
+    rounded: "md",
+    size: "sm",
   },
 };
