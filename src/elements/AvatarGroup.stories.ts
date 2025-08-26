@@ -3,6 +3,22 @@ import { expect, within } from "@storybook/test";
 import AvatarGroup from "./AvatarGroup.vue";
 import Avatar from "./Avatar.vue";
 
+const avatarGroupDescription = `
+# AvatarGroup Component
+
+Groups multiple Avatar components with an overlapping layout to indicate participants or teams.
+
+## Features
+- Automatic spacing/overlap with RTL support
+- Optional hover animations
+- Works with any Avatar sizes and rounding
+
+## Accessibility
+- Ensure each avatar has an informative alt text; the group itself should be labeled when used as a control.
+
+## Usage
+Use to summarize membership, commenters, or assignees; link the group to a details view when appropriate.
+`;
 const meta: Meta<typeof AvatarGroup> = {
   title: "Elements/AvatarGroup",
   component: AvatarGroup,
@@ -12,8 +28,7 @@ const meta: Meta<typeof AvatarGroup> = {
     componentSubtitle: "A container component for grouping multiple avatars",
     docs: {
       description: {
-        component:
-          "The AvatarGroup component provides a container for displaying multiple avatars with an overlapping effect. It handles proper spacing and RTL support automatically.",
+        component: avatarGroupDescription,
       },
       source: {
         type: "code",

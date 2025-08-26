@@ -7,6 +7,23 @@ import IconButton from "./IconButton.vue";
 import Icon from "@/icon/Icon.vue";
 import Button from "./Button.vue";
 
+const dropdownDescription = `
+# Dropdown Component
+
+Contextual menu/popover for secondary actions. Provides trigger slot and body slot, positioning via Popper, and rich interaction modes.
+
+## Features
+- Placement options with offsets; optional arrow
+- Click and hover triggers; interactive content support
+- Locking, z-index control, delays, and click-away behavior
+- RTL and dark mode aware styles
+
+## Accessibility
+- Trigger is a standard control; body content should be keyboard navigable. Manage focus when opening/closing.
+
+## Usage
+Use for menus, quick filters, and small forms. Keep actions concise and avoid deep nesting.
+`;
 const meta = {
   title: "Elements/Dropdown",
   component: Dropdown,
@@ -15,6 +32,9 @@ const meta = {
   parameters: {
     layout: "centered",
     docs: {
+      description: {
+        component: dropdownDescription,
+      },
       story: {
         height: "400px",
       },

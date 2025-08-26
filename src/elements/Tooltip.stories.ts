@@ -2,6 +2,23 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import Tooltip from "./Tooltip.vue";
 import Button from "./Button.vue";
 
+const tooltipDescription = `
+# Tooltip Component
+
+Wrap any element to show helpful text on hover or focus. Placement, delay, and color are configurable for consistent guidance.
+
+## Features
+- Top/bottom/left/right placement
+- Delay before showing to avoid flicker
+- Color themes for contrast on light/dark backgrounds
+- Disable when not needed
+
+## Accessibility
+- Should appear on focus as well as hover; ensure the trigger is keyboard reachable and supply concise, informative text.
+
+## Usage
+Use for short hints, not long-form content. Prefer inline help or docs links for complex explanations.
+`;
 const meta = {
   title: "Elements/Tooltip",
   component: Tooltip,
@@ -54,8 +71,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          "A tooltip component that can wrap around any element and display text on hover with customizable delay.",
+        component: tooltipDescription,
       },
     },
   },

@@ -1,9 +1,10 @@
 <template>
   <component
-    :is="to ? 'a' : 'button'"
+    :is="to && !chip ? 'a' : 'button'"
     @click="onClick"
-    :href="!disabled && !cardDisabled ? to : undefined"
-    :type="to ? undefined : 'button'"
+    :href="!disabled && !cardDisabled && !chip ? to : undefined"
+    :type="to && !chip ? undefined : 'button'"
+    :style="chipGradientStyle"
     :class="[
       // base class
       'btn',
@@ -19,6 +20,12 @@
       props.textTransform, // text transform class
       computedBorderType, // border type class
       computedActiveColor, // active effect class
+      // Chip mode: disable pointer cursor and hover/active bg fills
+      props.chip ? 'pointer-events-none cursor-default select-none' : undefined,
+      // Loading: keep interactive but do not show pointer cursor
+      isLoading ? 'cursor-default' : undefined,
+      computedHoverNeutralizeClasses,
+      props.chip ? 'is-chip' : undefined,
     ]"
     :disabled="disabled || cardDisabled ? true : undefined"
   >
@@ -44,9 +51,23 @@
     </span>
 
     <!-- Label Slot or Text Label -->
-    <span :class="{ 'ltr:ml-2 rtl:mr-2': hasIcon && label }">
+    <span
+      :class="[{ 'ltr:ml-2 rtl:mr-2': hasIcon && label }]"
+      :style="chipGradientTextStyle"
+    >
       <slot>{{ label }}</slot>
     </span>
+
+    <!-- Chip Close Icon (appears on opposite side of the text) -->
+    <i
+      v-if="chip"
+      class="inline-flex align-middle cursor-pointer pointer-events-auto ltr:ml-2 rtl:mr-2 ltr:order-last rtl:order-first hover:opacity-80 active:opacity-70"
+      @click.stop="onChipClick"
+      aria-label="Remove"
+      role="button"
+    >
+      <Icon name="IconX" class="w-4 h-4" />
+    </i>
   </component>
 </template>
 
@@ -86,6 +107,8 @@ interface ButtonProps {
   iconName?: string;
   /** Additional classes for the icon */
   iconClass?: string;
+  /** Enable chip mode with close icon and dedicated click event */
+  chip?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -100,11 +123,13 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   borderType: "solid",
   isLoading: false,
   loadingIcon: "IconLoader",
+  chip: false,
 });
 
 // Define the emits with TypeScript typing
 const emit = defineEmits<{
   (e: "click"): void;
+  (e: "chip-click"): void;
 }>();
 
 // Check if button has an icon (either via slot or prop)
@@ -146,9 +171,12 @@ const computedColor = computed(() => {
 });
 
 const computedActiveColor = computed(() => {
-  if (props.color) {
-    return `active:${computedColor.value}`;
-  }
+  if (props.chip) return undefined;
+  if (!props.color) return undefined;
+  // For non-outline colored buttons, apply a subtle generic active effect
+  if (!props.outline) return "active:brightness-95";
+  // For outline and gradient outline, keep active the same as rest state
+  return undefined;
 });
 
 const computedSize = computed(() => {
@@ -182,6 +210,8 @@ const computedRounded = computed(() => {
     };
     return roundedTypes[props.rounded];
   }
+  // Default rounding: in chip mode default to full, otherwise no extra rounding
+  return props.chip ? "rounded-full" : undefined;
 });
 
 const computedBorderType = computed(() => {
@@ -198,41 +228,60 @@ const computedBorderType = computed(() => {
 });
 
 const onClick = () => {
+  // In chip mode, suppress default button click behavior entirely
+  if (props.chip) return;
   if (!props.to) {
     emit("click");
   }
 };
+
+const onChipClick = () => {
+  emit("chip-click");
+};
+
+// In chip + outline-gradient, Storybook CSS applies hover changes via utility classes.
+// Neutralize by inlining base background when chip is true, and restore label gradient text.
+const chipGradientStyle = computed(() => {
+  if (!props.chip) return undefined;
+  if (props.color === "gradient" && props.outline) {
+    return {
+      background:
+        "linear-gradient(to right, #fafafa, #fafafa), linear-gradient(to right, #ef1262, #4361ee)",
+      backgroundClip: "padding-box, border-box",
+      backgroundOrigin: "padding-box, border-box",
+    } as unknown as string;
+  }
+  return undefined;
+});
+
+const chipGradientTextStyle = computed(() => {
+  if (!props.chip) return undefined;
+  if (props.color === "gradient" && props.outline) {
+    return {
+      backgroundImage: "linear-gradient(to right, #ef1262, #4361ee)",
+      backgroundClip: "text",
+      WebkitBackgroundClip: "text",
+      color: "transparent",
+    } as unknown as string;
+  }
+  return undefined;
+});
+
+const computedHoverNeutralizeClasses = computed(() => {
+  if (!props.chip || !props.outline) return undefined;
+  // Neutralize background/active; keep text color same as base outline color
+  const base = "hover:!bg-transparent active:!bg-transparent";
+  if (props.color === "gradient") return base;
+  const colorToText: Record<string, string> = {
+    primary: "hover:!text-primary",
+    secondary: "hover:!text-secondary",
+    success: "hover:!text-success",
+    danger: "hover:!text-danger",
+    warning: "hover:!text-warning",
+    info: "hover:!text-info",
+    dark: "hover:!text-dark",
+  };
+  const textClass = props.color ? colorToText[props.color] : undefined;
+  return [base, textClass].filter(Boolean).join(" ");
+});
 </script>
-
-<style scoped lang="scss">
-@use "sass:color";
-
-.btn-primary:active,
-.btn-outline-primary:active {
-  background-color: color.adjust(#4361ee, $lightness: 20%) !important;
-}
-.btn-info:active,
-.btn-outline-info:active {
-  background-color: color.adjust(#2196f3, $lightness: 20%) !important;
-}
-.btn-success:active,
-.btn-outline-success:active {
-  background-color: color.adjust(#00ab55, $lightness: 20%) !important;
-}
-.btn-warning:active,
-.btn-outline-warning:active {
-  background-color: color.adjust(#e2a03f, $lightness: 20%) !important;
-}
-.btn-danger:active,
-.btn-outline-danger:active {
-  background-color: color.adjust(#e7515a, $lightness: 20%) !important;
-}
-.btn-secondary:active,
-.btn-outline-secondary:active {
-  background-color: color.adjust(#805dca, $lightness: 20%) !important;
-}
-.btn-dark:active,
-.btn-outline-dark:active {
-  background-color: color.adjust(#3b3f5c, $lightness: 20%) !important;
-}
-</style>

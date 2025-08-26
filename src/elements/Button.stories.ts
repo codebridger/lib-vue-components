@@ -3,11 +3,37 @@ import { ref } from "vue";
 import { expect, userEvent, within } from "@storybook/test";
 import Button from "./Button.vue";
 
+const buttonDescription = `
+# Button Component
+
+A flexible, accessible button with rich visual variants and behaviors. Use it for primary and secondary actions, icon-only actions, links, and async/loading flows.
+
+## Features
+- Color themes: default, primary, info, success, warning, danger, secondary, dark, gradient
+- Sizes: xs, sm, md, lg; block layout and rounded radii
+- Outline, shadow, and border styles (solid, dashed, dotted)
+- Loading state with customizable spinner icon
+- Icon support before/after label; icon-only usage works too
+- Link mode via the to prop for navigation
+- Optional chip mode: adds a close icon and emits the chip-click event
+
+## Accessibility
+- Renders semantic button or link depending on props
+- Keyboard-focus styles; loading and disabled states are visually communicated
+
+## Usage
+Wrap actions, confirm flows, and toolbar icons. Prefer meaningful labels; use icons to reinforce meaning, not replace it.
+`;
 const meta = {
   title: "Elements/Button",
   component: Button,
   tags: ["autodocs"],
   parameters: {
+    docs: {
+      description: {
+        component: buttonDescription,
+      },
+    },
     interactions: {
       disable: false,
     },
@@ -59,6 +85,7 @@ const meta = {
       control: "text",
       description: "Additional classes for the icon",
     },
+    chip: { control: "boolean", description: "Enable chip mode (close icon)" },
   },
   args: {
     block: false,
@@ -139,6 +166,8 @@ export const Loading: Story = {
       const loadingIcon = canvas.getByRole("button").querySelector("svg");
       expect(loadingIcon).toBeInTheDocument();
       expect(loadingIcon).toHaveClass("animate-[spin_2s_linear_infinite]");
+      // Cursor should not be pointer in loading state
+      expect(button).toHaveClass("cursor-default");
     });
 
     await step("Verify button is disabled during loading", async () => {
@@ -360,6 +389,67 @@ export const FormButton: Story = {
       expect(
         canvas.getByRole("button", { name: /submitting/i })
       ).toBeInTheDocument();
+    });
+  },
+};
+
+export const Chip: Story = {
+  args: {
+    chip: true,
+    label: "Chip Label",
+    color: "primary",
+  },
+  parameters: {
+    // Disable snapshots for this interactive story to avoid play-time diffs
+    snapshots: false,
+  },
+  render: (args) => ({
+    components: { Button },
+    setup() {
+      const chipClicks = ref(0);
+      const btnClicks = ref(0);
+      const onChipClick = () => {
+        chipClicks.value += 1;
+      };
+      const onBtnClick = () => {
+        btnClicks.value += 1;
+      };
+      return { args, chipClicks, btnClicks, onChipClick, onBtnClick };
+    },
+    template: `
+      <div>
+        <Button v-bind="args" @click="onBtnClick" @chip-click="onChipClick" />
+        <div class="mt-2 text-xs text-gray-500">
+          <span>Button clicks: </span><span id="btnClicks">{{ btnClicks }}</span>
+        </div>
+        <div class="text-xs text-gray-500">
+          <span>Chip clicks: </span><span id="chipClicks">{{ chipClicks }}</span>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Default click is suppressed when chip is true", async () => {
+      const button = canvas.getByRole("button", { name: /chip label/i });
+      // Root has pointer-events-none in chip mode; assert non-interactive class instead
+      expect(button).toHaveClass("pointer-events-none");
+      const btnClicks = canvasElement.querySelector(
+        "#btnClicks"
+      ) as HTMLElement;
+      expect(btnClicks.textContent).toBe("0");
+    });
+
+    await step("Close icon emits chip-click", async () => {
+      const button = canvas.getByRole("button", { name: /chip label/i });
+      const closeIcon = button.querySelector("svg") as SVGElement;
+      expect(closeIcon).toBeInTheDocument();
+      await userEvent.click(closeIcon);
+      const chipClicks = canvasElement.querySelector(
+        "#chipClicks"
+      ) as HTMLElement;
+      expect(chipClicks.textContent).toBe("1");
     });
   },
 };

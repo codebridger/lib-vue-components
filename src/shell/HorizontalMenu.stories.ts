@@ -1,9 +1,21 @@
 import { useAppStore } from "@/stores";
-import DashboardShell from "./DashboardShell.vue";
 import HorizontalMenu from "./HorizontalMenu.vue";
 import { horizontalMenuItems } from "./sidebar-data";
 import { Meta, StoryFn } from "@storybook/vue3";
 
+const horizontalMenuDescription = `
+# HorizontalMenu
+
+Responsive top navigation bar rendering a hierarchy of items with icons and labels. Integrates with the shell store to switch layout style.
+
+## Features
+- Renders menu items with nesting and icons
+- Suited for wide screens; pairs with DashboardShell
+- Works in LTR/RTL and dark mode contexts
+
+## Usage
+Supply a prepared items array. Keep labels concise; group related pages under dropdowns.
+`;
 export default {
   title: "Shell/HorizontalMenu",
   component: HorizontalMenu,
@@ -17,6 +29,9 @@ export default {
   parameters: {
     layout: "fullscreen",
     docs: {
+      description: {
+        component: horizontalMenuDescription,
+      },
       story: {
         inline: false,
         height: "600px",
@@ -29,7 +44,7 @@ export default {
       store.toggleMenuStyle("horizontal");
 
       return {
-        components: { story, DashboardShell },
+        components: { story },
         template: `<story />`,
       };
     },

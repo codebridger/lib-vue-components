@@ -10,17 +10,15 @@
       'select-none',
       'transition-all',
 
-      // light - Base classes
+      // Base classes
       'flex items-center justify-center',
+      props.color !== 'default' ? 'border' : '',
       disabled || cardDisabled || isLoading
         ? 'bg-gray-100 cursor-not-allowed'
-        : 'bg-white-light/40 hover:bg-white-light/90 hover:text-primary hover:cursor-pointer',
-
-      // dark - Base classes
-      disabled || cardDisabled || isLoading
-        ? 'bg-gray-100 cursor-not-allowed'
-        : 'dark:bg-dark/40 dark:hover:bg-dark/60 dark:hover:text-primary hover:cursor-pointer',
-      'dark:text-[#d0d2d6]',
+        : isClickable
+        ? 'hover:cursor-pointer'
+        : 'cursor-default',
+      computedColor,
 
       computedRounded,
     ]"
@@ -56,6 +54,16 @@ import Icon from "../icon/Icon.vue";
 
 // Define Icon button props interface
 interface IconButtonProps {
+  color?:
+    | "default"
+    | "primary"
+    | "info"
+    | "success"
+    | "warning"
+    | "danger"
+    | "secondary"
+    | "dark"
+    | "gradient";
   rounded?: "full" | "none" | "xs" | "sm" | "md" | "lg" | "xl";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   icon?: string;
@@ -66,15 +74,21 @@ interface IconButtonProps {
    */
   loadingIcon?: "IconLoader" | "IconRefresh" | "IconRestore" | string;
   isLoading?: boolean;
+  /**
+   * Enable badge mode - removes click functionality and pointer cursor
+   */
+  badge?: boolean;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 
 // Define Icon button props with defaults
 const props = withDefaults(defineProps<IconButtonProps>(), {
+  color: "default",
   rounded: "full",
   isLoading: false,
   loadingIcon: "IconLoader",
+  badge: false,
 });
 
 const emit = defineEmits<{
@@ -82,6 +96,35 @@ const emit = defineEmits<{
 }>();
 
 // Computed properties
+const isClickable = computed(() => {
+  return !props.badge && !props.disabled && !cardDisabled && !props.isLoading;
+});
+
+const computedColor = computed(() => {
+  if (props.color) {
+    const colors = {
+      default:
+        "bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6]",
+      primary:
+        "bg-primary text-white border-primary shadow-primary/60 hover:bg-primary/90 hover:shadow-primary/80",
+      info: "bg-info text-white border-info shadow-info/60 hover:bg-info/90 hover:shadow-info/80",
+      success:
+        "bg-success text-white border-success shadow-success/60 hover:bg-success/90 hover:shadow-success/80",
+      warning:
+        "bg-warning text-white border-warning shadow-warning/60 hover:bg-warning/90 hover:shadow-warning/80",
+      danger:
+        "bg-danger text-white border-danger shadow-danger/60 hover:bg-danger/90 hover:shadow-danger/80",
+      secondary:
+        "bg-secondary text-white border-secondary shadow-secondary/60 hover:bg-secondary/90 hover:shadow-secondary/80",
+      dark: "bg-dark text-white border-dark shadow-dark/60 hover:bg-dark/90 hover:shadow-dark/80",
+      gradient:
+        "bg-gradient text-white hover:from-[#4361EE] hover:to-[#EF1262]",
+    };
+    return colors[props.color];
+  }
+  return "bg-white-light/40 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 dark:text-[#d0d2d6]"; // fallback
+});
+
 const computedRounded = computed(() => {
   if (props.rounded) {
     const roundedTypes = {
@@ -109,7 +152,7 @@ const computedSize = computed(() => {
 });
 
 const onClick = () => {
-  if (!props.isLoading && !props.disabled && !cardDisabled) {
+  if (isClickable.value) {
     emit("click");
   }
 };

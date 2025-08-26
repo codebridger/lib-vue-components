@@ -6,9 +6,29 @@ import variantIcons from "./variant-icons";
 import staticIcons from "./static-icons";
 import menuIcons from "./menu-icons";
 
+const iconDescription = `
+# Icon Component
+
+Renders SVG icons from bundled packs (variant, static, and menu). Provides a simple API for choosing names and optional fill styles.
+
+## Features
+- Multiple icon packs unified under a single component
+- Optional fill rendering for outlined vs. filled appearance
+- Works seamlessly with dark mode and RTL
+
+## Usage
+Use semantic icon names. Pair with IconButton for interactive actions, or inline in inputs and menus.
+`;
 const meta = {
   // title: "Icons",
   component: Icon,
+  parameters: {
+    docs: {
+      description: {
+        component: iconDescription,
+      },
+    },
+  },
 } satisfies Meta<typeof Icon>;
 
 export default meta;

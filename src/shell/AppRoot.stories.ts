@@ -7,6 +7,18 @@ import {
 } from "../../.storybook/globalTypes";
 import AppRoot from "./AppRoot.vue";
 
+const appRootDescription = `
+# AppRoot Shell
+
+Top-level shell that wires global layout concerns: color scheme, direction (LTR/RTL), and layout style. Wrap your application to ensure consistent theming and structure.
+
+## Features
+- Controls color scheme (light/dark), layout style (full/boxed), and direction (LTR/RTL)
+- Provides consistent container and reset styles for child content
+
+## Usage
+Use as the root wrapper for app pages/stories. Combine with DashboardShell for full navigation scaffolding.
+`;
 export default {
   title: "Shell/AppRoot",
   component: AppRoot,
@@ -34,6 +46,9 @@ export default {
     layout: "fullscreen",
     skipMainDecorator: true,
     docs: {
+      description: {
+        component: appRootDescription,
+      },
       story: {
         /**
          * https://storybook.js.org/docs/api/doc-blocks/doc-block-story#inline

@@ -4,7 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "version": "1.23.0",
+  "version": "1.17.0-dev.33",
   "type": "module",
   "files": [
     "dist",
@@ -14,12 +14,36 @@
   "module": "./dist/vue.es.js",
   "exports": {
     "./style.css": "./dist/style.css",
-    "./shell.ts": "./src/shell/components.ts",
-    "./elements.ts": "./src/elements/components.ts",
-    "./complex.ts": "./src/complex/components.ts",
-    "./toast.ts": "./src/utils/toast.ts",
-    "./store.ts": "./src/stores/index.ts",
-    "./types.ts": "./src/types/types.ts",
+    "./shell": {
+      "types": "./src/shell/components.ts",
+      "import": "./dist/shell.es.js",
+      "require": "./dist/shell.cjs.js"
+    },
+    "./elements": {
+      "types": "./src/elements/components.ts",
+      "import": "./dist/elements.es.js",
+      "require": "./dist/elements.cjs.js"
+    },
+    "./complex": {
+      "types": "./src/complex/components.ts",
+      "import": "./dist/complex.es.js",
+      "require": "./dist/complex.cjs.js"
+    },
+    "./toast": {
+      "types": "./src/utils/toast.ts",
+      "import": "./dist/toast.es.js",
+      "require": "./dist/toast.cjs.js"
+    },
+    "./store": {
+      "types": "./src/stores/index.ts",
+      "import": "./dist/store.es.js",
+      "require": "./dist/store.cjs.js"
+    },
+    "./types": {
+      "types": "./src/types/types.ts",
+      "import": "./dist/types.es.js",
+      "require": "./dist/types.cjs.js"
+    },
     "./nuxt": {
       "types": "./src/nuxt.ts",
       "require": "./dist/nuxt.cjs.js",
