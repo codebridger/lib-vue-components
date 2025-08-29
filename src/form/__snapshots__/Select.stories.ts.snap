@@ -1,0 +1,775 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form/Select ComplexGrouped smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="space-y-4">
+    <div class="flex flex-col gap-1">
+      <label for
+             class="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
+        Select from Categories
+      </label>
+      <div class="relative">
+        <div class="relative w-full">
+          <button id
+                  class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-labelledby="-label"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <span class="text-gray-500 dark:text-gray-400">
+                  Search and select from categories
+                </span>
+              </div>
+              <svg width="16"
+                   height="16"
+                   viewbox="0 0 24 24"
+                   fill="none"
+                   xmlns="http://www.w3.org/2000/svg"
+                   class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+              >
+                <path d="M19 9L12 15L5 9"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                >
+                </path>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
+      <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Selected Item:
+      </p>
+      <pre class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        null
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Form/Select Default smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Choose a color
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select Disabled smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Disabled Select
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+                disabled
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                This select is disabled
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select Grouped smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Select Category
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Choose a category
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select Interactive smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="space-y-4">
+    <div class="flex flex-col gap-1">
+      <label for
+             class="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
+        Interactive Select
+      </label>
+      <div class="relative">
+        <div class="relative w-full">
+          <button id
+                  class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-labelledby="-label"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <span class="text-gray-500 dark:text-gray-400">
+                  Select an option to see the value
+                </span>
+              </div>
+              <svg width="16"
+                   height="16"
+                   viewbox="0 0 24 24"
+                   fill="none"
+                   xmlns="http://www.w3.org/2000/svg"
+                   class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+              >
+                <path d="M19 9L12 15L5 9"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                >
+                </path>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
+      <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Selected Value:
+      </p>
+      <pre class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        ""
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Form/Select Multiple smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Select Colors
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Choose multiple colors
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected values: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select MultipleInteractive smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="space-y-4">
+    <div class="flex flex-col gap-1">
+      <label for
+             class="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
+        Multiple Selection
+      </label>
+      <div class="relative">
+        <div class="relative w-full">
+          <button id
+                  class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-labelledby="-label"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <span class="text-gray-500 dark:text-gray-400">
+                  Select multiple colors
+                </span>
+              </div>
+              <svg width="16"
+                   height="16"
+                   viewbox="0 0 24 24"
+                   fill="none"
+                   xmlns="http://www.w3.org/2000/svg"
+                   class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+              >
+                <path d="M19 9L12 15L5 9"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                >
+                </path>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
+      <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Selected Values:
+      </p>
+      <pre class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        []
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Form/Select ObjectOptions smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Select User
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Choose a user
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select PreselectFirst smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Auto-select First
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="truncate">
+                First Option
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: First Option
+  </div>
+</div>
+`;
+
+exports[`Form/Select Required smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Favorite Color
+      <span class="text-red-500">
+        *
+      </span>
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Choose a color
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select Searchable smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Search Country
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Type to search countries
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select SearchableObjects smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="space-y-4">
+    <div class="flex flex-col gap-1">
+      <label for
+             class="text-sm font-medium text-gray-700 dark:text-gray-300"
+      >
+        Search Users
+      </label>
+      <div class="relative">
+        <div class="relative w-full">
+          <button id
+                  class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  aria-labelledby="-label"
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex-1 min-w-0">
+                <span class="text-gray-500 dark:text-gray-400">
+                  Search by name, role, or department
+                </span>
+              </div>
+              <svg width="16"
+                   height="16"
+                   viewbox="0 0 24 24"
+                   fill="none"
+                   xmlns="http://www.w3.org/2000/svg"
+                   class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+              >
+                <path d="M19 9L12 15L5 9"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                >
+                </path>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
+      <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+        Selected User:
+      </p>
+      <pre class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        null
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Form/Select WithError smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Required Field
+      <span class="text-red-500">
+        *
+      </span>
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 border-red-500 focus:ring-red-500/20 focus:border-red-500"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Please select an option
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+    <span class="text-sm text-red-500 mt-1">
+      This field is required
+    </span>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select WithIcon smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Search Category
+    </label>
+    <div class="relative">
+      <svg width="16"
+           height="16"
+           viewbox="0 0 24 24"
+           fill="none"
+           xmlns="http://www.w3.org/2000/svg"
+           class="absolute top-1/2 transform -translate-y-1/2 cursor-pointer z-10 left-3"
+      >
+        <circle cx="11.5"
+                cy="11.5"
+                r="9.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                opacity="0.5"
+        >
+        </circle>
+        <path d="M18.5 18.5L22 22"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+        >
+        </path>
+      </svg>
+      <div class="relative w-full pl-10">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Select category
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
+
+exports[`Form/Select WithLabel smoke-test 1`] = `
+<div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
+  <div class="flex flex-col gap-1">
+    <label for
+           class="text-sm font-medium text-gray-700 dark:text-gray-300"
+    >
+      Favorite Color
+    </label>
+    <div class="relative">
+      <div class="relative w-full">
+        <button id
+                class="w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-labelledby="-label"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex-1 min-w-0">
+              <span class="text-gray-500 dark:text-gray-400">
+                Choose a color
+              </span>
+            </div>
+            <svg width="16"
+                 height="16"
+                 viewbox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="flex-shrink-0 transition-transform duration-200 ltr:ml-2 rtl:mr-2"
+            >
+              <path d="M19 9L12 15L5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+              >
+              </path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 text-sm text-gray-600">
+    Selected value: None
+  </div>
+</div>
+`;
