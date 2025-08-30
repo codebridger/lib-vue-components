@@ -280,7 +280,7 @@ exports[`Form/Select Grouped play-test 1`] = `
             </svg>
           </div>
         </button>
-        <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg max-h-60 opacity-0 scale-95 transform opacity-100 scale-100 transition ease-in duration-150"
+        <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg max-h-60 transition ease-in duration-150 transform opacity-0 scale-95"
              role="listbox"
              aria-label="Select Category list"
         >
@@ -441,51 +441,6 @@ exports[`Form/Select Multiple play-test 1`] = `
             </svg>
           </div>
         </button>
-        <div class="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg max-h-60 transition ease-in duration-150 transform opacity-0 scale-95"
-             role="listbox"
-             aria-label="Select Colors list"
-        >
-          <div class="flex-1">
-            <div class="py-1">
-              <div class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-900 dark:text-gray-100"
-                   role="option"
-                   aria-selected="false"
-              >
-                Orange
-              </div>
-              <div class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-900 dark:text-gray-100"
-                   role="option"
-                   aria-selected="false"
-              >
-                White
-              </div>
-              <div class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-900 dark:text-gray-100"
-                   role="option"
-                   aria-selected="false"
-              >
-                Purple
-              </div>
-              <div class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-900 dark:text-gray-100"
-                   role="option"
-                   aria-selected="false"
-              >
-                Yellow
-              </div>
-              <div class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-900 dark:text-gray-100"
-                   role="option"
-                   aria-selected="false"
-              >
-                Red
-              </div>
-              <div class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 text-gray-900 dark:text-gray-100"
-                   role="option"
-                   aria-selected="false"
-              >
-                Green
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
