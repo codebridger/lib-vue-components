@@ -8,9 +8,8 @@ import DropdownItem from "./DropdownItem.vue";
 import Card from "./Card.vue";
 import Tabs from "./Tabs.vue";
 import Progress from "./Progress.vue";
-import SwitchBall from "./SwitchBall.vue";
 import Tooltip from "./Tooltip.vue";
-import CheckboxInput from "./CheckboxInput.vue";
+
 // icons
 import Icon from "../icon/Icon.vue";
 
@@ -25,9 +24,7 @@ export {
   Card,
   Tabs,
   Progress,
-  SwitchBall,
   Tooltip,
-  CheckboxInput,
   // Icons
   Icon,
 };

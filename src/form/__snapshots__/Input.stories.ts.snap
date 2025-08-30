@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/Input ClickableIcon play-test 1`] = `
+exports[`Form/Input ClickableIcon play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-2">
     <div class="flex flex-col gap-1">
@@ -44,7 +44,7 @@ exports[`Elements/Input ClickableIcon play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Default play-test 1`] = `
+exports[`Form/Input Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <div class="relative">
@@ -59,7 +59,7 @@ exports[`Elements/Input Default play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Disabled play-test 1`] = `
+exports[`Form/Input Disabled play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -101,7 +101,7 @@ exports[`Elements/Input Disabled play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input EmailInput play-test 1`] = `
+exports[`Form/Input EmailInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -145,7 +145,7 @@ exports[`Elements/Input EmailInput play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input IconPositioningComparison play-test 1`] = `
+exports[`Form/Input IconPositioningComparison play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -187,7 +187,7 @@ exports[`Elements/Input IconPositioningComparison play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input NumberInput play-test 1`] = `
+exports[`Form/Input NumberInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -207,7 +207,7 @@ exports[`Elements/Input NumberInput play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input PasswordInput play-test 1`] = `
+exports[`Form/Input PasswordInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -251,7 +251,7 @@ exports[`Elements/Input PasswordInput play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input RTLIconComparison play-test 1`] = `
+exports[`Form/Input RTLIconComparison play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-6">
     <div class="space-y-2">
@@ -364,7 +364,7 @@ exports[`Elements/Input RTLIconComparison play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Range play-test 1`] = `
+exports[`Form/Input Range play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="volume-input"
@@ -386,7 +386,7 @@ exports[`Elements/Input Range play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input Required play-test 1`] = `
+exports[`Form/Input Required play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -410,7 +410,7 @@ exports[`Elements/Input Required play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input TelInput play-test 1`] = `
+exports[`Form/Input TelInput play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -430,7 +430,7 @@ exports[`Elements/Input TelInput play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithEnterKeyEvent play-test 1`] = `
+exports[`Form/Input WithEnterKeyEvent play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <div class="flex flex-col gap-1">
@@ -487,7 +487,7 @@ exports[`Elements/Input WithEnterKeyEvent play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithError play-test 1`] = `
+exports[`Form/Input WithError play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -534,7 +534,7 @@ exports[`Elements/Input WithError play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithIcon play-test 1`] = `
+exports[`Form/Input WithIcon play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -576,7 +576,7 @@ exports[`Elements/Input WithIcon play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithIconOppositePosition play-test 1`] = `
+exports[`Form/Input WithIconOppositePosition play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for
@@ -617,7 +617,7 @@ exports[`Elements/Input WithIconOppositePosition play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/Input WithLabel play-test 1`] = `
+exports[`Form/Input WithLabel play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="username-input"

@@ -596,8 +596,9 @@ export const Grouped: Story = {
     });
 
     await step("Verify selection reflected", async () => {
-      const result = await canvas.findByText(/banana/i);
+      const result = await canvas.findByText(/Selected value:/);
       expect(result).toBeInTheDocument();
+      expect(result.textContent).toContain("banana");
     });
   },
 };

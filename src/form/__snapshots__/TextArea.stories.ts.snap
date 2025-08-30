@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/TextArea ClickableIcon smoke-test 1`] = `
+exports[`Form/TextArea ClickableIcon smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <div>
@@ -48,7 +48,7 @@ exports[`Elements/TextArea ClickableIcon smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea CustomRows smoke-test 1`] = `
+exports[`Form/TextArea CustomRows smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="relative">
@@ -84,7 +84,7 @@ exports[`Elements/TextArea CustomRows smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea Default smoke-test 1`] = `
+exports[`Form/TextArea Default smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="relative">
@@ -100,7 +100,7 @@ exports[`Elements/TextArea Default smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea Disabled smoke-test 1`] = `
+exports[`Form/TextArea Disabled smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="relative">
@@ -138,7 +138,7 @@ exports[`Elements/TextArea Disabled smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea EnterKeyExample smoke-test 1`] = `
+exports[`Form/TextArea EnterKeyExample smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="p-4">
     <h3 class="text-lg font-semibold mb-2">
@@ -199,7 +199,7 @@ exports[`Elements/TextArea EnterKeyExample smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea Filled smoke-test 1`] = `
+exports[`Form/TextArea Filled smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="relative">
@@ -215,7 +215,7 @@ exports[`Elements/TextArea Filled smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea IconPositioningComparison smoke-test 1`] = `
+exports[`Form/TextArea IconPositioningComparison smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <label for
@@ -256,7 +256,7 @@ exports[`Elements/TextArea IconPositioningComparison smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea RTLIconComparison smoke-test 1`] = `
+exports[`Form/TextArea RTLIconComparison smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-6">
     <div class="space-y-2">
@@ -367,7 +367,7 @@ exports[`Elements/TextArea RTLIconComparison smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea Required smoke-test 1`] = `
+exports[`Form/TextArea Required smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="relative">
@@ -404,7 +404,7 @@ exports[`Elements/TextArea Required smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea WithError smoke-test 1`] = `
+exports[`Form/TextArea WithError smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <div class="relative">
@@ -448,7 +448,7 @@ exports[`Elements/TextArea WithError smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea WithIcon smoke-test 1`] = `
+exports[`Form/TextArea WithIcon smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <label for
@@ -489,7 +489,7 @@ exports[`Elements/TextArea WithIcon smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea WithIconDefault smoke-test 1`] = `
+exports[`Form/TextArea WithIconDefault smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <label for
@@ -531,7 +531,7 @@ exports[`Elements/TextArea WithIconDefault smoke-test 1`] = `
 </div>
 `;
 
-exports[`Elements/TextArea WithLabel smoke-test 1`] = `
+exports[`Form/TextArea WithLabel smoke-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <label for

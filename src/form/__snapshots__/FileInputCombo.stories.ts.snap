@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/FileInputCombo AutoUpload play-test 1`] = `
+exports[`Form/FileInputCombo AutoUpload play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -71,7 +71,7 @@ exports[`Elements/FileInputCombo AutoUpload play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo CustomIcons play-test 1`] = `
+exports[`Form/FileInputCombo CustomIcons play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -171,7 +171,7 @@ exports[`Elements/FileInputCombo CustomIcons play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo Default play-test 1`] = `
+exports[`Form/FileInputCombo Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -291,7 +291,7 @@ exports[`Elements/FileInputCombo Default play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo Disabled play-test 1`] = `
+exports[`Form/FileInputCombo Disabled play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -416,7 +416,7 @@ exports[`Elements/FileInputCombo Disabled play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo DocumentUploader play-test 1`] = `
+exports[`Form/FileInputCombo DocumentUploader play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -519,7 +519,7 @@ exports[`Elements/FileInputCombo DocumentUploader play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo ImageUploader play-test 1`] = `
+exports[`Form/FileInputCombo ImageUploader play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -622,7 +622,7 @@ exports[`Elements/FileInputCombo ImageUploader play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo NoPreview play-test 1`] = `
+exports[`Form/FileInputCombo NoPreview play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -742,7 +742,7 @@ exports[`Elements/FileInputCombo NoPreview play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo WithFileSizeLimit play-test 1`] = `
+exports[`Form/FileInputCombo WithFileSizeLimit play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -865,7 +865,7 @@ exports[`Elements/FileInputCombo WithFileSizeLimit play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo WithLabel play-test 1`] = `
+exports[`Form/FileInputCombo WithLabel play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -991,7 +991,7 @@ exports[`Elements/FileInputCombo WithLabel play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo WithMaxFiles play-test 1`] = `
+exports[`Form/FileInputCombo WithMaxFiles play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -1114,7 +1114,7 @@ exports[`Elements/FileInputCombo WithMaxFiles play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo WithToastNotifications play-test 1`] = `
+exports[`Form/FileInputCombo WithToastNotifications play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -1216,7 +1216,7 @@ exports[`Elements/FileInputCombo WithToastNotifications play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo WithUploadError play-test 1`] = `
+exports[`Form/FileInputCombo WithUploadError play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>
@@ -1318,7 +1318,7 @@ exports[`Elements/FileInputCombo WithUploadError play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/FileInputCombo WithtoastErrors play-test 1`] = `
+exports[`Form/FileInputCombo WithtoastErrors play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div>
     <section>

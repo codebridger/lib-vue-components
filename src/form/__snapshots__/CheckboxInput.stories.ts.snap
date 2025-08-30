@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Elements/CheckboxInput Default play-test 1`] = `
+exports[`Form/CheckboxInput Default play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -25,7 +25,7 @@ exports[`Elements/CheckboxInput Default play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput Disabled play-test 1`] = `
+exports[`Form/CheckboxInput Disabled play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -50,7 +50,7 @@ exports[`Elements/CheckboxInput Disabled play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput MultipleCheckboxes play-test 1`] = `
+exports[`Form/CheckboxInput MultipleCheckboxes play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="space-y-4">
     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -144,7 +144,7 @@ exports[`Elements/CheckboxInput MultipleCheckboxes play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput OutlineRoundedVariant play-test 1`] = `
+exports[`Form/CheckboxInput OutlineRoundedVariant play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -168,7 +168,7 @@ exports[`Elements/CheckboxInput OutlineRoundedVariant play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput Required play-test 1`] = `
+exports[`Form/CheckboxInput Required play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -196,7 +196,7 @@ exports[`Elements/CheckboxInput Required play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput SuccessColor play-test 1`] = `
+exports[`Form/CheckboxInput SuccessColor play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -221,7 +221,7 @@ exports[`Elements/CheckboxInput SuccessColor play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput WithError play-test 1`] = `
+exports[`Form/CheckboxInput WithError play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="checkbox-input"
@@ -248,7 +248,7 @@ exports[`Elements/CheckboxInput WithError play-test 1`] = `
 </div>
 `;
 
-exports[`Elements/CheckboxInput WithLabel play-test 1`] = `
+exports[`Form/CheckboxInput WithLabel play-test 1`] = `
 <div class="main-section antialiased relative font-nunito text-sm font-normal vertical full ltr">
   <div class="flex flex-col gap-1">
     <label for="terms-checkbox"
