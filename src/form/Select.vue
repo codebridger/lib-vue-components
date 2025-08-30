@@ -86,7 +86,7 @@
             :class="[
               'absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg',
               custom ? 'max-h-96' : 'max-h-60',
-              'overflow-auto',
+              confirm ? 'flex flex-col' : '',
             ]"
             role="listbox"
             :aria-label="`${label || 'Options'} list`"
@@ -105,21 +105,37 @@
                 />
               </div>
 
-              <!-- Options with Each Slot -->
-              <div v-if="filteredOptions.length > 0" class="py-1">
-                <template v-if="grouped">
-                  <div
-                    v-for="group in filteredOptions"
-                    :key="group[groupLabel]"
-                    class="group"
-                  >
+              <!-- Scrollable Options Container for Custom Mode -->
+              <div :class="['flex-1', confirm ? 'overflow-auto max-h-48' : '']">
+                <!-- Options with Each Slot -->
+                <div v-if="filteredOptions.length > 0" class="py-1">
+                  <template v-if="grouped">
                     <div
-                      class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                      v-for="group in filteredOptions"
+                      :key="group[groupLabel]"
+                      class="group"
                     >
-                      {{ group[groupLabel] }}
+                      <div
+                        class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                      >
+                        {{ group[groupLabel] }}
+                      </div>
+                      <div
+                        v-for="option in group[groupValues]"
+                        :key="getOptionValue(option)"
+                      >
+                        <slot
+                          name="each"
+                          :option="option"
+                          :is-selected="isOptionSelected(option)"
+                          :set-selected="() => selectOption(option)"
+                        />
+                      </div>
                     </div>
+                  </template>
+                  <template v-else>
                     <div
-                      v-for="option in group[groupValues]"
+                      v-for="option in filteredOptions"
                       :key="getOptionValue(option)"
                     >
                       <slot
@@ -129,21 +145,8 @@
                         :set-selected="() => selectOption(option)"
                       />
                     </div>
-                  </div>
-                </template>
-                <template v-else>
-                  <div
-                    v-for="option in filteredOptions"
-                    :key="getOptionValue(option)"
-                  >
-                    <slot
-                      name="each"
-                      :option="option"
-                      :is-selected="isOptionSelected(option)"
-                      :set-selected="() => selectOption(option)"
-                    />
-                  </div>
-                </template>
+                  </template>
+                </div>
               </div>
 
               <!-- Footer Slot -->
@@ -172,21 +175,44 @@
                 />
               </div>
 
-              <!-- Options list -->
-              <div v-if="filteredOptions.length > 0" class="py-1">
-                <template v-if="grouped">
-                  <div
-                    v-for="group in filteredOptions"
-                    :key="group[groupLabel]"
-                    class="group"
-                  >
+              <!-- Scrollable Options Container -->
+              <div :class="['flex-1', confirm ? 'overflow-auto max-h-48' : '']">
+                <!-- Options list -->
+                <div v-if="filteredOptions.length > 0" class="py-1">
+                  <template v-if="grouped">
                     <div
-                      class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                      v-for="group in filteredOptions"
+                      :key="group[groupLabel]"
+                      class="group"
                     >
-                      {{ group[groupLabel] }}
+                      <div
+                        class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                      >
+                        {{ group[groupLabel] }}
+                      </div>
+                      <div
+                        v-for="option in group[groupValues]"
+                        :key="getOptionValue(option)"
+                        :class="[
+                        'px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150',
+                        isOptionSelected(option) ? 'bg-primary text-white hover:bg-primary/90' : 'text-gray-900 dark:text-gray-100',
+                        (option as SelectOption).$isDisabled ? 'opacity-50 cursor-not-allowed hover:bg-transparent' : ''
+                      ]"
+                        role="option"
+                        :aria-selected="isOptionSelected(option)"
+                        :aria-disabled="(option as SelectOption).$isDisabled"
+                        @click="
+                          !(option as SelectOption).$isDisabled &&
+                            selectOption(option)
+                        "
+                      >
+                        {{ getOptionLabel(option) }}
+                      </div>
                     </div>
+                  </template>
+                  <template v-else>
                     <div
-                      v-for="option in group[groupValues]"
+                      v-for="option in filteredOptions"
                       :key="getOptionValue(option)"
                       :class="[
                       'px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150',
@@ -203,38 +229,46 @@
                     >
                       {{ getOptionLabel(option) }}
                     </div>
-                  </div>
-                </template>
-                <template v-else>
-                  <div
-                    v-for="option in filteredOptions"
-                    :key="getOptionValue(option)"
-                    :class="[
-                    'px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150',
-                    isOptionSelected(option) ? 'bg-primary text-white hover:bg-primary/90' : 'text-gray-900 dark:text-gray-100',
-                    (option as SelectOption).$isDisabled ? 'opacity-50 cursor-not-allowed hover:bg-transparent' : ''
-                  ]"
-                    role="option"
-                    :aria-selected="isOptionSelected(option)"
-                    :aria-disabled="(option as SelectOption).$isDisabled"
-                    @click="
-                      !(option as SelectOption).$isDisabled &&
-                        selectOption(option)
-                    "
-                  >
-                    {{ getOptionLabel(option) }}
-                  </div>
-                </template>
-              </div>
+                  </template>
+                </div>
 
-              <!-- No options message -->
-              <div
-                v-else
-                class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400 text-center"
-              >
-                {{ noOptionsMessage }}
+                <!-- No options message -->
+                <div
+                  v-else
+                  class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400 text-center"
+                >
+                  {{ noOptionsMessage }}
+                </div>
               </div>
             </template>
+
+            <!-- Built-in Confirmation Footer -->
+            <div
+              v-if="confirm && !custom"
+              class="border-t border-gray-200 dark:border-gray-600"
+            >
+              <div class="p-3 bg-gray-50 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">
+                    Confirm your selection
+                  </span>
+                  <div class="flex gap-2">
+                    <button
+                      @click="closeWithAcceptance(false)"
+                      class="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-150"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      @click="closeWithAcceptance(true)"
+                      class="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 border border-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-150"
+                    >
+                      Accept
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Transition>
       </div>
@@ -287,6 +321,7 @@ interface SelectProps {
   preselectFirst?: boolean;
   allowEmpty?: boolean;
   custom?: boolean;
+  confirm?: boolean;
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {
@@ -314,6 +349,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   preselectFirst: false,
   allowEmpty: true,
   custom: false,
+  confirm: false,
 });
 
 const emit = defineEmits<{
@@ -332,6 +368,7 @@ const store = useAppStore();
 const isOpen = ref(false);
 const searchQuery = ref("");
 const searchInput = ref<HTMLInputElement>();
+const originalValue = ref<any>(undefined);
 
 // Computed properties
 const actualIconPosition = computed(() =>
@@ -431,14 +468,17 @@ const selectOption = (option: any) => {
     emit("update:modelValue", currentValue);
     emit("change", currentValue);
 
-    // In custom mode, don't close dropdown for multiple selection
-    if (!props.custom) {
+    // Don't close dropdown for multiple selection in custom or confirm mode
+    if (!props.custom && !props.confirm) {
       closeDropdown();
     }
   } else {
     emit("update:modelValue", option);
     emit("change", option);
-    closeDropdown();
+    // Don't close dropdown in confirm mode
+    if (!props.confirm) {
+      closeDropdown();
+    }
   }
 };
 
@@ -454,6 +494,14 @@ const toggleDropdown = () => {
 
 const openDropdown = () => {
   isOpen.value = true;
+  // Store original value for confirmation mode
+  if (props.confirm) {
+    originalValue.value = props.multiple
+      ? Array.isArray(props.modelValue)
+        ? [...props.modelValue]
+        : []
+      : props.modelValue;
+  }
   emit("open");
 
   if (props.searchable) {
@@ -525,6 +573,16 @@ const closeWithAcceptance = (accepted: boolean) => {
   if (accepted) {
     // Accept the current selection
     emit("change", selectedOption.value);
+  } else {
+    // Cancel - revert to original value
+    if (props.confirm && originalValue.value !== undefined) {
+      emit("update:modelValue", originalValue.value);
+      emit("change", originalValue.value);
+    } else {
+      // Fallback to current props.modelValue for backward compatibility
+      emit("update:modelValue", props.modelValue);
+      emit("change", props.modelValue);
+    }
   }
   // Close the dropdown regardless of acceptance
   closeDropdown();

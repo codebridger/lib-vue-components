@@ -12,6 +12,7 @@ A flexible and customizable select component that supports both default and cust
 
 - **Default Mode**: Traditional dropdown with built-in search, styling, and interactions
 - **Custom Mode**: Complete customization through three specialized slots (header, each, footer)
+- **Confirmation Mode**: Built-in confirmation footer with Accept/Cancel buttons for improved UX
 - **Multiple Selection**: Support for selecting multiple options with toggle behavior
 - **Search Functionality**: Built-in search with filtering capabilities
 - **Grouped Options**: Support for categorized option groups
@@ -19,6 +20,16 @@ A flexible and customizable select component that supports both default and cust
 - **Theme Integration**: Light/dark mode support with Tailwind CSS
 - **RTL Support**: Right-to-left layout support
 - **Icon Integration**: Optional icon placement and interaction
+
+## Confirmation Mode
+
+When \`confirm={true}\`, the component automatically shows a built-in footer with Accept and Cancel buttons. This mode works in both single and multiple selection modes and provides improved UX by allowing users to make temporary selections before committing.
+
+**Key Benefits:**
+- **Value Preservation**: Original selection is preserved until confirmed
+- **Better UX**: Users can review their choices before committing
+- **Built-in Footer**: No need to implement custom footer logic
+- **Universal Support**: Works with single, multiple, and grouped options
 
 ## Custom Mode Slots
 
@@ -162,6 +173,11 @@ const meta = {
       control: "boolean",
       description: "Whether to enable custom mode with slot-based rendering",
     },
+    confirm: {
+      control: "boolean",
+      description:
+        "Whether to show a confirmation footer with Accept/Cancel buttons",
+    },
     "onUpdate:modelValue": {
       action: "update:modelValue",
       description: "Event emitted when value changes",
@@ -216,6 +232,7 @@ const meta = {
     preselectFirst: false,
     allowEmpty: true,
     custom: false,
+    confirm: false,
   },
   parameters: {
     layout: "padded",
@@ -818,6 +835,111 @@ export const ComplexGrouped: Story = {
         </div>
       `,
     };
+  },
+};
+
+// Confirmation Mode
+export const ConfirmationMode: Story = {
+  render: () => {
+    const selectedValue = ref("Option 1");
+    const options = [
+      "Option 1",
+      "Option 2",
+      "Option 3",
+      "Option 4",
+      "Option 5",
+    ];
+
+    return {
+      components: { Select },
+      setup() {
+        return { selectedValue, options };
+      },
+      template: `
+        <div class="space-y-4">
+          <Select
+            v-model="selectedValue"
+            :options="options"
+            confirm
+            placeholder="Select an option (confirmation required)"
+            label="Confirmation Mode Select (Single)"
+          />
+          <div class="text-sm text-gray-600">
+            Selected: {{ selectedValue || 'None' }}
+          </div>
+        </div>
+      `,
+    };
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+This story demonstrates the **Confirmation Mode** functionality of the Select component. When \`confirm={true}\`, the component shows a built-in footer with Accept and Cancel buttons.
+
+**Key Features:**
+- **Built-in Footer**: Automatically shows Accept/Cancel buttons
+- **Value Preservation**: Original value is preserved until confirmed
+- **Single Mode**: Works seamlessly with single selection
+- **Improved UX**: Users can make temporary selections and confirm or cancel them
+
+The confirmation footer appears below the options and provides clear actions for the user to either accept their selection or cancel and revert to the original value.
+        `,
+      },
+    },
+  },
+};
+
+// Multiple Confirmation Mode
+export const MultipleConfirmationMode: Story = {
+  render: () => {
+    const selectedValues = ref(["Option 1"]);
+    const options = [
+      "Option 1",
+      "Option 2",
+      "Option 3",
+      "Option 4",
+      "Option 5",
+    ];
+
+    return {
+      components: { Select },
+      setup() {
+        return { selectedValues, options };
+      },
+      template: `
+        <div class="space-y-4">
+          <Select
+            v-model="selectedValues"
+            :options="options"
+            confirm
+            multiple
+            placeholder="Select multiple options (confirmation required)"
+            label="Confirmation Mode Select (Multiple)"
+          />
+          <div class="text-sm text-gray-600">
+            Selected: {{ selectedValues.length > 0 ? selectedValues.join(', ') : 'None' }}
+          </div>
+        </div>
+      `,
+    };
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+This story demonstrates the **Multiple Confirmation Mode** functionality. When \`confirm={true}\` and \`multiple={true}\`, users can select multiple options and then confirm or cancel their selection.
+
+**Key Features:**
+- **Multiple Selection**: Users can select/deselect multiple options
+- **Built-in Footer**: Accept/Cancel buttons for final confirmation
+- **Value Preservation**: Original selection is preserved until confirmed
+- **Enhanced UX**: Perfect for scenarios where users need to review their choices
+
+This mode is particularly useful for forms where users need to make multiple selections and want to review them before committing.
+        `,
+      },
+    },
   },
 };
 
