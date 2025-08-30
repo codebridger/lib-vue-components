@@ -3,7 +3,7 @@ import TextArea from "./TextArea.vue";
 import { ref } from "vue";
 
 const meta = {
-  title: "Elements/TextArea",
+  title: "Form/TextArea",
   component: TextArea,
   tags: ["autodocs"],
   argTypes: {

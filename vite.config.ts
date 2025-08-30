@@ -20,6 +20,7 @@ export default defineConfig({
         shell: resolve(__dirname, "src/shell/components.ts"),
         elements: resolve(__dirname, "src/elements/components.ts"),
         complex: resolve(__dirname, "src/complex/components.ts"),
+        form: resolve(__dirname, "src/form/components.ts"),
         toast: resolve(__dirname, "src/utils/toast.ts"),
         store: resolve(__dirname, "src/stores/index.ts"),
         types: resolve(__dirname, "src/types/types.ts"),

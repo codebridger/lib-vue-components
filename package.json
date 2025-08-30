@@ -29,6 +29,11 @@
       "import": "./dist/complex.es.js",
       "require": "./dist/complex.cjs.js"
     },
+    "./form": {
+      "types": "./src/form/components.ts",
+      "import": "./dist/form.es.js",
+      "require": "./dist/form.cjs.js"
+    },
     "./toast": {
       "types": "./src/utils/toast.ts",
       "import": "./dist/toast.es.js",
