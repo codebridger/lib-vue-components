@@ -1,6 +1,64 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
+import { expect, within, userEvent } from "@storybook/test";
 import { ref } from "vue";
 import Select from "./Select.vue";
+
+const componentDocs = `
+# Select Component
+
+A flexible and customizable select component that supports both default and custom modes. The Select component provides a comprehensive dropdown interface with support for single/multiple selection, search functionality, grouped options, and custom rendering through slots.
+
+## Features
+
+- **Default Mode**: Traditional dropdown with built-in search, styling, and interactions
+- **Custom Mode**: Complete customization through three specialized slots (header, each, footer)
+- **Multiple Selection**: Support for selecting multiple options with toggle behavior
+- **Search Functionality**: Built-in search with filtering capabilities
+- **Grouped Options**: Support for categorized option groups
+- **Accessibility**: Full ARIA support and keyboard navigation
+- **Theme Integration**: Light/dark mode support with Tailwind CSS
+- **RTL Support**: Right-to-left layout support
+- **Icon Integration**: Optional icon placement and interaction
+
+## Custom Mode Slots
+
+When \`custom={true}\`, the component provides three specialized slots:
+
+### Header Slot
+- **Purpose**: Custom search widgets, filters, or additional controls
+- **Scoped Variables**: 
+  - \`allOptions\`: Array of all available options
+  - \`setNewList\`: Function to update the options list
+
+### Each Slot
+- **Purpose**: Custom rendering for each individual option
+- **Scoped Variables**:
+  - \`option\`: The current option data
+  - \`isSelected\`: Boolean indicating if option is selected
+  - \`setSelected\`: Function to select/deselect the option
+
+### Footer Slot
+- **Purpose**: Custom actions, accept/reject buttons, or additional controls
+- **Scoped Variables**:
+  - \`close\`: Function to close dropdown with acceptance parameter
+
+## Accessibility
+
+- Full keyboard navigation support (Enter, Space, Arrow keys, Escape)
+- Proper ARIA attributes (aria-expanded, aria-haspopup, aria-selected)
+- Screen reader friendly with proper role attributes
+- Focus management for search inputs and options
+
+## Usage Guidelines
+
+- Use **Default Mode** for standard dropdown requirements
+- Use **Custom Mode** when you need complete control over the dropdown appearance and behavior
+- Always provide meaningful labels and placeholders for accessibility
+- Consider using the \`required\` prop for form validation
+- Use \`error\` and \`errorMessage\` props for validation feedback
+
+Note: This section intentionally omits code; Storybook shows usage code automatically.
+`;
 
 const meta = {
   title: "Form/Select",
@@ -84,7 +142,8 @@ const meta = {
       description: "Message to show when no options are available",
     },
     iconName: {
-      control: "text",
+      control: "select",
+      options: ["", "IconSearch", "IconMail", "IconUser", "IconX"],
       description: "Name of the icon to display",
     },
     iconOppositePosition: {
@@ -98,6 +157,10 @@ const meta = {
     allowEmpty: {
       control: "boolean",
       description: "Whether to allow no selection",
+    },
+    custom: {
+      control: "boolean",
+      description: "Whether to enable custom mode with slot-based rendering",
     },
     "onUpdate:modelValue": {
       action: "update:modelValue",
@@ -152,75 +215,16 @@ const meta = {
     iconOppositePosition: false,
     preselectFirst: false,
     allowEmpty: true,
+    custom: false,
   },
   parameters: {
     layout: "padded",
     docs: {
       description: {
-        component: `
-# Select Component
-
-A flexible and accessible select dropdown component that supports single and multiple selection, search functionality, grouped options, and various customization options.
-
-## Features
-
-- **Single & Multiple Selection**: Support for both single choice and multiple choice selection
-- **Search Functionality**: Built-in search with real-time filtering
-- **Grouped Options**: Organize options into logical groups
-- **Customizable Display**: Configure how options are displayed and identified
-- **Accessibility**: Full ARIA support and keyboard navigation
-- **Theme Support**: Light/dark mode and RTL layout support
-- **Icon Integration**: Optional icon support with flexible positioning
-- **Validation States**: Error styling and message display
-- **Keyboard Navigation**: Full keyboard support for accessibility
-
-## Usage
-
-\`\`\`vue
-<template>
-  <Select
-    v-model="selectedValue"
-    :options="options"
-    label="Choose an option"
-    placeholder="Select..."
-  />
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import { Select } from '@codebridger/lib-vue-components/form';
-
-const selectedValue = ref('');
-const options = ['Option 1', 'Option 2', 'Option 3'];
-</script>
-\`\`\`
-
-## Props
-
-The component accepts various props for customization:
-
-- **Basic Props**: \`modelValue\`, \`options\`, \`placeholder\`, \`label\`
-- **Behavior Props**: \`searchable\`, \`multiple\`, \`grouped\`, \`disabled\`
-- **Display Props**: \`trackBy\`, \`labelKey\`, \`valueKey\`, \`iconName\`
-- **Validation Props**: \`required\`, \`error\`, \`errorMessage\`
-- **Advanced Props**: \`preselectFirst\`, \`allowEmpty\`, \`groupLabel\`, \`groupValues\`
-
-## Events
-
-- \`update:modelValue\`: Emitted when the selected value changes
-- \`change\`: Emitted when selection changes
-- \`open\`: Emitted when dropdown opens
-- \`close\`: Emitted when dropdown closes
-
-## Accessibility
-
-The component includes comprehensive accessibility features:
-
-- Proper ARIA attributes (\`aria-expanded\`, \`aria-haspopup\`, \`aria-selected\`)
-- Keyboard navigation (Enter, Space, Escape, Arrow keys)
-- Screen reader support with proper roles and labels
-- Focus management and visible focus indicators
-        `,
+        component: componentDocs,
+      },
+      story: {
+        height: "320px",
       },
     },
   },
@@ -251,6 +255,24 @@ export const Default: Story = {
   args: {
     options: ["Orange", "White", "Purple", "Yellow", "Red", "Green"],
     placeholder: "Choose a color",
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Open dropdown", async () => {
+      const trigger = canvas.getByText("Choose a color");
+      await userEvent.click(trigger);
+    });
+
+    await step("Select an option", async () => {
+      const option = await canvas.findByText("Red");
+      await userEvent.click(option);
+    });
+
+    await step("Verify selection bound to v-model", async () => {
+      const result = await canvas.findByText(/Selected value:\s*Red/i);
+      expect(result).toBeInTheDocument();
+    });
   },
 };
 
@@ -372,6 +394,31 @@ export const Searchable: Story = {
     ],
     placeholder: "Type to search countries",
   },
+  parameters: {
+    docs: {
+      story: {},
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Open dropdown", async () => {
+      const trigger = canvas.getByText("Type to search countries");
+      await userEvent.click(trigger);
+    });
+
+    await step("Filter and select", async () => {
+      const search = await canvas.findByPlaceholderText("Search...");
+      await userEvent.type(search, "Japan");
+      const option = await canvas.findByText("Japan");
+      await userEvent.click(option);
+    });
+
+    await step("Verify selection", async () => {
+      const result = await canvas.findByText(/Selected value:\s*Japan/i);
+      expect(result).toBeInTheDocument();
+    });
+  },
 };
 
 // Multiple Selection
@@ -398,6 +445,33 @@ export const Multiple: Story = {
     multiple: true,
     options: ["Orange", "White", "Purple", "Yellow", "Red", "Green"],
     placeholder: "Choose multiple colors",
+  },
+  parameters: {
+    docs: {
+      story: {},
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Open dropdown", async () => {
+      const trigger = canvas.getByText("Choose multiple colors");
+      await userEvent.click(trigger);
+    });
+
+    await step("Select multiple options", async () => {
+      const red = await canvas.findByText("Red");
+      await userEvent.click(red);
+      const green = await canvas.findByText("Green");
+      await userEvent.click(green);
+    });
+
+    await step("Verify selections", async () => {
+      const result = await canvas.findByText(
+        /Selected values:\s*(.*Red.*Green|.*Green.*Red)/i
+      );
+      expect(result).toBeInTheDocument();
+    });
   },
 };
 
@@ -480,6 +554,34 @@ export const Grouped: Story = {
     labelKey: "name",
     valueKey: "value",
     placeholder: "Choose a category",
+  },
+  parameters: {
+    docs: {
+      story: {},
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Open dropdown", async () => {
+      const trigger = canvas.getByText("Choose a category");
+      await userEvent.click(trigger);
+    });
+
+    await step("Verify groups visible", async () => {
+      expect(await canvas.findByText("Fruits")).toBeInTheDocument();
+      expect(await canvas.findByText("Vegetables")).toBeInTheDocument();
+    });
+
+    await step("Select an option from a group", async () => {
+      const banana = await canvas.findByText("Banana");
+      await userEvent.click(banana);
+    });
+
+    await step("Verify selection reflected", async () => {
+      const result = await canvas.findByText(/banana/i);
+      expect(result).toBeInTheDocument();
+    });
   },
 };
 
@@ -680,64 +782,168 @@ export const SearchableObjects: Story = {
 
 // Complex Grouped Example
 export const ComplexGrouped: Story = {
-  render: (args) => ({
-    components: { Select },
-    setup() {
-      const selectedItem = ref(args.modelValue || null);
-      const handleChange = (value: any) => {
-        selectedItem.value = value;
-      };
-      return { args, selectedItem, handleChange };
-    },
-    template: `
-      <div class="space-y-4">
-        <Select 
-          v-bind="args" 
-          :model-value="selectedItem"
-          @update:model-value="handleChange"
-        />
-        <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-md">
-          <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Selected Item:</p>
-          <pre class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ JSON.stringify(selectedItem, null, 2) }}</pre>
+  render: () => {
+    const selectedValue = ref({ name: "Option 1" });
+    const options = [
+      {
+        group_name: "Group 1",
+        list: [{ name: "Option 1" }, { name: "Option 2" }],
+      },
+      {
+        group_name: "Group 2",
+        list: [{ name: "Option 3" }],
+      },
+    ];
+
+    return {
+      components: { Select },
+      setup() {
+        return { selectedValue, options };
+      },
+      template: `
+        <div class="space-y-4">
+          <Select
+            v-model="selectedValue"
+            :options="options"
+            grouped
+            group-label="group_name"
+            group-values="list"
+            label-key="name"
+            placeholder="Select from grouped options"
+            label="Complex Grouped Select"
+          />
+          <div class="text-sm text-gray-600">
+            Selected: {{ selectedValue ? selectedValue.name : 'None' }}
+          </div>
         </div>
-      </div>
-    `,
-  }),
-  args: {
-    label: "Select from Categories",
-    grouped: true,
-    searchable: true,
-    options: [
-      {
-        group_name: "Programming Languages",
-        list: [
-          { name: "JavaScript", type: "language", year: 1995 },
-          { name: "Python", type: "language", year: 1991 },
-          { name: "TypeScript", type: "language", year: 2012 },
-        ],
+      `,
+    };
+  },
+};
+
+// Custom Mode
+export const CustomMode: Story = {
+  render: () => {
+    const selectedValue = ref(["Option 1"]);
+    const options = [
+      "Option 1",
+      "Option 2",
+      "Option 3",
+      "Option 4",
+      "Option 5",
+    ];
+
+    return {
+      components: { Select },
+      setup() {
+        return { selectedValue, options };
       },
-      {
-        group_name: "Frameworks",
-        list: [
-          { name: "React", type: "framework", year: 2013 },
-          { name: "Vue.js", type: "framework", year: 2014 },
-          { name: "Angular", type: "framework", year: 2010 },
-        ],
+      template: `
+        <div class="space-y-4">
+          <Select
+            v-model="selectedValue"
+            :options="options"
+            custom
+            multiple
+            placeholder="Custom select with slots"
+            label="Custom Mode Select (Multiple)"
+          >
+            <!-- Header Slot -->
+            <template #header="{ allOptions, setNewList }">
+              <div class="p-3 bg-blue-50 dark:bg-blue-900/20">
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="text-sm font-medium text-blue-900 dark:text-blue-100">
+                    Custom Search Widget
+                  </h4>
+                  <span class="text-xs text-blue-600 dark:text-blue-400">
+                    {{ allOptions.length }} options available
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search options..."
+                  class="w-full px-3 py-2 text-sm border border-blue-200 dark:border-blue-700 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  @input="(e) => {
+                    const query = e.target.value.toLowerCase();
+                    const filtered = allOptions.filter(opt => 
+                      opt.toLowerCase().includes(query)
+                    );
+                    setNewList(filtered);
+                  }"
+                />
+              </div>
+            </template>
+
+            <!-- Each Option Slot -->
+            <template #each="{ option, isSelected, setSelected }">
+              <div
+                :class="[
+                  'px-3 py-2 cursor-pointer transition-colors duration-150',
+                  isSelected 
+                    ? 'bg-blue-500 text-white' 
+                    : 'hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                ]"
+                @click="setSelected"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="text-sm">{{ option }}</span>
+                  <div v-if="isSelected" class="flex-shrink-0">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </template>
+
+            <!-- Footer Slot -->
+            <template #footer="{ close }">
+              <div class="p-3 bg-gray-50 dark:bg-gray-800">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">
+                    Custom footer with actions
+                  </span>
+                  <div class="flex gap-2">
+                    <button
+                      @click="close(false)"
+                      class="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-150"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      @click="close(true)"
+                      class="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 border border-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-150"
+                    >
+                      Accept
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </Select>
+          <div class="text-sm text-gray-600">
+            Selected: {{ selectedValue.length > 0 ? selectedValue.join(', ') : 'None' }}
+          </div>
+        </div>
+      `,
+    };
+  },
+  parameters: {
+    docs: {
+      story: {
+        height: "520px",
       },
-      {
-        group_name: "Tools",
-        list: [
-          { name: "VS Code", type: "tool", year: 2015 },
-          { name: "Git", type: "tool", year: 2005 },
-          { name: "Docker", type: "tool", year: 2013 },
-        ],
+      description: {
+        story: `
+This story demonstrates the **Custom Mode** functionality of the Select component, showcasing how to use the three specialized slots for complete customization:
+
+- **Header Slot**: Custom search widget with option count display
+- **Each Slot**: Custom option rendering with selection indicators
+- **Footer Slot**: Custom actions (Accept/Cancel buttons)
+
+The component is configured with \`custom={true}\` and \`multiple={true}\` to enable custom mode with multiple selection support. In custom mode, the dropdown height is increased to accommodate all content including the footer section.
+        `,
       },
-    ],
-    groupLabel: "group_name",
-    groupValues: "list",
-    trackBy: "name",
-    labelKey: "name",
-    valueKey: "name",
-    placeholder: "Search and select from categories",
+    },
   },
 };

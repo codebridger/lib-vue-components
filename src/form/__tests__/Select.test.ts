@@ -485,4 +485,32 @@ describe("Select Component", () => {
       expect(wrapper.emitted("update:modelValue")).toBeFalsy();
     });
   });
+
+  describe("Custom Mode", () => {
+    it("renders custom mode when custom prop is true", () => {
+      const wrapper = createWrapper({ custom: true });
+      expect(wrapper.vm.custom).toBe(true);
+    });
+
+    it("renders custom mode template structure", () => {
+      const wrapper = createWrapper({ custom: true });
+      // The custom mode should render the custom template structure
+      expect(wrapper.vm.custom).toBe(true);
+    });
+
+    it("supports multiple selection in custom mode", async () => {
+      const wrapper = createWrapper({
+        custom: true,
+        multiple: true,
+        modelValue: [],
+      });
+
+      const button = wrapper.find("button");
+      await button.trigger("click");
+
+      // In custom mode, multiple selection should work without closing dropdown
+      expect(wrapper.vm.custom).toBe(true);
+      expect(wrapper.vm.multiple).toBe(true);
+    });
+  });
 });

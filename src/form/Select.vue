@@ -85,47 +85,135 @@
             v-if="isOpen"
             :class="[
               'absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg',
-              'max-h-60 overflow-auto',
+              custom ? 'max-h-96' : 'max-h-60',
+              'overflow-auto',
             ]"
             role="listbox"
             :aria-label="`${label || 'Options'} list`"
           >
-            <!-- Search input -->
-            <div
-              v-if="searchable"
-              class="p-2 border-b border-gray-200 dark:border-gray-600"
-            >
-              <input
-                ref="searchInput"
-                v-model="searchQuery"
-                type="text"
-                :placeholder="searchPlaceholder"
-                class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                @keydown="handleSearchKeydown"
-              />
-            </div>
+            <!-- Custom Mode -->
+            <template v-if="custom">
+              <!-- Header Slot -->
+              <div
+                v-if="$slots.header"
+                class="border-b border-gray-200 dark:border-gray-600"
+              >
+                <slot
+                  name="header"
+                  :all-options="props.options"
+                  :set-new-list="setNewList"
+                />
+              </div>
 
-            <!-- Options list -->
-            <div v-if="filteredOptions.length > 0" class="py-1">
-              <template v-if="grouped">
-                <div
-                  v-for="group in filteredOptions"
-                  :key="group[groupLabel]"
-                  class="group"
-                >
+              <!-- Options with Each Slot -->
+              <div v-if="filteredOptions.length > 0" class="py-1">
+                <template v-if="grouped">
                   <div
-                    class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                    v-for="group in filteredOptions"
+                    :key="group[groupLabel]"
+                    class="group"
                   >
-                    {{ group[groupLabel] }}
+                    <div
+                      class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                    >
+                      {{ group[groupLabel] }}
+                    </div>
+                    <div
+                      v-for="option in group[groupValues]"
+                      :key="getOptionValue(option)"
+                    >
+                      <slot
+                        name="each"
+                        :option="option"
+                        :is-selected="isOptionSelected(option)"
+                        :set-selected="() => selectOption(option)"
+                      />
+                    </div>
                   </div>
+                </template>
+                <template v-else>
                   <div
-                    v-for="option in group[groupValues]"
+                    v-for="option in filteredOptions"
                     :key="getOptionValue(option)"
-                    :class="[
+                  >
+                    <slot
+                      name="each"
+                      :option="option"
+                      :is-selected="isOptionSelected(option)"
+                      :set-selected="() => selectOption(option)"
+                    />
+                  </div>
+                </template>
+              </div>
+
+              <!-- Footer Slot -->
+              <div
+                v-if="$slots.footer"
+                class="border-t border-gray-200 dark:border-gray-600"
+              >
+                <slot name="footer" :close="closeWithAcceptance" />
+              </div>
+            </template>
+
+            <!-- Default Mode -->
+            <template v-else>
+              <!-- Search input -->
+              <div
+                v-if="searchable"
+                class="p-2 border-b border-gray-200 dark:border-gray-600"
+              >
+                <input
+                  ref="searchInput"
+                  v-model="searchQuery"
+                  type="text"
+                  :placeholder="searchPlaceholder"
+                  class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                  @keydown="handleSearchKeydown"
+                />
+              </div>
+
+              <!-- Options list -->
+              <div v-if="filteredOptions.length > 0" class="py-1">
+                <template v-if="grouped">
+                  <div
+                    v-for="group in filteredOptions"
+                    :key="group[groupLabel]"
+                    class="group"
+                  >
+                    <div
+                      class="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-gray-700"
+                    >
+                      {{ group[groupLabel] }}
+                    </div>
+                    <div
+                      v-for="option in group[groupValues]"
+                      :key="getOptionValue(option)"
+                      :class="[
                       'px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150',
                       isOptionSelected(option) ? 'bg-primary text-white hover:bg-primary/90' : 'text-gray-900 dark:text-gray-100',
                       (option as SelectOption).$isDisabled ? 'opacity-50 cursor-not-allowed hover:bg-transparent' : ''
                     ]"
+                      role="option"
+                      :aria-selected="isOptionSelected(option)"
+                      :aria-disabled="(option as SelectOption).$isDisabled"
+                      @click="
+                        !(option as SelectOption).$isDisabled &&
+                          selectOption(option)
+                      "
+                    >
+                      {{ getOptionLabel(option) }}
+                    </div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div
+                    v-for="option in filteredOptions"
+                    :key="getOptionValue(option)"
+                    :class="[
+                    'px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150',
+                    isOptionSelected(option) ? 'bg-primary text-white hover:bg-primary/90' : 'text-gray-900 dark:text-gray-100',
+                    (option as SelectOption).$isDisabled ? 'opacity-50 cursor-not-allowed hover:bg-transparent' : ''
+                  ]"
                     role="option"
                     :aria-selected="isOptionSelected(option)"
                     :aria-disabled="(option as SelectOption).$isDisabled"
@@ -136,37 +224,17 @@
                   >
                     {{ getOptionLabel(option) }}
                   </div>
-                </div>
-              </template>
-              <template v-else>
-                <div
-                  v-for="option in filteredOptions"
-                  :key="getOptionValue(option)"
-                  :class="[
-                    'px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150',
-                    isOptionSelected(option) ? 'bg-primary text-white hover:bg-primary/90' : 'text-gray-900 dark:text-gray-100',
-                    (option as SelectOption).$isDisabled ? 'opacity-50 cursor-not-allowed hover:bg-transparent' : ''
-                  ]"
-                  role="option"
-                  :aria-selected="isOptionSelected(option)"
-                  :aria-disabled="(option as SelectOption).$isDisabled"
-                  @click="
-                    !(option as SelectOption).$isDisabled &&
-                      selectOption(option)
-                  "
-                >
-                  {{ getOptionLabel(option) }}
-                </div>
-              </template>
-            </div>
+                </template>
+              </div>
 
-            <!-- No options message -->
-            <div
-              v-else
-              class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400 text-center"
-            >
-              {{ noOptionsMessage }}
-            </div>
+              <!-- No options message -->
+              <div
+                v-else
+                class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400 text-center"
+              >
+                {{ noOptionsMessage }}
+              </div>
+            </template>
           </div>
         </Transition>
       </div>
@@ -218,6 +286,7 @@ interface SelectProps {
   iconOppositePosition?: boolean;
   preselectFirst?: boolean;
   allowEmpty?: boolean;
+  custom?: boolean;
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {
@@ -244,6 +313,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   iconOppositePosition: false,
   preselectFirst: false,
   allowEmpty: true,
+  custom: false,
 });
 
 const emit = defineEmits<{
@@ -360,6 +430,11 @@ const selectOption = (option: any) => {
 
     emit("update:modelValue", currentValue);
     emit("change", currentValue);
+
+    // In custom mode, don't close dropdown for multiple selection
+    if (!props.custom) {
+      closeDropdown();
+    }
   } else {
     emit("update:modelValue", option);
     emit("change", option);
@@ -435,6 +510,24 @@ const handleSearchKeydown = (event: KeyboardEvent) => {
       // Focus first option
       break;
   }
+};
+
+// Custom mode methods
+const setNewList = (
+  newOptions: (string | number | SelectOption | SelectGroup)[]
+) => {
+  // This method allows custom header to update the options list
+  // In a real implementation, you might want to emit an event or use a different approach
+  console.log("New options list set:", newOptions);
+};
+
+const closeWithAcceptance = (accepted: boolean) => {
+  if (accepted) {
+    // Accept the current selection
+    emit("change", selectedOption.value);
+  }
+  // Close the dropdown regardless of acceptance
+  closeDropdown();
 };
 
 // Click outside handler
