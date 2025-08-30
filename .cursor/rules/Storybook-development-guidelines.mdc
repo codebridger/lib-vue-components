@@ -203,18 +203,49 @@ A description of the component and its purpose.
 - Feature 2
 - Feature 3
 
-## Usage
-
-\`\`\`vue
-<ComponentName v-model="value" />
-\`\`\`
+Note: Avoid embedding code in this section; Storybook auto-generates usage code.
         `
       }
     }
   }
   ```
 
-- **Code Examples**: Include practical usage examples:
+- **Dedicated Documentation Content**: Author a dedicated documentation text for each story file that clearly explains the component's purpose, features, states, accessibility notes, and typical use cases.
+  - Intended for consumption by both humans and AI; it must be informative and human-readable.
+  - Use standard Markdown elements (headings, paragraphs, lists, links, and tables when needed).
+  - Do not include inline code snippets; Storybook auto-generates usage code.
+  - When the content is lengthy, define it in a variable first and reference it from the story meta to keep files organized and enable reuse.
+  ```typescript
+  const componentDocs = `
+  # ComponentName
+
+  A concise overview describing the purpose of the component and when to use it.
+
+  ## Features
+  - Feature 1
+  - Feature 2
+
+  ## Accessibility
+  - Keyboard and ARIA guidance
+
+  Note: This section intentionally omits code; Storybook shows usage code automatically.
+  `;
+
+  const meta = {
+    title: "Elements/ComponentName",
+    component: ComponentName,
+    tags: ["autodocs"],
+    parameters: {
+      docs: {
+        description: {
+          component: componentDocs
+        }
+      }
+    }
+  } satisfies Meta<typeof ComponentName>;
+  ```
+
+- **Usage Scenarios in Stories**: Demonstrate practical scenarios via story variants; avoid embedding code in docs:
   - Basic usage patterns
   - Advanced configurations
   - Integration examples
