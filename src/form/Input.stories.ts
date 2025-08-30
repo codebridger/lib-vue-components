@@ -4,7 +4,7 @@ import Input from "./Input.vue";
 import { ref } from "vue";
 
 const meta = {
-  title: "Elements/Input",
+  title: "Form/Input",
   component: Input,
   tags: ["autodocs"],
   argTypes: {
@@ -222,10 +222,13 @@ export const WithIconOppositePosition: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step("Verify input with opposite icon position renders correctly", async () => {
-      const input = canvas.getByPlaceholderText("Enter username");
-      expect(input).toBeInTheDocument();
-    });
+    await step(
+      "Verify input with opposite icon position renders correctly",
+      async () => {
+        const input = canvas.getByPlaceholderText("Enter username");
+        expect(input).toBeInTheDocument();
+      }
+    );
 
     await step("Verify user icon is present", async () => {
       const input = canvas.getByPlaceholderText("Enter username");
@@ -597,7 +600,9 @@ export const RTLIconComparison: Story = {
 
     await step("Verify inputs have icons", async () => {
       const inputs = canvas.getAllByRole("textbox");
-      const icons = inputs.map(input => input.parentElement?.querySelector("svg")).filter(Boolean);
+      const icons = inputs
+        .map((input) => input.parentElement?.querySelector("svg"))
+        .filter(Boolean);
       expect(icons.length).toBeGreaterThan(0);
     });
   },
@@ -738,10 +743,15 @@ export const IconPositioningComparison: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step("Verify icon positioning comparison renders correctly", async () => {
-      const input = canvas.getByPlaceholderText("See different icon positions");
-      expect(input).toBeInTheDocument();
-    });
+    await step(
+      "Verify icon positioning comparison renders correctly",
+      async () => {
+        const input = canvas.getByPlaceholderText(
+          "See different icon positions"
+        );
+        expect(input).toBeInTheDocument();
+      }
+    );
 
     await step("Verify search icon is present", async () => {
       const input = canvas.getByPlaceholderText("See different icon positions");
