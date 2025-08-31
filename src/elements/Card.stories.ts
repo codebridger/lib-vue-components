@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { expect, within, userEvent } from "@storybook/test";
 import Card from "./Card.vue";
-import Input from "./Input.vue";
+import Input from "../form/Input.vue";
 
 const meta: Meta<typeof Card> = {
   title: "Elements/Card",

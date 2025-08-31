@@ -4,7 +4,7 @@ import CheckboxInput from "./CheckboxInput.vue";
 import { ref } from "vue";
 
 const meta: Meta<typeof CheckboxInput> = {
-  title: "Elements/CheckboxInput",
+  title: "Form/CheckboxInput",
   component: CheckboxInput,
   tags: ["autodocs"],
   argTypes: {
