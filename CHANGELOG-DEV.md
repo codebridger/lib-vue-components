@@ -1,3 +1,10 @@
+# [1.17.0-dev.36](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.35...dev-1.17.0-dev.36) (2025-09-01)
+
+
+### Features
+
+* Add badge label support to IconButton component ([5084bce](https://github.com/codebridger/lib-vue-components/commit/5084bce5f7048beacbc1efee050864467b958155))
+
 # [1.17.0-dev.35](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.34...dev-1.17.0-dev.35) (2025-08-30)
 
 
