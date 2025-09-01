@@ -7,6 +7,7 @@ import FileInputDropMode from "./FileInputDropMode.vue";
 import SwitchBall from "./SwitchBall.vue";
 import TextArea from "./TextArea.vue";
 import Input from "./Input.vue";
+import InputGroup from "./InputGroup.vue";
 
 export {
   // Form Components
@@ -18,4 +19,5 @@ export {
   SwitchBall,
   TextArea,
   Input,
+  InputGroup,
 };
