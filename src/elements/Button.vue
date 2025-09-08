@@ -1,5 +1,6 @@
 <template>
   <component
+    ref="buttonRef"
     :is="to && !chip ? 'a' : 'button'"
     @click="onClick"
     :href="!disabled && !cardDisabled && !chip ? to : undefined"
@@ -28,6 +29,7 @@
             props.textTransform, // text transform class
             computedBorderType, // border type class
             computedActiveColor, // active effect class
+            computedFocusColor, // focus effect class
             // Chip mode: disable pointer cursor and hover/active bg fills
             props.chip
               ? 'pointer-events-none cursor-default select-none'
@@ -38,7 +40,7 @@
             props.chip ? 'is-chip' : undefined,
           ],
     ]"
-    :disabled="disabled || cardDisabled ? true : undefined"
+    :disabled="disabled || cardDisabled || isLoading ? true : undefined"
   >
     <!-- Loading Icon -->
     <span
@@ -83,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, useSlots } from "vue";
+import { computed, inject, useSlots, ref, nextTick } from "vue";
 import Icon from "../icon/Icon.vue";
 import { useInputGroup } from "../composables/use-input-group";
 
@@ -126,6 +128,9 @@ interface ButtonProps {
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const slots = useSlots();
 const { isInInputGroup, inputGroupButtonClasses } = useInputGroup();
+
+// Template ref for the button element
+const buttonRef = ref<HTMLElement | null>(null);
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -192,6 +197,50 @@ const computedActiveColor = computed(() => {
   return undefined;
 });
 
+const computedFocusColor = computed(() => {
+  if (props.chip) return undefined;
+
+  // Use the color prop or default to 'default' for focus styling
+  const color = props.color || "default";
+
+  if (props.outline) {
+    // For outline buttons, focus should show only a ring around the button
+    const focusColors = {
+      default: "focus:ring-2 focus:ring-gray-300 focus:ring-offset-2",
+      primary: "focus:ring-2 focus:ring-primary/30 focus:ring-offset-2",
+      info: "focus:ring-2 focus:ring-info/30 focus:ring-offset-2",
+      success: "focus:ring-2 focus:ring-success/30 focus:ring-offset-2",
+      warning: "focus:ring-2 focus:ring-warning/30 focus:ring-offset-2",
+      danger: "focus:ring-2 focus:ring-danger/30 focus:ring-offset-2",
+      secondary: "focus:ring-2 focus:ring-secondary/30 focus:ring-offset-2",
+      dark: "focus:ring-2 focus:ring-dark/30 focus:ring-offset-2",
+      gradient: "focus:ring-2 focus:ring-primary/30 focus:ring-offset-2",
+    };
+    return focusColors[color];
+  } else {
+    // For solid buttons, focus should show a slightly brighter version
+    const focusColors = {
+      default:
+        "focus:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:ring-offset-2",
+      primary:
+        "focus:bg-primary/90 focus:ring-2 focus:ring-primary/30 focus:ring-offset-2",
+      info: "focus:bg-info/90 focus:ring-2 focus:ring-info/30 focus:ring-offset-2",
+      success:
+        "focus:bg-success/90 focus:ring-2 focus:ring-success/30 focus:ring-offset-2",
+      warning:
+        "focus:bg-warning/90 focus:ring-2 focus:ring-warning/30 focus:ring-offset-2",
+      danger:
+        "focus:bg-danger/90 focus:ring-2 focus:ring-danger/30 focus:ring-offset-2",
+      secondary:
+        "focus:bg-secondary/90 focus:ring-2 focus:ring-secondary/30 focus:ring-offset-2",
+      dark: "focus:bg-dark/90 focus:ring-2 focus:ring-dark/30 focus:ring-offset-2",
+      gradient:
+        "focus:bg-gradient-to-r focus:from-primary/90 focus:to-danger/90 focus:ring-2 focus:ring-primary/30 focus:ring-offset-2",
+    };
+    return focusColors[color];
+  }
+});
+
 const computedSize = computed(() => {
   if (props.size) {
     const sizes = {
@@ -240,12 +289,30 @@ const computedBorderType = computed(() => {
   }
 });
 
-const onClick = () => {
+const onClick = async () => {
   // In chip mode, suppress default button click behavior entirely
   if (props.chip) return;
+
+  // In loading mode, suppress click behavior entirely
+  if (props.isLoading) return;
+
+  // Focus the button first
+  if (buttonRef.value) {
+    buttonRef.value.focus();
+  }
+
+  // Emit click event if not a link
   if (!props.to) {
     emit("click");
   }
+
+  // Defocus the button after a short delay to allow for visual feedback
+  await nextTick();
+  setTimeout(() => {
+    if (buttonRef.value) {
+      buttonRef.value.blur();
+    }
+  }, 150); // 150ms delay to show focus state briefly
 };
 
 const onChipClick = () => {
