@@ -50,23 +50,17 @@ export function useInputGroup() {
       classes.push("bg-white dark:bg-gray-800");
     }
 
-    // Position-based styling
+    // Position-based styling - with gaps, all elements get full borders and radius
     if (position) {
       if (position === "first") {
         classes.push(isRtl ? "rounded-r-md" : "rounded-l-md");
-        classes.push("border-r-0");
-        classes.push("-mr-px");
       } else if (position === "last") {
         classes.push(isRtl ? "rounded-l-md" : "rounded-r-md");
-        classes.push("border-l-0");
-        classes.push("-ml-px");
       } else if (position === "only") {
         classes.push("rounded-md");
       } else {
-        // Middle elements
+        // Middle elements - no radius
         classes.push("rounded-none");
-        classes.push("border-l-0 border-r-0");
-        classes.push("-ml-px -mr-px");
       }
     }
 
@@ -91,40 +85,32 @@ export function useInputGroup() {
     const classes: string[] = [];
     const { isRtl, error, disabled } = inputGroupContext;
 
-    // Base classes for buttons in input group
-    classes.push(
-      "border px-4 py-2 text-sm font-semibold text-black dark:text-white-dark focus:outline-none"
-    );
+    // Base classes for buttons in input group - only border and padding
+    classes.push("border px-4 py-2 focus:outline-none");
 
     if (error) {
       classes.push("border-red-500");
-    } else {
+    } else if (disabled) {
       classes.push("border-gray-300 dark:border-gray-600");
     }
+    // Don't set border color when not disabled or error - let button color classes handle it
 
     if (disabled) {
       classes.push("bg-gray-100 dark:bg-gray-700 cursor-not-allowed");
-    } else {
-      classes.push("bg-white dark:bg-gray-800");
     }
+    // Don't set background color when not disabled - let button color classes handle it
 
-    // Position-based styling
+    // Position-based styling - with gaps, all elements get full borders and radius
     if (position) {
       if (position === "first") {
         classes.push(isRtl ? "rounded-r-md" : "rounded-l-md");
-        classes.push("border-r-0");
-        classes.push("-mr-px");
       } else if (position === "last") {
         classes.push(isRtl ? "rounded-l-md" : "rounded-r-md");
-        classes.push("border-l-0");
-        classes.push("-ml-px");
       } else if (position === "only") {
         classes.push("rounded-md");
       } else {
-        // Middle elements
+        // Middle elements - no radius
         classes.push("rounded-none");
-        classes.push("border-l-0 border-r-0");
-        classes.push("-ml-px -mr-px");
       }
     }
 

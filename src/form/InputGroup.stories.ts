@@ -104,7 +104,7 @@ export const Default: Story = {
           v-model="username" 
           placeholder="Enter username"
         />
-        <Button variant="primary">
+        <Button color="primary">
           Submit
         </Button>
       </InputGroup>
@@ -167,14 +167,14 @@ export const WithButtons: Story = {
     },
     template: `
       <InputGroup v-bind="args">
-        <Button variant="primary">
+        <Button color="primary">
           Search
         </Button>
         <Input 
           v-model="search" 
           placeholder="Enter search term"
         />
-        <Button variant="secondary">
+        <Button color="secondary">
           Clear
         </Button>
       </InputGroup>
@@ -190,13 +190,13 @@ export const ButtonGroup: Story = {
     },
     template: `
       <InputGroup v-bind="args">
-        <Button variant="primary">
+        <Button color="primary">
           Left
         </Button>
-        <Button variant="secondary">
+        <Button color="secondary">
           Middle
         </Button>
-        <Button variant="success">
+        <Button color="success">
           Right
         </Button>
       </InputGroup>
@@ -250,7 +250,7 @@ export const WithError: Story = {
           v-model="email" 
           placeholder="Enter email"
         />
-        <Button variant="primary">
+        <Button color="primary">
           Submit
         </Button>
       </InputGroup>
@@ -274,7 +274,7 @@ export const Disabled: Story = {
           v-model="username" 
           placeholder="Enter username"
         />
-        <Button variant="primary">
+        <Button color="primary">
           Submit
         </Button>
       </InputGroup>
@@ -310,6 +310,13 @@ export const MultipleInputs: Story = {
 };
 
 export const SearchWithDropdown: Story = {
+  parameters: {
+    docs: {
+      story: {
+        height: "320px",
+      },
+    },
+  },
   render: (args) => ({
     components: { InputGroup, Input, Select, Button, Icon },
     setup() {
@@ -335,8 +342,10 @@ export const SearchWithDropdown: Story = {
           :options="categories"
           placeholder="Category"
         />
-        <Button variant="primary">
-          <Icon name="IconSearch" class="w-4 h-4 ltr:mr-2 rtl:ml-2" />
+        <Button 
+          color="primary"
+          iconName="IconSearch"
+        >
           Search
         </Button>
       </InputGroup>
@@ -346,6 +355,13 @@ export const SearchWithDropdown: Story = {
 
 // Select Component Examples
 export const WithSelectDropdown: Story = {
+  parameters: {
+    docs: {
+      story: {
+        height: "320px",
+      },
+    },
+  },
   render: (args) => ({
     components: { InputGroup, Select, Button, Icon },
     setup() {
@@ -380,8 +396,10 @@ export const WithSelectDropdown: Story = {
           :options="sortOptions"
           placeholder="Sort by"
         />
-        <Button variant="secondary">
-          <Icon name="IconRefresh" class="w-4 h-4 ltr:mr-2 rtl:ml-2" />
+        <Button 
+          color="secondary"
+          iconName="IconRefresh"
+        >
           Reset
         </Button>
       </InputGroup>
@@ -390,6 +408,13 @@ export const WithSelectDropdown: Story = {
 };
 
 export const CurrencyInput: Story = {
+  parameters: {
+    docs: {
+      story: {
+        height: "320px",
+      },
+    },
+  },
   render: (args) => ({
     components: { InputGroup, Input, Select, Icon, InputGroupItem },
     setup() {
@@ -451,7 +476,7 @@ export const Interactive: Story = {
             placeholder="Search for anything..."
           />
           <Button 
-            variant="primary" 
+            color="primary" 
             :loading="isLoading"
             @click="handleSearch"
           >

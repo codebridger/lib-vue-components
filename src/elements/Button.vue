@@ -18,6 +18,11 @@
             ...inputGroupButtonClasses,
             'h-10',
             'flex items-center justify-center',
+            // Apply button color and effects even in InputGroup
+            computedColor,
+            computedActiveColor,
+            computedFocusColor,
+            computedHoverNeutralizeClasses,
           ]
         : [
             disabled || cardDisabled
