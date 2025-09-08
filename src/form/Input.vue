@@ -19,15 +19,20 @@
         :class="[
           iconName && actualIconPosition === 'left' ? 'pl-10' : '',
           iconName && actualIconPosition === 'right' ? 'pr-10' : '',
-          // base classes
-          { 'form-input': type !== 'range' },
+          // base classes - only apply form-input when NOT in InputGroup
+          { 'form-input': type !== 'range' && !isInInputGroup },
 
           // specific for range type
           { 'w-full py-2.5': type === 'range' },
 
           // Input group styling takes precedence
           isInInputGroup
-            ? [...inputGroupClasses, 'flex-1', 'h-10']
+            ? [
+                ...inputGroupClasses,
+                'flex-1',
+                'h-10',
+                'focus:ring-2 focus:ring-primary/20 focus:border-primary',
+              ]
             : [
                 disabled || cardDisabled
                   ? 'bg-gray-100 cursor-not-allowed'

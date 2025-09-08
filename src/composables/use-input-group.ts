@@ -32,8 +32,10 @@ export function useInputGroup() {
     const classes: string[] = [];
     const { isRtl, error, disabled } = inputGroupContext;
 
-    // Base classes for input group children
-    classes.push("border");
+    // Base classes for input group children (replaces form-input)
+    classes.push(
+      "border px-4 py-2 text-sm font-semibold text-black dark:text-white-dark focus:outline-none"
+    );
 
     if (error) {
       classes.push("border-red-500");
@@ -51,16 +53,19 @@ export function useInputGroup() {
     if (position) {
       if (position === "first") {
         classes.push(isRtl ? "rounded-r-md" : "rounded-l-md");
-        classes.push(isRtl ? "border-l-0" : "border-r-0");
+        classes.push("border-r-0");
+        classes.push("-mr-px");
       } else if (position === "last") {
         classes.push(isRtl ? "rounded-l-md" : "rounded-r-md");
-        classes.push(isRtl ? "border-r-0" : "border-l-0");
+        classes.push("border-l-0");
+        classes.push("-ml-px");
       } else if (position === "only") {
         classes.push("rounded-md");
       } else {
         // Middle elements
         classes.push("rounded-none");
         classes.push("border-l-0 border-r-0");
+        classes.push("-ml-px -mr-px");
       }
     }
 

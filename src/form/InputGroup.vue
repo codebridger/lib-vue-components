@@ -9,7 +9,7 @@
       <span v-if="required" class="text-red-500">*</span>
     </label>
 
-    <div class="flex">
+    <div class="flex w-full">
       <template v-for="(child, index) in children" :key="index">
         <component
           :is="child"

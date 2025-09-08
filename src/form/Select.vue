@@ -34,7 +34,12 @@
             'focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
             // Input group styling takes precedence
             isInInputGroup
-              ? [...inputGroupClasses, 'flex-1', 'h-10']
+              ? [
+                  ...inputGroupClasses,
+                  'flex-1',
+                  'h-10',
+                  'focus:ring-2 focus:ring-primary/20 focus:border-primary',
+                ]
               : [
                   'border rounded-md',
                   props.disabled || cardDisabled
