@@ -30,14 +30,20 @@
         <button
           :id="id"
           :class="[
-            'w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200',
+            'w-full text-left px-3 py-2.5 transition-colors duration-200',
             'focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-            props.disabled || cardDisabled
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
-              : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100',
-            error
-              ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
-              : '',
+            // Input group styling takes precedence
+            isInInputGroup
+              ? [...inputGroupClasses, 'flex-1']
+              : [
+                  'border rounded-md',
+                  props.disabled || cardDisabled
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                    : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100',
+                  error
+                    ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
+                    : '',
+                ],
             isOpen ? 'border-primary' : '',
           ]"
           :disabled="props.disabled || cardDisabled"
@@ -285,6 +291,7 @@ import { ref, computed, nextTick, watch, onMounted, onUnmounted } from "vue";
 import { inject } from "vue";
 import Icon from "../icon/Icon.vue";
 import { useAppStore } from "../stores/index";
+import { useInputGroup } from "../composables/use-input-group";
 
 interface SelectOption {
   [key: string]: any;
@@ -363,6 +370,7 @@ const emit = defineEmits<{
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
+const { isInInputGroup, inputGroupClasses } = useInputGroup();
 
 // Reactive state
 const isOpen = ref(false);

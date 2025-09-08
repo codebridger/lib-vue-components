@@ -27,16 +27,13 @@
 
           // Input group styling takes precedence
           isInInputGroup
-            ? inputGroupClasses.value
+            ? [...inputGroupClasses, 'flex-1']
             : [
                 disabled || cardDisabled
                   ? 'bg-gray-100 cursor-not-allowed'
                   : 'bg-white',
                 error ? 'border-red-500' : 'border-gray-300',
               ],
-
-          // Add flex-1 for input group children
-          isInInputGroup ? 'flex-1' : '',
         ]"
         :id="id"
         :type="type"

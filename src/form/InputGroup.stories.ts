@@ -6,6 +6,7 @@ import TextArea from "./TextArea.vue";
 import Select from "./Select.vue";
 import Button from "../elements/Button.vue";
 import Icon from "../icon/Icon.vue";
+import InputGroupItem from "./InputGroupItem.vue";
 
 const componentDocs = `
 # InputGroup
@@ -90,25 +91,21 @@ type Story = StoryObj<typeof meta>;
 // Basic Examples
 export const Default: Story = {
   render: (args) => ({
-    components: { InputGroup, Input, Button },
+    components: { InputGroup, Input, Button, InputGroupItem },
     setup() {
       const username = ref("");
       return { args, username };
     },
     template: `
       <InputGroup v-bind="args">
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           @
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="username" 
           placeholder="Enter username"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
-        <Button 
-          variant="primary" 
-          class="ltr:rounded-l-none rtl:rounded-r-none"
-        >
+        <Button variant="primary">
           Submit
         </Button>
       </InputGroup>
@@ -118,7 +115,7 @@ export const Default: Story = {
 
 export const WithSuffix: Story = {
   render: (args) => ({
-    components: { InputGroup, Input },
+    components: { InputGroup, Input, InputGroupItem },
     setup() {
       const email = ref("");
       return { args, email };
@@ -128,11 +125,10 @@ export const WithSuffix: Story = {
         <Input 
           v-model="email" 
           placeholder="username"
-          class="ltr:rounded-r-none rtl:rounded-l-none"
         />
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-r-md rtl:rounded-l-md ltr:border-l-0 rtl:border-r-0">
+        <InputGroupItem>
           @example.com
-        </div>
+        </InputGroupItem>
       </InputGroup>
     `,
   }),
@@ -140,24 +136,23 @@ export const WithSuffix: Story = {
 
 export const WithPrefixAndSuffix: Story = {
   render: (args) => ({
-    components: { InputGroup, Input },
+    components: { InputGroup, Input, InputGroupItem },
     setup() {
       const amount = ref("");
       return { args, amount };
     },
     template: `
       <InputGroup v-bind="args">
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           $
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="amount" 
           placeholder="0.00"
-          class="rounded-none"
         />
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-r-md rtl:rounded-l-md ltr:border-l-0 rtl:border-r-0">
+        <InputGroupItem>
           .00
-        </div>
+        </InputGroupItem>
       </InputGroup>
     `,
   }),
@@ -165,21 +160,20 @@ export const WithPrefixAndSuffix: Story = {
 
 export const WithTextArea: Story = {
   render: (args) => ({
-    components: { InputGroup, TextArea },
+    components: { InputGroup, TextArea, InputGroupItem },
     setup() {
       const comment = ref("");
       return { args, comment };
     },
     template: `
       <InputGroup v-bind="args">
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           Comment
-        </div>
+        </InputGroupItem>
         <TextArea 
           v-model="comment" 
           placeholder="Enter your comment"
           :rows="3"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
       </InputGroup>
     `,
@@ -196,21 +190,14 @@ export const WithButtons: Story = {
     },
     template: `
       <InputGroup v-bind="args">
-        <Button 
-          variant="primary" 
-          class="ltr:rounded-r-none rtl:rounded-l-none"
-        >
+        <Button variant="primary">
           Search
         </Button>
         <Input 
           v-model="search" 
           placeholder="Enter search term"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
-        <Button 
-          variant="secondary" 
-          class="ltr:rounded-l-none rtl:rounded-r-none"
-        >
+        <Button variant="secondary">
           Clear
         </Button>
       </InputGroup>
@@ -226,13 +213,13 @@ export const ButtonGroup: Story = {
     },
     template: `
       <InputGroup v-bind="args">
-        <Button variant="primary" class="ltr:rounded-r-none rtl:rounded-l-none">
+        <Button variant="primary">
           Left
         </Button>
-        <Button variant="secondary" class="rounded-none">
+        <Button variant="secondary">
           Middle
         </Button>
-        <Button variant="success" class="ltr:rounded-l-none rtl:rounded-r-none">
+        <Button variant="success">
           Right
         </Button>
       </InputGroup>
@@ -243,24 +230,23 @@ export const ButtonGroup: Story = {
 // Icon Examples
 export const WithIcons: Story = {
   render: (args) => ({
-    components: { InputGroup, Input, Icon },
+    components: { InputGroup, Input, Icon, InputGroupItem },
     setup() {
       const search = ref("");
       return { args, search };
     },
     template: `
       <InputGroup v-bind="args">
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           <Icon name="IconSearch" class="w-4 h-4" />
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="search" 
           placeholder="Search..."
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-r-md rtl:rounded-l-md ltr:border-l-0 rtl:border-r-0">
+        <InputGroupItem>
           <Icon name="IconHorizontalDots" class="w-4 h-4" />
-        </div>
+        </InputGroupItem>
       </InputGroup>
     `,
   }),
@@ -269,7 +255,7 @@ export const WithIcons: Story = {
 // Error States
 export const WithError: Story = {
   render: (args) => ({
-    components: { InputGroup, Input, Button },
+    components: { InputGroup, Input, Button, InputGroupItem },
     setup() {
       const email = ref("");
       return { args, email };
@@ -280,18 +266,14 @@ export const WithError: Story = {
         error 
         error-message="Please enter a valid email address"
       >
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-red-500 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           @
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="email" 
           placeholder="Enter email"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
-        <Button 
-          variant="primary" 
-          class="ltr:rounded-l-none rtl:rounded-r-none"
-        >
+        <Button variant="primary">
           Submit
         </Button>
       </InputGroup>
@@ -301,25 +283,21 @@ export const WithError: Story = {
 
 export const Disabled: Story = {
   render: (args) => ({
-    components: { InputGroup, Input, Button },
+    components: { InputGroup, Input, Button, InputGroupItem },
     setup() {
       const username = ref("disabled@example.com");
       return { args, username };
     },
     template: `
       <InputGroup v-bind="args" disabled>
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           @
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="username" 
           placeholder="Enter username"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
-        <Button 
-          variant="primary" 
-          class="ltr:rounded-l-none rtl:rounded-r-none"
-        >
+        <Button variant="primary">
           Submit
         </Button>
       </InputGroup>
@@ -330,7 +308,7 @@ export const Disabled: Story = {
 // Complex Examples
 export const MultipleInputs: Story = {
   render: (args) => ({
-    components: { InputGroup, Input },
+    components: { InputGroup, Input, InputGroupItem },
     setup() {
       const firstName = ref("");
       const lastName = ref("");
@@ -338,18 +316,16 @@ export const MultipleInputs: Story = {
     },
     template: `
       <InputGroup v-bind="args">
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           Name
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="firstName" 
           placeholder="First Name"
-          class="ltr:border-r-0 rtl:border-l-0 rounded-none"
         />
         <Input 
           v-model="lastName" 
           placeholder="Last Name"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
       </InputGroup>
     `,
@@ -376,18 +352,13 @@ export const SearchWithDropdown: Story = {
         <Input 
           v-model="search" 
           placeholder="Search products..."
-          class="ltr:rounded-r-none rtl:rounded-l-none"
         />
         <Select 
           v-model="category"
           :options="categories"
           placeholder="Category"
-          class="rounded-none ltr:border-l-0 rtl:border-r-0"
         />
-        <Button 
-          variant="primary" 
-          class="ltr:rounded-l-none rtl:rounded-r-none"
-        >
+        <Button variant="primary">
           <Icon name="IconSearch" class="w-4 h-4 ltr:mr-2 rtl:ml-2" />
           Search
         </Button>
@@ -426,18 +397,13 @@ export const WithSelectDropdown: Story = {
           v-model="category"
           :options="categories"
           placeholder="Category"
-          class="ltr:rounded-r-none rtl:rounded-l-none"
         />
         <Select 
           v-model="sortBy"
           :options="sortOptions"
           placeholder="Sort by"
-          class="rounded-none ltr:border-l-0 rtl:border-r-0"
         />
-        <Button 
-          variant="secondary" 
-          class="ltr:rounded-l-none rtl:rounded-r-none"
-        >
+        <Button variant="secondary">
           <Icon name="IconRefresh" class="w-4 h-4 ltr:mr-2 rtl:ml-2" />
           Reset
         </Button>
@@ -448,7 +414,7 @@ export const WithSelectDropdown: Story = {
 
 export const CurrencyInput: Story = {
   render: (args) => ({
-    components: { InputGroup, Input, Select, Icon },
+    components: { InputGroup, Input, Select, Icon, InputGroupItem },
     setup() {
       const amount = ref("");
       const currency = ref("USD");
@@ -463,19 +429,17 @@ export const CurrencyInput: Story = {
     },
     template: `
       <InputGroup v-bind="args">
-        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+        <InputGroupItem>
           <Icon name="IconDollarSign" class="w-4 h-4" />
-        </div>
+        </InputGroupItem>
         <Input 
           v-model="amount" 
           placeholder="0.00"
           type="number"
-          class="rounded-none"
         />
         <Select 
           v-model="currency"
           :options="currencies"
-          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
       </InputGroup>
     `,
@@ -485,7 +449,7 @@ export const CurrencyInput: Story = {
 // Interactive Examples
 export const Interactive: Story = {
   render: (args) => ({
-    components: { InputGroup, Input, Button, Icon },
+    components: { InputGroup, Input, Button, Icon, InputGroupItem },
     setup() {
       const search = ref("");
       const isLoading = ref(false);
@@ -502,18 +466,16 @@ export const Interactive: Story = {
     template: `
       <div class="space-y-4">
         <InputGroup v-bind="args">
-          <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          <InputGroupItem>
             <Icon name="IconSearch" class="w-4 h-4" />
-          </div>
+          </InputGroupItem>
           <Input 
             v-model="search" 
             placeholder="Search for anything..."
-            class="ltr:rounded-l-none rtl:rounded-r-none"
           />
           <Button 
             variant="primary" 
             :loading="isLoading"
-            class="ltr:rounded-l-none rtl:rounded-r-none"
             @click="handleSearch"
           >
             {{ isLoading ? 'Searching...' : 'Search' }}

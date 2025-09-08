@@ -8,6 +8,7 @@ import SwitchBall from "./SwitchBall.vue";
 import TextArea from "./TextArea.vue";
 import Input from "./Input.vue";
 import InputGroup from "./InputGroup.vue";
+import InputGroupItem from "./InputGroupItem.vue";
 
 export {
   // Form Components
@@ -20,4 +21,5 @@ export {
   TextArea,
   Input,
   InputGroup,
+  InputGroupItem,
 };
