@@ -6,28 +6,37 @@
     :type="to && !chip ? undefined : 'button'"
     :style="chipGradientStyle"
     :class="[
-      // base class
-      'btn',
+      // base class - only apply when NOT in InputGroup
+      { btn: !isInInputGroup },
       'text-xs sm:text-sm', // responsive text size
       'transition-all', // transition effect
       { 'w-full': props.block }, // conditional full width
-      disabled || cardDisabled
-        ? 'bg-gray-100 cursor-not-allowed'
-        : computedColor, // color class
-      computedSize, // size class
-      computedShadow, // shadow class
-      computedRounded, // rounded corners class
-      props.textTransform, // text transform class
-      computedBorderType, // border type class
-      computedActiveColor, // active effect class
-      // Chip mode: disable pointer cursor and hover/active bg fills
-      props.chip ? 'pointer-events-none cursor-default select-none' : undefined,
-      // Loading: keep interactive but do not show pointer cursor
-      isLoading ? 'cursor-default' : undefined,
-      computedHoverNeutralizeClasses,
-      props.chip ? 'is-chip' : undefined,
-      // InputGroup height consistency
-      isInInputGroup ? 'h-10' : undefined,
+      // InputGroup styling takes precedence
+      isInInputGroup
+        ? [
+            ...inputGroupButtonClasses,
+            'h-10',
+            'flex items-center justify-center',
+          ]
+        : [
+            disabled || cardDisabled
+              ? 'bg-gray-100 cursor-not-allowed'
+              : computedColor, // color class
+            computedSize, // size class
+            computedShadow, // shadow class
+            computedRounded, // rounded corners class
+            props.textTransform, // text transform class
+            computedBorderType, // border type class
+            computedActiveColor, // active effect class
+            // Chip mode: disable pointer cursor and hover/active bg fills
+            props.chip
+              ? 'pointer-events-none cursor-default select-none'
+              : undefined,
+            // Loading: keep interactive but do not show pointer cursor
+            isLoading ? 'cursor-default' : undefined,
+            computedHoverNeutralizeClasses,
+            props.chip ? 'is-chip' : undefined,
+          ],
     ]"
     :disabled="disabled || cardDisabled ? true : undefined"
   >
@@ -116,7 +125,7 @@ interface ButtonProps {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const slots = useSlots();
-const { isInInputGroup } = useInputGroup();
+const { isInInputGroup, inputGroupButtonClasses } = useInputGroup();
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {
