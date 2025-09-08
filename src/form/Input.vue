@@ -25,10 +25,18 @@
           // specific for range type
           { 'w-full py-2.5': type === 'range' },
 
-          disabled || cardDisabled
-            ? 'bg-gray-100 cursor-not-allowed'
-            : 'bg-white',
-          error ? 'border-red-500' : 'border-gray-300',
+          // Input group styling takes precedence
+          isInInputGroup
+            ? inputGroupClasses.value
+            : [
+                disabled || cardDisabled
+                  ? 'bg-gray-100 cursor-not-allowed'
+                  : 'bg-white',
+                error ? 'border-red-500' : 'border-gray-300',
+              ],
+
+          // Add flex-1 for input group children
+          isInInputGroup ? 'flex-1' : '',
         ]"
         :id="id"
         :type="type"
@@ -55,6 +63,7 @@
 import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
 import { useAppStore } from "../stores/index";
+import { useInputGroup } from "../composables/use-input-group";
 
 interface InputProps {
   modelValue?: string;
@@ -98,6 +107,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
+const { isInInputGroup, inputGroupClasses } = useInputGroup();
 
 // Calculate icon position based on existing RTL state and iconOppositePosition
 const actualIconPosition = computed(() => {

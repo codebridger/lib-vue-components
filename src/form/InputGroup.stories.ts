@@ -1,38 +1,40 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { expect, within, userEvent } from "@storybook/test";
+import { ref } from "vue";
 import InputGroup from "./InputGroup.vue";
 import Input from "./Input.vue";
 import TextArea from "./TextArea.vue";
 import Select from "./Select.vue";
 import Button from "../elements/Button.vue";
-import { ref } from "vue";
 import Icon from "../icon/Icon.vue";
 
 const componentDocs = `
-# InputGroup Component
+# InputGroup
 
-A flexible wrapper component that allows you to add content before and after any input field. This component provides a consistent layout for input groups with addons.
+A flexible container component that groups form elements together with proper styling coordination. The InputGroup automatically manages border radius, error states, and spacing for its child components.
 
 ## Features
-- Left and right addons via named slots
-- Works with any input component (Input, TextArea, Select, etc.)
-- Multiple size variants (sm, md, lg)
-- Theme support (light/dark)
-- RTL support
-- Form validation states
-- Accessible with proper ARIA attributes
+- **Slot-based Architecture**: Accepts any number of child components through a single default slot
+- **Automatic Styling**: Manages border radius for first, middle, and last children
+- **Error State Management**: Coordinates error styling across all children
+- **RTL Support**: Proper right-to-left layout support
+- **Theme Support**: Works with light, dark, and semidark themes
+- **Flexible Layout**: Input and TextArea components automatically take available width with flex-1
 
-## Usage
-The InputGroup component uses slots for layout:
-- \`leftAddon\`: Content displayed before the input
-- \`rightAddon\`: Content displayed after the input
-- \`default\`: The main input component
+## Common Use Cases
+- Input with prefix/suffix text or icons
+- Input with action buttons
+- Multiple related form elements
+- Search input with submit button
+- Currency input with symbol prefix
+- URL input with domain suffix
 
 ## Accessibility
-- Proper label association with input IDs
+- Proper label association for screen readers
+- Error message announcement
 - Keyboard navigation support
-- Screen reader friendly with appropriate ARIA attributes
-- High contrast support in both light and dark themes
+- ARIA attributes for form validation
+
+Note: This section intentionally omits code; Storybook shows usage code automatically.
 `;
 
 const meta = {
@@ -42,45 +44,41 @@ const meta = {
   argTypes: {
     label: {
       control: "text",
-      description: "Label of input group",
-    },
-    required: {
-      control: "boolean",
-      description: "Required state",
-    },
-    error: {
-      control: "boolean",
-      description: "Error state",
-    },
-    errorMessage: {
-      control: "text",
-      description: "Error message text",
-    },
-    size: {
-      control: "select",
-      options: ["sm", "md", "lg"],
-      description: "Size of the input group",
+      description: "Label text for the input group",
     },
     id: {
       control: "text",
-      description: "Input ID attribute for label association",
+      description: "ID for the input group (used for label association)",
     },
-  },
+    required: {
+      control: "boolean",
+      description: "Whether the input group is required",
+    },
+    error: {
+      control: "boolean",
+      description: "Whether the input group has an error state",
+    },
+    errorMessage: {
+      control: "text",
+      description: "Error message to display when error is true",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Whether the input group is disabled",
+    },
+  } as any,
   args: {
-    label: "Input Group",
+    label: "Username",
+    id: "username",
     required: false,
     error: false,
     errorMessage: "",
-    size: "md",
-    id: "",
-  },
+    disabled: false,
+  } as any,
   parameters: {
     docs: {
       description: {
         component: componentDocs,
-      },
-      source: {
-        type: "code",
       },
     },
   },
@@ -89,391 +87,443 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Basic stories
+// Basic Examples
 export const Default: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input },
-    setup() {
-      return { args };
-    },
-    template: `
-      <InputGroup v-bind="args">
-        <template #leftAddon>@</template>
-        <Input placeholder="Enter username" />
-        <template #rightAddon>.com</template>
-      </InputGroup>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const TextAddons: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input },
-    setup() {
-      return { args };
-    },
-    template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Username">
-          <template #leftAddon>@</template>
-          <Input placeholder="Enter username" />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Email">
-          <Input placeholder="username" />
-          <template #rightAddon>@example.com</template>
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="URL">
-          <template #leftAddon>https://</template>
-          <Input placeholder="example.com/users/" />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Price">
-          <template #leftAddon>$</template>
-          <Input placeholder="0.00" />
-          <template #rightAddon>.00</template>
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const IconAddons: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input, Icon },
-    setup() {
-      return { args };
-    },
-    template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Search">
-          <template #leftAddon>
-            <Icon name="IconSearch" class="w-4 h-4" />
-          </template>
-          <Input placeholder="Search..." />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Email">
-          <template #leftAddon>
-            <Icon name="IconMail" class="w-4 h-4" />
-          </template>
-          <Input placeholder="Enter email" />
-          <template #rightAddon>
-            <Icon name="IconEye" class="w-4 h-4 cursor-pointer" />
-          </template>
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Password">
-          <template #leftAddon>
-            <Icon name="IconLock" class="w-4 h-4" />
-          </template>
-          <Input type="password" placeholder="Enter password" />
-          <template #rightAddon>
-            <Icon name="IconEye" class="w-4 h-4 cursor-pointer" />
-          </template>
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const ButtonAddons: Story = {
   render: (args) => ({
     components: { InputGroup, Input, Button },
     setup() {
-      return { args };
+      const username = ref("");
+      return { args, username };
     },
     template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Search with button">
-          <Input placeholder="Search..." />
-          <template #rightAddon>
-            <Button variant="primary" size="sm" class="rounded-r-md">
-              Search
-            </Button>
-          </template>
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Input with dropdown">
-          <template #leftAddon>
-            <Button variant="secondary" size="sm" class="rounded-l-md">
-              Options
-            </Button>
-          </template>
-          <Input placeholder="Select option" />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Multiple buttons">
-          <template #leftAddon>
-            <Button variant="success" size="sm" class="rounded-l-md">
-              Save
-            </Button>
-          </template>
-          <Input placeholder="Enter data" />
-          <template #rightAddon>
-            <Button variant="danger" size="sm" class="rounded-r-md">
-              Clear
-            </Button>
-          </template>
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const Sizes: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input },
-    setup() {
-      return { args };
-    },
-    template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Small" size="sm">
-          <template #leftAddon>@</template>
-          <Input placeholder="Small input" />
-          <template #rightAddon>.com</template>
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Medium" size="md">
-          <template #leftAddon>@</template>
-          <Input placeholder="Medium input" />
-          <template #rightAddon>.com</template>
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Large" size="lg">
-          <template #leftAddon>@</template>
-          <Input placeholder="Large input" />
-          <template #rightAddon>.com</template>
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const States: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input },
-    setup() {
-      return { args };
-    },
-    template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Normal">
-          <template #leftAddon>@</template>
-          <Input placeholder="Normal state" />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Disabled">
-          <template #leftAddon>@</template>
-          <Input disabled placeholder="Disabled state" />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Error" error errorMessage="This field is required">
-          <template #leftAddon>@</template>
-          <Input error placeholder="Error state" />
-        </InputGroup>
-        
-        <InputGroup v-bind="args" label="Required" required>
-          <template #leftAddon>@</template>
-          <Input required placeholder="Required field" />
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const Interactive: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input },
-    setup() {
-      const value = ref("");
-      const handleChange = (newValue: string) => {
-        value.value = newValue;
-      };
-      return { args, value, handleChange };
-    },
-    template: `
-      <div class="space-y-4">
-        <InputGroup 
-          v-bind="args" 
-          label="Interactive Input"
-        >
-          <template #leftAddon>@</template>
-          <Input 
-            placeholder="Type something..."
-            :model-value="value"
-            @update:model-value="handleChange"
-          />
-          <template #rightAddon>.com</template>
-        </InputGroup>
-        
-        <div class="text-sm text-gray-600">
-          Current value: <span class="font-mono">{{ value || '(empty)' }}</span>
+      <InputGroup v-bind="args">
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          @
         </div>
-      </div>
+        <Input 
+          v-model="username" 
+          placeholder="Enter username"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
+        <Button 
+          variant="primary" 
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        >
+          Submit
+        </Button>
+      </InputGroup>
     `,
   }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
+};
+
+export const WithSuffix: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input },
+    setup() {
+      const email = ref("");
+      return { args, email };
     },
-  },
+    template: `
+      <InputGroup v-bind="args">
+        <Input 
+          v-model="email" 
+          placeholder="username"
+          class="ltr:rounded-r-none rtl:rounded-l-none"
+        />
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-r-md rtl:rounded-l-md ltr:border-l-0 rtl:border-r-0">
+          @example.com
+        </div>
+      </InputGroup>
+    `,
+  }),
+};
+
+export const WithPrefixAndSuffix: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input },
+    setup() {
+      const amount = ref("");
+      return { args, amount };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          $
+        </div>
+        <Input 
+          v-model="amount" 
+          placeholder="0.00"
+          class="rounded-none"
+        />
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-r-md rtl:rounded-l-md ltr:border-l-0 rtl:border-r-0">
+          .00
+        </div>
+      </InputGroup>
+    `,
+  }),
 };
 
 export const WithTextArea: Story = {
   render: (args) => ({
     components: { InputGroup, TextArea },
     setup() {
-      return { args };
+      const comment = ref("");
+      return { args, comment };
     },
     template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Description">
-          <template #leftAddon>Note:</template>
-          <TextArea placeholder="Enter description" rows="3" />
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const WithSelect: Story = {
-  render: (args) => ({
-    components: { InputGroup, Select },
-    setup() {
-      return { args };
-    },
-    template: `
-      <div class="space-y-4">
-        <InputGroup v-bind="args" label="Country">
-          <template #leftAddon>+</template>
-          <Select 
-            :options="[
-              { value: '1', label: '1' },
-              { value: '44', label: '44' },
-              { value: '91', label: '91' }
-            ]"
-            placeholder="Select country code"
-          />
-        </InputGroup>
-      </div>
-    `,
-  }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
-};
-
-export const NoAddons: Story = {
-  render: (args) => ({
-    components: { InputGroup, Input },
-    setup() {
-      return { args };
-    },
-    template: `
-      <InputGroup v-bind="args" label="Regular Input">
-        <Input placeholder="No addons" />
+      <InputGroup v-bind="args">
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          Comment
+        </div>
+        <TextArea 
+          v-model="comment" 
+          placeholder="Enter your comment"
+          :rows="3"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
       </InputGroup>
     `,
   }),
-  parameters: {
-    docs: {
-      source: {
-        type: "code",
-      },
-    },
-  },
 };
 
-// Test stories
-export const TestInteraction: Story = {
+// Button Examples
+export const WithButtons: Story = {
   render: (args) => ({
-    components: { InputGroup, Input },
+    components: { InputGroup, Input, Button },
+    setup() {
+      const search = ref("");
+      return { args, search };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <Button 
+          variant="primary" 
+          class="ltr:rounded-r-none rtl:rounded-l-none"
+        >
+          Search
+        </Button>
+        <Input 
+          v-model="search" 
+          placeholder="Enter search term"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
+        <Button 
+          variant="secondary" 
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        >
+          Clear
+        </Button>
+      </InputGroup>
+    `,
+  }),
+};
+
+export const ButtonGroup: Story = {
+  render: (args) => ({
+    components: { InputGroup, Button },
     setup() {
       return { args };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <Button variant="primary" class="ltr:rounded-r-none rtl:rounded-l-none">
+          Left
+        </Button>
+        <Button variant="secondary" class="rounded-none">
+          Middle
+        </Button>
+        <Button variant="success" class="ltr:rounded-l-none rtl:rounded-r-none">
+          Right
+        </Button>
+      </InputGroup>
+    `,
+  }),
+};
+
+// Icon Examples
+export const WithIcons: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input, Icon },
+    setup() {
+      const search = ref("");
+      return { args, search };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          <Icon name="IconSearch" class="w-4 h-4" />
+        </div>
+        <Input 
+          v-model="search" 
+          placeholder="Search..."
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-r-md rtl:rounded-l-md ltr:border-l-0 rtl:border-r-0">
+          <Icon name="IconHorizontalDots" class="w-4 h-4" />
+        </div>
+      </InputGroup>
+    `,
+  }),
+};
+
+// Error States
+export const WithError: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input, Button },
+    setup() {
+      const email = ref("");
+      return { args, email };
     },
     template: `
       <InputGroup 
         v-bind="args" 
-        label="Test Input"
-        data-testid="input-group"
+        error 
+        error-message="Please enter a valid email address"
       >
-        <template #leftAddon data-testid="left-addon">@</template>
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-red-500 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          @
+        </div>
         <Input 
-          placeholder="Test interaction"
-          data-testid="input"
+          v-model="email" 
+          placeholder="Enter email"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
         />
-        <template #rightAddon data-testid="right-addon">.com</template>
+        <Button 
+          variant="primary" 
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        >
+          Submit
+        </Button>
       </InputGroup>
     `,
   }),
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const input = canvas.getByRole("textbox");
+};
 
-    // Test typing
-    await userEvent.type(input, "testuser");
-    await expect(input).toHaveValue("testuser");
+export const Disabled: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input, Button },
+    setup() {
+      const username = ref("disabled@example.com");
+      return { args, username };
+    },
+    template: `
+      <InputGroup v-bind="args" disabled>
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          @
+        </div>
+        <Input 
+          v-model="username" 
+          placeholder="Enter username"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
+        <Button 
+          variant="primary" 
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        >
+          Submit
+        </Button>
+      </InputGroup>
+    `,
+  }),
+};
 
-    // Test focus
-    await userEvent.click(input);
-    await expect(input).toHaveFocus();
-  },
+// Complex Examples
+export const MultipleInputs: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input },
+    setup() {
+      const firstName = ref("");
+      const lastName = ref("");
+      return { args, firstName, lastName };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          Name
+        </div>
+        <Input 
+          v-model="firstName" 
+          placeholder="First Name"
+          class="ltr:border-r-0 rtl:border-l-0 rounded-none"
+        />
+        <Input 
+          v-model="lastName" 
+          placeholder="Last Name"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
+      </InputGroup>
+    `,
+  }),
+};
+
+export const SearchWithDropdown: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input, Select, Button, Icon },
+    setup() {
+      const search = ref("");
+      const category = ref("");
+      const categories = [
+        { label: "All Categories", value: "" },
+        { label: "Electronics", value: "electronics" },
+        { label: "Clothing", value: "clothing" },
+        { label: "Books", value: "books" },
+        { label: "Home & Garden", value: "home" },
+      ];
+      return { args, search, category, categories };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <Input 
+          v-model="search" 
+          placeholder="Search products..."
+          class="ltr:rounded-r-none rtl:rounded-l-none"
+        />
+        <Select 
+          v-model="category"
+          :options="categories"
+          placeholder="Category"
+          class="rounded-none ltr:border-l-0 rtl:border-r-0"
+        />
+        <Button 
+          variant="primary" 
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        >
+          <Icon name="IconSearch" class="w-4 h-4 ltr:mr-2 rtl:ml-2" />
+          Search
+        </Button>
+      </InputGroup>
+    `,
+  }),
+};
+
+// Select Component Examples
+export const WithSelectDropdown: Story = {
+  render: (args) => ({
+    components: { InputGroup, Select, Button, Icon },
+    setup() {
+      const category = ref("");
+      const sortBy = ref("");
+      const categories = [
+        { label: "All Categories", value: "" },
+        { label: "Electronics", value: "electronics" },
+        { label: "Clothing", value: "clothing" },
+        { label: "Books", value: "books" },
+        { label: "Home & Garden", value: "home" },
+      ];
+      const sortOptions = [
+        { label: "Sort by", value: "" },
+        { label: "Price: Low to High", value: "price-asc" },
+        { label: "Price: High to Low", value: "price-desc" },
+        { label: "Name: A to Z", value: "name-asc" },
+        { label: "Name: Z to A", value: "name-desc" },
+        { label: "Newest First", value: "newest" },
+      ];
+      return { args, category, sortBy, categories, sortOptions };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <Select 
+          v-model="category"
+          :options="categories"
+          placeholder="Category"
+          class="ltr:rounded-r-none rtl:rounded-l-none"
+        />
+        <Select 
+          v-model="sortBy"
+          :options="sortOptions"
+          placeholder="Sort by"
+          class="rounded-none ltr:border-l-0 rtl:border-r-0"
+        />
+        <Button 
+          variant="secondary" 
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        >
+          <Icon name="IconRefresh" class="w-4 h-4 ltr:mr-2 rtl:ml-2" />
+          Reset
+        </Button>
+      </InputGroup>
+    `,
+  }),
+};
+
+export const CurrencyInput: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input, Select, Icon },
+    setup() {
+      const amount = ref("");
+      const currency = ref("USD");
+      const currencies = [
+        { label: "USD", value: "USD" },
+        { label: "EUR", value: "EUR" },
+        { label: "GBP", value: "GBP" },
+        { label: "JPY", value: "JPY" },
+        { label: "CAD", value: "CAD" },
+      ];
+      return { args, amount, currency, currencies };
+    },
+    template: `
+      <InputGroup v-bind="args">
+        <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+          <Icon name="IconDollarSign" class="w-4 h-4" />
+        </div>
+        <Input 
+          v-model="amount" 
+          placeholder="0.00"
+          type="number"
+          class="rounded-none"
+        />
+        <Select 
+          v-model="currency"
+          :options="currencies"
+          class="ltr:rounded-l-none rtl:rounded-r-none"
+        />
+      </InputGroup>
+    `,
+  }),
+};
+
+// Interactive Examples
+export const Interactive: Story = {
+  render: (args) => ({
+    components: { InputGroup, Input, Button, Icon },
+    setup() {
+      const search = ref("");
+      const isLoading = ref(false);
+
+      const handleSearch = () => {
+        isLoading.value = true;
+        setTimeout(() => {
+          isLoading.value = false;
+        }, 2000);
+      };
+
+      return { args, search, isLoading, handleSearch };
+    },
+    template: `
+      <div class="space-y-4">
+        <InputGroup v-bind="args">
+          <div class="bg-gray-100 dark:bg-gray-700 flex items-center px-3 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 ltr:rounded-l-md rtl:rounded-r-md ltr:border-r-0 rtl:border-l-0">
+            <Icon name="IconSearch" class="w-4 h-4" />
+          </div>
+          <Input 
+            v-model="search" 
+            placeholder="Search for anything..."
+            class="ltr:rounded-l-none rtl:rounded-r-none"
+          />
+          <Button 
+            variant="primary" 
+            :loading="isLoading"
+            class="ltr:rounded-l-none rtl:rounded-r-none"
+            @click="handleSearch"
+          >
+            {{ isLoading ? 'Searching...' : 'Search' }}
+          </Button>
+        </InputGroup>
+        
+        <div v-if="search" class="text-sm text-gray-600 dark:text-gray-400">
+          Searching for: "{{ search }}"
+        </div>
+      </div>
+    `,
+  }),
 };

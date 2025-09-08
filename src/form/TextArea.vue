@@ -23,10 +23,18 @@
           'form-textarea w-full',
           iconName && actualIconPosition === 'left' ? 'pl-10' : '',
           iconName && actualIconPosition === 'right' ? 'pr-10' : '',
-          disabled || cardDisabled
-            ? 'bg-gray-100 cursor-not-allowed'
-            : 'bg-white',
-          error ? 'border-red-500' : 'border-gray-300',
+          // Input group styling takes precedence
+          isInInputGroup
+            ? inputGroupClasses.value
+            : [
+                disabled || cardDisabled
+                  ? 'bg-gray-100 cursor-not-allowed'
+                  : 'bg-white',
+                error ? 'border-red-500' : 'border-gray-300',
+              ],
+
+          // Add flex-1 for input group children
+          isInInputGroup ? 'flex-1' : '',
         ]"
         :placeholder="placeholder"
         :required="required"
@@ -49,6 +57,7 @@
 import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
 import { useAppStore } from "../stores/index";
+import { useInputGroup } from "../composables/use-input-group";
 
 interface TextAreaProps {
   modelValue?: string;
@@ -65,6 +74,7 @@ interface TextAreaProps {
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
+const { isInInputGroup, inputGroupClasses } = useInputGroup();
 
 const props = withDefaults(defineProps<TextAreaProps>(), {
   modelValue: "",
