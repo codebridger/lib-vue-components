@@ -26,6 +26,8 @@
       isLoading ? 'cursor-default' : undefined,
       computedHoverNeutralizeClasses,
       props.chip ? 'is-chip' : undefined,
+      // InputGroup height consistency
+      isInInputGroup ? 'h-10' : undefined,
     ]"
     :disabled="disabled || cardDisabled ? true : undefined"
   >
@@ -74,6 +76,7 @@
 <script setup lang="ts">
 import { computed, inject, useSlots } from "vue";
 import Icon from "../icon/Icon.vue";
+import { useInputGroup } from "../composables/use-input-group";
 
 // Define button props interface
 interface ButtonProps {
@@ -113,6 +116,7 @@ interface ButtonProps {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const slots = useSlots();
+const { isInInputGroup } = useInputGroup();
 
 // Define button props with defaults
 const props = withDefaults(defineProps<ButtonProps>(), {

@@ -30,11 +30,11 @@
         <button
           :id="id"
           :class="[
-            'w-full text-left px-3 py-2.5 transition-colors duration-200',
+            'w-full text-left px-4 py-2 transition-colors duration-200',
             'focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
             // Input group styling takes precedence
             isInInputGroup
-              ? [...inputGroupClasses, 'flex-1']
+              ? [...inputGroupClasses, 'flex-1', 'h-10']
               : [
                   'border rounded-md',
                   props.disabled || cardDisabled

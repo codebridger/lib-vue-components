@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import { ref } from "vue";
 import InputGroup from "./InputGroup.vue";
 import Input from "./Input.vue";
-import TextArea from "./TextArea.vue";
 import Select from "./Select.vue";
 import Button from "../elements/Button.vue";
 import Icon from "../icon/Icon.vue";
@@ -19,7 +18,7 @@ A flexible container component that groups form elements together with proper st
 - **Error State Management**: Coordinates error styling across all children
 - **RTL Support**: Proper right-to-left layout support
 - **Theme Support**: Works with light, dark, and semidark themes
-- **Flexible Layout**: Input and TextArea components automatically take available width with flex-1
+- **Flexible Layout**: Input components automatically take available width with flex-1
 
 ## Common Use Cases
 - Input with prefix/suffix text or icons
@@ -153,28 +152,6 @@ export const WithPrefixAndSuffix: Story = {
         <InputGroupItem>
           .00
         </InputGroupItem>
-      </InputGroup>
-    `,
-  }),
-};
-
-export const WithTextArea: Story = {
-  render: (args) => ({
-    components: { InputGroup, TextArea, InputGroupItem },
-    setup() {
-      const comment = ref("");
-      return { args, comment };
-    },
-    template: `
-      <InputGroup v-bind="args">
-        <InputGroupItem>
-          Comment
-        </InputGroupItem>
-        <TextArea 
-          v-model="comment" 
-          placeholder="Enter your comment"
-          :rows="3"
-        />
       </InputGroup>
     `,
   }),

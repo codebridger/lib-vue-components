@@ -27,7 +27,7 @@
 
           // Input group styling takes precedence
           isInInputGroup
-            ? [...inputGroupClasses, 'flex-1']
+            ? [...inputGroupClasses, 'flex-1', 'h-10']
             : [
                 disabled || cardDisabled
                   ? 'bg-gray-100 cursor-not-allowed'
