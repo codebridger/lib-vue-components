@@ -119,6 +119,18 @@ alwaysApply: false
 - Support validation states with error styling
 - Include proper labels and helper text
 
+#### InputGroup Integration
+- **MANDATORY**: All form input components must support InputGroup integration
+- Import `useInputGroup` composable and destructure required properties
+- Hide individual labels and error messages when `isInInputGroup` is true
+- Use `props.error` directly for error state (InputGroup passes this via props)
+- Apply conditional class binding: InputGroup classes when in group, default when standalone
+- Implement focus/blur event handlers for border management
+- Use `h-10` height and `flex-1` width for form inputs in InputGroup
+- Use content width for buttons in InputGroup
+- Apply `!important` to error borders for proper CSS specificity
+- Exclude TextArea from InputGroup due to height constraints
+
 #### Modal Components
 - Use Headless UI Dialog components
 - Support custom triggers via slots
@@ -189,4 +201,5 @@ alwaysApply: false
 - **RTL Support**: Check directional styling uses logical properties
 - **Accessibility**: Always consider accessibility when creating/modifying components
 - **Pattern Consistency**: Follow established patterns from existing components
+- **InputGroup Compliance**: Ensure all new form components support InputGroup integration
 - **Code Examples**: Provide complete, runnable code examples
