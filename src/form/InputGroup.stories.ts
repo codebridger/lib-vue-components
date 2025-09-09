@@ -231,6 +231,11 @@ export const WithIcons: Story = {
 
 // Error States
 export const WithError: Story = {
+  args: {
+    label: "Username",
+    error: true,
+    errorMessage: "Please enter a valid email address",
+  },
   render: (args) => ({
     components: { InputGroup, Input, Button, InputGroupItem },
     setup() {
@@ -239,9 +244,7 @@ export const WithError: Story = {
     },
     template: `
       <InputGroup 
-        v-bind="args" 
-        error 
-        error-message="Please enter a valid email address"
+        v-bind="args"
       >
         <InputGroupItem>
           @
@@ -259,6 +262,10 @@ export const WithError: Story = {
 };
 
 export const Disabled: Story = {
+  args: {
+    label: "Username",
+    disabled: true,
+  },
   render: (args) => ({
     components: { InputGroup, Input, Button, InputGroupItem },
     setup() {
@@ -266,7 +273,7 @@ export const Disabled: Story = {
       return { args, username };
     },
     template: `
-      <InputGroup v-bind="args" disabled>
+      <InputGroup v-bind="args">
         <InputGroupItem>
           @
         </InputGroupItem>

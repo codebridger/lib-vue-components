@@ -1,6 +1,10 @@
 <template>
   <div class="flex flex-col gap-1">
-    <label v-if="label" :for="id" class="text-sm font-medium text-gray-700">
+    <label
+      v-if="label && !isInInputGroup"
+      :for="id"
+      class="text-sm font-medium text-gray-700"
+    >
       {{ label }}
       <span v-if="required" class="text-red-500">*</span>
     </label>
@@ -32,12 +36,14 @@
                 'flex-1',
                 'h-10',
                 'focus:ring-2 focus:ring-primary/20 focus:border-primary',
+                // Ensure error state is applied even in InputGroup
+                effectiveError ? '!border-red-500' : '',
               ]
             : [
                 disabled || cardDisabled
                   ? 'bg-gray-100 cursor-not-allowed'
                   : 'bg-white',
-                error ? 'border-red-500' : 'border-gray-300',
+                effectiveError ? 'border-red-500' : 'border-gray-300',
               ],
         ]"
         :id="id"
@@ -55,9 +61,11 @@
       />
     </div>
 
-    <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">{{
-      errorMessage
-    }}</span>
+    <span
+      v-if="error && errorMessage && !isInInputGroup"
+      class="text-sm text-red-500 mt-1"
+      >{{ errorMessage }}</span
+    >
   </div>
 </template>
 
@@ -109,7 +117,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
-const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur } =
+const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur, context } =
   useInputGroup();
 
 // Calculate icon position based on existing RTL state and iconOppositePosition
@@ -121,6 +129,12 @@ const actualIconPosition = computed(() => {
     // Behind content (default): left in LTR, right in RTL
     return store.isRtl ? "right" : "left";
   }
+});
+
+// Use group error state when in InputGroup, otherwise use component's own error state
+const effectiveError = computed(() => {
+  // Always use props.error - InputGroup passes this via props
+  return props.error;
 });
 
 const emit = defineEmits<{

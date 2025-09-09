@@ -10,5 +10,5 @@
 <script setup lang="ts">
 import { useInputGroup } from "../composables/use-input-group";
 
-const { isInInputGroup, inputGroupItemClasses } = useInputGroup();
+const { isInInputGroup, inputGroupItemClasses, context } = useInputGroup();
 </script>

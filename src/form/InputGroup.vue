@@ -19,6 +19,8 @@
             'data-input-group-total': children.length,
             'data-input-group-remove-right-border': index < children.length - 1,
             'data-input-group-index': index,
+            // Pass error state to children for styling
+            error: props.error,
           }"
           :class="getChildBorderClasses(index)"
           @focus="handleChildFocus(index)"

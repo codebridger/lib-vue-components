@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-1">
     <label
-      v-if="label"
+      v-if="label && !isInInputGroup"
       :for="id"
       class="text-sm font-medium text-gray-700 dark:text-gray-300"
     >
@@ -39,13 +39,15 @@
                   'flex-1',
                   'h-10',
                   'focus:ring-2 focus:ring-primary/20 focus:border-primary',
+                  // Ensure error state is applied even in InputGroup
+                  effectiveError ? '!border-red-500' : '',
                 ]
               : [
                   'border rounded-md',
                   props.disabled || cardDisabled
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
                     : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100',
-                  error
+                  effectiveError
                     ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
                     : '',
                 ],
@@ -287,7 +289,10 @@
       </div>
     </div>
 
-    <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">
+    <span
+      v-if="error && errorMessage && !isInInputGroup"
+      class="text-sm text-red-500 mt-1"
+    >
       {{ errorMessage }}
     </span>
   </div>
@@ -377,7 +382,7 @@ const emit = defineEmits<{
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
-const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur } =
+const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur, context } =
   useInputGroup();
 
 // Reactive state
@@ -385,6 +390,12 @@ const isOpen = ref(false);
 const searchQuery = ref("");
 const searchInput = ref<HTMLInputElement>();
 const originalValue = ref<any>(undefined);
+
+// Use group error state when in InputGroup, otherwise use component's own error state
+const effectiveError = computed(() => {
+  // Always use props.error - InputGroup passes this via props
+  return props.error;
+});
 
 // Computed properties
 const actualIconPosition = computed(() =>

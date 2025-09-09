@@ -49,7 +49,7 @@ export function useInputGroup() {
     );
 
     if (error) {
-      classes.push("border-red-500");
+      classes.push("!border-red-500");
     } else {
       classes.push("border-gray-300 dark:border-gray-600");
     }
@@ -106,11 +106,14 @@ export function useInputGroup() {
     );
 
     if (error) {
-      classes.push("border-red-500");
+      classes.push("!border-red-500");
     } else if (disabled) {
       classes.push("border-gray-300 dark:border-gray-600");
+    } else {
+      // Don't set border color when not disabled or error - let button color classes handle it
+      // But we still need a base border for the group styling
+      classes.push("border-gray-300 dark:border-gray-600");
     }
-    // Don't set border color when not disabled or error - let button color classes handle it
 
     if (disabled) {
       classes.push("bg-gray-100 dark:bg-gray-700 cursor-not-allowed");
