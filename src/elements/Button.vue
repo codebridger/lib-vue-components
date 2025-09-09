@@ -46,6 +46,8 @@
           ],
     ]"
     :disabled="disabled || cardDisabled || isLoading ? true : undefined"
+    @focus="handleFocusEvent"
+    @blur="handleBlurEvent"
   >
     <!-- Loading Icon -->
     <span
@@ -132,7 +134,8 @@ interface ButtonProps {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const slots = useSlots();
-const { isInInputGroup, inputGroupButtonClasses } = useInputGroup();
+const { isInInputGroup, inputGroupButtonClasses, handleFocus, handleBlur } =
+  useInputGroup();
 
 // Template ref for the button element
 const buttonRef = ref<HTMLElement | null>(null);
@@ -322,6 +325,19 @@ const onClick = async () => {
 
 const onChipClick = () => {
   emit("chip-click");
+};
+
+// Focus event handlers for InputGroup
+const handleFocusEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleFocus) {
+    handleFocus();
+  }
+};
+
+const handleBlurEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleBlur) {
+    handleBlur();
+  }
 };
 
 // In chip + outline-gradient, Storybook CSS applies hover changes via utility classes.

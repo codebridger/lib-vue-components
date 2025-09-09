@@ -1,10 +1,11 @@
-import { inject, computed, getCurrentInstance } from "vue";
+import { inject, computed, getCurrentInstance, ref } from "vue";
 
 interface InputGroupContext {
   isRtl: boolean;
   isDarkMode: boolean;
   error: boolean;
   disabled: boolean;
+  removeRightBorder?: boolean;
 }
 
 export function useInputGroup() {
@@ -28,6 +29,15 @@ export function useInputGroup() {
   const position = instance?.vnode?.props?.["data-input-group-position"] as
     | string
     | null;
+  const removeRightBorder = instance?.vnode?.props?.[
+    "data-input-group-remove-right-border"
+  ] as boolean | null;
+  const childIndex = instance?.vnode?.props?.["data-input-group-index"] as
+    | number
+    | null;
+
+  // Track focus state for this specific child
+  const isFocused = ref(false);
 
   const inputGroupClasses = computed(() => {
     const classes: string[] = [];
@@ -35,7 +45,7 @@ export function useInputGroup() {
 
     // Base classes for input group children (replaces form-input)
     classes.push(
-      "border px-4 py-2 text-sm font-semibold text-black dark:text-white-dark focus:outline-none"
+      "border px-4 py-2 text-sm font-semibold text-black dark:text-white-dark focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
     );
 
     if (error) {
@@ -64,6 +74,11 @@ export function useInputGroup() {
       }
     }
 
+    // Border removal for seamless connection - but not when focused
+    if (removeRightBorder && !isFocused.value) {
+      classes.push("border-r-0");
+    }
+
     return classes;
   });
 
@@ -86,7 +101,9 @@ export function useInputGroup() {
     const { isRtl, error, disabled } = inputGroupContext;
 
     // Base classes for buttons in input group - only border and padding
-    classes.push("border px-4 py-2 focus:outline-none");
+    classes.push(
+      "border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+    );
 
     if (error) {
       classes.push("border-red-500");
@@ -114,8 +131,22 @@ export function useInputGroup() {
       }
     }
 
+    // Border removal for seamless connection - but not when focused
+    if (removeRightBorder && !isFocused.value) {
+      classes.push("border-r-0");
+    }
+
     return classes;
   });
+
+  // Focus event handlers
+  const handleFocus = () => {
+    isFocused.value = true;
+  };
+
+  const handleBlur = () => {
+    isFocused.value = false;
+  };
 
   return {
     isInInputGroup: true,
@@ -125,5 +156,7 @@ export function useInputGroup() {
     inputGroupButtonClasses,
     inputGroupBorderClasses: inject<string>("inputGroupBorderClasses", ""),
     context: inputGroupContext,
+    handleFocus,
+    handleBlur,
   };
 }

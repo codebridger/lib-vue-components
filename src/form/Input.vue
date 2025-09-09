@@ -49,8 +49,8 @@
         :min="type === 'range' ? min : undefined"
         :max="type === 'range' ? max : undefined"
         @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
-        @blur="$emit('blur', $event)"
-        @focus="$emit('focus', $event)"
+        @blur="handleBlurEvent"
+        @focus="handleFocusEvent"
         @keyup.enter="handleEnterKey"
       />
     </div>
@@ -109,7 +109,8 @@ const props = withDefaults(defineProps<InputProps>(), {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
-const { isInInputGroup, inputGroupClasses } = useInputGroup();
+const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur } =
+  useInputGroup();
 
 // Calculate icon position based on existing RTL state and iconOppositePosition
 const actualIconPosition = computed(() => {
@@ -166,5 +167,20 @@ const handleEnterKey = (event: KeyboardEvent) => {
 
 const handleIconClick = (event: MouseEvent) => {
   emit("iconClick", event);
+};
+
+// Focus event handlers for InputGroup
+const handleFocusEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleFocus) {
+    handleFocus();
+  }
+  emit("focus", event);
+};
+
+const handleBlurEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleBlur) {
+    handleBlur();
+  }
+  emit("blur", event);
 };
 </script>

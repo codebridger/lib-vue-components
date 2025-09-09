@@ -57,6 +57,8 @@
           :aria-labelledby="label ? `${id}-label` : undefined"
           @click="toggleDropdown"
           @keydown="handleKeydown"
+          @focus="handleFocusEvent"
+          @blur="handleBlurEvent"
         >
           <div class="flex items-center justify-between">
             <div class="flex-1 min-w-0">
@@ -375,7 +377,8 @@ const emit = defineEmits<{
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
-const { isInInputGroup, inputGroupClasses } = useInputGroup();
+const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur } =
+  useInputGroup();
 
 // Reactive state
 const isOpen = ref(false);
@@ -534,6 +537,21 @@ const handleIconClick = () => {
   if (!props.disabled && !cardDisabled) {
     toggleDropdown();
   }
+};
+
+// Focus event handlers for InputGroup
+const handleFocusEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleFocus) {
+    handleFocus();
+  }
+  emit("focus", event);
+};
+
+const handleBlurEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleBlur) {
+    handleBlur();
+  }
+  emit("blur", event);
 };
 
 const handleKeydown = (event: KeyboardEvent) => {
