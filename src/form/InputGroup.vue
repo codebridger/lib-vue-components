@@ -2,7 +2,6 @@
   <div class="flex flex-col gap-1">
     <label
       v-if="label"
-      :for="id"
       class="text-sm font-medium text-gray-700 dark:text-gray-300"
     >
       {{ label }}
@@ -19,8 +18,9 @@
             'data-input-group-total': children.length,
             'data-input-group-remove-right-border': index < children.length - 1,
             'data-input-group-index': index,
-            // Pass error state to children for styling
+            // Pass error and disabled state to children for styling
             error: props.error,
+            disabled: props.disabled,
           }"
           :class="getChildBorderClasses(index)"
           @focus="handleChildFocus(index)"
@@ -41,7 +41,6 @@ import { useAppStore } from "../stores/index";
 
 interface InputGroupProps {
   label?: string;
-  id?: string;
   required?: boolean;
   error?: boolean;
   errorMessage?: string;
@@ -50,7 +49,6 @@ interface InputGroupProps {
 
 const props = withDefaults(defineProps<InputGroupProps>(), {
   label: "",
-  id: "",
   required: false,
   error: false,
   errorMessage: "",

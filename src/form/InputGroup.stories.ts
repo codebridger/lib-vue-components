@@ -46,10 +46,6 @@ const meta = {
       control: "text",
       description: "Label text for the input group",
     },
-    id: {
-      control: "text",
-      description: "ID for the input group (used for label association)",
-    },
     required: {
       control: "boolean",
       description: "Whether the input group is required",
@@ -69,7 +65,6 @@ const meta = {
   } as any,
   args: {
     label: "Username",
-    id: "username",
     required: false,
     error: false,
     errorMessage: "",

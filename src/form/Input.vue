@@ -38,6 +38,12 @@
                 'focus:ring-2 focus:ring-primary/20 focus:border-primary',
                 // Ensure error state is applied even in InputGroup
                 effectiveError ? '!border-red-500' : '',
+                // Handle disabled styling when in InputGroup
+                (isInInputGroup && context && context.disabled) ||
+                disabled ||
+                cardDisabled
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                  : '',
               ]
             : [
                 disabled || cardDisabled
@@ -50,7 +56,11 @@
         :type="type"
         :value="modelValue"
         :placeholder="placeholder"
-        :disabled="disabled || cardDisabled"
+        :disabled="
+          isInInputGroup && context
+            ? context.disabled
+            : disabled || cardDisabled
+        "
         :required="required"
         :min="type === 'range' ? min : undefined"
         :max="type === 'range' ? max : undefined"

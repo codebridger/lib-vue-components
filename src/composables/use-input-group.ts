@@ -54,11 +54,8 @@ export function useInputGroup() {
       classes.push("border-gray-300 dark:border-gray-600");
     }
 
-    if (disabled) {
-      classes.push("bg-gray-100 dark:bg-gray-700 cursor-not-allowed");
-    } else {
-      classes.push("bg-white dark:bg-gray-800");
-    }
+    // Don't handle disabled styling here - let child components handle their own disabled styling
+    classes.push("bg-white dark:bg-gray-800");
 
     // Position-based styling - with gaps, all elements get full borders and radius
     if (position) {
@@ -115,10 +112,8 @@ export function useInputGroup() {
       classes.push("border-gray-300 dark:border-gray-600");
     }
 
-    if (disabled) {
-      classes.push("bg-gray-100 dark:bg-gray-700 cursor-not-allowed");
-    }
-    // Don't set background color when not disabled - let button color classes handle it
+    // Don't handle disabled styling here - let child components handle their own disabled styling
+    // Don't set background color - let button color classes handle it
 
     // Position-based styling - with gaps, all elements get full borders and radius
     if (position) {

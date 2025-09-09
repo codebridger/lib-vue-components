@@ -23,6 +23,12 @@
             computedActiveColor,
             computedFocusColor,
             computedHoverNeutralizeClasses,
+            // Handle disabled styling when in InputGroup
+            (isInInputGroup && context && context.disabled) ||
+            disabled ||
+            cardDisabled
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+              : '',
           ]
         : [
             disabled || cardDisabled
@@ -134,8 +140,13 @@ interface ButtonProps {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const slots = useSlots();
-const { isInInputGroup, inputGroupButtonClasses, handleFocus, handleBlur } =
-  useInputGroup();
+const {
+  isInInputGroup,
+  inputGroupButtonClasses,
+  handleFocus,
+  handleBlur,
+  context,
+} = useInputGroup();
 
 // Template ref for the button element
 const buttonRef = ref<HTMLElement | null>(null);
