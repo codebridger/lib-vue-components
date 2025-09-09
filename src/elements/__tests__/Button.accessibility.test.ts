@@ -162,9 +162,8 @@ describe("Button Component Accessibility", () => {
     it("is disabled during loading", () => {
       const wrapper = createWrapper({ isLoading: true });
       const button = wrapper.find("button");
-      // Note: The Button component doesn't disable during loading
-      // This test documents the expected behavior for future implementation
-      expect(button.attributes("disabled")).toBeUndefined();
+      // The Button component disables during loading for better UX
+      expect(button.attributes("disabled")).toBe("");
     });
   });
 

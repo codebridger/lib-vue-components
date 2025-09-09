@@ -80,6 +80,10 @@ const meta = {
       description:
         "Enable badge mode (non-interactive): no click events and default cursor",
     },
+    label: {
+      control: "text",
+      description: "Label text to display when in badge mode",
+    },
   },
   args: {
     color: "default",
@@ -476,6 +480,138 @@ export const BadgeVariants: Story = {
     await step("Verify badge variants story renders correctly", async () => {
       // Verify the story renders without errors
       const title = canvas.getByText("IconButton Badge Variants");
+      expect(title).toBeInTheDocument();
+
+      // Verify we have some IconButton elements
+      const iconButtons = canvas.getAllByRole("generic");
+      expect(iconButtons.length).toBeGreaterThan(0);
+    });
+  },
+};
+
+export const BadgeLabelSizes: Story = {
+  render: (args) => ({
+    components: { IconButton },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="p-6 bg-gray-50 dark:bg-gray-900">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">IconButton Badge with Labels - Size Variants</h3>
+        <div class="flex gap-4 items-center flex-wrap">
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" size="xs" label="New" color="success" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">XS</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" size="sm" label="Hot" color="danger" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">SM</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" size="md" label="Featured" color="primary" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">MD</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" size="lg" label="Trending" color="warning" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">LG</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" size="xl" label="Popular" color="info" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">XL</span>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-3">
+          Badge mode with labels at different sizes - note how label text scales with icon size
+        </p>
+      </div>
+    `,
+  }),
+  args: {
+    rounded: "full",
+    badge: true,
+    icon: "IconStar",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Demonstrates how labels scale with different badge sizes.",
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify badge label sizes story renders correctly", async () => {
+      // Verify the story renders without errors
+      const title = canvas.getByText("IconButton Badge with Labels - Size Variants");
+      expect(title).toBeInTheDocument();
+
+      // Verify we have some IconButton elements
+      const iconButtons = canvas.getAllByRole("generic");
+      expect(iconButtons.length).toBeGreaterThan(0);
+    });
+  },
+};
+
+export const BadgeWithLabelsVariants: Story = {
+  render: (args) => ({
+    components: { IconButton },
+    setup() {
+      return { args };
+    },
+    template: `
+      <div class="p-6 bg-gray-50 dark:bg-gray-900">
+        <h3 class="text-lg font-semibold mb-4 text-gray-800 dark:text-white">IconButton Badge with Labels - Color Variants</h3>
+        <div class="flex gap-4 items-center flex-wrap">
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="primary" icon="IconStar" badge label="Premium" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Primary</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="success" icon="IconCheck" badge label="Verified" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Success</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="warning" icon="IconAlertTriangle" badge label="Warning" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Warning</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="danger" icon="IconX" badge label="Blocked" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Danger</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="info" icon="IconInfo" badge label="Info" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Info</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <IconButton v-bind="args" color="secondary" icon="IconSettings" badge label="Settings" />
+            <span class="text-xs text-gray-600 dark:text-gray-400">Secondary</span>
+          </div>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-3">
+          Badge mode with labels in different colors - perfect for status indicators and tags
+        </p>
+      </div>
+    `,
+  }),
+  args: {
+    rounded: "full",
+    size: "md",
+    badge: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Multiple badge color examples with labels.",
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step("Verify badge with labels variants story renders correctly", async () => {
+      // Verify the story renders without errors
+      const title = canvas.getByText("IconButton Badge with Labels - Color Variants");
       expect(title).toBeInTheDocument();
 
       // Verify we have some IconButton elements

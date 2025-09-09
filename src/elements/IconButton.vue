@@ -21,6 +21,9 @@
       computedColor,
 
       computedRounded,
+
+      // Badge mode with label adjustments
+      props.badge && props.label ? 'px-3 py-2 gap-2' : '',
     ]"
     :disabled="disabled || cardDisabled || isLoading"
   >
@@ -45,6 +48,14 @@
         :class="[computedSize]"
       />
     </slot>
+
+    <!-- Label for badge mode -->
+    <span
+      v-if="props.badge && props.label"
+      :class="[computedLabelSize, 'font-medium']"
+    >
+      {{ props.label }}
+    </span>
   </div>
 </template>
 
@@ -78,6 +89,10 @@ interface IconButtonProps {
    * Enable badge mode - removes click functionality and pointer cursor
    */
   badge?: boolean;
+  /**
+   * Label text to display when in badge mode
+   */
+  label?: string;
 }
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
@@ -149,6 +164,17 @@ const computedSize = computed(() => {
     xl: "h-14 w-14",
   };
   return sizes[props.size || "lg"];
+});
+
+const computedLabelSize = computed(() => {
+  const labelSizes = {
+    xs: "text-xs",
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+    xl: "text-xl",
+  };
+  return labelSizes[props.size || "lg"];
 });
 
 const onClick = () => {

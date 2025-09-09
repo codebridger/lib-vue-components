@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-1">
     <label
-      v-if="label"
+      v-if="label && !isInInputGroup"
       :for="id"
       class="text-sm font-medium text-gray-700 dark:text-gray-300"
     >
@@ -30,22 +30,47 @@
         <button
           :id="id"
           :class="[
-            'w-full text-left px-3 py-2.5 border rounded-md transition-colors duration-200',
+            'w-full text-left px-4 py-2 transition-colors duration-200',
             'focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary',
-            props.disabled || cardDisabled
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
-              : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100',
-            error
-              ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
-              : '',
+            // Input group styling takes precedence
+            isInInputGroup
+              ? [
+                  ...inputGroupClasses,
+                  'flex-1',
+                  'h-10',
+                  'focus:ring-2 focus:ring-primary/20 focus:border-primary',
+                  // Ensure error state is applied even in InputGroup
+                  effectiveError ? '!border-red-500' : '',
+                  // Handle disabled styling when in InputGroup
+                  (isInInputGroup && context && context.disabled) ||
+                  props.disabled ||
+                  cardDisabled
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                    : '',
+                ]
+              : [
+                  'border rounded-md',
+                  props.disabled || cardDisabled
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                    : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100',
+                  effectiveError
+                    ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500'
+                    : '',
+                ],
             isOpen ? 'border-primary' : '',
           ]"
-          :disabled="props.disabled || cardDisabled"
+          :disabled="
+            isInInputGroup && context
+              ? context.disabled
+              : props.disabled || cardDisabled
+          "
           :aria-expanded="isOpen"
           :aria-haspopup="true"
           :aria-labelledby="label ? `${id}-label` : undefined"
           @click="toggleDropdown"
           @keydown="handleKeydown"
+          @focus="handleFocusEvent"
+          @blur="handleBlurEvent"
         >
           <div class="flex items-center justify-between">
             <div class="flex-1 min-w-0">
@@ -274,7 +299,10 @@
       </div>
     </div>
 
-    <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">
+    <span
+      v-if="error && errorMessage && !isInInputGroup"
+      class="text-sm text-red-500 mt-1"
+    >
       {{ errorMessage }}
     </span>
   </div>
@@ -285,6 +313,7 @@ import { ref, computed, nextTick, watch, onMounted, onUnmounted } from "vue";
 import { inject } from "vue";
 import Icon from "../icon/Icon.vue";
 import { useAppStore } from "../stores/index";
+import { useInputGroup } from "../composables/use-input-group";
 
 interface SelectOption {
   [key: string]: any;
@@ -363,12 +392,20 @@ const emit = defineEmits<{
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
+const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur, context } =
+  useInputGroup();
 
 // Reactive state
 const isOpen = ref(false);
 const searchQuery = ref("");
 const searchInput = ref<HTMLInputElement>();
 const originalValue = ref<any>(undefined);
+
+// Use group error state when in InputGroup, otherwise use component's own error state
+const effectiveError = computed(() => {
+  // Always use props.error - InputGroup passes this via props
+  return props.error;
+});
 
 // Computed properties
 const actualIconPosition = computed(() =>
@@ -521,6 +558,21 @@ const handleIconClick = () => {
   if (!props.disabled && !cardDisabled) {
     toggleDropdown();
   }
+};
+
+// Focus event handlers for InputGroup
+const handleFocusEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleFocus) {
+    handleFocus();
+  }
+  emit("focus", event);
+};
+
+const handleBlurEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleBlur) {
+    handleBlur();
+  }
+  emit("blur", event);
 };
 
 const handleKeydown = (event: KeyboardEvent) => {
