@@ -42,7 +42,11 @@
                   // Ensure error state is applied even in InputGroup
                   effectiveError ? '!border-red-500' : '',
                   // Handle disabled styling when in InputGroup
-                  (isInInputGroup && context && context.disabled) ||
+                  (isInInputGroup &&
+                    context &&
+                    (props.disabled !== undefined
+                      ? props.disabled
+                      : context.disabled)) ||
                   props.disabled ||
                   cardDisabled
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
@@ -61,7 +65,9 @@
           ]"
           :disabled="
             isInInputGroup && context
-              ? context.disabled
+              ? props.disabled !== undefined
+                ? props.disabled
+                : context.disabled
               : props.disabled || cardDisabled
           "
           :aria-expanded="isOpen"
@@ -357,7 +363,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   modelValue: undefined,
   options: () => [],
   placeholder: "Select an option",
-  disabled: false,
+  disabled: undefined,
   required: false,
   error: false,
   errorMessage: "",

@@ -132,7 +132,7 @@ describe("InputGroup Component", () => {
       expect(inputComponent.props("error")).toBe(true);
     });
 
-    it("passes disabled prop to child components", () => {
+    it("provides disabled state via context when child disabled is undefined", () => {
       wrapper = mount(InputGroup, {
         props: { disabled: true },
         slots: {
@@ -143,9 +143,9 @@ describe("InputGroup Component", () => {
         },
       });
 
-      // The Input component should receive the disabled prop
+      // The Input component should use InputGroup's disabled state via context
       const inputComponent = wrapper.findComponent(Input);
-      expect(inputComponent.props("disabled")).toBe(true);
+      expect(inputComponent.find("input").element.disabled).toBe(true);
     });
   });
 
@@ -300,7 +300,7 @@ describe("InputGroup Component", () => {
   });
 
   describe("Disabled States", () => {
-    it("passes disabled state to child components", () => {
+    it("uses InputGroup disabled state when child disabled is undefined", () => {
       wrapper = mount(InputGroup, {
         props: { disabled: true },
         slots: {
@@ -312,7 +312,57 @@ describe("InputGroup Component", () => {
       });
 
       const input = wrapper.findComponent(Input);
-      expect(input.props("disabled")).toBe(true);
+      // Child doesn't have disabled prop, so it should use InputGroup's disabled state
+      expect(input.find("input").element.disabled).toBe(true);
+    });
+
+    it("prioritizes child disabled prop over InputGroup disabled prop", () => {
+      wrapper = mount(InputGroup, {
+        props: { disabled: true },
+        slots: {
+          default: `<Input model-value="test" :disabled="false" />`,
+        },
+        global: {
+          components: { Input },
+        },
+      });
+
+      const input = wrapper.findComponent(Input);
+      // Child's disabled=false should override InputGroup's disabled=true
+      // Check the actual disabled property of the DOM element
+      expect(input.find("input").element.disabled).toBe(false);
+    });
+
+    it("uses InputGroup disabled when child disabled is undefined (duplicate test)", () => {
+      wrapper = mount(InputGroup, {
+        props: { disabled: true },
+        slots: {
+          default: `<Input model-value="test" />`,
+        },
+        global: {
+          components: { Input },
+        },
+      });
+
+      const input = wrapper.findComponent(Input);
+      // Should use InputGroup's disabled=true when child disabled is undefined
+      expect(input.find("input").element.disabled).toBe(true);
+    });
+
+    it("prioritizes child disabled=true over InputGroup disabled=false", () => {
+      wrapper = mount(InputGroup, {
+        props: { disabled: false },
+        slots: {
+          default: `<Input model-value="test" :disabled="true" />`,
+        },
+        global: {
+          components: { Input },
+        },
+      });
+
+      const input = wrapper.findComponent(Input);
+      // Child's disabled=true should override InputGroup's disabled=false
+      expect(input.find("input").element.disabled).toBe(true);
     });
   });
 

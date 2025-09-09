@@ -290,9 +290,9 @@ describe("InputGroup Component Accessibility", () => {
         }
       );
 
-      // Disabled state should be passed to child components
+      // Disabled state should be applied to child components via context
       const input = wrapper.findComponent(Input);
-      expect(input.props("disabled")).toBe(true);
+      expect(input.find("input").element.disabled).toBe(true);
     });
 
     it("maintains disabled state consistency", () => {
@@ -303,10 +303,10 @@ describe("InputGroup Component Accessibility", () => {
         }
       );
 
-      // Child component should receive disabled state
+      // Child component should receive disabled state via context
       const input = wrapper.findComponent(Input);
 
-      expect(input.props("disabled")).toBe(true);
+      expect(input.find("input").element.disabled).toBe(true);
     });
   });
 
