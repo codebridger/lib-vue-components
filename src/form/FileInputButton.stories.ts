@@ -17,7 +17,7 @@ Accessible file picker that pairs a styled button with a native file input under
 Use when you need a simple, button-driven file chooser without drag-and-drop.
 `;
 const meta: Meta<typeof FileInputButton> = {
-  title: "Elements/FileInputButton",
+  title: "Form/FileInputButton",
   component: FileInputButton,
   tags: ["autodocs"],
   parameters: {

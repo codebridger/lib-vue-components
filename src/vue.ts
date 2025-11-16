@@ -8,7 +8,15 @@ import "./assets/css/app.css";
 import appSetting from "./app-setting";
 import * as ShellComponents from "./shell/components";
 import * as Components from "./elements/components";
+import * as FormComponents from "./form/components";
+import * as ComplexComponents from "./complex/components";
 import { PluginOptionsType } from "./types/initialize.type";
+
+// Export all components from root level
+export * from "./shell/components";
+export * from "./elements/components";
+export * from "./form/components";
+export * from "./complex/components";
 
 export default {
   install: (app: App, options: PluginOptionsType) => {
@@ -59,6 +67,14 @@ export default {
 
     Object.keys(Components).forEach((key) => {
       app.component(prefix + key, ShellComponents[key]);
+    });
+
+    Object.keys(FormComponents).forEach((key) => {
+      app.component(prefix + key, FormComponents[key]);
+    });
+
+    Object.keys(ComplexComponents).forEach((key) => {
+      app.component(prefix + key, ComplexComponents[key]);
     });
 
     // Check if we're on client-side

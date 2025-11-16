@@ -1,0 +1,120 @@
+import { describe, it, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import SwitchBall from "../SwitchBall.vue";
+describe("SwitchBall Component Accessibility", () => {
+  const createWrapper = (props = {}) => {
+    return mount(SwitchBall, {
+      props: {
+        id: "test-switch",
+        modelValue: false,
+        label: "Test Label",
+        sublabel: "Test Sublabel",
+        ...props,
+      },
+    });
+  };
+  describe("ARIA Attributes", () => {
+    it("supports custom aria-label", () => {
+      const wrapper = createWrapper({ "aria-label": "Toggle notifications" });
+      expect(wrapper.attributes("aria-label")).toBe("Toggle notifications");
+    });
+    it("supports aria-describedby", () => {
+      const wrapper = createWrapper({
+        "aria-describedby": "switch-description",
+      });
+      expect(wrapper.attributes("aria-describedby")).toBe("switch-description");
+    });
+    it("supports role attribute", () => {
+      const wrapper = createWrapper({ role: "switch" });
+      expect(wrapper.attributes("role")).toBe("switch");
+    });
+  });
+  describe("Label Association", () => {
+    it("associates label with input using for attribute", () => {
+      const wrapper = createWrapper({ id: "test-switch" });
+      const label = wrapper.find("label");
+      const input = wrapper.find('input[type="checkbox"]');
+      expect(label.attributes("for")).toBe("test-switch");
+      expect(input.attributes("id")).toBe("test-switch");
+    });
+    it("provides meaningful label text", () => {
+      const wrapper = createWrapper({ label: "Enable dark mode" });
+      expect(wrapper.text()).toContain("Enable dark mode");
+    });
+    it("provides meaningful sublabel text", () => {
+      const wrapper = createWrapper({
+        label: "Notifications",
+        sublabel: "Receive email notifications",
+      });
+      expect(wrapper.text()).toContain("Notifications");
+      expect(wrapper.text()).toContain("Receive email notifications");
+    });
+  });
+  describe("Keyboard Navigation", () => {
+    it("supports tabindex", () => {
+      const wrapper = createWrapper({ tabindex: "0" });
+      expect(wrapper.attributes("tabindex")).toBe("0");
+    });
+    it("can be removed from tab order", () => {
+      const wrapper = createWrapper({ tabindex: "-1" });
+      expect(wrapper.attributes("tabindex")).toBe("-1");
+    });
+  });
+  describe("Focus Management", () => {
+    it("supports focus event handling", async () => {
+      const wrapper = createWrapper({ tabindex: "0" });
+      await wrapper.trigger("focus");
+      expect(wrapper.emitted("focus")).toBeTruthy();
+    });
+    it("supports blur event handling", async () => {
+      const wrapper = createWrapper({ tabindex: "0" });
+      await wrapper.trigger("blur");
+      expect(wrapper.emitted("blur")).toBeTruthy();
+    });
+  });
+  describe("Screen Reader Support", () => {
+    it("provides meaningful context for screen readers", () => {
+      const wrapper = createWrapper({
+        label: "Enable accessibility features",
+        "aria-label": "Toggle accessibility features",
+      });
+      expect(wrapper.attributes("aria-label")).toBe(
+        "Toggle accessibility features"
+      );
+      expect(wrapper.text()).toContain("Enable accessibility features");
+    });
+    it("announces state changes", () => {
+      const wrapper = createWrapper({
+        modelValue: true,
+        label: "Notifications enabled",
+      });
+      const input = wrapper.find('input[type="checkbox"]');
+      expect(input.element.checked).toBe(true);
+    });
+    it("provides context for different states", () => {
+      const wrapper = createWrapper({
+        modelValue: false,
+        label: "Notifications disabled",
+      });
+      const input = wrapper.find('input[type="checkbox"]');
+      expect(input.element.checked).toBe(false);
+    });
+  });
+  describe("Switch Specific Accessibility", () => {
+    it("supports switch role", () => {
+      const wrapper = createWrapper({
+        role: "switch",
+        "aria-checked": "false",
+      });
+      expect(wrapper.attributes("role")).toBe("switch");
+      expect(wrapper.attributes("aria-checked")).toBe("false");
+    });
+    it("indicates checked state", () => {
+      const wrapper = createWrapper({
+        modelValue: true,
+        "aria-checked": "true",
+      });
+      expect(wrapper.attributes("aria-checked")).toBe("true");
+    });
+  });
+});

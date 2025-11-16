@@ -4,7 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "version": "1.25.0",
+  "version": "1.17.0-dev.38",
   "type": "module",
   "files": [
     "dist",
@@ -28,6 +28,11 @@
       "types": "./src/complex/components.ts",
       "import": "./dist/complex.es.js",
       "require": "./dist/complex.cjs.js"
+    },
+    "./form": {
+      "types": "./src/form/components.ts",
+      "import": "./dist/form.es.js",
+      "require": "./dist/form.cjs.js"
     },
     "./toast": {
       "types": "./src/utils/toast.ts",

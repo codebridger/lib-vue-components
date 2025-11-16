@@ -23,7 +23,7 @@ function formatFileSize(bytes: number): string {
 }
 
 const meta = {
-  title: "Elements/FileInputCombo",
+  title: "Form/FileInputCombo",
   component: FileInputCombo,
   tags: ["autodocs"],
   argTypes: {

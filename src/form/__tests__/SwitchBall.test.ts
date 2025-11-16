@@ -1,0 +1,156 @@
+import { describe, it, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import SwitchBall from "../SwitchBall.vue";
+describe("SwitchBall Component", () => {
+  const createWrapper = (props = {}) => {
+    return mount(SwitchBall, {
+      props: {
+        id: "test-switch",
+        modelValue: false,
+        label: "Test Label",
+        sublabel: "Test Sublabel",
+        ...props,
+      },
+    });
+  };
+  describe("Rendering", () => {
+    it("renders as label element by default", () => {
+      const wrapper = createWrapper();
+      expect(wrapper.find("label").exists()).toBe(true);
+    });
+    it("renders with default classes", () => {
+      const wrapper = createWrapper();
+      expect(wrapper.classes()).toContain("relative");
+      expect(wrapper.classes()).toContain("inline-flex");
+      expect(wrapper.classes()).toContain("items-center");
+      expect(wrapper.classes()).toContain("cursor-pointer");
+    });
+    it("renders with custom class", () => {
+      const wrapper = createWrapper({ class: "custom-switch" });
+      expect(wrapper.classes()).toContain("custom-switch");
+    });
+  });
+  describe("Input Rendering", () => {
+    it("renders checkbox input", () => {
+      const wrapper = createWrapper();
+      const input = wrapper.find('input[type="checkbox"]');
+      expect(input.exists()).toBe(true);
+    });
+    it("sets checked state based on modelValue", () => {
+      const wrapper = createWrapper({ modelValue: true });
+      const input = wrapper.find('input[type="checkbox"]');
+      expect(input.element.checked).toBe(true);
+    });
+    it("sets id attribute", () => {
+      const wrapper = createWrapper({ id: "custom-id" });
+      const input = wrapper.find('input[type="checkbox"]');
+      expect(input.attributes("id")).toBe("custom-id");
+    });
+  });
+  describe("Props and Styling", () => {
+    it("applies color classes correctly", () => {
+      const colors = [
+        "default",
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "secondary",
+        "dark",
+        "gradient",
+      ];
+      colors.forEach((color) => {
+        const wrapper = createWrapper({ color });
+        expect(wrapper.exists()).toBe(true);
+      });
+    });
+    it("renders label text", () => {
+      const wrapper = createWrapper({ label: "Switch Label" });
+      expect(wrapper.text()).toContain("Switch Label");
+    });
+    it("renders sublabel text", () => {
+      const wrapper = createWrapper({
+        label: "Main Label",
+        sublabel: "Sub Label",
+      });
+      expect(wrapper.text()).toContain("Main Label");
+      expect(wrapper.text()).toContain("Sub Label");
+    });
+  });
+  describe("Switch Track and Ball", () => {
+    it("renders switch track", () => {
+      const wrapper = createWrapper();
+      const track = wrapper.find("span");
+      expect(track.exists()).toBe(true);
+    });
+    it("renders moving ball", () => {
+      const wrapper = createWrapper();
+      const ball = wrapper.findAll("span")[1];
+      expect(ball.exists()).toBe(true);
+      expect(ball.classes()).toContain("rounded-full");
+    });
+    it("applies ball positioning classes", () => {
+      const wrapper = createWrapper();
+      const ball = wrapper.findAll("span")[1];
+      expect(ball.classes()).toContain("absolute");
+      expect(ball.classes()).toContain("h-4");
+      expect(ball.classes()).toContain("w-4");
+    });
+  });
+  describe("Icon Rendering", () => {
+    it("renders icon when iconName is provided", () => {
+      const wrapper = createWrapper({ iconName: "IconCheck" });
+      expect(wrapper.exists()).toBe(true);
+    });
+    it("does not render icon when iconName is not provided", () => {
+      const wrapper = createWrapper({ iconName: "" });
+      expect(wrapper.exists()).toBe(true);
+    });
+  });
+  describe("Events", () => {
+    it("emits update:modelValue when checkbox is clicked", async () => {
+      const wrapper = createWrapper({ modelValue: false });
+      const input = wrapper.find('input[type="checkbox"]');
+      await input.setChecked();
+      expect(wrapper.emitted("update:modelValue")).toBeTruthy();
+      expect(wrapper.emitted("update:modelValue")[0]).toEqual([true]);
+    });
+    it("emits update:modelValue when checkbox is unchecked", async () => {
+      const wrapper = createWrapper({ modelValue: true });
+      const input = wrapper.find('input[type="checkbox"]');
+      await input.setChecked(false);
+      expect(wrapper.emitted("update:modelValue")).toBeTruthy();
+      expect(wrapper.emitted("update:modelValue")[0]).toEqual([false]);
+    });
+  });
+  describe("Label Structure", () => {
+    it("renders simple label structure when no sublabel", () => {
+      const wrapper = createWrapper({ sublabel: "" });
+      expect(wrapper.text()).toContain("Test Label");
+    });
+    it("renders complex label structure when sublabel is provided", () => {
+      const wrapper = createWrapper({
+        label: "Main Label",
+        sublabel: "Sub Label",
+      });
+      expect(wrapper.text()).toContain("Main Label");
+      expect(wrapper.text()).toContain("Sub Label");
+    });
+  });
+  describe("Edge Cases", () => {
+    it("handles empty label", () => {
+      const wrapper = createWrapper({ label: "" });
+      expect(wrapper.exists()).toBe(true);
+    });
+    it("handles empty sublabel", () => {
+      const wrapper = createWrapper({ sublabel: "" });
+      expect(wrapper.exists()).toBe(true);
+    });
+    it("handles undefined props gracefully", () => {
+      const wrapper = createWrapper({});
+      expect(wrapper.exists()).toBe(true);
+      expect(wrapper.find('input[type="checkbox"]').exists()).toBe(true);
+    });
+  });
+});

@@ -3,7 +3,7 @@ import { expect, within, userEvent } from "@storybook/test";
 import SwitchBall from "./SwitchBall.vue";
 
 const meta = {
-  title: "Elements/SwitchBall",
+  title: "Form/SwitchBall",
   component: SwitchBall,
   tags: ["autodocs"],
   argTypes: {

@@ -224,10 +224,51 @@ describe("Button Component", () => {
       expect(wrapper.emitted("click")).toBeFalsy();
     });
 
+    it("does not emit click event when loading", async () => {
+      wrapper = createWrapper({ isLoading: true });
+      await wrapper.find("button").trigger("click");
+      expect(wrapper.emitted("click")).toBeFalsy();
+    });
+
     it("does not emit click event when to prop is provided (link mode)", async () => {
       wrapper = createWrapper({ to: "/dashboard" });
       await wrapper.find("a").trigger("click");
       expect(wrapper.emitted("click")).toBeFalsy();
+    });
+
+    it("focuses and defocuses button when clicked", async () => {
+      wrapper = createWrapper();
+      const button = wrapper.find("button").element as HTMLButtonElement;
+
+      // Mock focus and blur methods
+      const focusSpy = vi.spyOn(button, "focus");
+      const blurSpy = vi.spyOn(button, "blur");
+
+      await wrapper.find("button").trigger("click");
+
+      // Check that focus was called
+      expect(focusSpy).toHaveBeenCalled();
+
+      // Wait for the defocus timeout
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // Check that blur was called
+      expect(blurSpy).toHaveBeenCalled();
+    });
+
+    it("does not focus/defocus when in chip mode", async () => {
+      wrapper = createWrapper({ chip: true });
+      const button = wrapper.find("button").element as HTMLButtonElement;
+
+      // Mock focus and blur methods
+      const focusSpy = vi.spyOn(button, "focus");
+      const blurSpy = vi.spyOn(button, "blur");
+
+      await wrapper.find("button").trigger("click");
+
+      // Check that focus and blur were not called in chip mode
+      expect(focusSpy).not.toHaveBeenCalled();
+      expect(blurSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -252,6 +293,11 @@ describe("Button Component", () => {
           },
         },
       });
+      expect(wrapper.find("button").attributes("disabled")).toBeDefined();
+    });
+
+    it("has proper disabled attribute when loading", () => {
+      wrapper = createWrapper({ isLoading: true });
       expect(wrapper.find("button").attributes("disabled")).toBeDefined();
     });
 
@@ -376,6 +422,78 @@ describe("Button Component", () => {
       const iconSpan = wrapper.find("span.inline-flex");
       expect(iconSpan.classes()).toContain("inline-flex");
       expect(iconSpan.classes()).toContain("align-middle");
+    });
+  });
+
+  describe("Focus Styling", () => {
+    it("applies focus colors for solid buttons", () => {
+      const colors = [
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "secondary",
+        "dark",
+      ];
+
+      colors.forEach((color) => {
+        wrapper = createWrapper({ color });
+        const classes = wrapper.classes();
+        expect(classes.some((cls) => cls.includes("focus:bg-"))).toBe(true);
+        expect(classes.some((cls) => cls.includes("focus:ring-"))).toBe(true);
+      });
+    });
+
+    it("applies focus colors for outline buttons", () => {
+      const colors = [
+        "primary",
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "secondary",
+        "dark",
+      ];
+
+      colors.forEach((color) => {
+        wrapper = createWrapper({ color, outline: true });
+        const classes = wrapper.classes();
+        expect(classes.some((cls) => cls.includes("focus:ring-"))).toBe(true);
+        expect(classes.some((cls) => cls.includes("focus:ring-offset-"))).toBe(
+          true
+        );
+      });
+    });
+
+    it("applies gradient focus colors for gradient buttons", () => {
+      wrapper = createWrapper({ color: "gradient" });
+      const classes = wrapper.classes();
+      expect(
+        classes.some((cls) => cls.includes("focus:bg-gradient-to-r"))
+      ).toBe(true);
+    });
+
+    it("applies gradient focus colors for gradient outline buttons", () => {
+      wrapper = createWrapper({ color: "gradient", outline: true });
+      const classes = wrapper.classes();
+      expect(classes.some((cls) => cls.includes("focus:ring-"))).toBe(true);
+      expect(classes.some((cls) => cls.includes("focus:ring-offset-"))).toBe(
+        true
+      );
+    });
+
+    it("does not apply focus colors in chip mode", () => {
+      wrapper = createWrapper({ color: "primary", chip: true });
+      const classes = wrapper.classes();
+      expect(classes.some((cls) => cls.includes("focus:bg-"))).toBe(false);
+      expect(classes.some((cls) => cls.includes("focus:ring-"))).toBe(false);
+    });
+
+    it("applies default focus colors when no color is specified", () => {
+      wrapper = createWrapper();
+      const classes = wrapper.classes();
+      expect(classes.some((cls) => cls.includes("focus:bg-gray-"))).toBe(true);
     });
   });
 });

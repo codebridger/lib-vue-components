@@ -1,6 +1,10 @@
 <template>
-  <div class="flex flex-col gap-1">
-    <label v-if="label" :for="id" class="text-sm font-medium text-gray-700">
+  <div :class="['flex flex-col gap-1', isInInputGroup ? 'flex-1' : 'w-full']">
+    <label
+      v-if="label && !isInInputGroup"
+      :for="id"
+      class="text-sm font-medium text-gray-700"
+    >
       {{ label }}
       <span v-if="required" class="text-red-500">*</span>
     </label>
@@ -17,37 +21,66 @@
       />
       <input
         :class="[
+          'w-full',
           iconName && actualIconPosition === 'left' ? 'pl-10' : '',
           iconName && actualIconPosition === 'right' ? 'pr-10' : '',
-          // base classes
-          { 'form-input': type !== 'range' },
+          // base classes - only apply form-input when NOT in InputGroup
+          { 'form-input': type !== 'range' && !isInInputGroup },
 
           // specific for range type
           { 'w-full py-2.5': type === 'range' },
 
-          disabled || cardDisabled
-            ? 'bg-gray-100 cursor-not-allowed'
-            : 'bg-white',
-          error ? 'border-red-500' : 'border-gray-300',
+          // Input group styling takes precedence
+          isInInputGroup
+            ? [
+                ...inputGroupClasses,
+
+                'h-10',
+                'focus:ring-2 focus:ring-primary/20 focus:border-primary',
+                // Ensure error state is applied even in InputGroup
+                effectiveError ? '!border-red-500' : '',
+                // Handle disabled styling when in InputGroup
+                (isInInputGroup &&
+                  context &&
+                  (disabled !== undefined ? disabled : context.disabled)) ||
+                disabled ||
+                cardDisabled
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
+                  : '',
+              ]
+            : [
+                disabled || cardDisabled
+                  ? 'bg-gray-100 cursor-not-allowed'
+                  : 'bg-white',
+                effectiveError ? 'border-red-500' : 'border-gray-300',
+              ],
         ]"
         :id="id"
         :type="type"
         :value="modelValue"
         :placeholder="placeholder"
-        :disabled="disabled || cardDisabled"
+        :disabled="
+          isInInputGroup && context
+            ? disabled !== undefined
+              ? disabled
+              : context.disabled
+            : disabled || cardDisabled
+        "
         :required="required"
         :min="type === 'range' ? min : undefined"
         :max="type === 'range' ? max : undefined"
         @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
-        @blur="$emit('blur', $event)"
-        @focus="$emit('focus', $event)"
+        @blur="handleBlurEvent"
+        @focus="handleFocusEvent"
         @keyup.enter="handleEnterKey"
       />
     </div>
 
-    <span v-if="error && errorMessage" class="text-sm text-red-500 mt-1">{{
-      errorMessage
-    }}</span>
+    <span
+      v-if="error && errorMessage && !isInInputGroup"
+      class="text-sm text-red-500 mt-1"
+      >{{ errorMessage }}</span
+    >
   </div>
 </template>
 
@@ -55,6 +88,7 @@
 import { inject, computed } from "vue";
 import Icon from "../icon/Icon.vue";
 import { useAppStore } from "../stores/index";
+import { useInputGroup } from "../composables/use-input-group";
 
 interface InputProps {
   modelValue?: string;
@@ -84,7 +118,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   modelValue: "",
   type: "text",
   placeholder: "",
-  disabled: false,
+  disabled: undefined,
   required: false,
   error: false,
   errorMessage: "",
@@ -98,6 +132,8 @@ const props = withDefaults(defineProps<InputProps>(), {
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
 const store = useAppStore();
+const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur, context } =
+  useInputGroup();
 
 // Calculate icon position based on existing RTL state and iconOppositePosition
 const actualIconPosition = computed(() => {
@@ -108,6 +144,12 @@ const actualIconPosition = computed(() => {
     // Behind content (default): left in LTR, right in RTL
     return store.isRtl ? "right" : "left";
   }
+});
+
+// Use group error state when in InputGroup, otherwise use component's own error state
+const effectiveError = computed(() => {
+  // Always use props.error - InputGroup passes this via props
+  return props.error;
 });
 
 const emit = defineEmits<{
@@ -154,5 +196,20 @@ const handleEnterKey = (event: KeyboardEvent) => {
 
 const handleIconClick = (event: MouseEvent) => {
   emit("iconClick", event);
+};
+
+// Focus event handlers for InputGroup
+const handleFocusEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleFocus) {
+    handleFocus();
+  }
+  emit("focus", event);
+};
+
+const handleBlurEvent = (event: FocusEvent) => {
+  if (isInInputGroup && handleBlur) {
+    handleBlur();
+  }
+  emit("blur", event);
 };
 </script>

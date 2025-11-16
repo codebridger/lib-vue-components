@@ -24,6 +24,11 @@ It's really important to wrap all components with `AppRoot` because it's respons
 ```
 
 ```typescript
+// All Components
+Import { Button, Input, App } form '@codebridger/lib-vue-components'
+
+// Or Import by category:
+
 // Shell components
 import {
   App,
@@ -31,19 +36,22 @@ import {
   ThemeCustomizer,
   SidebarMenu,
   HorizontalMenu,
-} from "@codebridger/lib-vue-components/shell.ts";
+} from "@codebridger/lib-vue-components/shell";
 
 // Element components
-import { Button } from "@codebridger/lib-vue-components/elements.ts";
+import { Button } from "@codebridger/lib-vue-components/elements";
+
+// Form components
+import { Input } from "@codebridger/lib-vue-components/form";
 
 // Complex components
-import { Modal } from "@codebridger/lib-vue-components/complex.ts";
+import { Modal } from "@codebridger/lib-vue-components/complex";
 
 // Type imports
 import type {
   SidebarItemType,
   HorizontalMenuItemType,
-} from "@codebridger/lib-vue-components/types.ts";
+} from "@codebridger/lib-vue-components/types";
 ```
 
 ## Global Configuration
