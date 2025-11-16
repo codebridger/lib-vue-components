@@ -18,9 +18,9 @@
             'data-input-group-total': children.length,
             'data-input-group-remove-right-border': index < children.length - 1,
             'data-input-group-index': index,
-            // Pass error and disabled state to children for styling
+            // Pass error state to children for styling
             error: props.error,
-            disabled: props.disabled,
+            // Don't pass disabled directly - let children handle priority
           }"
           :class="getChildBorderClasses(index)"
           @focus="handleChildFocus(index)"

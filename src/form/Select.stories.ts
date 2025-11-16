@@ -53,6 +53,18 @@ When \`custom={true}\`, the component provides three specialized slots:
 - **Scoped Variables**:
   - \`close\`: Function to close dropdown with acceptance parameter
 
+## Selected Slot
+
+The \`selected\` slot allows you to customize how selected options are displayed in the trigger button. This slot is available in both default and custom modes.
+
+- **Purpose**: Custom display of selected option(s) in the trigger button
+- **Scoped Variables**:
+  - \`selectedOption\`: The selected value (single mode only, undefined in multiple mode)
+  - \`selectedOptions\`: Array of selected values (always an array - contains single item in single mode, multiple items in multiple mode)
+  - \`multiple\`: Boolean indicating if multiple selection mode is enabled
+  - \`getOptionLabel\`: Helper function to get the display label for an option
+  - \`selectedCount\`: Number of selected items
+
 ## Accessibility
 
 - Full keyboard navigation support (Enter, Space, Arrow keys, Escape)
@@ -800,9 +812,29 @@ export const SearchableObjects: Story = {
 
 // Complex Grouped Example
 export const ComplexGrouped: Story = {
-  render: () => {
-    const selectedValue = ref({ name: "Option 1" });
-    const options = [
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selectedValue = ref(args.modelValue || { name: "Option 1" });
+      return { args, selectedValue };
+    },
+    template: `
+      <div class="space-y-4">
+        <Select
+          v-model="selectedValue"
+          v-bind="args"
+          @update:modelValue="selectedValue = $event"
+        />
+        <div class="text-sm text-gray-600">
+          Selected: {{ selectedValue ? selectedValue.name : 'None' }}
+        </div>
+      </div>
+    `,
+  }),
+  args: {
+    label: "Complex Grouped Select",
+    grouped: true,
+    options: [
       {
         group_name: "Group 1",
         list: [{ name: "Option 1" }, { name: "Option 2" }],
@@ -811,66 +843,40 @@ export const ComplexGrouped: Story = {
         group_name: "Group 2",
         list: [{ name: "Option 3" }],
       },
-    ];
-
-    return {
-      components: { Select },
-      setup() {
-        return { selectedValue, options };
-      },
-      template: `
-        <div class="space-y-4">
-          <Select
-            v-model="selectedValue"
-            :options="options"
-            grouped
-            group-label="group_name"
-            group-values="list"
-            label-key="name"
-            placeholder="Select from grouped options"
-            label="Complex Grouped Select"
-          />
-          <div class="text-sm text-gray-600">
-            Selected: {{ selectedValue ? selectedValue.name : 'None' }}
-          </div>
-        </div>
-      `,
-    };
+    ],
+    groupLabel: "group_name",
+    groupValues: "list",
+    labelKey: "name",
+    placeholder: "Select from grouped options",
   },
 };
 
 // Confirmation Mode
 export const ConfirmationMode: Story = {
-  render: () => {
-    const selectedValue = ref("Option 1");
-    const options = [
-      "Option 1",
-      "Option 2",
-      "Option 3",
-      "Option 4",
-      "Option 5",
-    ];
-
-    return {
-      components: { Select },
-      setup() {
-        return { selectedValue, options };
-      },
-      template: `
-        <div class="space-y-4">
-          <Select
-            v-model="selectedValue"
-            :options="options"
-            confirm
-            placeholder="Select an option (confirmation required)"
-            label="Confirmation Mode Select (Single)"
-          />
-          <div class="text-sm text-gray-600">
-            Selected: {{ selectedValue || 'None' }}
-          </div>
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selectedValue = ref(args.modelValue || "Option 1");
+      return { args, selectedValue };
+    },
+    template: `
+      <div class="space-y-4">
+        <Select
+          v-model="selectedValue"
+          v-bind="args"
+          @update:modelValue="selectedValue = $event"
+        />
+        <div class="text-sm text-gray-600">
+          Selected: {{ selectedValue || 'None' }}
         </div>
-      `,
-    };
+      </div>
+    `,
+  }),
+  args: {
+    label: "Confirmation Mode Select (Single)",
+    confirm: true,
+    options: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+    placeholder: "Select an option (confirmation required)",
   },
   parameters: {
     docs: {
@@ -893,37 +899,31 @@ The confirmation footer appears below the options and provides clear actions for
 
 // Multiple Confirmation Mode
 export const MultipleConfirmationMode: Story = {
-  render: () => {
-    const selectedValues = ref(["Option 1"]);
-    const options = [
-      "Option 1",
-      "Option 2",
-      "Option 3",
-      "Option 4",
-      "Option 5",
-    ];
-
-    return {
-      components: { Select },
-      setup() {
-        return { selectedValues, options };
-      },
-      template: `
-        <div class="space-y-4">
-          <Select
-            v-model="selectedValues"
-            :options="options"
-            confirm
-            multiple
-            placeholder="Select multiple options (confirmation required)"
-            label="Confirmation Mode Select (Multiple)"
-          />
-          <div class="text-sm text-gray-600">
-            Selected: {{ selectedValues.length > 0 ? selectedValues.join(', ') : 'None' }}
-          </div>
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selectedValues = ref(args.modelValue || ["Option 1"]);
+      return { args, selectedValues };
+    },
+    template: `
+      <div class="space-y-4">
+        <Select
+          v-model="selectedValues"
+          v-bind="args"
+          @update:modelValue="selectedValues = $event"
+        />
+        <div class="text-sm text-gray-600">
+          Selected: {{ selectedValues.length > 0 ? selectedValues.join(', ') : 'None' }}
         </div>
-      `,
-    };
+      </div>
+    `,
+  }),
+  args: {
+    label: "Confirmation Mode Select (Multiple)",
+    confirm: true,
+    multiple: true,
+    options: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+    placeholder: "Select multiple options (confirmation required)",
   },
   parameters: {
     docs: {
@@ -946,31 +946,19 @@ This mode is particularly useful for forms where users need to make multiple sel
 
 // Custom Mode
 export const CustomMode: Story = {
-  render: () => {
-    const selectedValue = ref(["Option 1"]);
-    const options = [
-      "Option 1",
-      "Option 2",
-      "Option 3",
-      "Option 4",
-      "Option 5",
-    ];
-
-    return {
-      components: { Select },
-      setup() {
-        return { selectedValue, options };
-      },
-      template: `
-        <div class="space-y-4">
-          <Select
-            v-model="selectedValue"
-            :options="options"
-            custom
-            multiple
-            placeholder="Custom select with slots"
-            label="Custom Mode Select (Multiple)"
-          >
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selectedValue = ref(args.modelValue || ["Option 1"]);
+      return { args, selectedValue };
+    },
+    template: `
+      <div class="space-y-4">
+        <Select
+          v-model="selectedValue"
+          v-bind="args"
+          @update:modelValue="selectedValue = $event"
+        >
             <!-- Header Slot -->
             <template #header="{ allOptions, setNewList }">
               <div class="p-3 bg-blue-50 dark:bg-blue-900/20">
@@ -1049,7 +1037,13 @@ export const CustomMode: Story = {
           </div>
         </div>
       `,
-    };
+  }),
+  args: {
+    label: "Custom Mode Select (Multiple)",
+    custom: true,
+    multiple: true,
+    options: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+    placeholder: "Custom select with slots",
   },
   parameters: {
     docs: {
@@ -1065,6 +1059,142 @@ This story demonstrates the **Custom Mode** functionality of the Select componen
 - **Footer Slot**: Custom actions (Accept/Cancel buttons)
 
 The component is configured with \`custom={true}\` and \`multiple={true}\` to enable custom mode with multiple selection support. In custom mode, the dropdown height is increased to accommodate all content including the footer section.
+        `,
+      },
+    },
+  },
+};
+
+// Custom Selected Display Slot
+export const CustomSelectedDisplay: Story = {
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selectedValue = ref(args.modelValue || "");
+      return { args, selectedValue };
+    },
+    template: `
+      <div class="space-y-4">
+        <Select
+          v-model="selectedValue"
+          v-bind="args"
+          @update:modelValue="selectedValue = $event"
+        >
+          <template #selected="{ selectedOption, selectedOptions, multiple, getOptionLabel, selectedCount }">
+            <span v-if="multiple" class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-blue-600 rounded-full">
+                {{ selectedCount }}
+              </span>
+              <span class="font-medium">Selected</span>
+            </span>
+            <span v-else class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 text-xs text-blue-600">
+                ✓
+              </span>
+              <span class="font-medium">{{ getOptionLabel(selectedOption) }}</span>
+            </span>
+          </template>
+        </Select>
+        <div class="text-sm text-gray-600">
+          Selected: {{ Array.isArray(selectedValue) ? selectedValue.join(', ') : selectedValue || 'None' }}
+        </div>
+      </div>
+    `,
+  }),
+  args: {
+    label: "Custom Selected Display",
+    options: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+    placeholder: "Select an option",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+This story demonstrates the **Selected Slot** functionality, which allows you to customize how selected options are displayed in the trigger button.
+
+**Scoped Variables:**
+- \`selectedOption\`: The selected value(s) - single value or array depending on mode
+- \`multiple\`: Boolean indicating if multiple selection mode is enabled
+- \`getOptionLabel\`: Helper function to get the display label for an option
+- \`selectedCount\`: Number of selected items (for multiple mode)
+
+**Use Cases:**
+- Custom badges or chips for selected items
+- Icons or indicators for selection state
+- Custom formatting for selected values
+- Displaying additional information about selections
+
+The slot provides a default implementation that shows a count for multiple selections or the option label for single selections, but you can completely customize this display.
+        `,
+      },
+    },
+  },
+};
+
+// Custom Selected Display with Multiple Selection
+export const CustomSelectedDisplayMultiple: Story = {
+  render: (args) => ({
+    components: { Select },
+    setup() {
+      const selectedValues = ref(args.modelValue || []);
+      return { args, selectedValues };
+    },
+    template: `
+      <div class="space-y-4">
+        <Select
+          v-model="selectedValues"
+          v-bind="args"
+          @update:modelValue="selectedValues = $event"
+        >
+          <template #selected="{ selectedOption, selectedOptions, multiple, getOptionLabel, selectedCount }">
+            <div v-if="multiple && selectedOptions.length > 0" class="flex items-center gap-2 flex-wrap">
+              <span class="text-xs text-gray-500 dark:text-gray-400">Selected:</span>
+              <div class="flex items-center gap-1 flex-wrap">
+                <span
+                  v-for="(option, index) in selectedOptions.slice(0, 2)"
+                  :key="index"
+                  class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded"
+                >
+                  {{ getOptionLabel(option) }}
+                </span>
+                <span
+                  v-if="selectedCount > 2"
+                  class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"
+                >
+                  +{{ selectedCount - 2 }} more
+                </span>
+              </div>
+            </div>
+            <span v-else-if="!multiple" class="flex items-center gap-2">
+              <span class="inline-flex items-center justify-center w-5 h-5 text-xs text-blue-600">
+                ✓
+              </span>
+              <span class="font-medium">{{ getOptionLabel(selectedOption) }}</span>
+            </span>
+          </template>
+        </Select>
+        <div class="text-sm text-gray-600">
+          Selected: {{ selectedValues.length > 0 ? selectedValues.join(', ') : 'None' }}
+        </div>
+      </div>
+    `,
+  }),
+  args: {
+    label: "Custom Selected Display (Multiple)",
+    multiple: true,
+    options: ["Red", "Green", "Blue", "Yellow", "Purple", "Orange"],
+    placeholder: "Select multiple colors",
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+This story demonstrates the **Selected Slot** with multiple selection mode, showing how to display selected items as chips/badges with a "more" indicator when there are many selections.
+
+The custom implementation shows:
+- Up to 2 selected items as individual badges
+- A "+X more" badge when more than 2 items are selected
+- Clean, compact display that works well in limited space
         `,
       },
     },

@@ -24,7 +24,9 @@
             computedFocusColor,
             computedHoverNeutralizeClasses,
             // Handle disabled styling when in InputGroup
-            (isInInputGroup && context && context.disabled) ||
+            (isInInputGroup &&
+              context &&
+              (disabled !== undefined ? disabled : context.disabled)) ||
             disabled ||
             cardDisabled
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
@@ -51,7 +53,11 @@
             props.chip ? 'is-chip' : undefined,
           ],
     ]"
-    :disabled="disabled || cardDisabled || isLoading ? true : undefined"
+    :disabled="
+      isInInputGroup && context
+        ? (disabled !== undefined ? disabled : context.disabled) || isLoading
+        : disabled || cardDisabled || isLoading
+    "
     @focus="handleFocusEvent"
     @blur="handleBlurEvent"
   >

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-1">
+  <div :class="['flex flex-col gap-1', isInInputGroup ? 'flex-1' : 'w-full']">
     <label
       v-if="label && !isInInputGroup"
       :for="id"
@@ -21,6 +21,7 @@
       />
       <input
         :class="[
+          'w-full',
           iconName && actualIconPosition === 'left' ? 'pl-10' : '',
           iconName && actualIconPosition === 'right' ? 'pr-10' : '',
           // base classes - only apply form-input when NOT in InputGroup
@@ -33,13 +34,15 @@
           isInInputGroup
             ? [
                 ...inputGroupClasses,
-                'flex-1',
+
                 'h-10',
                 'focus:ring-2 focus:ring-primary/20 focus:border-primary',
                 // Ensure error state is applied even in InputGroup
                 effectiveError ? '!border-red-500' : '',
                 // Handle disabled styling when in InputGroup
-                (isInInputGroup && context && context.disabled) ||
+                (isInInputGroup &&
+                  context &&
+                  (disabled !== undefined ? disabled : context.disabled)) ||
                 disabled ||
                 cardDisabled
                   ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 dark:bg-gray-800 dark:border-gray-700'
@@ -58,7 +61,9 @@
         :placeholder="placeholder"
         :disabled="
           isInInputGroup && context
-            ? context.disabled
+            ? disabled !== undefined
+              ? disabled
+              : context.disabled
             : disabled || cardDisabled
         "
         :required="required"
@@ -113,7 +118,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   modelValue: "",
   type: "text",
   placeholder: "",
-  disabled: false,
+  disabled: undefined,
   required: false,
   error: false,
   errorMessage: "",
