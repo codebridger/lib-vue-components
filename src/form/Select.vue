@@ -87,7 +87,23 @@
                 {{ placeholder }}
               </span>
               <span v-else-if="hasSelectedOption" class="truncate">
-                {{ getOptionLabel(selectedOption) }}
+                <slot
+                  name="selected"
+                  :selected-option="selectedOption"
+                  :selected-options="selectedOptions"
+                  :multiple="multiple"
+                  :get-option-label="getOptionLabel"
+                  :selected-count="multiple ? selectedOptions.length : 1"
+                >
+                  <template v-if="multiple">
+                    {{ selectedOptions.length }}
+                    {{ selectedOptions.length === 1 ? "item" : "items" }}
+                    selected
+                  </template>
+                  <template v-else>
+                    {{ getOptionLabel(selectedOption) }}
+                  </template>
+                </slot>
               </span>
             </div>
             <Icon
@@ -113,7 +129,7 @@
           leave-to-class="transform opacity-0 scale-95"
         >
           <div
-            v-if="isOpen"
+            v-show="isOpen"
             :class="[
               'absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg',
               custom ? 'max-h-96' : 'max-h-60',
@@ -159,7 +175,7 @@
                           name="each"
                           :option="option"
                           :is-selected="isOptionSelected(option)"
-                          :set-selected="() => selectOption(option)"
+                          :set-selected="(selectedOption:any) => selectOption(selectedOption || option)"
                         />
                       </div>
                     </div>
@@ -397,7 +413,6 @@ const emit = defineEmits<{
 }>();
 
 const cardDisabled = inject<boolean>("cardDisabled", false);
-const store = useAppStore();
 const { isInInputGroup, inputGroupClasses, handleFocus, handleBlur, context } =
   useInputGroup();
 
@@ -420,9 +435,21 @@ const actualIconPosition = computed(() =>
 
 const selectedOption = computed(() => {
   if (props.multiple) {
-    return Array.isArray(props.modelValue) ? props.modelValue : [];
+    return undefined; // In multiple mode, use selectedOptions instead
   }
   return props.modelValue;
+});
+
+const selectedOptions = computed(() => {
+  if (props.multiple) {
+    return Array.isArray(props.modelValue) ? props.modelValue : [];
+  }
+  // In single mode, return array with single option if selected
+  return props.modelValue !== undefined &&
+    props.modelValue !== null &&
+    props.modelValue !== ""
+    ? [props.modelValue]
+    : [];
 });
 
 const hasSelectedOption = computed(() => {
@@ -478,13 +505,13 @@ const getOptionLabel = (option: any): string => {
   if (typeof option === "string" || typeof option === "number") {
     return String(option);
   }
-  return option[props.labelKey] ?? option.name ?? String(option);
+  return option[props.labelKey] ?? String(option);
 };
 
 const isOptionSelected = (option: any): boolean => {
   if (!option) return false;
   if (props.multiple) {
-    return selectedOption.value.some(
+    return selectedOptions.value.some(
       (selected: any) => getOptionValue(selected) === getOptionValue(option)
     );
   }
@@ -630,7 +657,10 @@ const setNewList = (
 const closeWithAcceptance = (accepted: boolean) => {
   if (accepted) {
     // Accept the current selection
-    emit("change", selectedOption.value);
+    emit(
+      "change",
+      props.multiple ? selectedOptions.value : selectedOption.value
+    );
   } else {
     // Cancel - revert to original value
     if (props.confirm && originalValue.value !== undefined) {
