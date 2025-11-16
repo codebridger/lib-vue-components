@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/codebridger/lib-vue-components/compare/v1.28.0...v1.28.1) (2025-11-16)
+
+
+### Bug Fixes
+
+* **Select:** Change v-show to v-if for improved rendering logic ([d0fb03e](https://github.com/codebridger/lib-vue-components/commit/d0fb03ef1685033f197918f99e06387a1573139e))
+
 # [1.28.0](https://github.com/codebridger/lib-vue-components/compare/v1.27.0...v1.28.0) (2025-11-16)
 
 
