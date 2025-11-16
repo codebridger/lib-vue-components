@@ -132,6 +132,42 @@ alwaysApply: false
   };
   ```
 
+- **Args-to-Props Consistency**: All story args must be passed to the rendered component via props. Never hardcode props in templates when they should come from args:
+  - ✅ **Correct**: Use `v-bind="args"` to pass all args as props
+  ```typescript
+  template: `
+    <ComponentName v-bind="args" />
+  `
+  ```
+  - ❌ **Incorrect**: Hardcoding props that should come from args
+  ```typescript
+  template: `
+    <ComponentName 
+      :label="'Hardcoded Label'" 
+      :placeholder="'Hardcoded Placeholder'"
+    />
+  `
+  ```
+  - ✅ **Correct**: When overriding specific props, still use `v-bind="args"` first, then override:
+  ```typescript
+  template: `
+    <ComponentName 
+      v-bind="args"
+      :model-value="reactiveValue"
+      @update:model-value="handleChange"
+    />
+  `
+  ```
+  - **Story Args**: All component props should be controllable through story args. Define props in the story's `args` object rather than hardcoding them in templates:
+  ```typescript
+  args: {
+    label: "Custom Label",
+    placeholder: "Custom Placeholder",
+    options: ["Option 1", "Option 2"]
+  }
+  ```
+  - **Verification**: Ensure that when users modify controls in Storybook, those changes are reflected in the rendered component through the args binding.
+
 ### 4. ArgTypes & Controls Configuration
 
 - **ArgTypes Definition**: Define comprehensive argTypes for all props:
@@ -413,6 +449,7 @@ Note: Avoid embedding code in this section; Storybook auto-generates usage code.
 
 - **Story Creation**: Automatically create comprehensive stories for new components with proper structure, argTypes, and documentation.
 - **Pattern Consistency**: Follow established patterns from existing stories in the project.
+- **Args-to-Props Matching**: Always ensure story args are passed to rendered components via `v-bind="args"`. Never hardcode props in templates that should come from story args. All component props must be controllable through Storybook controls.
 - **TypeScript Integration**: Ensure proper TypeScript typing for all stories and meta configurations.
 - **Theme Integration**: Leverage global theme controls and main decorator for consistent theming.
 - **Documentation Quality**: Include comprehensive component documentation with usage examples.
