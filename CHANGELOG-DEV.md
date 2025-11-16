@@ -1,3 +1,10 @@
+# [1.17.0-dev.38](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.37...dev-1.17.0-dev.38) (2025-11-16)
+
+
+### Features
+
+* Add custom selected display slot to Select component ([79d98b7](https://github.com/codebridger/lib-vue-components/commit/79d98b7f55d44c269130d7d3a576f9e3600c2cc0))
+
 # [1.17.0-dev.37](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.36...dev-1.17.0-dev.37) (2025-09-09)
 
 
