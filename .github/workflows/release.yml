@@ -31,7 +31,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22" # Required for stable npm OIDC / Trusted Publishing
+          node-version: "22.17.1" # Required for stable npm OIDC / Trusted Publishing and @semantic-release/npm compatibility
 
       - name: Install dependencies
         run: yarn install
