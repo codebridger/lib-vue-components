@@ -52,7 +52,6 @@ export default {
         tag: isMainBranch ? "latest" : currentBranch,
       },
     ],
-    "@semantic-release/github",
     [
       "@semantic-release/git",
       {
