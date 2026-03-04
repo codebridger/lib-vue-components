@@ -25,7 +25,7 @@ It's really important to wrap all components with `AppRoot` because it's respons
 
 ```typescript
 // All Components
-Import { Button, Input, App } form '@codebridger/lib-vue-components'
+Import { Button, Input, App } form 'pilotui'
 
 // Or Import by category:
 
@@ -36,22 +36,22 @@ import {
   ThemeCustomizer,
   SidebarMenu,
   HorizontalMenu,
-} from "@codebridger/lib-vue-components/shell";
+} from "pilotui/shell";
 
 // Element components
-import { Button } from "@codebridger/lib-vue-components/elements";
+import { Button } from "pilotui/elements";
 
 // Form components
-import { Input } from "@codebridger/lib-vue-components/form";
+import { Input } from "pilotui/form";
 
 // Complex components
-import { Modal } from "@codebridger/lib-vue-components/complex";
+import { Modal } from "pilotui/complex";
 
 // Type imports
 import type {
   SidebarItemType,
   HorizontalMenuItemType,
-} from "@codebridger/lib-vue-components/types";
+} from "pilotui/types";
 ```
 
 ## Global Configuration
@@ -59,7 +59,7 @@ import type {
 There is pinia store for global configuration. see full documentation [here](/docs/introduction.mdx#store)
 
 ```typescript
-import { useAppStore } from "@codebridger/lib-vue-components/store.ts";
+import { useAppStore } from "pilotui/store.ts";
 
 const appStore = useAppStore();
 appStore.setTheme("dark");

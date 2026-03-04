@@ -1,11 +1,13 @@
 {
-  "name": "@codebridger/lib-vue-components",
+  "name": "pilotui",
   "description": "A comprehensive Vue 3 + TypeScript component library featuring 50+ UI components, shell layouts, icon system, and utilities. Built with Tailwind CSS, includes Storybook documentation, theme customization, and Nuxt.js support. Perfect for building modern web applications and dashboards.",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
-  "version": "1.17.0-dev.38",
+  "version": "1.28.1",
+  "license": "MIT",
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "files": [
     "dist",
     "src"

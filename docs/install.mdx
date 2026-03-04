@@ -7,39 +7,23 @@ import { Meta } from "@storybook/blocks";
 ## Prerequisites
 
 - A working Vue 3 or Nuxt 3 project
-- GitHub account with package access
 - Node.js and npm/yarn installed
 
 ## Setup Steps
 
-### 1. GitHub Authentication
-
-1. Create a GitHub personal access token:
-   - Go to GitHub Settings → Developer Settings → Personal Access Tokens
-   - Generate a new token with `read:packages` permission
-   - Copy the generated token
-   - For detailed instructions, watch [this guide](https://www.youtube.com/watch?v=iLrywUfs7yU)
-
-2. Create an `.npmrc` file in your project root:
-   ```bash
-   @codebridger:registry=https://npm.pkg.github.com
-   //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
-   ```
-   Replace `YOUR_GITHUB_TOKEN` with the token you created.
-
-### 2. Package Installation
+### 1. Package Installation
 
 Install the package using npm or yarn:
 
 ```bash
 # Using npm
-npm install @codebridger/lib-vue-components
+npm install pilotui
 
 # Using yarn
-yarn add @codebridger/lib-vue-components
+yarn add pilotui
 
 # install from dev branch
-yarn add @codebridger/lib-vue-components@dev
+yarn add pilotui@dev
 ```
 
 ### 3. Integration
@@ -48,8 +32,8 @@ yarn add @codebridger/lib-vue-components@dev
 
 ```javascript
 // Import components and Styles
-import vueComponents from "@codebridger/lib-vue-components";
-import '@codebridger/lib-vue-components/style.css';
+import vueComponents from "pilotui";
+import 'pilotui/style.css';
 
 // Configuration options
 const options = {
@@ -71,10 +55,10 @@ vueApp.use(vueComponents, options);
 1. Create a plugin file `plugins/component-library.client.ts`:
 
 ```javascript
-import { defineNuxtPlugin as init } from '@codebridger/lib-vue-components/nuxt';
+import { defineNuxtPlugin as init } from 'pilotui/nuxt';
 
 export default defineNuxtPlugin({
-  name: '@codebridger/lib-vue-components',
+  name: 'pilotui',
   enforce: 'pre',
   async setup(nuxtApp) {
     const options = {
@@ -95,12 +79,12 @@ export default defineNuxtPlugin({
 export default defineNuxtConfig({
   // Ensure components are transpiled during build
   build: {
-    transpile: ['@codebridger/lib-vue-components'],
+    transpile: ['pilotui'],
   },
 
   css: [
     // ... other CSS files
-    '@codebridger/lib-vue-components/style.css',
+    'pilotui/style.css',
   ],
   
   // ... other Nuxt config
