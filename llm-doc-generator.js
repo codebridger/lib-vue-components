@@ -110,20 +110,19 @@ class DocGenerator {
         "--disable-gpu",
         "--no-first-run",
         "--no-zygote",
-        "--single-process",
       ],
     });
     this.page = await this.browser.newPage();
 
     // Set user agent to avoid detection
     await this.page.setUserAgent(
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     );
 
     // Additional settings for CI environment
     if (process.env.CI) {
       console.log(
-        "🔧 Running in CI environment - applying CI-specific settings"
+        "🔧 Running in CI environment - applying CI-specific settings",
       );
       await this.page.setViewport({ width: 1920, height: 1080 });
       await this.page.setDefaultTimeout(30000);
@@ -141,8 +140,8 @@ class DocGenerator {
     console.log("🏥 Checking server health...");
     try {
       const response = await this.page.goto(this.baseUrl, {
-        waitUntil: "domcontentloaded",
-        timeout: 10000,
+        waitUntil: "load",
+        timeout: 30000,
       });
 
       if (response && response.ok()) {
@@ -167,16 +166,11 @@ class DocGenerator {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(
-          `🔄 Attempt ${attempt}/${maxRetries} to connect to Storybook...`
+          `🔄 Attempt ${attempt}/${maxRetries} to connect to Storybook...`,
         );
 
-        // First check if server is healthy
+        // Check if server is healthy (this also performs the initial navigation)
         if (await this.checkServerHealth()) {
-          await this.page.goto(this.baseUrl, {
-            waitUntil: "domcontentloaded",
-            timeout: 30000,
-          });
-
           console.log("✅ Successfully loaded Storybook");
           return;
         } else {
@@ -198,7 +192,7 @@ class DocGenerator {
 
   async findDocPages() {
     console.log(
-      "🔍 Finding documentation pages with data-item-id ending in --docs..."
+      "🔍 Finding documentation pages with data-item-id ending in --docs...",
     );
 
     try {
@@ -208,7 +202,7 @@ class DocGenerator {
       // Find and click all expand-all buttons
       await this.page.evaluate(() => {
         const expandAllButtons = Array.from(
-          document.querySelectorAll('[data-action="expand-all"]')
+          document.querySelectorAll('[data-action="expand-all"]'),
         );
         console.log("Found expand-all buttons:", expandAllButtons.length);
         console.log("🖱️  Starting to click expand-all buttons...");
@@ -227,7 +221,7 @@ class DocGenerator {
       await this.page.evaluate(() => {
         // Find all expandable menu items (those without links but with data-item-id)
         const expandableItems = Array.from(
-          document.querySelectorAll("[data-item-id]")
+          document.querySelectorAll("[data-item-id]"),
         ).filter((el) => {
           const link = el.querySelector("a");
           return !link || !link.href; // Items without links are likely expandable
@@ -251,7 +245,7 @@ class DocGenerator {
       const docElements = await this.page.evaluate(() => {
         // Get all elements with data-item-id ending in --docs that have links
         const allElementsWithLinks = Array.from(
-          document.querySelectorAll('[data-item-id$="--docs"]')
+          document.querySelectorAll('[data-item-id$="--docs"]'),
         ).filter((el) => {
           const link = el.querySelector("a");
           return link && link.href;
@@ -259,7 +253,7 @@ class DocGenerator {
 
         console.log(
           "📄 Documentation pages (--docs):",
-          allElementsWithLinks.length
+          allElementsWithLinks.length,
         );
 
         // Use only documentation elements (ending with --docs)
@@ -308,7 +302,7 @@ class DocGenerator {
       });
 
       console.log(
-        `📄 Found ${docElements.length} documentation pages to process`
+        `📄 Found ${docElements.length} documentation pages to process`,
       );
 
       return docElements;
@@ -325,7 +319,7 @@ class DocGenerator {
     }
 
     console.log(
-      `📖 Extracting content from: ${docElement.title} (${docElement.dataItemId})`
+      `📖 Extracting content from: ${docElement.title} (${docElement.dataItemId})`,
     );
     this.visitedUrls.add(docElement.href);
 
@@ -343,7 +337,7 @@ class DocGenerator {
       try {
         await this.page.waitForSelector(
           '.docblock, .markdown, article, main, [data-testid="story-panel"]',
-          { timeout: 5000 }
+          { timeout: 5000 },
         );
       } catch (e) {
         console.log("No specific content selectors found, continuing...");
@@ -380,7 +374,7 @@ class DocGenerator {
 
         // Remove all style tags and buttons from the cloned content
         const elementsToRemove = clonedContent.querySelectorAll(
-          "style, button, [role='button'], .btn, .button"
+          "style, button, [role='button'], .btn, .button",
         );
         elementsToRemove.forEach((element) => {
           element.remove();
@@ -388,7 +382,7 @@ class DocGenerator {
 
         const result = clonedContent.outerHTML;
         console.log(
-          `Extracted content length: ${result.length} characters (after removing ${elementsToRemove.length} elements)`
+          `Extracted content length: ${result.length} characters (after removing ${elementsToRemove.length} elements)`,
         );
         return result;
       }, docElement.dataItemId);
@@ -406,7 +400,7 @@ class DocGenerator {
     } catch (error) {
       console.error(
         `❌ Error extracting content from ${docElement.title}:`,
-        error.message
+        error.message,
       );
       return null;
     }
@@ -422,14 +416,14 @@ class DocGenerator {
       // Try to find and click "Show code" buttons in the main document
       const mainDocButtonsClicked = await this.page.evaluate(() => {
         const showCodeButtons = Array.from(
-          document.querySelectorAll('button, [role="button"], .btn, .button')
+          document.querySelectorAll('button, [role="button"], .btn, .button'),
         ).filter((button) => {
           const text = button.textContent?.trim().toLowerCase();
           return text === "show code" || text.includes("show code");
         });
 
         console.log(
-          `Found ${showCodeButtons.length} 'Show code' buttons in main document`
+          `Found ${showCodeButtons.length} 'Show code' buttons in main document`,
         );
 
         let clickedCount = 0;
@@ -441,7 +435,7 @@ class DocGenerator {
           } catch (error) {
             console.log(
               "Failed to click button in main document:",
-              error.message
+              error.message,
             );
           }
         });
@@ -466,20 +460,20 @@ class DocGenerator {
           iframe.contentDocument || iframe.contentWindow.document;
         if (!iframeDoc) {
           console.log(
-            "Cannot access iframe content for 'Show code' button search"
+            "Cannot access iframe content for 'Show code' button search",
           );
           return 0;
         }
 
         const showCodeButtons = Array.from(
-          iframeDoc.querySelectorAll('button, [role="button"], .btn, .button')
+          iframeDoc.querySelectorAll('button, [role="button"], .btn, .button'),
         ).filter((button) => {
           const text = button.textContent?.trim().toLowerCase();
           return text === "show code" || text.includes("show code");
         });
 
         console.log(
-          `Found ${showCodeButtons.length} 'Show code' buttons in iframe`
+          `Found ${showCodeButtons.length} 'Show code' buttons in iframe`,
         );
 
         let clickedCount = 0;
@@ -504,7 +498,7 @@ class DocGenerator {
       const totalClicked = mainDocButtonsClicked + iframeButtonsClicked;
       if (totalClicked > 0) {
         console.log(
-          `✅ Successfully clicked ${totalClicked} 'Show code' button(s)`
+          `✅ Successfully clicked ${totalClicked} 'Show code' button(s)`,
         );
       } else {
         console.log("ℹ️  No 'Show code' buttons found on this page");
@@ -512,7 +506,7 @@ class DocGenerator {
     } catch (error) {
       console.log(
         "⚠️  Error while handling 'Show code' buttons:",
-        error.message
+        error.message,
       );
     }
   }
@@ -534,7 +528,7 @@ class DocGenerator {
     for (let i = 0; i < docElements.length; i++) {
       const docElement = docElements[i];
       console.log(
-        `\n[${i + 1}/${docElements.length}] Processing: ${docElement.title}`
+        `\n[${i + 1}/${docElements.length}] Processing: ${docElement.title}`,
       );
 
       const docContent = await this.extractPageContent(docElement);
@@ -573,14 +567,79 @@ Generated on: ${new Date().toISOString()}
   }
 
   async appendDocumentToFile(doc) {
-    const content = `## ${doc.title}\n\n${doc.content}\n\n---\n\n`;
-    await fs.appendFile("llm.md", content, "utf8");
+    // We now accumulate in memory and write all at once in finalizeMarkdownFile
+    // but we can still log progress
+    console.log(`✅ Prepared content for: ${doc.title}`);
   }
 
   async finalizeMarkdownFile() {
+    console.log("📊 Finalizing markdown file with TOC and LLM guidance...");
+
+    // 1. Generate Header & LLM Guidance
+    let fullContent = `# PilotUI - LLM Documentation\n\n`;
+    fullContent += `> Generated on: ${new Date().toLocaleString()}\n\n`;
+
+    fullContent += `## 🤖 LLM Instructions\n`;
+    fullContent += `This document is optimized for Large Language Models. It contains the complete documentation for **PilotUI**, a Vue 3 component library.\n\n`;
+    fullContent += `### How to use this doc:\n`;
+    fullContent += `- **Component Search**: Use the Table of Contents below to find specific components.\n`;
+    fullContent += `- **Code Examples**: All component examples are provided in fenced code blocks with language identifiers.\n`;
+    fullContent += `- **Prop Tables**: Component properties, events, and slots are documented in Markdown tables.\n`;
+    fullContent += `- **Implementation**: When asked to implement a UI, refer to the available components and their usage patterns described here.\n\n`;
+
+    fullContent += `---\n\n`;
+
+    // 2. Generate Table of Contents
+    fullContent += `## 📋 Table of Contents\n\n`;
+
+    // Group by category if possible (based on "Category / Component" title format)
+    const categories = {};
+    this.allDocs.forEach((doc) => {
+      const parts = doc.title.split(" / ");
+      const category = parts.length > 1 ? parts[0] : "General";
+      const title = parts.length > 1 ? parts[1] : doc.title;
+
+      if (!categories[category]) categories[category] = [];
+      categories[category].push({
+        title: title,
+        anchor: doc.title
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, "")
+          .trim()
+          .replace(/\s+/g, "-"),
+      });
+    });
+
+    for (const [category, items] of Object.entries(categories)) {
+      fullContent += `### ${category}\n`;
+      items.forEach((item) => {
+        fullContent += `- [${item.title}](#${item.anchor})\n`;
+      });
+      fullContent += `\n`;
+    }
+
+    fullContent += `---\n\n`;
+
+    // 3. Append all document contents
+    this.allDocs.forEach((doc) => {
+      const anchor = doc.title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+      fullContent += `<a id="${anchor}"></a>\n`;
+      fullContent += `## ${doc.title}\n\n`;
+      fullContent += `**Source URL**: ${doc.url}\n\n`;
+      fullContent += `${doc.content}\n\n`;
+      fullContent += `---\n\n`;
+    });
+
+    // Write the complete file
+    await fs.writeFile("llm.md", fullContent, "utf8");
+
     const stats = await fs.stat("llm.md");
-    console.log(`✅ Documentation written to: llm.md`);
-    console.log(`📊 Total content length: ${stats.size} characters`);
+    console.log(`✅ Documentation successfully written to: llm.md`);
+    console.log(`📊 Total file size: ${(stats.size / 1024).toFixed(2)} KB`);
   }
 
   async cleanup() {
@@ -593,7 +652,7 @@ Generated on: ${new Date().toISOString()}
   async run() {
     try {
       console.log(
-        `🔧 Environment: CI=${process.env.CI}, NODE_ENV=${process.env.NODE_ENV}`
+        `🔧 Environment: CI=${process.env.CI}, NODE_ENV=${process.env.NODE_ENV}`,
       );
       await this.init();
       await this.navigateToStorybook();

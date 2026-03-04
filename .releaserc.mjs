@@ -50,9 +50,9 @@ export default {
       {
         npmPublish: true,
         tag: isMainBranch ? "latest" : currentBranch,
+        provenance: true,
       },
     ],
-    "@semantic-release/github",
     [
       "@semantic-release/git",
       {

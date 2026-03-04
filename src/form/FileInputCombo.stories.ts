@@ -131,7 +131,7 @@ In this Storybook demo, the file upload process is simulated with progress updat
 
 \`\`\`vue
 <script setup>
-import { FileInputCombo } from "@codebridger/lib-vue-components/elements";
+import { FileInputCombo } from "pilotui/elements";
 import { ref } from "vue";
 
 // Get a reference to the component

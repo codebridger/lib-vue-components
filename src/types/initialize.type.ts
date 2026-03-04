@@ -21,7 +21,6 @@ export interface AppSettingType {
 }
 
 export interface PluginOptionsType extends AppSettingType {
-  prefix?: string;
   dontInstallPinia?: boolean;
   dontInstallPopper?: boolean;
   dontInstallPerfectScrollbar?: boolean;

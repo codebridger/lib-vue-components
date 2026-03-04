@@ -1,9 +1,18 @@
 import { vi } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
+import { config } from "@vue/test-utils";
+import Popper from "vue3-popper";
+import PerfectScrollbar from "vue3-perfect-scrollbar";
 
 // Create and set active Pinia for tests
 const pinia = createPinia();
 setActivePinia(pinia);
+
+// Register global components for Vue Test Utils
+config.global.components = {
+  Popper,
+  PerfectScrollbar,
+};
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -63,40 +72,40 @@ HTMLElement.prototype.blur = vi.fn();
 // Mock document methods
 document.createRange = vi.fn(
   () =>
-    ({
-      setStart: vi.fn(),
-      setEnd: vi.fn(),
-      commonAncestorContainer: {
-        nodeName: "BODY",
-        ownerDocument: document,
-      },
-      cloneContents: vi.fn(),
-      cloneRange: vi.fn(),
-      collapse: vi.fn(),
-      compareBoundaryPoints: vi.fn(),
-      comparePoint: vi.fn(),
-      createContextualFragment: vi.fn(),
-      deleteContents: vi.fn(),
-      extractContents: vi.fn(),
-      getBoundingClientRect: vi.fn(),
-      getClientRects: vi.fn(),
-      insertNode: vi.fn(),
-      intersectsNode: vi.fn(),
-      isPointInRange: vi.fn(),
-      selectNode: vi.fn(),
-      selectNodeContents: vi.fn(),
-      setEndAfter: vi.fn(),
-      setEndBefore: vi.fn(),
-      setStartAfter: vi.fn(),
-      setStartBefore: vi.fn(),
-      surroundContents: vi.fn(),
-      toString: vi.fn(),
-      startContainer: document,
-      endContainer: document,
-      startOffset: 0,
-      endOffset: 0,
-      collapsed: false,
-    } as unknown as Range)
+  ({
+    setStart: vi.fn(),
+    setEnd: vi.fn(),
+    commonAncestorContainer: {
+      nodeName: "BODY",
+      ownerDocument: document,
+    },
+    cloneContents: vi.fn(),
+    cloneRange: vi.fn(),
+    collapse: vi.fn(),
+    compareBoundaryPoints: vi.fn(),
+    comparePoint: vi.fn(),
+    createContextualFragment: vi.fn(),
+    deleteContents: vi.fn(),
+    extractContents: vi.fn(),
+    getBoundingClientRect: vi.fn(),
+    getClientRects: vi.fn(),
+    insertNode: vi.fn(),
+    intersectsNode: vi.fn(),
+    isPointInRange: vi.fn(),
+    selectNode: vi.fn(),
+    selectNodeContents: vi.fn(),
+    setEndAfter: vi.fn(),
+    setEndBefore: vi.fn(),
+    setStartAfter: vi.fn(),
+    setStartBefore: vi.fn(),
+    surroundContents: vi.fn(),
+    toString: vi.fn(),
+    startContainer: document,
+    endContainer: document,
+    startOffset: 0,
+    endOffset: 0,
+    collapsed: false,
+  } as unknown as Range)
 );
 
 // Mock Headless UI transition utilities
@@ -135,3 +144,29 @@ vi.mock("@headlessui/vue", async () => {
     },
   };
 });
+
+// Mock Popper component
+vi.mock("vue3-popper", () => ({
+  default: {
+    name: "Popper",
+    template: '<div><slot /><slot name="content" /></div>',
+    props: [
+      "placement",
+      "hover",
+      "arrow",
+      "open-delay",
+      "close-delay",
+      "z-index",
+      "disabled",
+    ],
+  },
+}));
+
+// Mock PerfectScrollbar component
+vi.mock("vue3-perfect-scrollbar", () => ({
+  default: {
+    name: "PerfectScrollbar",
+    template: "<div><slot /></div>",
+    props: ["options", "tag"],
+  },
+}));

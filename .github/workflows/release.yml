@@ -1,7 +1,7 @@
 name: Release
 
 env:
-  package_name: "@codebridger/lib-vue-components"
+  package_name: "pilotui"
 
 on:
   push:
@@ -14,11 +14,13 @@ permissions:
   issues: write
   pull-requests: write
   packages: write
+  id-token: write # Required for Trusted Publishing/OIDC
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    # environment: production  # Optional: keep if you want UI tracking, but ensure it's not branch-restricted
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,9 +31,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
-          scope: ${{ env.package_name }}
+          node-version: "22" # Required for stable npm OIDC / Trusted Publishing
 
       - name: Install dependencies
         run: yarn install
@@ -42,11 +42,10 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN intentionally removed to enable OIDC / Trusted Publishing
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            yarn semantic-release --branch dev --tag-format "dev-\${version}"
+            yarn semantic-release --branch dev
           else
             yarn semantic-release
           fi
