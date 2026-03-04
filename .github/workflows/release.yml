@@ -14,6 +14,7 @@ permissions:
   issues: write
   pull-requests: write
   packages: write
+  id-token: write # Required for Trusted Publishing/OIDC
 
 jobs:
   release:
