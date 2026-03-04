@@ -1,119 +1,124 @@
-# Vue 3 + TypeScript + Vite
+# 🚀 PilotUI
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+**Assemble modern web applications and dashboards fast with PilotUI.**
 
-## Recommended IDE Setup
+PilotUI is a comprehensive Vue 3 + TypeScript component library featuring **50+ UI components**, custom shell layouts, a robust icon system, and specialized utilities. Built with **Tailwind CSS**, it's designed to provide consistent aesthetics and premium developer experience.
 
-### What is PilotUI?
-PilotUI is a reusable component library for Vue 3 projects. It ships a curated set of building blocks to assemble modern web applications and dashboards fast, with consistent design and strong TypeScript types. The published package name is `pilotui`.
+[![Version](https://img.shields.io/npm/v/pilotui?color=blue&style=flat-square)](https://www.npmjs.com/package/pilotui)
+[![License](https://img.shields.io/npm/l/pilotui?color=green&style=flat-square)](https://github.com/codebridger/lib-vue-components/blob/main/LICENSE)
+[![Vue](https://img.shields.io/badge/Vue-3.x-brightgreen?style=flat-square&logo=vue.js)](https://vuejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 
-## Type Support For `.vue` Imports in TS
+---
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+## 🔗 Quick Links
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+- 📖 **Live Documentation**: [Storybook Showcase](https://codebridger.github.io/lib-vue-components/)
+- 🤖 **AI-Ready Docs**: [llm.md](https://codebridger.github.io/lib-vue-components/llm.md) *(Optimized for Claude, Gemini, ChatGPT)*
+- 📦 **NPM Package**: [`pilotui`](https://www.npmjs.com/package/pilotui)
 
-### Prerequisites
-- Vue 3 or Nuxt 3 project
-- Node.js and yarn
+---
 
-### 1) Install the package
+## ✨ Key Features
+
+- 🏗️ **Shell Scaffolding**: Pre-built `DashboardShell`, `AppRoot`, and navigation menus (Vertical/Horizontal).
+- 🎨 **Dynamic Theming**: Integrated theme customizer with Dark/Light/System modes via Pinia.
+- 🍱 **50+ Components**: From basic buttons and inputs to complex data tables and modals.
+- 🌍 **RTL & I18n Ready**: Full support for Right-to-Left layouts and multi-language setups.
+- ⚡ **Vite Powered**: Ultra-fast development and optimized production builds.
+- 🧱 **Nuxt 3 Compatible**: Includes specific entry points for seamless Nuxt integration.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Installation
 
 ```bash
 yarn add pilotui
 
-# or install the dev tag
-yarn add pilotui@dev
+# or using npm
+npm install pilotui
 ```
 
-## Usage
+### 2. Global Integration (Vue 3)
 
-### Vue 3 (Vite) quick start
 ```ts
 // main.ts
 import { createApp } from 'vue'
-import App from './App.vue'
 import PilotUI from 'pilotui'
 import 'pilotui/style.css'
+import App from './App.vue'
 
 const app = createApp(App)
 
 app.use(PilotUI, {
-  prefix: 'CL',
-  dontInstallPinia: true,
-  dontInstallPopper: false,
-  dontInstallPerfectScrollbar: false,
+  dontInstallPinia: false, // Set to true if you already have a Pinia instance in your app
 })
 
 app.mount('#app')
 ```
 
-Use components immediately (default prefix `CL`):
+### 3. Usage
+
+Import components directly where you need them:
 
 ```vue
 <template>
-  <CLButton>Click me</CLButton>
-  <CLInput placeholder="Type here" />
-  <CLToast />
-  <!-- and many more... -->
-  
+  <AppRoot colorScheme="dark">
+    <Button variant="primary">Launch Dashboard</Button>
+  </AppRoot>
 </template>
+
+<script setup>
+import { AppRoot, Button } from 'pilotui'
+</script>
 ```
-
-### Nuxt 3 setup
-Create a client plugin, for example `plugins/pilotui.client.ts`:
-
-```ts
-import { defineNuxtPlugin as init } from 'pilotui/nuxt'
-
-export default defineNuxtPlugin({
-  name: 'pilotui',
-  enforce: 'pre',
-  async setup(nuxtApp) {
-    const options = {
-      prefix: 'CL',
-      dontInstallPinia: true,
-      dontInstallPopper: false,
-      dontInstallPerfectScrollbar: false,
-    }
-
-    return init(nuxtApp, options)
-  },
-})
-```
-
-Add configuration to `nuxt.config.ts`:
-
-```ts
-export default defineNuxtConfig({
-  build: {
-    transpile: ['pilotui'],
-  },
-  css: ['pilotui/style.css'],
-})
-```
-
-## Local development
-
-```bash
-# install dependencies
-yarn
-
-# run Storybook locally
-yarn storybook
-
-# run tests
-yarn test
-
-# build the library
-yarn build
-```
-
-## Links
-- **Storybook**: [codebridger.github.io/lib-vue-components](https://codebridger.github.io/lib-vue-components)
-- **Package**: `pilotui`
 
 ---
 
-If you like PilotUI, consider starring the repo and pinning it on your GitHub profile.
+## 🍱 Component Showcase
+
+| Category | Key Components |
+| :--- | :--- |
+| **Shell** | `AppRoot`, `DashboardShell`, `SidebarMenu`, `HorizontalMenu` |
+| **Elements** | `Button`, `Card`, `Avatar`, `Dropdown`, `Tabs`, `Progress` |
+| **Form** | `Input`, `Select`, `Checkbox`, `Switch`, `Textarea` |
+| **Complex** | `Modal`, `Pagination`, `DataTable`, `Toast` |
+| **Icons** | Custom `Icon` component with multi-pack support |
+
+---
+
+## 🤖 AI-Native Documentation
+
+PilotUI includes a specialized `llm.md` file designed specifically for Large Language Models. If you are using an AI assistant (like Cursor or GitHub Copilot) to build your app, point it to:
+👉 [**https://codebridger.github.io/lib-vue-components/llm.md**](https://codebridger.github.io/lib-vue-components/llm.md)
+
+This file contains flat, metadata-rich descriptions of every component, property, and slot, enabling AI to generate accurate PilotUI code for you instantly.
+
+---
+
+## 🛠️ Local Development
+
+```bash
+# Install dependencies
+yarn install
+
+# Run Storybook for live development
+yarn storybook
+
+# Generate LLM documentation
+yarn generate-docs
+
+# Run unit tests
+yarn test
+```
+
+---
+
+## 🤝 Community & Support
+
+- **Contribute**: Feel free to open issues or submit PRs to improve the library.
+- **Star us**: If you find PilotUI useful, please consider giving it a ⭐ on GitHub!
+
+Built with ❤️ by the **CodeBridger** team.
