@@ -1,3 +1,10 @@
+# [1.17.0-dev.40](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.39...dev-1.17.0-dev.40) (2026-03-04)
+
+
+### Bug Fixes
+
+* modernization of readme and metadata ([c943183](https://github.com/codebridger/lib-vue-components/commit/c943183fa9b59e306083ea99f538cc7a15175a57))
+
 # [1.17.0-dev.39](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.38...dev-1.17.0-dev.39) (2026-03-04)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "pilotui",
   "description": "A comprehensive Vue 3 + TypeScript component library featuring 50+ UI components, shell layouts, icon system, and utilities. Built with Tailwind CSS, includes Storybook documentation, theme customization, and Nuxt.js support. Perfect for building modern web applications and dashboards.",
-  "version": "1.17.0-dev.39",
+  "version": "1.17.0-dev.40",
   "license": "MIT",
   "repository": {
     "type": "git",
