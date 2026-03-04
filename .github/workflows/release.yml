@@ -45,7 +45,7 @@ jobs:
           # NPM_TOKEN intentionally removed to enable OIDC / Trusted Publishing
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            yarn semantic-release --branch dev --tag-format "dev-\${version}"
+            yarn semantic-release --branch dev
           else
             yarn semantic-release
           fi
