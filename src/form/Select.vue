@@ -129,7 +129,7 @@
           leave-to-class="transform opacity-0 scale-95"
         >
           <div
-            v-show="isOpen"
+            v-if="isOpen"
             :class="[
               'absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg',
               custom ? 'max-h-96' : 'max-h-60',
