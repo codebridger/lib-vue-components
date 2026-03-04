@@ -1,3 +1,16 @@
+# [1.29.0-dev.1](https://github.com/codebridger/lib-vue-components/compare/v1.28.1...v1.29.0-dev.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* modernization of readme and metadata ([c943183](https://github.com/codebridger/lib-vue-components/commit/c943183fa9b59e306083ea99f538cc7a15175a57))
+
+
+### Features
+
+* Enhance documentation generation with improved Puppeteer stability, 'Show code' button handling, and structured LLM-friendly output including a header, instructions, and TOC. ([f894c51](https://github.com/codebridger/lib-vue-components/commit/f894c519615e955487a0c19d2183562ffc57fbd8))
+* Register and mock Popper and PerfectScrollbar for testing, adjust Vitest function coverage, and enhance Storybook CI startup reliability. ([51bdbcd](https://github.com/codebridger/lib-vue-components/commit/51bdbcdba6134e22386578f1f2679b8c33c8a60b))
+
 # [1.17.0-dev.40](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.39...dev-1.17.0-dev.40) (2026-03-04)
 
 
