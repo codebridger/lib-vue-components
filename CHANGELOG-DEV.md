@@ -1,3 +1,15 @@
+# [1.17.0-dev.39](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.38...dev-1.17.0-dev.39) (2026-03-04)
+
+
+### Bug Fixes
+
+* **Select:** Change v-show to v-if for improved rendering logic ([d0fb03e](https://github.com/codebridger/lib-vue-components/commit/d0fb03ef1685033f197918f99e06387a1573139e))
+
+
+### Features
+
+* Enhance documentation generation with improved Puppeteer stability, 'Show code' button handling, and structured LLM-friendly output including a header, instructions, and TOC. ([f894c51](https://github.com/codebridger/lib-vue-components/commit/f894c519615e955487a0c19d2183562ffc57fbd8))
+
 # [1.17.0-dev.38](https://github.com/codebridger/lib-vue-components/compare/dev-1.17.0-dev.37...dev-1.17.0-dev.38) (2025-11-16)
 
 
