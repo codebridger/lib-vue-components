@@ -50,6 +50,7 @@ export default {
       {
         npmPublish: true,
         tag: isMainBranch ? "latest" : currentBranch,
+        provenance: true,
       },
     ],
     [
