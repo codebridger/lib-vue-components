@@ -19,7 +19,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ github.ref == 'refs/heads/dev' && secrets.NPM_TOKEN_DEV || secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
             yarn semantic-release --branch dev --tag-format "dev-\${version}"
