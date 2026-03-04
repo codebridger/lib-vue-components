@@ -41,27 +41,26 @@ yarn add pilotui
 npm install pilotui
 ```
 
-### 2. Global Integration (Vue 3)
+### 2. Setup
+Add the required styles and Pinia configuration (if using state-dependent components like `DashboardShell`):
 
 ```ts
 // main.ts
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import PilotUI from 'pilotui'
 import 'pilotui/style.css'
 import App from './App.vue'
 
 const app = createApp(App)
 
-app.use(PilotUI, {
-  dontInstallPinia: false, // Set to true if you already have a Pinia instance in your app
-})
-
+app.use(createPinia())
+app.use(PilotUI) // Optional: sets up default themes & internal utilities
 app.mount('#app')
 ```
 
 ### 3. Usage
-
-Import components directly where you need them:
+PilotUI is designed for explicit component imports. This ensures better tree-shaking and type safety:
 
 ```vue
 <template>
