@@ -99,7 +99,6 @@ const props = withDefaults(defineProps<FileInputButtonProps>(), {
   buttonColor: "primary",
   accept: "",
   multiple: false,
-  size: 0,
 });
 
 const emit = defineEmits<{
