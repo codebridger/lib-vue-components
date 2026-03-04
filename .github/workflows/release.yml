@@ -31,8 +31,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org/"
+          node-version: "22" # Required for stable npm OIDC / Trusted Publishing
 
       - name: Install dependencies
         run: yarn install
@@ -43,7 +42,7 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN removed - OIDC Trusted Publishing will be used instead
+          # NPM_TOKEN intentionally removed to enable OIDC / Trusted Publishing
         run: |
           if [ "${{ github.ref }}" == "refs/heads/dev" ]; then
             yarn semantic-release --branch dev --tag-format "dev-\${version}"
